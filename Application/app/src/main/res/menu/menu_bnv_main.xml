@@ -19,12 +19,12 @@
 
     <item
         android:id="@+id/bnv_main_message"
-        android:title="메시지"
+        android:title="대화방"
         />
 
     <item
         android:id="@+id/bnv_main_profile"
-        android:title="프로필"
+        android:title="내페이지"
         />
 
 </menu>

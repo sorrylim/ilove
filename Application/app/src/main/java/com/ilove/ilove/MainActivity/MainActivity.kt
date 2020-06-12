@@ -32,7 +32,7 @@ class MainActivity : PSAppCompatActivity() {
         if (savedInstanceState == null) {
             channelFragment = ChannelFragment()
             supportFragmentManager.beginTransaction().add(R.id.frame_main, channelFragment!!).commit()
-            toolbarBinding(toolbar_main, "아이러브", false)
+            toolbarCenterBinding(toolbar_main, "아이러브", false)
         }
     }
 
