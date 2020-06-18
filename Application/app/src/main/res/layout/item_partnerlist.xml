@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/text_historydate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="날짜"
+        android:textColor="@color/colorMdGrey_900"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_partnerlistprofile"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_historydate"
+        app:srcCompat="@drawable/default_profile" />
+
+    <TextView
+        android:id="@+id/text_partnerlistnickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="닉네임"
+        android:textColor="@color/colorMdGrey_900"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/image_partnerlistprofile"
+        app:layout_constraintTop_toTopOf="@+id/image_partnerlistprofile" />
+
+    <TextView
+        android:id="@+id/text_partnerlistage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="나이, 지역"
+        android:textColor="@color/colorMdGrey_900"
+        android:textSize="15dp"
+        app:layout_constraintStart_toEndOf="@+id/image_partnerlistprofile"
+        app:layout_constraintTop_toBottomOf="@+id/text_partnerlistnickname" />
+
+    <com.like.LikeButton
+        android:id="@+id/btn_like"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="15dp"
+        app:anim_scale_factor="2"
+        app:circle_end_color="@color/colorMdRed_600"
+        app:circle_start_color="@color/colorMdWhite_1000"
+        app:dots_primary_color="@color/colorMdGreen_600"
+        app:dots_secondary_color="@color/colorMdBlue_300"
+        app:icon_size="20dp"
+        app:icon_type="heart"
+        app:is_enabled="true"
+        app:layout_constraintBottom_toBottomOf="@+id/image_partnerlistprofile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/image_partnerlistprofile"
+        app:like_drawable="@drawable/heart_on"
+        app:unlike_drawable="@drawable/heart_off" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

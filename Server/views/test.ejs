@@ -1,0 +1,354 @@
+<% include ../reference.ejs %>
+
+<!-- Panel-->
+<div class="view-cascade overlay gradient-card-header narrower z-depth-1 d-flex justify-content-between align-items-center ml-2 mr-2"
+    style="flex-flow: row wrap;">
+    <!-- Search form -->
+    <div class="form-inline mr-auto my-1" onkeyup="Enterkey()">
+        <gb-searchcombo ID="searchName" LABEL="대분류" ITEMNUM="1"
+            CLASS="mdb-select md-form md-outline colorful-select dropdown-secondary ml-3" data='MAINCOMCODE' all="yes"
+            searchable="Search here..." changeevent="ChangeSelect()"></gb-searchcombo>
+        <a type="button" class="fas fa-search ml-3 mt-1" onclick="Search()"></a>
+    </div>
+    <!-- Search from -->
+    <!-- Edit buttons -->
+    <div>
+        <a type="button" class="btn-lg transparent" data-toggle="tooltip" data-placement="top" title="추가"
+            onclick="addModal()"><i class="fas fa-plus fa-large" aria-hidden="true"></i></a>
+        <a type="button" class="btn-lg transparent" data-toggle="tooltip" data-placement="top" title="수정"
+            onclick="modifyModal()"><i class="fas fa-pencil-alt fa-large" aria-hidden="true"></i></a>
+        <a type="button" class="btn-lg transparent" data-toggle="tooltip" data-placement="top" title="삭제"
+            onclick="deleteModal()"><i class="fas fa-trash-alt fa-large" aria-hidden="true"></i></a>
+        <a type="button" class="btn-lg transparent" data-toggle="collapse" href="#export" aria-expanded="false"
+            aria-controls="export"><i class="fas fa-file-export fa-large black-text" aria-hidden="true"></i></a>
+    </div>
+    <!-- /Edit buttons -->
+    <!-- Collapsible element -->
+    <div class="collapse" id="export">
+        <div id="menu-icon">
+        </div>
+    </div>
+</div>
+<!--/Panel-->
+<!-- Table -->
+<div class="card-body card-body-cascade text-center">
+    <div class="px-1">
+        <div class="table-wrapper">
+            <gb-grid ID="comCode"></gb-grid>
+        </div>
+    </div>
+</div>
+<!-- /Table -->
+<!-- /Card -->
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="edit_modal" tabindex="-1" role="dialog" aria-labelledby="edit_modal"
+    aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content card mb-4">
+            <div class="modal-header">
+                <h6 class="modal-title"></h6>
+                <button type="button" class="close" onclick="Close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="addCombo">
+                    <div class="md-form md-outline col-md-6">
+                        <gb-searchcombo ID="mainClassCode" LABEL="대분류코드" ITEMNUM="1"
+                            CLASS="mdb-select md-form md-outline colorful-select dropdown-secondary" data='MAINCOMCODE'
+                            all="no" searchable="Search here..."></gb-searchcombo>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <gb-edittext Label="*소분류코드" ID="subClassCode"></gb-edittext>
+                    </div>
+                    <div class="col-md-6">
+                        <gb-edittext Label="소분류명" ID="subClassName"></gb-edittext>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <gb-button ID="add" class="input-group-text purple white-text" Text="추가" Icon="fas fa-plus"
+                    visibility="no" clickEvent="Add()"></gb-button>
+                <gb-button ID="modify" class="input-group-text purple white-text " Text="수정" Icon="fas fa-save"
+                    clickEvent="Modify()"></gb-button>
+                <gb-button ID="delete" class="input-group-text purple white-text" Text="삭제" Icon="fas fa-minus"
+                    clickEvent="Delete()"></gb-button>
+                <gb-button ID="close" class="input-group-text purple white-text" Text="닫기" Icon="fas fa-times"
+                    clickEvent="Close()"></gb-button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!-- Modal: delete-->
+<div class="modal fade bd-example-modal-lg" id="delete_Modal" tabindex="-1" role="dialog" aria-labelledby="deleteModal"
+    aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Body-->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-3">
+                        <p></p>
+                        <p class="text-center"><i class="fas fa-trash-alt purple-text fa-2x"></i></p>
+                    </div>
+                    <div class="col-9">
+                        <p>선택한 데이터 : </p>
+                        <ol id="dataName">
+
+                        </ol>
+                        <p id="deleteString">선택한 항목을 정말 삭제하시겠습니까?</p>
+                    </div>
+                </div>
+            </div>
+            <!--Footer-->
+            <div class="modal-footer justify-content-center">
+                <gb-button ID="" class="btn btn-purple" Text="삭제" Icon="fas fa-minus" clickEvent="Delete()"></gb-button>
+                <gb-button ID="" class="btn btn-blue-grey" Text="닫기" Icon="fas fa-times" clickEvent="Close()">
+                </gb-button>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<!-- Modal: delete-->
+
+<script>
+    var fields = 'MAINCOMCODE_INFO.ClassName AS MainName, SUBCOMCODE_INFO.ClassName AS SubName, MainClass, SubClass';
+    var table = 'SUBCOMCODE_INFO LEFT JOIN MAINCOMCODE_INFO USING(MainClass)';
+    var cond = '';
+    var order = 'MainName, SubName';
+
+    var keyValue = '';
+
+    var index = -1;
+    var keybefore = "";
+
+    var multi = [];
+
+    $(document).ready(function () {
+        $('.mdb-select').materialSelect();
+
+        GbGrid.Create('comCode', '65', fields, table, cond, order, [
+            { 'name': '대분류', 'field': 'MainName' },
+            { 'name': '소분류', 'field': 'SubName' },
+        ]);
+        GbGrid.OnDoubleClick('comCode', function () {
+            GbFunc.SetComboValue('mainClassCode', GbGrid.GetValue('comCode', index, 'MainClass'));
+            GbFunc.SetValue('subClassCode', GbGrid.GetValue('comCode', index, 'SubClass'));
+            GbFunc.SetValue('subClassName', GbGrid.GetValue('comCode', index, 'SubName'));
+
+            GbFunc.SetView('add', false);
+            GbFunc.SetView('modify', true);
+            GbFunc.SetView('delete', true);
+
+            $('#addCombo').css('display', 'none');
+            GbFunc.SetView('mainClassCode', false);
+
+            GbFunc.SetComboDisabled('mainClassCode', true);
+            GbFunc.SetDisabled('subClassCode', true);
+
+            $('#edit_modal').modal('show');
+        });
+        GbGrid.OnSelect('comCode', function () {
+            index = GbGrid.GetSelectedIndex('comCode');
+            GbFunc.SetValue('mainClassCode', GbGrid.GetValue('comCode', index, 'MainClass'));
+            GbFunc.SetValue('subClassCode', GbGrid.GetValue('comCode', index, 'SubClass'));
+            if (index == 0) {
+                keybefore = GbGrid.GetValue('comCode', index, 'SubClass');
+            } else
+                keybefore = GbGrid.GetValue('comCode', index - 1, 'SubClass');
+            GbFunc.SetValue('subClassName', GbGrid.GetValue('comCode', index, 'SubName'));
+        })
+
+        GbGrid.OnDraw('comCode', function () {
+            GbGrid.SetIndex('comCode', 'SubClass', keyValue);
+        });
+    })
+    function Search() {
+        var mainClass = GbFunc.GetText('searchName');
+
+        if (mainClass == '전체') {
+            mainClass = '%';
+        }
+
+        var cond = `MAINCOMCODE_INFO.ClassName LIKE '${mainClass}'`;
+
+        GbGrid.Redraw('comCode', fields, table, cond, order);
+
+        $('#edit_modal').modal('hide');
+    }
+    function Add() {
+        var comCode = new Object();
+        comCode.MainClass = GbFunc.GetValue('mainClassCode');
+        comCode.SubClass = GbFunc.GetValue('subClassCode');
+        comCode.ClassName = GbFunc.GetValue('subClassName');
+        comCode.CreateUser = '<%=user.UserID%>';
+        comCode.CreateTime = GbFunc.GetTime();
+        comCode.CreateProgram = '공통코드관리';
+        if (GbFunc.GetValue('mainClassCode') != '') {
+            if (GbFunc.GetValue('subClassCode') != '') {
+                a2s_addDB('SUBCOMCODE_INFO', JSON.stringify(comCode), function (res) {
+                    if (res.affectedRows > 0) {
+                        keyValue = GbFunc.GetValue('subClassCode');
+                        var subcode_cache = new Object();
+                        subcode_cache.ID = comCode.SubClass;
+                        subcode_cache.VALUE = comCode.ClassName;
+
+                        a2s_addCache(comCode.MainClass, JSON.stringify(subcode_cache), function (error, res) {
+                            //console.log(`res`, res);
+                        });
+                        GbFunc.ShowNotification('success', '추가 완료');
+                        Search();
+                    }
+                    else {
+                        GbFunc.ShowNotification('error', '추가 실패');
+                    }
+                });
+            } else alert('코드를 입력하세요')
+        } else alert('코드를 입력하세요')
+    }
+
+    function Modify() {
+        var cond = 'MainClass="' + GbFunc.GetValue('mainClassCode') + '"';
+        cond += 'AND SubClass="' + GbFunc.GetValue('subClassCode') + '"';
+
+        var comCode = new Object();
+        comCode.ClassName = GbFunc.GetValue('subClassName');
+        comCode.UpdateUser = '<%=user.UserID%>';
+        comCode.UpdateTime = GbFunc.GetTime();
+        comCode.UpdateProgram = '공통코드관리';
+        a2s_modifyDBByCond('SUBCOMCODE_INFO', JSON.stringify(comCode), cond, function (res) {
+            if (res.affectedRows > 0) {
+                keyValue = GbFunc.GetValue('subClassCode');
+                GbFunc.ShowNotification('success', '수정 완료');
+                Search();
+            }
+            else {
+                GbFunc.ShowNotification('error', '수정 실패');
+            }
+        });
+    }
+
+    function Delete() {
+        var cond = '';
+        var multiState = false;
+        var MainClassKeys = [];
+        var SubClassKeys = [];
+
+        if (GbGrid.GetSelectedMultiIndex('comCode') > 1) {
+            var str = '(';
+            for (var i = 0; i < multi.length; ++i) {
+                str += `(MainClass = "${multi[i].MainClass}" AND SubClass = "${multi[i].SubClass}")`;
+                if (i < multi.length - 1) str += ' OR ';
+                MainClassKeys.push(multi[i].MainClass);
+                SubClassKeys.push(multi[i].SubClass);
+            }
+            cond = str + ')';
+            idx = $('#comCode').DataTable().rows('.selected').indexes();
+            var length = idx.length - 1;
+            if ($('#comCode').DataTable().row(idx[length] + 1).data() != undefined) {
+                keyValue = GbGrid.GetValue('comCode', idx[length] + 1, 'SubClass');
+            }
+            multiState = true;
+
+
+        } else {
+            MainClassKeys.push(GbFunc.GetValue('mainClassCode'));
+            SubClassKeys.push(GbFunc.GetValue('subClassCode'));
+
+            cond = 'MainClass="' + MainClassKeys[0] + '"';
+            cond += 'AND SubClass="' + SubClassKeys[0] + '"';
+            keyValue = keybefore;
+        }
+
+
+
+        a2s_deleteDBByCond('SUBCOMCODE_INFO', cond, function (res) {
+            if (res.affectedRows > 0) {
+                if (multiState) {
+                    a2s_deleteSomeCache(JSON.stringify(MainClassKeys), JSON.stringify(SubClassKeys), function (error, res) {
+
+                    })
+                } else {
+                    a2s_deleteCache(MainClassKeys[0], SubClassKeys[0], function (error, res) {/* console.log(`res`, res); */ });
+                }
+
+
+                GbFunc.ShowNotification('success', '삭제 완료');
+                Search();
+            }
+            else {
+                GbFunc.ShowNotification('error', '삭제 실패');
+            }
+            $('#edit_modal').modal('hide');
+            $('.modal').modal('hide');
+        });
+    }
+    function addModal() {
+        $('#addCombo').css('display', 'block');
+        GbFunc.SetView('add', true);
+        GbFunc.SetView('modify', false);
+        GbFunc.SetView('delete', false);
+
+        GbFunc.SetValue('subClassCode', '');
+        GbFunc.SetValue('subClassName', '');
+
+        GbFunc.SetComboDisabled('mainClassCode', false);
+
+        GbFunc.SetDisabled('subClassCode', false);
+
+        $('#edit_modal').modal('show');
+    }
+    function modifyModal() {
+        if (GbGrid.GetSelectedIndex('comCode') < 0) {
+            GbFunc.ShowNotification('info', '수정할 항목을 선택하세요.');
+            return;
+        }
+        $('#addCombo').css('display', 'none');
+        GbFunc.SetComboValue('mainClassCode', GbGrid.GetValue('comCode', index, 'MainClass'));
+        GbFunc.SetValue('subClassCode', GbGrid.GetValue('comCode', index, 'SubClass'));
+        GbFunc.SetValue('subClassName', GbGrid.GetValue('comCode', index, 'SubName'));
+
+        GbFunc.SetView('add', false);
+        GbFunc.SetView('modify', true);
+        GbFunc.SetView('delete', true);
+
+        GbFunc.SetComboDisabled('mainClassCode', true);
+        GbFunc.SetDisabled('subClassCode', true);
+
+        $('#edit_modal').modal('show');
+    }
+    function deleteModal() {
+        if (GbGrid.GetSelectedMultiIndex('comCode') < 0) {
+            GbFunc.ShowNotification('info', '삭제할 항목을 선택하세요.');
+            return;
+        }
+        $('#delete_Modal').modal('show');
+        multi = [];
+        $('#dataName').empty();
+        var data = $('#comCode').DataTable().rows('.selected').data();
+        for (var i = 0; i < data.length; ++i) {
+            multi.push(data[i]);
+            $('#dataName').append(`<li>${data[i].MainName + ' : ' + data[i].SubName}</li>`)
+        }
+    }
+    function Close() {
+        $('.modal').modal('hide');
+        $('.modal').removeData('bs.modal');
+    }
+
+    function ChangeSelect() {
+        Search();
+    }
+    function Enterkey() {
+        if (window.event.keyCode == 13) {
+            Search();
+        }
+    }
+
+</script>

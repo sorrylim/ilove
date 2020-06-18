@@ -2,14 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ilove.ilove">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".IntroActivity.ItemActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".MainActivity.PartnerListActivity"></activity>
+        <activity android:name=".MainActivity.PartnerActivity" />
+        <activity android:name=".MainActivity.VipActivity" />
+        <activity android:name=".IntroActivity.ItemActivity" />
         <activity android:name=".IntroActivity.AlarmSettingActivity" />
         <activity android:name=".IntroActivity.SettingActivity" />
         <activity android:name=".MainActivity.MainActivity">

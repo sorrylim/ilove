@@ -3,45 +3,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <ImageView
-        android:id="@+id/image_partnerlistprofile"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:id="@+id/image_userlistprofile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/default_profile" />
 
     <TextView
-        android:id="@+id/text_partnerlistintroduce"
+        android:id="@+id/text_userlistintroduce"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:text="소개글"
-        android:textSize="15dp"
+        android:layout_marginBottom="5dp"
         android:maxLines="3"
+        android:text="소개글"
         android:textColor="@color/colorMdGrey_900"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_like"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image_partnerlistprofile"
-        app:layout_constraintTop_toTopOf="@+id/image_partnerlistprofile" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_userlistprofile"
+        app:layout_constraintTop_toBottomOf="@+id/text_userlistinfo" />
 
     <TextView
-        android:id="@+id/text_partnerlistcertification"
+        android:id="@+id/text_userlistcertification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="인증여부"
         android:textSize="10dp"
         android:textColor="@color/colorMdGrey_700"
-        app:layout_constraintBottom_toBottomOf="@+id/image_partnerlistprofile"
-        app:layout_constraintStart_toEndOf="@+id/image_partnerlistprofile"
-        app:layout_constraintTop_toBottomOf="@+id/text_partnerlistintroduce"
+        app:layout_constraintBottom_toBottomOf="@+id/image_userlistprofile"
+        app:layout_constraintStart_toEndOf="@+id/image_userlistprofile"
+        app:layout_constraintTop_toBottomOf="@+id/text_userlistintroduce"
         app:layout_constraintVertical_bias="1.0" />
 
     <com.like.LikeButton
@@ -49,16 +55,23 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginEnd="10dp"
-        app:anim_scale_factor="2"
-        app:circle_end_color="@color/colorMdRed_600"
-        app:circle_start_color="@color/colorMdWhite_1000"
-        app:dots_primary_color="@color/colorMdGreen_600"
-        app:dots_secondary_color="@color/colorMdBlue_300"
         app:icon_size="20dp"
         app:icon_type="heart"
         app:is_enabled="true"
-        app:layout_constraintBottom_toBottomOf="@+id/image_partnerlistprofile"
+        app:layout_constraintBottom_toBottomOf="@+id/image_userlistprofile"
         app:layout_constraintEnd_toEndOf="parent"
         app:like_drawable="@drawable/heart_on"
         app:unlike_drawable="@drawable/heart_off" />
+
+    <TextView
+        android:id="@+id/text_userlistinfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="닉네임, 나이, 지역, 거리"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_userlistprofile"
+        app:layout_constraintTop_toTopOf="@+id/image_userlistprofile" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,5 +19,7 @@ class SettingActivity : PSAppCompatActivity() {
             startActivity(intent)
         }
 
+
+
     }
 }

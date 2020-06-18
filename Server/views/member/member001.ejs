@@ -1,0 +1,115 @@
+<script src="/public/js/common.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<!-- JQuery -->
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="/js/mdb.min.js"></script>
+
+<!DOCTYPE html>
+<html>
+
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.min.css" rel="stylesheet">
+      <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+
+
+
+    <!--검색 추가 수정 삭제 -->
+    <div class="view-cascade overlay gradient-card-header narrower z-depth-1 d-flex justify-content-between align-items-center ml-2 mr-2"
+    style="flex-flow: row wrap;">
+    <div class="form-inline mr-auto my-1">
+    
+        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group" style="padding-top: 10px;">
+              <input id="textSearch" type="text" class="form-control bg-light border-0 small" placeholder="아이디" aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button" id="btnSearch">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>       
+        </div>
+    </div>
+    <!--테이블-->
+    <div id="tableDiv" class="table-responsive"></div>
+
+<script>
+    function htmlTable(data) {
+        var htmlStr = "<table class=\"table table-hover\">"
+        htmlStr += "<tr style=\"text-overflow:ellipsis; white-space:nowrap; overflow:hidden;\">"
+        htmlStr += "<th>#</td><th>아이디</th><th>이전 타입</th><th>변경 타입</th>"
+        htmlStr += "</tr>"
+        var i = 1
+        data.forEach(element => {
+            htmlStr += "<tr style=\"text-overflow:ellipsis; white-space:nowrap; overflow:hidden\">"
+            htmlStr += "<td>" + i++ + "</td>"+ "<td>" + element["user_id"] + "</td>" + "<td>" + element["cur_type"] + "</td>" + "<td>" + element["change_type"] + "</td>"
+            htmlStr += "</tr>"
+        });
+        htmlStr += "</table>"
+
+        $("#tableDiv").html(htmlStr)
+    }
+
+    $(document).ready(() => {
+
+        $.ajax({
+            url: "/usertypechange",
+            dataType: "json",
+            type: "GET",
+            success: function (data) {
+                htmlTable(data)
+            },
+            error: function (err) {
+                var htmlStr = "<table class=\"table table-hover\">"
+        htmlStr += "<tr style=\"text-overflow:ellipsis; white-space:nowrap; overflow:hidden;\">"
+        htmlStr += "<th>#</td><th>아이디</th><th>이전 타입</th><th>변경 타입</th>"
+        htmlStr += "</tr>"
+            htmlStr += "</table>"
+
+            $("#tableDiv").html(htmlStr)
+            }
+            
+        })
+
+        $('#btnSearch').click(function () {
+            var search = $("#textSearch").val()
+
+             $.ajax({
+                 url: "/usertypechange/search",
+                 dataType: "json",
+                 type: "POST",
+                 data:{
+                     search:search
+                 },
+                 success: function (data) {
+                     htmlTable(data)
+                 }
+             })
+        })
+    })
+</script>
+
+
+
+</html>

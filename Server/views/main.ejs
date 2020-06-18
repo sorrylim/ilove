@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>유저리스트</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="tableDiv" class="table-responsive">
+
+    </div>
+    <div id="bottomOfTableDiv" class="center-block">
+        <input id="textSearch" class="text text-defalut text-sm-left" type="text">
+        <button id="btnSearch" class="btn btn-primary btn-sm" type="button">검색</button>
+    </div>
+</body>
+<!-- JQuery -->
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="/js/mdb.min.js"></script>
+
+
+<script>
+    function htmlTable(data) {
+        var htmlStr = "<table class=\"table table-hover\">"
+        htmlStr += "<tr style=\"text-overflow:ellipsis; white-space:nowrap; overflow:hidden;\">"
+        htmlStr += "<th>#</td><th>아이디</th><th>비밀번호</th><th>로그인타입</th><th>닉네임</th><th>유형</th><th>전화번호</th><th>주소</th><th>포인트</th><th>계좌</th><th>가입날짜</th>"
+        htmlStr += "</tr>"
+        var i = 1
+        data.forEach(element => {
+            htmlStr += "<tr style=\"text-overflow:ellipsis; white-space:nowrap; overflow:hidden\">"
+            htmlStr += "<td>" + i++ + "</td>" + "<td>" + element["user_id"] + "</td>" + "<td>" + element["user_pw"] + "</td>" + "<td>" + element["user_login_type"] + "</td>"
+            htmlStr += "<td>" + element["user_nickname"] + "</td>" + "<td>" + element["user_type"] + "</td>" + "<td>" + element["user_phone"] + "</td>"
+            htmlStr += "<td>" + element["user_address"] + "</td>" + "<td>" + element["user_point"] + "</td>" + "<td>" + element["user_bank"] + " " + element["user_account"] + "</td>"
+            htmlStr += "<td>" + element["user_join_date"] + "</td>"
+            htmlStr += "</tr>"
+        });
+        htmlStr += "</table>"
+
+        $("#tableDiv").html(htmlStr)
+    }
+
+    $(document).ready(() => {
+
+        $.ajax({
+            url: "/user",
+            dataType: "json",
+            type: "GET",
+            success: function (data) {
+                htmlTable(data)
+            }
+        })
+
+        $('#btnSearch').click(function () {
+            var search = $("textSearch").val()
+
+            $.ajax({
+                url: "/user/search",
+                dataType: "json",
+                type: "GET",
+                data:{
+                    search:search
+                },
+                success: function (data) {
+                    htmlTable(data)
+                }
+            })
+        })
+    })
+</script>
+
+
+
+</html>

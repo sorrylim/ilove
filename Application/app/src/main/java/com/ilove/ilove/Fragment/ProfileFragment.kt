@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.ilove.ilove.IntroActivity.ItemActivity
 import com.ilove.ilove.IntroActivity.SettingActivity
 import com.ilove.ilove.R
 
@@ -18,9 +19,16 @@ class ProfileFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_profile, container, false)
 
         val settingBtn : TextView = rootView.findViewById(R.id.text_mypagesetting)
+        val itemManagement : TextView = rootView.findViewById(R.id.text_mypageitem)
+
 
         settingBtn.setOnClickListener {
             var intent = Intent(activity!!, SettingActivity::class.java)
+            startActivity(intent)
+        }
+
+        itemManagement.setOnClickListener {
+            var intent = Intent(activity!!, ItemActivity::class.java)
             startActivity(intent)
         }
 
