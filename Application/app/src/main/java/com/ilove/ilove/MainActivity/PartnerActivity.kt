@@ -11,9 +11,9 @@ class PartnerActivity : PSAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_partner)
 
-        //var intent = intent
-        //intent.getStringExtra("userNickname")
+        var intent = intent
+        var userNickname = intent.getStringExtra("userNickname")
 
-        toolbarCenterBinding(toolbar_partner, "", true)
+        toolbarCenterBinding(toolbar_partner, userNickname, true)
     }
 }

@@ -26,7 +26,7 @@ class ListFragment : Fragment() {
         val partnerListRV : RecyclerView = rootView.findViewById(R.id.rv_userlist)
 
         if(UserInfo.GENDER == "M") {
-            VolleyService.getUserListReq("F", activity!!, {success->
+            VolleyService.getUserListReq("F", UserInfo.ID, activity!!, {success->
                 userList.clear()
                 var array = success
                 for(i in 0..array!!.length()-1) {
@@ -42,7 +42,7 @@ class ListFragment : Fragment() {
             })
         }
         else if(UserInfo.GENDER == "F") {
-            VolleyService.getUserListReq("M", activity!!, {success->
+            VolleyService.getUserListReq("M", UserInfo.ID, activity!!, {success->
                 userList.clear()
                 var array = success
                 for(i in 0..array!!.length()-1) {

@@ -30,8 +30,8 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
             holder.itemView.text_historydate.text = partnerList.get(position).dateHistory
         }
 
-        holder.itemView.text_partnerlistnickname.text = partnerList.get(position).nickname
-        holder.itemView.text_partnerlistage.text = partnerList.get(position).age + "," + partnerList.get(position).city
+        holder.itemView.text_partnerlistnickname.text = partnerList.get(position).userNickname
+        holder.itemView.text_partnerlistage.text = partnerList.get(position).userAge + "," + partnerList.get(position).userCity
         dateHistory = partnerList.get(position).dateHistory
 
     }
