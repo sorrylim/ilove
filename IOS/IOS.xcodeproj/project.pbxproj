@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		545D598F24A0A448000B8A5A /* VipGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545D598E24A0A448000B8A5A /* VipGuideView.swift */; };
+		54745B9624A06E6400B32F25 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54745B9524A06E6400B32F25 /* MyPageView.swift */; };
+		54745B9924A071FC00B32F25 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54745B9824A071FC00B32F25 /* SettingView.swift */; };
+		54745B9B24A0724900B32F25 /* ItemManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54745B9A24A0724900B32F25 /* ItemManageView.swift */; };
 		547E6203249C67A300D8B7C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E6202249C67A300D8B7C4 /* AppDelegate.swift */; };
 		547E6205249C67A300D8B7C4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E6204249C67A300D8B7C4 /* SceneDelegate.swift */; };
 		547E6208249C67A300D8B7C4 /* IOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 547E6206249C67A300D8B7C4 /* IOS.xcdatamodeld */; };
@@ -17,13 +21,17 @@
 		547E621C249C829200D8B7C4 /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E621B249C829200D8B7C4 /* UserListView.swift */; };
 		547E621F249C82B400D8B7C4 /* StoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E621E249C82B400D8B7C4 /* StoryView.swift */; };
 		547E6221249C82CC00D8B7C4 /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E6220249C82CC00D8B7C4 /* ChatListView.swift */; };
-		547E6223249C82D800D8B7C4 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E6222249C82D800D8B7C4 /* MyPageView.swift */; };
 		547E6225249C88E300D8B7C4 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E6224249C88E300D8B7C4 /* ChannelView.swift */; };
 		547E6228249CA27C00D8B7C4 /* WriteStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E6227249CA27C00D8B7C4 /* WriteStoryView.swift */; };
 		547E622B249CAFFA00D8B7C4 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E622A249CAFFA00D8B7C4 /* EditProfileView.swift */; };
+		5497A40D24A09A94005BBC1A /* AlarmSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5497A40C24A09A94005BBC1A /* AlarmSettingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		545D598E24A0A448000B8A5A /* VipGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VipGuideView.swift; sourceTree = "<group>"; };
+		54745B9524A06E6400B32F25 /* MyPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		54745B9824A071FC00B32F25 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		54745B9A24A0724900B32F25 /* ItemManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemManageView.swift; sourceTree = "<group>"; };
 		547E61FF249C67A300D8B7C4 /* IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		547E6202249C67A300D8B7C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		547E6204249C67A300D8B7C4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,10 +44,10 @@
 		547E621B249C829200D8B7C4 /* UserListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
 		547E621E249C82B400D8B7C4 /* StoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryView.swift; sourceTree = "<group>"; };
 		547E6220249C82CC00D8B7C4 /* ChatListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListView.swift; sourceTree = "<group>"; };
-		547E6222249C82D800D8B7C4 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		547E6224249C88E300D8B7C4 /* ChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelView.swift; sourceTree = "<group>"; };
 		547E6227249CA27C00D8B7C4 /* WriteStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteStoryView.swift; sourceTree = "<group>"; };
 		547E622A249CAFFA00D8B7C4 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		5497A40C24A09A94005BBC1A /* AlarmSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +61,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		545D598D24A0A438000B8A5A /* ItemManage */ = {
+			isa = PBXGroup;
+			children = (
+				545D598E24A0A448000B8A5A /* VipGuideView.swift */,
+			);
+			path = ItemManage;
+			sourceTree = "<group>";
+		};
+		54745B9724A0702A00B32F25 /* MyPageItem */ = {
+			isa = PBXGroup;
+			children = (
+				545D598D24A0A438000B8A5A /* ItemManage */,
+				5497A40B24A09A7C005BBC1A /* SettingItem */,
+				547E622A249CAFFA00D8B7C4 /* EditProfileView.swift */,
+				54745B9824A071FC00B32F25 /* SettingView.swift */,
+				54745B9A24A0724900B32F25 /* ItemManageView.swift */,
+			);
+			path = MyPageItem;
+			sourceTree = "<group>";
+		};
 		547E61F6249C67A300D8B7C4 = {
 			isa = PBXGroup;
 			children = (
@@ -72,8 +100,6 @@
 		547E6201249C67A300D8B7C4 /* IOS */ = {
 			isa = PBXGroup;
 			children = (
-				547E6229249CAFE400D8B7C4 /* Profile */,
-				547E6226249CA26900D8B7C4 /* Story */,
 				547E621D249C82A300D8B7C4 /* TabView */,
 				547E6202249C67A300D8B7C4 /* AppDelegate.swift */,
 				547E6204249C67A300D8B7C4 /* SceneDelegate.swift */,
@@ -98,10 +124,12 @@
 		547E621D249C82A300D8B7C4 /* TabView */ = {
 			isa = PBXGroup;
 			children = (
+				54745B9724A0702A00B32F25 /* MyPageItem */,
+				547E6226249CA26900D8B7C4 /* Story */,
+				54745B9524A06E6400B32F25 /* MyPageView.swift */,
 				547E621B249C829200D8B7C4 /* UserListView.swift */,
 				547E621E249C82B400D8B7C4 /* StoryView.swift */,
 				547E6220249C82CC00D8B7C4 /* ChatListView.swift */,
-				547E6222249C82D800D8B7C4 /* MyPageView.swift */,
 				547E6224249C88E300D8B7C4 /* ChannelView.swift */,
 			);
 			path = TabView;
@@ -115,12 +143,12 @@
 			path = Story;
 			sourceTree = "<group>";
 		};
-		547E6229249CAFE400D8B7C4 /* Profile */ = {
+		5497A40B24A09A7C005BBC1A /* SettingItem */ = {
 			isa = PBXGroup;
 			children = (
-				547E622A249CAFFA00D8B7C4 /* EditProfileView.swift */,
+				5497A40C24A09A94005BBC1A /* AlarmSettingView.swift */,
 			);
-			path = Profile;
+			path = SettingItem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,11 +228,15 @@
 				547E622B249CAFFA00D8B7C4 /* EditProfileView.swift in Sources */,
 				547E6225249C88E300D8B7C4 /* ChannelView.swift in Sources */,
 				547E6228249CA27C00D8B7C4 /* WriteStoryView.swift in Sources */,
+				54745B9624A06E6400B32F25 /* MyPageView.swift in Sources */,
+				545D598F24A0A448000B8A5A /* VipGuideView.swift in Sources */,
+				54745B9B24A0724900B32F25 /* ItemManageView.swift in Sources */,
 				547E621F249C82B400D8B7C4 /* StoryView.swift in Sources */,
 				547E620A249C67A300D8B7C4 /* ContentView.swift in Sources */,
-				547E6223249C82D800D8B7C4 /* MyPageView.swift in Sources */,
+				54745B9924A071FC00B32F25 /* SettingView.swift in Sources */,
 				547E6221249C82CC00D8B7C4 /* ChatListView.swift in Sources */,
 				547E6205249C67A300D8B7C4 /* SceneDelegate.swift in Sources */,
+				5497A40D24A09A94005BBC1A /* AlarmSettingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

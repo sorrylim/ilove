@@ -14,12 +14,13 @@ struct StoryView : View {
             ScrollView(){
                 HStack{
                     Image(systemName: "circle")
-                        .frame(width:100,height: 100)
+                        .frame(width:120,height: 120)
                     Spacer()
                     VStack{
+                        Spacer()
                         NavigationLink(destination: WriteStoryView()) {
                             Text("스토리 작성하기")
-                                .font(.system(size: 20,weight: .bold))
+                                .font(.system(size: 15,weight: .bold))
                                 .frame(width:200)
                                 .foregroundColor(Color.white)
                                 .padding()
@@ -27,9 +28,11 @@ struct StoryView : View {
                                 .cornerRadius(15)
                                 .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color.orange, lineWidth: 0))
                         }
+                        Spacer(minLength:5)
                         Text("자신만의 일상스토리로 멋내 보세요")
                             .font(.system(size: 15))
                             .foregroundColor(Color.gray)
+                        Spacer()
                     }
                     Spacer()
                 }
