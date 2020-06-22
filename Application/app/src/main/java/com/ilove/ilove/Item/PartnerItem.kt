@@ -21,5 +21,7 @@ data class UserList(
     val recentGps: String,
     val userIntroduce: String,
     val userCertification: String,
+    val like: Int,
+    val meet: Int,
     val imageList: ArrayList<Bitmap>?
 )

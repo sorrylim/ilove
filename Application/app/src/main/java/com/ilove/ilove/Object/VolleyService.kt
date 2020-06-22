@@ -123,6 +123,7 @@ object VolleyService {
         json.put("expression_type", expressionType)
 
         var array = JSONArray()
+        array.put(json)
 
         var request = object : JsonArrayRequest(
             Method.POST,
@@ -201,4 +202,47 @@ object VolleyService {
             }) {}
         Volley.newRequestQueue(context).add(request)
     }
+
+    fun insertExpressionReq(userId: String, partnerId: String, expressionType:String, expressionDate: String, context:Context, success:(String?) -> Unit) {
+        var url = "${ip}/expression/insert"
+        var json = JSONObject()
+        json.put("user_id", userId)
+        json.put("partner_id", partnerId)
+        json.put("expression_type", expressionType)
+        json.put("expression_date", expressionDate)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun deleteExpressionReq(userId: String, partnerId: String, expressionType:String, context:Context, success:(String?) -> Unit) {
+        var url = "${ip}/expression/delete"
+        var json = JSONObject()
+        json.put("user_id", userId)
+        json.put("partner_id", partnerId)
+        json.put("expression_type", expressionType)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+
 }

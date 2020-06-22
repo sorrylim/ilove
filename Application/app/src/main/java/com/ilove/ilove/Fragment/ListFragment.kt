@@ -33,7 +33,8 @@ class ListFragment : Fragment() {
                     var json = array[i] as JSONObject
                     var partner = UserList(json.getString("user_id"), json.getString("user_nickname"),
                     json.getString("user_birthday"), json.getString("user_city"), json.getString("user_recentgps"),
-                    json.getString("user_introduce"), json.getString("user_certification"), ArrayList<Bitmap>())
+                    json.getString("user_introduce"), json.getString("user_certification"), json.getInt("like"), json.getInt("meet"),
+                        ArrayList<Bitmap>())
                     userList.add(partner)
                 }
                 partnerListRV.setHasFixedSize(true)
@@ -49,7 +50,8 @@ class ListFragment : Fragment() {
                     var json = array[i] as JSONObject
                     var partner = UserList(json.getString("user_id"), json.getString("user_nickname"),
                         json.getString("user_birthday"), json.getString("user_city"), json.getString("user_recentgps"),
-                        json.getString("user_introduce"), json.getString("user_certification"), ArrayList<Bitmap>())
+                        json.getString("user_introduce"), json.getString("user_certification"),
+                        json.getInt("like"), json.getInt("meet"), ArrayList<Bitmap>())
                     userList.add(partner)
                 }
                 partnerListRV.setHasFixedSize(true)

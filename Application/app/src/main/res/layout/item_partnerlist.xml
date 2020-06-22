@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_partnerlistnickname" />
 
     <com.like.LikeButton
-        android:id="@+id/btn_like"
+        android:id="@+id/btn_partnerlistlike"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginEnd="15dp"
