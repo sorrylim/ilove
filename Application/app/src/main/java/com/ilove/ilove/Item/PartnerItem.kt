@@ -3,10 +3,10 @@ package com.ilove.ilove.Item
 import android.graphics.Bitmap
 
 data class Partner(
-    val id: String,
-    val nickname: String,
-    val age: String,
-    val city: String,
+    val userId: String,
+    val userNickname: String,
+    val userAge: String,
+    val userCity: String,
     val dateHistory: String,
     val like: Int,
     val meet: Int,
@@ -14,12 +14,14 @@ data class Partner(
 )
 
 data class UserList(
-    val id: String,
-    val nickname: String,
-    val age: String,
-    val city: String,
+    val userId: String,
+    val userNickname: String,
+    val userAge: String,
+    val userCity: String,
     val recentGps: String,
-    val introduce: String,
-    val certification: String,
+    val userIntroduce: String,
+    val userCertification: String,
+    val like: Int,
+    val meet: Int,
     val imageList: ArrayList<Bitmap>?
 )

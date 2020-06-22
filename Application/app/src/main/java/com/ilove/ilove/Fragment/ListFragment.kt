@@ -26,14 +26,15 @@ class ListFragment : Fragment() {
         val partnerListRV : RecyclerView = rootView.findViewById(R.id.rv_userlist)
 
         if(UserInfo.GENDER == "M") {
-            VolleyService.getUserListReq("F", activity!!, {success->
+            VolleyService.getUserListReq("F", UserInfo.ID, activity!!, {success->
                 userList.clear()
                 var array = success
                 for(i in 0..array!!.length()-1) {
                     var json = array[i] as JSONObject
                     var partner = UserList(json.getString("user_id"), json.getString("user_nickname"),
                     json.getString("user_birthday"), json.getString("user_city"), json.getString("user_recentgps"),
-                    json.getString("user_introduce"), json.getString("user_certification"), ArrayList<Bitmap>())
+                    json.getString("user_introduce"), json.getString("user_certification"), json.getInt("like"), json.getInt("meet"),
+                        ArrayList<Bitmap>())
                     userList.add(partner)
                 }
                 partnerListRV.setHasFixedSize(true)
@@ -42,14 +43,15 @@ class ListFragment : Fragment() {
             })
         }
         else if(UserInfo.GENDER == "F") {
-            VolleyService.getUserListReq("M", activity!!, {success->
+            VolleyService.getUserListReq("M", UserInfo.ID, activity!!, {success->
                 userList.clear()
                 var array = success
                 for(i in 0..array!!.length()-1) {
                     var json = array[i] as JSONObject
                     var partner = UserList(json.getString("user_id"), json.getString("user_nickname"),
                         json.getString("user_birthday"), json.getString("user_city"), json.getString("user_recentgps"),
-                        json.getString("user_introduce"), json.getString("user_certification"), ArrayList<Bitmap>())
+                        json.getString("user_introduce"), json.getString("user_certification"),
+                        json.getInt("like"), json.getInt("meet"), ArrayList<Bitmap>())
                     userList.add(partner)
                 }
                 partnerListRV.setHasFixedSize(true)

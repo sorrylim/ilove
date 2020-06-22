@@ -26,12 +26,11 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="5dp"
         android:maxLines="3"
         android:text="소개글"
         android:textColor="@color/colorMdGrey_900"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_like"
+        app:layout_constraintBottom_toTopOf="@+id/btn_userlike"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/image_userlistprofile"
@@ -51,7 +50,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <com.like.LikeButton
-        android:id="@+id/btn_like"
+        android:id="@+id/btn_userlike"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginEnd="10dp"
