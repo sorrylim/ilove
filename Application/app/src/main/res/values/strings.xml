@@ -8,4 +8,6 @@
     <string name="guidemeet"><b>"만나봐요"</b>를 통해\n 연락처를 물어보세요</string>
     <string name="guidemeetcontent">서로<font color="FF0000"><b>만나봐요</b></font>가 연결되면\n <font color="FF0000"><b>연락처</b></font>를 받을수도 있습니다.</string>
     <string name="guidelikecontent">서로<font color="#FFA500"><b>좋아요</b></font>가 연결되면\n <font color="#FFA500"><b>첫번째 메세지</b></font>를 보낼수 있습니다. </string>
+    <string name="buyvip"><b>정회원</b>신청하기</string>
+    <string name="buyvipcontent">1개월 구독 <b>0원</b>\n(부가세별도)</string>
 </resources>

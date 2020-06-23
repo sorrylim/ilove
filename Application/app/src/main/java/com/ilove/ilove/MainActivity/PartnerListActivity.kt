@@ -48,8 +48,8 @@ class PartnerListActivity : PSAppCompatActivity() {
             for(i in 0..array!!.length()-1) {
                 var json = array[i] as JSONObject
                 var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
-                    json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"),
-                    json.getInt("like"), json.getInt("meet"), ArrayList<Bitmap>())
+                    json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"),
+                    json.getInt("like"), json.getInt("meet"), "")
                 partnerList.add(partner)
             }
             rv_partnerlist.setHasFixedSize(true)
@@ -65,8 +65,8 @@ class PartnerListActivity : PSAppCompatActivity() {
             for(i in 0..array!!.length()-1) {
                 var json = array[i] as JSONObject
                 var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
-                    json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"),
-                    json.getInt("like"), json.getInt("meet"), ArrayList<Bitmap>())
+                    json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"),
+                    json.getInt("like"), json.getInt("meet"), "")
                 partnerList.add(partner)
             }
             rv_partnerlist.setHasFixedSize(true)
@@ -82,8 +82,8 @@ class PartnerListActivity : PSAppCompatActivity() {
             for(i in 0..array!!.length()-1) {
                 var json = array[i] as JSONObject
                 var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
-                    json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"),
-                    json.getInt("like"), json.getInt("meet"), ArrayList<Bitmap>())
+                    json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"),
+                    json.getInt("like"), json.getInt("meet"), "")
                 partnerList.add(partner)
             }
             VolleyService.getEach2UserReq("ljs", expressionType, this, {success->
@@ -91,8 +91,8 @@ class PartnerListActivity : PSAppCompatActivity() {
                 for(i in 0..array!!.length()-1) {
                     var json = array[i] as JSONObject
                     var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
-                        json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"),
-                        json.getInt("like"), json.getInt("meet"), ArrayList<Bitmap>())
+                        json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"),
+                        json.getInt("like"), json.getInt("meet"), "")
                     partnerList.add(partner)
                 }
                 rv_partnerlist.setHasFixedSize(true)
@@ -109,8 +109,8 @@ class PartnerListActivity : PSAppCompatActivity() {
             for(i in 0..array!!.length()-1) {
                 var json = array[i] as JSONObject
                 var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
-                    json.getString("user_birthday"), json.getString("user_city"), json.getString("visit_date"),
-                    json.getInt("like"), json.getInt("meet"), ArrayList<Bitmap>())
+                    json.getString("user_birthday"), json.getString("user_city"), json.getString("visit_date"), json.getString("user_phone"),
+                    json.getInt("like"), json.getInt("meet"), "")
                 partnerList.add(partner)
             }
             rv_partnerlist.setHasFixedSize(true)

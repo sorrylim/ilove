@@ -8,9 +8,10 @@ data class Partner(
     val userAge: String,
     val userCity: String,
     val dateHistory: String,
+    val userPhone: String,
     val like: Int,
     val meet: Int,
-    val imageList: ArrayList<Bitmap>?
+    val userImage: String?
 )
 
 data class UserList(
@@ -21,7 +22,8 @@ data class UserList(
     val recentGps: String,
     val userIntroduce: String,
     val userCertification: String,
+    val userPhone: String,
     val like: Int,
     val meet: Int,
-    val imageList: ArrayList<Bitmap>?
+    val userImage: String?
 )

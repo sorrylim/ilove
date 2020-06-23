@@ -1,12 +1,15 @@
 package com.ilove.ilove.Adapter
 
+import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.Partner
 import com.ilove.ilove.Object.VolleyService
@@ -59,11 +62,15 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
 
             override fun liked(likeButton: LikeButton?) {
                 VolleyService.insertExpressionReq(UserInfo.ID, partnerList.get(position).userId, "like", currentDate, context, { success->
-                    if(success=="success") {
-                        likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
-                    }
-                    else {
-                        Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                    when(success) {
+                        "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
+                        "eachsuccess" -> {
+                            likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
+                            var dialog = PSDialog(context as Activity)
+                            dialog.setEachExpressionLikeDialog(partnerList.get(position).userNickname, partnerList.get(position).userAge + ", " + partnerList.get(position).userCity)
+                            dialog.show()
+                        }
+                        else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
                     }
                 })
             }
