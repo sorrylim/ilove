@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btn_insertstory"
+            android:id="@+id/btn_writestory"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -53,9 +53,9 @@
             android:text="자신만의 일상스토리로 멋내 보세요"
             android:textColor="@color/colorMdGrey_700"
             android:textSize="13dp"
-            app:layout_constraintEnd_toEndOf="@+id/btn_insertstory"
-            app:layout_constraintStart_toStartOf="@+id/btn_insertstory"
-            app:layout_constraintTop_toBottomOf="@+id/btn_insertstory" />
+            app:layout_constraintEnd_toEndOf="@+id/btn_writestory"
+            app:layout_constraintStart_toStartOf="@+id/btn_writestory"
+            app:layout_constraintTop_toBottomOf="@+id/btn_writestory" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
