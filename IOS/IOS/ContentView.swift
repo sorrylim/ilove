@@ -1,33 +1,43 @@
-//
-//  ContentView.swift
-//  IOS
-//
-//  Created by 김세현 on 2020/06/18.
-//  Copyright © 2020 김세현. All rights reserved.
-//
-
-import SwiftUI
-
-struct ContentView: View {
+    //
+    //  ContentView.swift
+    //  IOS
+    //
+    //  Created by 김세현 on 2020/06/19.
+    //  Copyright © 2020 KSH. All rights reserved.
+    //
     
-    @State var count=0
+    import SwiftUI
     
-    var body: some View {
-        HStack {
-            NavigationView{
-                Form{
-                    Text("\(count)")
-                    Button("asd"){
-                        self.count+=1
-                    }
-                }.navigationBarTitle("asd")
+    struct ContentView: View {
+        var body: some View {
+            TabView{
+                ChannelView().tabItem({
+                    Text("채널")
+                })
+                    .tag(0)
+                UserListView().tabItem({
+                    Image(systemName: "list.dash")
+                    Text("리스트")
+                })
+                    .tag(1)
+                StoryView().tabItem({
+                    Text("스토리")
+                })
+                    .tag(2)
+                ChatListView().tabItem({
+                    Text("대화방")
+                })
+                    .tag(3)
+                MyPageView().tabItem({
+                    Text("내 페이지")
+                })
+                    .tag(4)
             }
         }
     }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
     }
-}
