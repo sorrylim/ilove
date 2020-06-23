@@ -8,10 +8,26 @@
 
 import SwiftUI
 
+
 struct ChannelView : View{
+    
+    @State var showModal = false
+    
+    @State var profileCount : Int = -1
+    @State var storyCount : Int = -1
+    
+    @State var sendLikeCount : Int = -1
+    @State var receiveLikeCount : Int = -1
+    @State var eachLikeCount : Int = -1
+    
+    @State var sendMeetCount : Int = -1
+    @State var receiveMeetCount : Int = -1
+    @State var eachMeetCount : Int = -1
+    
     var body: some View {
         NavigationView {
             ScrollView(){
+                //아이러브 신규 이성
                 Group{
                     HStack{
                         Text("아이러브 신규 이성")
@@ -47,6 +63,7 @@ struct ChannelView : View{
                     Spacer(minLength: 30)
                 }
                 
+                //내 프로필 확인한 사람 & 내 스토리를 확인한 사람
                 Group{
                     HStack{
                         Text("향기를 남기고 간 그대는")
@@ -55,19 +72,28 @@ struct ChannelView : View{
                     }
                     Spacer(minLength: 10)
                     VStack(spacing: 20){
-                        HStack{
-                            Text("내 프로필을 확인한 사람")
-                                .font(.system(size: 15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("명")
+                        Button(action: {
+                            self.showModal=true
+                        }){
+                            HStack{
+                                Text("내 프로필을 확인한 사람")
+                                    .font(.system(size: 15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(profileCount)명")
+                                    .foregroundColor(Color.black)
+                            }
                         }
+                        .sheet(isPresented: $showModal) {
+                            ModalView(title: "내 프로필을 확인한 사람")
+                        }
+                        
                         HStack{
                             Text("내 스토리를 확인한 사람")
                                 .font(.system(size: 15))
                                 .foregroundColor(Color.gray)
                             Spacer()
-                            Text("명")
+                            Text("\(storyCount)명")
                         }
                     }
                     .padding()
@@ -103,21 +129,21 @@ struct ChannelView : View{
                                 .font(.system(size:15))
                                 .foregroundColor(Color.gray)
                             Spacer()
-                            Text("명")
+                            Text("\(sendLikeCount)명")
                         }
                         HStack{
                             Text("나에게 좋아요를 보낸 이성")
                                 .font(.system(size:15))
                                 .foregroundColor(Color.gray)
                             Spacer()
-                            Text("명")
+                            Text("\(receiveLikeCount)명")
                         }
                         HStack{
                             Text("서로 좋아요가 연결된 이성")
                                 .font(.system(size:15))
                                 .foregroundColor(Color.gray)
                             Spacer()
-                            Text("명")
+                            Text("\(eachLikeCount)명")
                         }
                     }
                     .padding()
@@ -136,21 +162,21 @@ struct ChannelView : View{
                                 .font(.system(size:15))
                                 .foregroundColor(Color.gray)
                             Spacer()
-                            Text("명")
+                            Text("\(sendMeetCount)명")
                         }
                         HStack{
                             Text("나를 만나고 싶어하는 그대")
                                 .font(.system(size:15))
                                 .foregroundColor(Color.gray)
                             Spacer()
-                            Text("명")
+                            Text("\(receiveMeetCount)명")
                         }
                         HStack{
                             Text("서로 연락처를 주고받은 그대")
                                 .font(.system(size:15))
                                 .foregroundColor(Color.gray)
                             Spacer()
-                            Text("명")
+                            Text("\(eachMeetCount)명")
                         }
                     }
                     .padding()
@@ -160,6 +186,23 @@ struct ChannelView : View{
             }
             .padding()
             .navigationBarTitle("채널",displayMode: .inline)
+            .onAppear{
+                HttpService.shared.getViewCountReq(userId: "ljs",callback: { (data) -> Void in
+                    self.profileCount=data.profile
+                    self.storyCount=data.story
+                })
+                
+                HttpService.shared.getExpressionCountReq(userId: "ljs", callback: { (data) -> Void in
+                    self.sendLikeCount=data.send_like
+                    self.receiveLikeCount=data.receive_like
+                    self.eachLikeCount=data.each_like
+                    
+                    self.sendMeetCount=data.send_meet
+                    self.receiveMeetCount=data.receive_meet
+                    self.eachMeetCount=data.each_meet
+                })
+                
+            }
         }
     }
 }
@@ -167,5 +210,26 @@ struct ChannelView : View{
 struct ChannelView_Previews: PreviewProvider {
     static var previews: some View {
         ChannelView()
+    }
+}
+
+struct ModalView : View{
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    var title:String
+    var body: some View{
+        NavigationView{
+            ScrollView{
+                EmptyView()
+            }
+            .navigationBarTitle("\(self.title)",displayMode: .inline)
+            .navigationBarItems(leading:
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }){
+                    Text("Close")
+                }
+            )
+        }
     }
 }
