@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5451D1EC24A2F8610035EA91 /* PartnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5451D1EB24A2F8610035EA91 /* PartnerView.swift */; };
 		545D598F24A0A448000B8A5A /* VipGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545D598E24A0A448000B8A5A /* VipGuideView.swift */; };
 		54745B9624A06E6400B32F25 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54745B9524A06E6400B32F25 /* MyPageView.swift */; };
 		54745B9924A071FC00B32F25 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54745B9824A071FC00B32F25 /* SettingView.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5451D1EB24A2F8610035EA91 /* PartnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerView.swift; sourceTree = "<group>"; };
 		545D598E24A0A448000B8A5A /* VipGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VipGuideView.swift; sourceTree = "<group>"; };
 		54745B9524A06E6400B32F25 /* MyPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		54745B9824A071FC00B32F25 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -65,6 +67,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5451D1EA24A2F8480035EA91 /* Channel */ = {
+			isa = PBXGroup;
+			children = (
+				5451D1EB24A2F8610035EA91 /* PartnerView.swift */,
+			);
+			path = Channel;
+			sourceTree = "<group>";
+		};
 		545D598D24A0A438000B8A5A /* ItemManage */ = {
 			isa = PBXGroup;
 			children = (
@@ -73,7 +83,7 @@
 			path = ItemManage;
 			sourceTree = "<group>";
 		};
-		54745B9724A0702A00B32F25 /* MyPageItem */ = {
+		54745B9724A0702A00B32F25 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
 				545D598D24A0A438000B8A5A /* ItemManage */,
@@ -82,7 +92,7 @@
 				54745B9824A071FC00B32F25 /* SettingView.swift */,
 				54745B9A24A0724900B32F25 /* ItemManageView.swift */,
 			);
-			path = MyPageItem;
+			path = MyPage;
 			sourceTree = "<group>";
 		};
 		547E61F6249C67A300D8B7C4 = {
@@ -130,7 +140,8 @@
 		547E621D249C82A300D8B7C4 /* TabView */ = {
 			isa = PBXGroup;
 			children = (
-				54745B9724A0702A00B32F25 /* MyPageItem */,
+				5451D1EA24A2F8480035EA91 /* Channel */,
+				54745B9724A0702A00B32F25 /* MyPage */,
 				547E6226249CA26900D8B7C4 /* Story */,
 				54745B9524A06E6400B32F25 /* MyPageView.swift */,
 				547E621B249C829200D8B7C4 /* UserListView.swift */,
@@ -233,6 +244,7 @@
 				547E621C249C829200D8B7C4 /* UserListView.swift in Sources */,
 				547E622B249CAFFA00D8B7C4 /* EditProfileView.swift in Sources */,
 				547E6225249C88E300D8B7C4 /* ChannelView.swift in Sources */,
+				5451D1EC24A2F8610035EA91 /* PartnerView.swift in Sources */,
 				547E6228249CA27C00D8B7C4 /* WriteStoryView.swift in Sources */,
 				54745B9624A06E6400B32F25 /* MyPageView.swift in Sources */,
 				545D598F24A0A448000B8A5A /* VipGuideView.swift in Sources */,

@@ -23,10 +23,14 @@ struct ExpressionCountModel : Codable {
     var each_meet : Int
 }
 
-struct partnerModel : Codable {
-    var userId: String
-    var userNickname: String
-    var userAge: String
-    var userCity: String
-    
+struct PartnerModel : Codable {
+    var user_id: String
+    var user_nickname: String
+    var user_birthday: String
+    var user_city: String
+    var expression_date: String
+    var user_phone: String
+    var like: Int
+    var meet: Int
+    //var userImage: String
 }
