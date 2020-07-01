@@ -48,7 +48,6 @@ struct SettingView : View {
             }
         }
         .navigationBarTitle("설정")
-        
     }
 }
 

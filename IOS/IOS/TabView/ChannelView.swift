@@ -8,10 +8,26 @@
 
 import SwiftUI
 
+
 struct ChannelView : View{
+    
+    @State var showModal = false
+    
+    @State var profileCount : Int = -1
+    @State var storyCount : Int = -1
+    
+    @State var sendLikeCount : Int = -1
+    @State var receiveLikeCount : Int = -1
+    @State var eachLikeCount : Int = -1
+    
+    @State var sendMeetCount : Int = -1
+    @State var receiveMeetCount : Int = -1
+    @State var eachMeetCount : Int = -1
+    
     var body: some View {
         NavigationView {
             ScrollView(){
+                //아이러브 신규 이성
                 Group{
                     HStack{
                         Text("아이러브 신규 이성")
@@ -47,6 +63,7 @@ struct ChannelView : View{
                     Spacer(minLength: 30)
                 }
                 
+                //내 프로필 확인한 사람 & 내 스토리를 확인한 사람
                 Group{
                     HStack{
                         Text("향기를 남기고 간 그대는")
@@ -55,19 +72,26 @@ struct ChannelView : View{
                     }
                     Spacer(minLength: 10)
                     VStack(spacing: 20){
-                        HStack{
-                            Text("내 프로필을 확인한 사람")
-                                .font(.system(size: 15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("명")
+                        NavigationLink(destination: PartnerView(title : "내 프로필을 확인한 사람")){
+                            HStack{
+                                Text("내 프로필을 확인한 사람")
+                                    .font(.system(size: 15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(profileCount)명")
+                                    .foregroundColor(Color.black)
+                            }
                         }
-                        HStack{
-                            Text("내 스토리를 확인한 사람")
-                                .font(.system(size: 15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("명")
+                            
+                        NavigationLink(destination: PartnerView(title : "내 스토리를 확인한 사람")){
+                            HStack{
+                                Text("내 스토리를 확인한 사람")
+                                    .font(.system(size: 15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(storyCount)명")
+                                    .foregroundColor(Color.black)
+                            }
                         }
                     }
                     .padding()
@@ -98,26 +122,37 @@ struct ChannelView : View{
                         Spacer()
                     }
                     VStack(spacing: 20){
-                        HStack{
-                            Text("내가 좋아요를 보낸 이성")
-                                .font(.system(size:15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("명")
+                        NavigationLink(destination: PartnerView(title: "내가 좋아요를 보낸 이성")){
+                            HStack{
+                                Text("내가 좋아요를 보낸 이성")
+                                    .font(.system(size:15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(sendLikeCount)명")
+                                    .foregroundColor(Color.black)
+                            }
                         }
-                        HStack{
-                            Text("나에게 좋아요를 보낸 이성")
-                                .font(.system(size:15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("명")
+                    
+                        NavigationLink(destination: PartnerView(title: "나에게 좋아요를 보낸 이성")){
+                            HStack{
+                                Text("나에게 좋아요를 보낸 이성")
+                                    .font(.system(size:15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(receiveLikeCount)명")
+                                    .foregroundColor(Color.black)
+                            }
                         }
-                        HStack{
-                            Text("서로 좋아요가 연결된 이성")
-                                .font(.system(size:15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("명")
+                        
+                        NavigationLink(destination: PartnerView(title: "서로 좋아요가 연결된 이성")){
+                            HStack{
+                                Text("서로 좋아요가 연결된 이성")
+                                    .font(.system(size:15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(eachLikeCount)명")
+                                    .foregroundColor(Color.black)
+                            }
                         }
                     }
                     .padding()
@@ -131,26 +166,39 @@ struct ChannelView : View{
                         Spacer()
                     }
                     VStack(spacing: 20){
-                        HStack{
-                            Text("내가 만나고 싶은 그대")
-                                .font(.system(size:15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("명")
+                        
+                        NavigationLink(destination: PartnerView(title : "내가 만나고 싶은 그대")){
+                            HStack{
+                                Text("내가 만나고 싶은 그대")
+                                    .font(.system(size:15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(sendMeetCount)명")
+                                    .foregroundColor(Color.black)
+                            }
                         }
-                        HStack{
-                            Text("나를 만나고 싶어하는 그대")
-                                .font(.system(size:15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("명")
+                        
+                        
+                        NavigationLink(destination: PartnerView(title : "나를 만나고 싶어하는 그대")){
+                            HStack{
+                                Text("나를 만나고 싶어하는 그대")
+                                    .font(.system(size:15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(receiveMeetCount)명")
+                                    .foregroundColor(Color.black)
+                            }
                         }
-                        HStack{
-                            Text("서로 연락처를 주고받은 그대")
-                                .font(.system(size:15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("명")
+                        
+                        NavigationLink(destination: PartnerView(title : "서로 연락처를 주고받은 그대")){
+                            HStack{
+                                Text("서로 연락처를 주고받은 그대")
+                                    .font(.system(size:15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(eachMeetCount)명")
+                                    .foregroundColor(Color.black)
+                            }
                         }
                     }
                     .padding()
@@ -160,6 +208,23 @@ struct ChannelView : View{
             }
             .padding()
             .navigationBarTitle("채널",displayMode: .inline)
+            .onAppear{
+                
+                HttpService.shared.getViewCountReq(userId: "hyeha",callback: { (data) -> Void in
+                    self.profileCount=data.profile
+                    self.storyCount=data.story
+                })
+                
+                HttpService.shared.getExpressionCountReq(userId: "hyeha", callback: { (data) -> Void in
+                    self.sendLikeCount=data.send_like
+                    self.receiveLikeCount=data.receive_like
+                    self.eachLikeCount=data.each_like
+                    
+                    self.sendMeetCount=data.send_meet
+                    self.receiveMeetCount=data.receive_meet
+                    self.eachMeetCount=data.each_meet
+                })
+            }
         }
     }
 }
