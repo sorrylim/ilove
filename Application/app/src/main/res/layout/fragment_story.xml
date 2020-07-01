@@ -16,13 +16,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/image_storyimage"
+            android:id="@+id/image_mystoryimage"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:scaleType="fitXY"
+            android:adjustViewBounds="true"
             android:src="@drawable/default_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,10 +40,10 @@
             android:textColor="@color/colorMdWhite_1000"
             android:textSize="15dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/image_storyimage"
+            app:layout_constraintBottom_toBottomOf="@+id/image_mystoryimage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_storyimage"
-            app:layout_constraintTop_toTopOf="@+id/image_storyimage" />
+            app:layout_constraintStart_toEndOf="@+id/image_mystoryimage"
+            app:layout_constraintTop_toTopOf="@+id/image_mystoryimage" />
 
         <TextView
             android:id="@+id/textView2"

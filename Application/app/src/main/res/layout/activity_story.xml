@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity.StoryActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_story"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/image_storyuserprofile"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/default_profile" />
+
+            <TextView
+                android:id="@+id/text_storynickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="9dp"
+                android:text="닉네임, 나이"
+                android:textColor="@color/colorMdGrey_900"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/image_storyuserprofile"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_storygps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="거리"
+                android:textColor="@color/colorMdGrey_700"
+                android:textSize="10dp"
+                app:layout_constraintStart_toEndOf="@+id/image_storyuserprofile"
+                app:layout_constraintTop_toBottomOf="@+id/text_storynickname" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <TextView
+        android:id="@+id/text_storycontent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="스토리내용"
+        android:textColor="@color/colorMdGrey_900"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_story" />
+
+    <ImageView
+        android:id="@+id/image_storyimage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:scaleType="fitXY"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_storycontent"
+        app:srcCompat="@drawable/default_image" />
+
+    <TextView
+        android:id="@+id/text_storylikecount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="30dp"
+        android:text="좋아요갯수"
+        android:textColor="@color/colorMdGrey_900"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/btn_storylike"
+        app:layout_constraintTop_toBottomOf="@+id/image_storyimage" />
+
+    <TextView
+        android:id="@+id/text_storyviewcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="조회수"
+        android:textColor="@color/colorMdGrey_900"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/image_storyimage"
+        app:layout_constraintTop_toBottomOf="@+id/image_storyimage" />
+
+    <com.like.LikeButton
+        android:id="@+id/btn_storylike"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="20dp"
+        app:anim_scale_factor="2"
+        app:circle_end_color="@color/colorMdRed_600"
+        app:circle_start_color="@color/colorMdWhite_1000"
+        app:dots_primary_color="@color/colorMdGreen_600"
+        app:dots_secondary_color="@color/colorMdBlue_300"
+        app:icon_size="20dp"
+        app:icon_type="heart"
+        app:is_enabled="true"
+        app:layout_constraintBottom_toBottomOf="@+id/text_storylikecount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_storylikecount"
+        app:like_drawable="@drawable/heart_on"
+        app:unlike_drawable="@drawable/heart_off" />
+</androidx.constraintlayout.widget.ConstraintLayout>
