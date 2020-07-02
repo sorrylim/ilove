@@ -89,6 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_storycontent"
+        android:background="@drawable/rounded_imageview"
         app:srcCompat="@drawable/default_image" />
 
     <TextView

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ilove.ilove.Adapter.StoryAdapter
@@ -29,13 +30,16 @@ class StoryFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_story, container, false)
         val writeStoryBtn : Button = rootView.findViewById(R.id.btn_writestory)
         val storyRV : RecyclerView = rootView.findViewById(R.id.rv_storyview)
+        var myStoryImage: ImageView = rootView.findViewById(R.id.image_mystoryimage)
+
+        myStoryImage.setClipToOutline(true)
 
         writeStoryBtn.setOnClickListener {
             var intent = Intent(activity!!, WriteStoryActivity::class.java)
             startActivity(intent)
         }
 
-            VolleyService.getStoryImageReq(UserInfo.ID, "story", activity!!, { success->
+        VolleyService.getStoryImageReq(UserInfo.ID, "story", activity!!, { success->
             storyList.clear()
 
             var array = success

@@ -2,9 +2,12 @@ package com.ilove.ilove.Class
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_main.view.*
 
 public abstract class PSAppCompatActivity : AppCompatActivity() {
@@ -27,6 +30,7 @@ public abstract class PSAppCompatActivity : AppCompatActivity() {
         supportActionBar?.setTitle(titleText)
         return toolbar
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item != null) {

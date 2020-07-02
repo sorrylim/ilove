@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.Partner
@@ -36,9 +37,13 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Glide.with(holder.itemView)
+            .load(userList.get(position).userImage)
+            .into(holder.itemView.image_userlistprofile)
         holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + ", " + userList.get(position).userAge + ", " + userList.get(position).userCity + ", " + userList.get(position).recentGps
         holder.itemView.text_userlistintroduce.text = userList.get(position).userIntroduce
         holder.itemView.text_userlistcertification.text = userList.get(position).userCertification
+        holder.itemView.image_userlistprofile.setClipToOutline(true)
 
         if(userList.get(position).like == 1) {
             holder.itemView.btn_userlike.setLiked(true)
@@ -81,6 +86,7 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
             var intent = Intent(context, PartnerActivity::class.java)
             intent.putExtra("userNickname", userList.get(position).userNickname)
             intent.putExtra("userId", userList.get(position).userId)
+            intent.putExtra("userImage", userList.get(position).userImage)
 
             val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
             val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))

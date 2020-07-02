@@ -194,6 +194,7 @@ router.post('/insert/history', function(req, res, next) {
                         var object = new Object();
                         object.result = "success";
                         res.send(object);
+                        console.log("방문기록 업데이트 완료")
                     }
                 })
             }
@@ -204,6 +205,7 @@ router.post('/insert/history', function(req, res, next) {
                         var object = new Object();
                         object.result = "success";
                         res.send(object);
+                        console.log("방문기록 삽입 완료")
                     }
                 })
             }
