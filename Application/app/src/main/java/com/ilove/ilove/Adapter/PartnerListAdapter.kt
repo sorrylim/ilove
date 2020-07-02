@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.Partner
@@ -18,6 +19,7 @@ import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.item_partner.view.*
 import kotlinx.android.synthetic.main.item_partnerlist.view.*
+import kotlinx.android.synthetic.main.item_storylist.view.*
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -50,9 +52,12 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
             holder.itemView.btn_partnerlistlike.setLiked(false)
         }
 
-
+        Glide.with(holder.itemView)
+            .load(partnerList.get(position).userImage)
+            .into(holder.itemView.image_partnerlistprofile)
         holder.itemView.text_partnerlistnickname.text = partnerList.get(position).userNickname
         holder.itemView.text_partnerlistage.text = partnerList.get(position).userAge + "," + partnerList.get(position).userCity
+        holder.itemView.image_partnerlistprofile.setClipToOutline(true)
         dateHistory = partnerList.get(position).dateHistory
 
 

@@ -1,8 +1,10 @@
 package com.ilove.ilove.MainActivity
 
 import android.app.Activity
+import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
@@ -23,8 +25,11 @@ class StoryActivity : PSAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_story)
-
         toolbarBinding(toolbar_story, "", true)
+
+        var image : ImageView = findViewById(R.id.image_storyimage)
+
+        image.setClipToOutline(true)
 
         var intent = intent
         var imgUrl = intent.getStringExtra("image")

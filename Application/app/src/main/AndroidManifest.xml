@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity.StoryActivity"></activity>
+        <activity android:name=".IntroActivity.EditProfileActivity"></activity>
+        <activity android:name=".MainActivity.StoryActivity" />
         <activity android:name=".MainActivity.WriteStoryActivity" />
         <activity android:name=".MainActivity.PartnerListActivity" />
         <activity android:name=".MainActivity.PartnerActivity" />

@@ -12,9 +12,9 @@ module.exports = function () {
               })
           })
         },
-        get_image:function(image_usage, callback) {
+        get_image:function(user_id, image_usage, callback) {
           pool.getConnection(function(err, con){
-              var sql = `select image_id, image from image where image_usage = '${image_usage}'`
+              var sql = `select image_id, image from image where image_usage = '${image_usage}' and user_id <> '${user_id}'`
               con.query(sql, function(err, result) {
                 con.release()
                 if(err) callback(err)
@@ -24,7 +24,7 @@ module.exports = function () {
         },
         get_story_data: function(image_id, callback) {
           pool.getConnection(function(err, con) {
-            var sql = `select user.user_id, user_nickname, user_birthday, user_recentgps, image_content from user, image where image_id = ${image_id} and user.user_id = image.user_id`
+            var sql = `select user.user_id, user_nickname, user_birthday, user_recentgps, image_content, viewcount, likecount from user, image where image_id = ${image_id} and user.user_id = image.user_id`
             con.query(sql, function(err, result) {
               con.release()
               if(err) callback(err)
@@ -55,6 +55,36 @@ module.exports = function () {
         decrease_like: function(image_id, callback) {
           pool.getConnection(function(err, con) {
             var sql = `update image set likecount=likecount-1 where image_id = ${image_id}`
+            con.query(sql, function(err, result) {
+              con.release()
+              if(err) callback(err)
+              else callback(null, result)
+            })
+          })
+        },
+        check_expression_data : function(user_id, image_id, callback) {
+          pool.getConnection(function(err, con) {
+              var sql = `select count(*) as count from expressionstory where user_id='${user_id}' and image_id=${image_id}`
+              con.query(sql, function(err, result) {
+                  con.release()
+                  if(err) callback(err)
+                  else callback(null, result)
+              })
+          })
+        },
+        insert_expression_data: function(user_id, image_id, callback) {
+          pool.getConnection(function(err, con) {
+            var sql = `insert into expressionstory values('${user_id}', ${image_id}, '${expression_date}')`
+            con.query(sql, function(err, result) {
+              con.release()
+              if(err) callback(err)
+              else callback(null, result)
+            })
+          })
+        },
+        delete_expression_data: function(user_id, image_id, callback) {
+          pool.getConnection(function(err, con) {
+            var sql = `delete from expressionstory where user_id='${user_id}' and image_id = ${image_id}`
             con.query(sql, function(err, result) {
               con.release()
               if(err) callback(err)

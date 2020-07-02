@@ -20,10 +20,11 @@ router.post('/insert', function(req, res, next) {
     })
 })
 
-router.post('/get', function(req, res, next) {
+router.post('/get/story', function(req, res, next) {
+    var user_id = req.body[0].user_id
     var image_usage = req.body[0].image_usage
 
-    db_image.get_image(image_usage, function(err, result) {
+    db_image.get_image(user_id, image_usage, function(err, result) {
         if(err) console.log(err)
         else {
             var array = new Array()
@@ -39,7 +40,7 @@ router.post('/get', function(req, res, next) {
     })
 })
 
-router.post('/get/story', function(req, res, next) {
+router.post('/get/story/user', function(req, res, next) {
     var user_id = req.body.user_id
     var image_id = req.body.image_id
 
