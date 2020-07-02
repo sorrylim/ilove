@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.ilove.ilove.Class.UserInfo
+import com.ilove.ilove.IntroActivity.EditProfileActivity
 import com.ilove.ilove.IntroActivity.ItemActivity
 import com.ilove.ilove.IntroActivity.SettingActivity
 import com.ilove.ilove.R
@@ -28,7 +29,8 @@ class ProfileFragment : Fragment() {
         nickName.text = UserInfo.NICKNAME
 
         editProfileBtn.setOnClickListener {
-            
+            var intent = Intent(activity, EditProfileActivity::class.java)
+            startActivity(intent)
         }
 
         settingBtn.setOnClickListener {

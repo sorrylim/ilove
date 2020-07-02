@@ -17,6 +17,8 @@ class PartnerActivity : PSAppCompatActivity() {
         var userNickname = intent.getStringExtra("userNickname")
         var userImage = intent.getStringExtra("userImage")
 
+        image_partnerprofile.setClipToOutline(true)
+
         Glide.with(this).load(userImage).into(image_partnerprofile)
         toolbarCenterBinding(toolbar_partner, userNickname, true)
     }

@@ -33,7 +33,7 @@ class ListFragment : Fragment() {
                     var json = array[i] as JSONObject
                     var partner = UserList(json.getString("user_id"), json.getString("user_nickname"),
                     json.getString("user_birthday"), json.getString("user_city"), json.getString("user_recentgps"),
-                    json.getString("user_introduce"), json.getString("user_certification"), json.getString("user_phone"), json.getString("image"), json.getInt("like"), json.getInt("meet"))
+                    json.getString("user_introduce"), json.getString("user_phone"), json.getString("image"), json.getInt("like"), json.getInt("meet"))
                     userList.add(partner)
                 }
                 partnerListRV.setHasFixedSize(true)
@@ -49,7 +49,7 @@ class ListFragment : Fragment() {
                     var json = array[i] as JSONObject
                     var partner = UserList(json.getString("user_id"), json.getString("user_nickname"),
                         json.getString("user_birthday"), json.getString("user_city"), json.getString("user_recentgps"),
-                        json.getString("user_introduce"), json.getString("user_certification"), json.getString("user_phone"), json.getString("image"),
+                        json.getString("user_introduce"), json.getString("user_phone"), json.getString("image"),
                         json.getInt("like"), json.getInt("meet"))
                     userList.add(partner)
                 }

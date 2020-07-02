@@ -21,7 +21,6 @@ data class UserList(
     val userCity: String,
     val recentGps: String,
     val userIntroduce: String,
-    val userCertification: String,
     val userPhone: String,
     val userImage: String,
     val like: Int,

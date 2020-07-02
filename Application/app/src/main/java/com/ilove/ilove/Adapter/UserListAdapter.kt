@@ -42,7 +42,6 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
             .into(holder.itemView.image_userlistprofile)
         holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + ", " + userList.get(position).userAge + ", " + userList.get(position).userCity + ", " + userList.get(position).recentGps
         holder.itemView.text_userlistintroduce.text = userList.get(position).userIntroduce
-        holder.itemView.text_userlistcertification.text = userList.get(position).userCertification
         holder.itemView.image_userlistprofile.setClipToOutline(true)
 
         if(userList.get(position).like == 1) {
