@@ -28,6 +28,9 @@
 		548AD92824A1A772003E27FD /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AD92724A1A772003E27FD /* HttpService.swift */; };
 		548AD92E24A1CD40003E27FD /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AD92D24A1CD40003E27FD /* DataModel.swift */; };
 		5497A40D24A09A94005BBC1A /* AlarmSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5497A40C24A09A94005BBC1A /* AlarmSettingView.swift */; };
+		549E5B3724ADB29D00050E62 /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E5B3624ADB29D00050E62 /* MultilineTextField.swift */; };
+		549E5B3924ADB34F00050E62 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E5B3824ADB34F00050E62 /* ImagePicker.swift */; };
+		549E5B3B24ADB39300050E62 /* ExtensionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E5B3A24ADB39300050E62 /* ExtensionClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +57,9 @@
 		548AD92724A1A772003E27FD /* HttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
 		548AD92D24A1CD40003E27FD /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		5497A40C24A09A94005BBC1A /* AlarmSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingView.swift; sourceTree = "<group>"; };
+		549E5B3624ADB29D00050E62 /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
+		549E5B3824ADB34F00050E62 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		549E5B3A24ADB39300050E62 /* ExtensionClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,12 +120,14 @@
 		547E6201249C67A300D8B7C4 /* IOS */ = {
 			isa = PBXGroup;
 			children = (
+				549E5B3524ADB27F00050E62 /* CustomUI */,
 				547E621D249C82A300D8B7C4 /* TabView */,
 				547E6202249C67A300D8B7C4 /* AppDelegate.swift */,
 				547E6204249C67A300D8B7C4 /* SceneDelegate.swift */,
 				547E6209249C67A300D8B7C4 /* ContentView.swift */,
 				548AD92724A1A772003E27FD /* HttpService.swift */,
 				548AD92D24A1CD40003E27FD /* DataModel.swift */,
+				549E5B3A24ADB39300050E62 /* ExtensionClass.swift */,
 				547E620B249C67A400D8B7C4 /* Assets.xcassets */,
 				547E6210249C67A400D8B7C4 /* LaunchScreen.storyboard */,
 				547E6213249C67A400D8B7C4 /* Info.plist */,
@@ -166,6 +174,15 @@
 				5497A40C24A09A94005BBC1A /* AlarmSettingView.swift */,
 			);
 			path = SettingItem;
+			sourceTree = "<group>";
+		};
+		549E5B3524ADB27F00050E62 /* CustomUI */ = {
+			isa = PBXGroup;
+			children = (
+				549E5B3624ADB29D00050E62 /* MultilineTextField.swift */,
+				549E5B3824ADB34F00050E62 /* ImagePicker.swift */,
+			);
+			path = CustomUI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,11 +259,13 @@
 				547E6203249C67A300D8B7C4 /* AppDelegate.swift in Sources */,
 				547E6208249C67A300D8B7C4 /* IOS.xcdatamodeld in Sources */,
 				547E621C249C829200D8B7C4 /* UserListView.swift in Sources */,
+				549E5B3B24ADB39300050E62 /* ExtensionClass.swift in Sources */,
 				547E622B249CAFFA00D8B7C4 /* EditProfileView.swift in Sources */,
 				547E6225249C88E300D8B7C4 /* ChannelView.swift in Sources */,
 				5451D1EC24A2F8610035EA91 /* PartnerView.swift in Sources */,
 				547E6228249CA27C00D8B7C4 /* WriteStoryView.swift in Sources */,
 				54745B9624A06E6400B32F25 /* MyPageView.swift in Sources */,
+				549E5B3724ADB29D00050E62 /* MultilineTextField.swift in Sources */,
 				545D598F24A0A448000B8A5A /* VipGuideView.swift in Sources */,
 				54745B9B24A0724900B32F25 /* ItemManageView.swift in Sources */,
 				547E621F249C82B400D8B7C4 /* StoryView.swift in Sources */,
@@ -255,6 +274,7 @@
 				54745B9924A071FC00B32F25 /* SettingView.swift in Sources */,
 				547E6221249C82CC00D8B7C4 /* ChatListView.swift in Sources */,
 				548AD92E24A1CD40003E27FD /* DataModel.swift in Sources */,
+				549E5B3924ADB34F00050E62 /* ImagePicker.swift in Sources */,
 				547E6205249C67A300D8B7C4 /* SceneDelegate.swift in Sources */,
 				5497A40D24A09A94005BBC1A /* AlarmSettingView.swift in Sources */,
 			);

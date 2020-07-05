@@ -14,6 +14,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:scaleType="fitXY"
+        android:background="@drawable/rounded_imageview"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,19 +36,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/image_userlistprofile"
         app:layout_constraintTop_toBottomOf="@+id/text_userlistinfo" />
-
-    <TextView
-        android:id="@+id/text_userlistcertification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="인증여부"
-        android:textSize="10dp"
-        android:textColor="@color/colorMdGrey_700"
-        app:layout_constraintBottom_toBottomOf="@+id/image_userlistprofile"
-        app:layout_constraintStart_toEndOf="@+id/image_userlistprofile"
-        app:layout_constraintTop_toBottomOf="@+id/text_userlistintroduce"
-        app:layout_constraintVertical_bias="1.0" />
 
     <com.like.LikeButton
         android:id="@+id/btn_userlike"

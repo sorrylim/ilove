@@ -2,7 +2,9 @@ package com.ilove.ilove.Object
 
 import android.content.Context
 import android.util.Log
+import android.graphics.Bitmap
 import com.android.volley.Response
+import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -266,6 +268,144 @@ object VolleyService {
             }
         ){}
 
+        Volley.newRequestQueue(content).add(request)
+    }
+
+    fun getStoryImageReq(userId:String, imageUsage:String, context: Context, success:(JSONArray)->Unit) {
+        var url = "${ip}/image/get/story"
+        var json = JSONObject()
+        json.put("user_id", userId)
+        json.put("image_usage", imageUsage)
+
+        var array = JSONArray()
+        array.put(json)
+
+        var request = object : JsonArrayRequest(
+            Method.POST,
+            url,
+            array,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun getStoryUserReq(userId:String,imageId:Int, context: Context, success:(JSONObject)->Unit) {
+        var url = "${ip}/image/get/story/user"
+        var json = JSONObject()
+        json.put("user_id", userId)
+        json.put("image_id", imageId)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun insertStoryExpressionReq(userId:String, imageId:Int, expressionDate:String, context: Context, success:(String)->Unit) {
+        var url = "${ip}/image/insert/expression"
+        var json = JSONObject()
+        json.put("user_id", userId)
+        json.put("image_id", imageId)
+        json.put("expression_date", expressionDate)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun deleteStoryExpressionReq(userId:String, imageId:Int, context: Context, success:(String)->Unit) {
+        var url = "${ip}/image/delete/expression"
+        var json = JSONObject()
+        json.put("user_id", userId)
+        json.put("image_id", imageId)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun updateUserOptionReq(userId:String, userOption:String, userOptionData:String, context: Context, success:(String)->Unit) {
+        var url = "${ip}/user/update/option"
+        var json = JSONObject()
+        json.put("user_id", userId)
+        json.put("user_option", userOption)
+        json.put("user_optiondata", userOptionData)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun updateUserCityReq(userId:String, userOption:String, userOptionData:String, context: Context, success:(String)->Unit) {
+        var url = "${ip}/user/update/option/city"
+        var json = JSONObject()
+        json.put("user_id", userId)
+        json.put("user_option", userOption)
+        json.put("user_optiondata", userOptionData)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun getUserOptionReq(userId:String, context:Context, success:(JSONObject)->Unit) {
+        var url = "${ip}/user/get/option"
+        var json = JSONObject()
+        json.put("user_id", userId)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+
+            }) {}
         Volley.newRequestQueue(context).add(request)
     }
 

@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import com.ilove.ilove.Class.UserInfo
+import com.ilove.ilove.IntroActivity.EditProfileActivity
 import com.ilove.ilove.IntroActivity.ItemActivity
 import com.ilove.ilove.IntroActivity.SettingActivity
 import com.ilove.ilove.R
@@ -19,8 +22,16 @@ class ProfileFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_profile, container, false)
 
         val settingBtn : TextView = rootView.findViewById(R.id.text_mypagesetting)
+        val editProfileBtn: Button = rootView.findViewById(R.id.btn_editprofile)
         val itemManagement : TextView = rootView.findViewById(R.id.text_mypageitem)
+        var nickName: TextView = rootView.findViewById(R.id.text_mypagenickname)
 
+        nickName.text = UserInfo.NICKNAME
+
+        editProfileBtn.setOnClickListener {
+            var intent = Intent(activity, EditProfileActivity::class.java)
+            startActivity(intent)
+        }
 
         settingBtn.setOnClickListener {
             var intent = Intent(activity!!, SettingActivity::class.java)
