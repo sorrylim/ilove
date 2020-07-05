@@ -1,6 +1,7 @@
 package com.ilove.ilove.Object
 
 import android.content.Context
+import android.util.Log
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
@@ -241,6 +242,30 @@ object VolleyService {
             Response.ErrorListener {
 
             }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun chatInitReq(roomId: String, context: Context, success: (JSONArray?) -> Unit) {
+        var url = "${ip}/chat/init"
+
+        var json = JSONObject()
+            .put("room_id",roomId)
+
+        var array = JSONArray()
+            .put(json)
+
+        var request=object : JsonArrayRequest(
+            Method.POST,
+            url,
+            array,
+            Response.Listener{
+                success(it)
+            },
+            Response.ErrorListener {
+                Log.d("test","${it}")
+            }
+        ){}
+
         Volley.newRequestQueue(context).add(request)
     }
 

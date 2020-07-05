@@ -15,14 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity.WriteStoryActivity"></activity>
+        <activity android:name=".MainActivity.MainActivity"></activity>
+        <activity android:name=".MainActivity.WriteStoryActivity" />
         <activity android:name=".MainActivity.PartnerListActivity" />
         <activity android:name=".MainActivity.PartnerActivity" />
         <activity android:name=".MainActivity.VipActivity" />
         <activity android:name=".IntroActivity.ItemActivity" />
         <activity android:name=".IntroActivity.AlarmSettingActivity" />
         <activity android:name=".IntroActivity.SettingActivity" />
-        <activity android:name=".MainActivity.MainActivity">
+        <activity android:name=".MainActivity.ChatActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
