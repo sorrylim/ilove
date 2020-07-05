@@ -37,4 +37,34 @@ router.post('/get/list', function(req, res, next) {
   })
 })
 
+router.post('/option', function(req, res, next) {
+  var user_id = req.body.user_id
+  var user_option = req.body.user_option
+  var user_optiondata = req.body.user_optiondata
+
+  db_user.update_option(user_id, user_option, user_optiondata, function(err, result) {
+    if(err) console.log(err)
+    else {
+      var object = new Object()
+      object.result = "success"
+      res.send(object)
+    }
+  })
+})
+
+router.post('/option/city', function(req, res, next) {
+  var user_id = req.body.user_id
+  var user_option = req.body.user_option
+  var user_optiondata = req.body.user_optiondata
+
+  db_user.update_option_city(user_id, user_option, user_optiondata, function(err, result) {
+    if(err) console.log(err)
+    else {
+      var object = new Object()
+      object.result = "success"
+      res.send(object)
+    }
+  })
+})
+
 module.exports = router;

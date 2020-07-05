@@ -12,6 +12,26 @@ module.exports = function () {
         })
       })
     },
+    update_option: function(user_id, user_option, user_optiondata, callback) {
+      pool.getConnection(function(err, con) {
+        var sql = `update useroption set ${user_option} = '${user_optiondata}' where user_id='${user_id}'`
+        con.query(sql, function(err, result) {
+          con.release()
+          if(err) callback(err)
+          else callback(null, result)
+        })
+      })
+    },
+    update_option_city: function(user_id, user_option, user_optiondata, callback) {
+      pool.getConnection(function(err, con) {
+        var sql = `update user set ${user_option} = '${user_optiondata}' where user_id='${user_id}'`
+        con.query(sql, function(err, result) {
+          con.release()
+          if(err) callback(err)
+          else callback(null, result)
+        })
+      })
+    },
     pool: pool
   }
 }

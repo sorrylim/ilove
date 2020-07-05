@@ -326,5 +326,63 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
+    fun updateUserOptionReq(userId:String, userOption:String, userOptionData:String, context: Context, success:(String)->Unit) {
+        var url = "${ip}/user/update/option"
+        var json = JSONObject()
+        json.put("user_id", userId)
+        json.put("user_option", userOption)
+        json.put("user_optiondata", userOptionData)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun updateUserCityReq(userId:String, userOption:String, userOptionData:String, context: Context, success:(String)->Unit) {
+        var url = "${ip}/user/update/option/city"
+        var json = JSONObject()
+        json.put("user_id", userId)
+        json.put("user_option", userOption)
+        json.put("user_optiondata", userOptionData)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun getUserOptionReq(userId:String, context:Context, success:(JSONObject)->Unit) {
+        var url = "${ip}/user/get/option"
+        var json = JSONObject()
+        json.put("user_id", userId)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
 
 }

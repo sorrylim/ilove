@@ -2,7 +2,6 @@ package com.ilove.ilove.Adapter
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +16,7 @@ import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import com.like.LikeButton
 import com.like.OnLikeListener
-import kotlinx.android.synthetic.main.item_partner.view.*
 import kotlinx.android.synthetic.main.item_partnerlist.view.*
-import kotlinx.android.synthetic.main.item_storylist.view.*
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
