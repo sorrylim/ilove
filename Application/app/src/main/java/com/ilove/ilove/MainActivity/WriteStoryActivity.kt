@@ -79,10 +79,6 @@ class WriteStoryActivity : PSAppCompatActivity() {
                     image_writestory.visibility = View.VISIBLE
                     image_writestory.setImageBitmap(imageBitmap)
 
-
-
-
-
                 } catch (e: FileNotFoundException) {
                     // TODO Auto-generated catch block
                     e.printStackTrace()

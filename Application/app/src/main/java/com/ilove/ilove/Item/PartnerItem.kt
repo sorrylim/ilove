@@ -14,6 +14,17 @@ data class Partner(
     val meet: Int
 )
 
+data class NewUserList(
+    val userId: String,
+    val userNickname: String,
+    val userAge: String,
+    val userCity: String,
+    val recentGps: String,
+    val recentTime: String,
+    val userPhone: String,
+    val userImage: String
+)
+
 data class UserList(
     val userId: String,
     val userNickname: String,

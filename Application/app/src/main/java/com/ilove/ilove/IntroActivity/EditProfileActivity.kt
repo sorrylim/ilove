@@ -1,18 +1,44 @@
 package com.ilove.ilove.IntroActivity
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
-import android.widget.TextView
+import android.provider.MediaStore
+import android.util.Log
+import android.view.View
+import com.bumptech.glide.Glide
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.UserItem
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import kotlinx.android.synthetic.main.activity_write_story.*
+import org.json.JSONObject
+import java.io.FileNotFoundException
+import java.io.IOException
+
 
 class EditProfileActivity : PSAppCompatActivity() {
 
+    var imagePath : String? = null
+    var imageCaptureUri: Uri? = null
+    val PICK_FROM_ALBUM = 1
     var userOptionList = ArrayList<UserItem.UserOption>()
+    var mainProfileImagePath = ""
+    var mainProfileImageId : Int? = null
+    var editProfileImage1Path = ""
+    var editProfileImage1Id : Int? = null
+    var editProfileImage2Path = ""
+    var editProfileImage2Id : Int? = null
+    var editProfileImage3Path = ""
+    var editProfileImage3Id : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,36 +49,85 @@ class EditProfileActivity : PSAppCompatActivity() {
         image_editsub2.setClipToOutline(true)
         image_editsub3.setClipToOutline(true)
 
-        /*var height : String? = null
-        var bodyType : String? = null
-        var bloodType : String? = null
-        var city: String? = null
-        var job : String? = null
-        var education : String? = null
-        var holiday: String? = null
-        var cigarette : String? = null
-        var alcohol : String? = null
-        var religion : String? = null
-        var brother : String? = null
-        var country: String? = null
-        var salary : String? = null
-        var asset : String? = null
-        var marriageHistory: String? = null
-        var children : String? = null
-        var marriagePlan: String? = null
-        var childrenPlan: String? = null
-        var parenting: String? = null
-        var wishDate : String? = null
-        var dateCost: String? = null
-        var roommate: String? = null
-        var language: String? = null
-        var interest : String? = null
-        var personality: String? = null
-        var favoritePerson: String? = null*/
-
-
-
         toolbarBinding(toolbar_editprofile, "프로필 편집", true)
+
+        image_editmain.setOnClickListener{
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            intent.setType("image/*")
+            startActivityForResult(intent, PICK_FROM_ALBUM)
+        }
+
+        VolleyService.getProfileImageReq(UserInfo.ID, this, {success->
+            var array = success
+            if(array.length() == 1) {
+                var json = array[0] as JSONObject
+                mainProfileImageId = json.getInt("image_id")
+                mainProfileImagePath = json.getString("image")
+                Glide.with(this)
+                    .load(mainProfileImagePath)
+                    .into(image_editmain)
+            }
+            else if(array.length() == 2) {
+                var json = array[0] as JSONObject
+                mainProfileImageId = json.getInt("image_id")
+                mainProfileImagePath = json.getString("image")
+                Glide.with(this)
+                    .load(mainProfileImagePath)
+                    .into(image_editmain)
+                var json1 = array[1] as JSONObject
+                editProfileImage1Id = json1.getInt("image_id")
+                editProfileImage1Path = json1.getString("image")
+                Glide.with(this)
+                    .load(editProfileImage1Path)
+                    .into(image_editsub1)
+            }
+            else if(array.length() == 3) {
+                var json = array[0] as JSONObject
+                mainProfileImageId = json.getInt("image_id")
+                mainProfileImagePath = json.getString("image")
+                Glide.with(this)
+                    .load(mainProfileImagePath)
+                    .into(image_editmain)
+                var json1 = array[1] as JSONObject
+                editProfileImage1Id = json1.getInt("image_id")
+                editProfileImage1Path = json1.getString("image")
+                Glide.with(this)
+                    .load(editProfileImage1Path)
+                    .into(image_editsub1)
+                var json2 = array[2] as JSONObject
+                editProfileImage2Id = json2.getInt("image_id")
+                editProfileImage2Path = json2.getString("image")
+                Glide.with(this)
+                    .load(editProfileImage2Path)
+                    .into(image_editsub2)
+            }
+            else if(array.length() == 4) {
+                var json = array[0] as JSONObject
+                mainProfileImageId = json.getInt("image_id")
+                mainProfileImagePath = json.getString("image")
+                Glide.with(this)
+                    .load(mainProfileImagePath)
+                    .into(image_editmain)
+                var json1 = array[1] as JSONObject
+                editProfileImage1Id = json1.getInt("image_id")
+                editProfileImage1Path = json1.getString("image")
+                Glide.with(this)
+                    .load(editProfileImage1Path)
+                    .into(image_editsub1)
+                var json2 = array[2] as JSONObject
+                editProfileImage2Id = json2.getInt("image_id")
+                editProfileImage2Path = json2.getString("image")
+                Glide.with(this)
+                    .load(editProfileImage2Path)
+                    .into(image_editsub2)
+                var json3 = array[3] as JSONObject
+                editProfileImage3Id = json3.getInt("image_id")
+                editProfileImage3Path = json3.getString("image")
+                Glide.with(this)
+                    .load(editProfileImage3Path)
+                    .into(image_editsub3)
+            }
+        })
 
         VolleyService.getUserOptionReq(UserInfo.ID, this, {success->
             var json = success
@@ -60,131 +135,183 @@ class EditProfileActivity : PSAppCompatActivity() {
             if(json.getString("user_height") != "null")
             {
                 text_editheight.text = json.getString("user_height")
+                text_editheight.setTextColor(Color.parseColor("#FFA500"))
+                text_editheight.setTypeface(text_editheight.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_bodytype") != "null")
             {
                 text_editbody.text = json.getString("user_bodytype")
+                text_editbody.setTextColor(Color.parseColor("#FFA500"))
+                text_editbody.setTypeface(text_editbody.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_bloodtype") != "null")
             {
                 text_editbloodtype.text = json.getString("user_bloodtype")
+                text_editbloodtype.setTextColor(Color.parseColor("#FFA500"))
+                text_editbloodtype.setTypeface(text_editbloodtype.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_city") != "null")
             {
                 text_editcity.text = json.getString("user_city")
+                text_editcity.setTextColor(Color.parseColor("#FFA500"))
+                text_editcity.setTypeface(text_editcity.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_job") != "null")
             {
                 text_editjob.text = json.getString("user_job")
+                text_editjob.setTextColor(Color.parseColor("#FFA500"))
+                text_editjob.setTypeface(text_editjob.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_education") != "null")
             {
                 text_editeducation.text = json.getString("user_education")
+                text_editeducation.setTextColor(Color.parseColor("#FFA500"))
+                text_editeducation.setTypeface(text_editeducation.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_holiday") != "null")
             {
                 text_editholiday.text = json.getString("user_holiday")
+                text_editholiday.setTextColor(Color.parseColor("#FFA500"))
+                text_editholiday.setTypeface(text_editholiday.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_cigarette") != "null")
             {
                 text_editcigarette.text = json.getString("user_cigarette")
+                text_editcigarette.setTextColor(Color.parseColor("#FFA500"))
+                text_editcigarette.setTypeface(text_editcigarette.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_alcohol") != "null")
             {
                 text_editalcohol.text = json.getString("user_alcohol")
+                text_editalcohol.setTextColor(Color.parseColor("#FFA500"))
+                text_editalcohol.setTypeface(text_editalcohol.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_religion") != "null")
             {
                 text_editreligion.text = json.getString("user_religion")
+                text_editreligion.setTextColor(Color.parseColor("#FFA500"))
+                text_editreligion.setTypeface(text_editreligion.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_brother") != "null")
             {
                 text_editbrother.text = json.getString("user_brother")
+                text_editbrother.setTextColor(Color.parseColor("#FFA500"))
+                text_editbrother.setTypeface(text_editbrother.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_country") != "null")
             {
                 text_editcountry.text = json.getString("user_country")
+                text_editcountry.setTextColor(Color.parseColor("#FFA500"))
+                text_editcountry.setTypeface(text_editcountry.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_salary") != "null")
             {
                 text_editsalary.text = json.getString("user_salary")
+                text_editsalary.setTextColor(Color.parseColor("#FFA500"))
+                text_editsalary.setTypeface(text_editsalary.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_asset") != "null")
             {
                 text_editasset.text = json.getString("user_asset")
+                text_editasset.setTextColor(Color.parseColor("#FFA500"))
+                text_editasset.setTypeface(text_editasset.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_marriagehistory") != "null")
             {
                 text_editmarriagehistory.text = json.getString("user_marriagehistory")
+                text_editmarriagehistory.setTextColor(Color.parseColor("#FFA500"))
+                text_editmarriagehistory.setTypeface(text_editmarriagehistory.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_children") != "null")
             {
                 text_editchildren.text = json.getString("user_children")
+                text_editchildren.setTextColor(Color.parseColor("#FFA500"))
+                text_editchildren.setTypeface(text_editchildren.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_marriageplan") != "null")
             {
                 text_editmarriageplan.text = json.getString("user_marriageplan")
+                text_editmarriageplan.setTextColor(Color.parseColor("#FFA500"))
+                text_editmarriageplan.setTypeface(text_editmarriageplan.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_childrenplan") != "null")
             {
                 text_editchildrenplan.text = json.getString("user_childrenplan")
+                text_editchildrenplan.setTextColor(Color.parseColor("#FFA500"))
+                text_editchildrenplan.setTypeface(text_editchildrenplan.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_parenting") != "null")
             {
                 text_editparenting.text = json.getString("user_parenting")
+                text_editparenting.setTextColor(Color.parseColor("#FFA500"))
+                text_editparenting.setTypeface(text_editparenting.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_wishdate") != "null")
             {
                 text_editwishdate.text = json.getString("user_wishdate")
+                text_editwishdate.setTextColor(Color.parseColor("#FFA500"))
+                text_editwishdate.setTypeface(text_editwishdate.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_datecost") != "null")
             {
                 text_editdatecost.text = json.getString("user_datecost")
+                text_editdatecost.setTextColor(Color.parseColor("#FFA500"))
+                text_editdatecost.setTypeface(text_editdatecost.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_roommate") != "null")
             {
                 text_editroommate.text = json.getString("user_roommate")
+                text_editroommate.setTextColor(Color.parseColor("#FFA500"))
+                text_editroommate.setTypeface(text_editroommate.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_language") != "null")
             {
                 text_editlanguage.text = json.getString("user_language")
+                text_editlanguage.setTextColor(Color.parseColor("#FFA500"))
+                text_editlanguage.setTypeface(text_editlanguage.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_interest") != "null")
             {
                 text_editinterest.text = json.getString("user_interest")
+                text_editinterest.setTextColor(Color.parseColor("#FFA500"))
+                text_editinterest.setTypeface(text_editinterest.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_personality") != "null")
             {
                 text_editpersonality.text = json.getString("user_personality")
+                text_editpersonality.setTextColor(Color.parseColor("#FFA500"))
+                text_editpersonality.setTypeface(text_editpersonality.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_favoriteperson") != "null")
             {
                 text_editfavoriteperson.text = json.getString("user_favoriteperson")
+                text_editfavoriteperson.setTextColor(Color.parseColor("#FFA500"))
+                text_editfavoriteperson.setTypeface(text_editfavoriteperson.getTypeface(), Typeface.BOLD)
             }
 
         })
@@ -487,6 +614,49 @@ class EditProfileActivity : PSAppCompatActivity() {
     fun favoriteperson() {
         userOptionList = arrayListOf(UserItem.UserOption("귀여운"), UserItem.UserOption("털털한"), UserItem.UserOption("잘 웃는"), UserItem.UserOption("유머러스한"), UserItem.UserOption("다정다감한"), UserItem.UserOption("엄청 착한"), UserItem.UserOption("순수한"), UserItem.UserOption("박력있는"), UserItem.UserOption("듬직한"), UserItem.UserOption("마음이 예쁜"), UserItem.UserOption("욕 안하는"), UserItem.UserOption("열정적인"))
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data == null) {
+            return
+        }
+
+
+        when (requestCode) {
+            PICK_FROM_ALBUM -> {
+                imageCaptureUri = data!!.data
+                //imagePath = /*Environment.getExternalStorageDirectory().getAbsolutePath() +*/ getPath(imageCaptureUri!!)
+                Log.d("test", "$imagePath")
+
+                try {
+                   /* val imageBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageCaptureUri)
+                    image_writestory.visibility = View.VISIBLE
+                    image_writestory.setImageBitmap(imageBitmap)*/
+
+                    CropImage.activity(imageCaptureUri).setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1920, 1080)
+                        .setCropShape(CropImageView.CropShape.RECTANGLE).start(this)
+
+                } catch (e: FileNotFoundException) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace()
+                } catch (e: IOException) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace()
+                }
+
+            }
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                val result = CropImage.getActivityResult(data)
+                if (resultCode == Activity.RESULT_OK) {
+                    val resultUri: Uri = result.uri
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    val error = result.error
+                }
+            }
+
+        }
+    }
+
 
 
 

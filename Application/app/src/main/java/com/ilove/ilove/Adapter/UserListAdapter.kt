@@ -37,10 +37,15 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
+        val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+
+        var age = currentDate.substring(0, 4).toInt() - userList.get(position).userAge.substring(0,4).toInt() + 1
+
         Glide.with(holder.itemView)
             .load(userList.get(position).userImage)
             .into(holder.itemView.image_userlistprofile)
-        holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + ", " + userList.get(position).userAge + ", " + userList.get(position).userCity + ", " + userList.get(position).recentGps
+        holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + ", " + age + ", " + userList.get(position).userCity + ", " + userList.get(position).recentGps
         holder.itemView.text_userlistintroduce.text = userList.get(position).userIntroduce
         holder.itemView.image_userlistprofile.setClipToOutline(true)
 
@@ -52,8 +57,6 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
         }
 
         holder.itemView.btn_userlike.setOnLikeListener(object: OnLikeListener {
-            val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-            val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
             override fun liked(likeButton: LikeButton?) {
                 VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "like", currentDate, context, {success->

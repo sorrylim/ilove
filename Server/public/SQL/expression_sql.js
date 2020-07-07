@@ -34,7 +34,7 @@ module.exports = function () {
         },
         get_send_user: function(user_id, expression_type, callback) {
             pool.getConnection(function(err, con){
-                var sql = `select user.user_id, user_nickname, user_birthday, user_city, expression_date from user, expression where expression.user_id = '${user_id}' and expression.partner_id = user.user_id and expression_type='${expression_type}'`
+                var sql = `select user.user_id, user_nickname, user_birthday, user_city, expression_date, user_phone, image from user, expression, image where expression.user_id = '${user_id}' and expression.partner_id = user.user_id and expression_type='${expression_type}' and image.user_id = user.user_id and image.image_usage='mainprofile'`
                 con.query(sql, function(err, result) {
                     con.release()
                     if(err) callback(err)
@@ -44,7 +44,7 @@ module.exports = function () {
         },
         get_receive_user: function(user_id, expression_type, callback) {
             pool.getConnection(function(err, con){
-                var sql = `select user.user_id, user_nickname, user_birthday, user_city, expression_date from user, expression where expression.partner_id = '${user_id}' and expression.user_id = user.user_id and expression_type='${expression_type}'`
+                var sql = `select user.user_id, user_nickname, user_birthday, user_city, expression_date, user_phone, image from user, image, expression where expression.partner_id = '${user_id}' and expression.user_id = user.user_id and expression_type='${expression_type}' and image.user_id = user.user_id and image.image_usage='mainprofile'`
                 con.query(sql, function(err, result) {
                     con.release()
                     if(err) callback(err)
@@ -54,7 +54,7 @@ module.exports = function () {
         },
         get_each1_user: function(user_id, expression_type, callback) {
             pool.getConnection(function(err, con){
-                var sql = `select user.user_id, user_nickname, user_birthday, user_city, expression_date from user, expressioneach where expressioneach.user_id='${user_id}' and expressioneach.partner_id = user.user_id and expression_type = '${expression_type}'`
+                var sql = `select user.user_id, user_nickname, user_birthday, user_city, expression_date, user_phone, image from user, expressioneach, image where expressioneach.user_id='${user_id}' and expressioneach.partner_id = user.user_id and expression_type = '${expression_type}' and image.user_id = user.user_id and image.image_usage='mainprofile'`
                 con.query(sql, function(err, result) {
                     con.release()
                     if(err) callback(err)
@@ -64,7 +64,7 @@ module.exports = function () {
         },
         get_each2_user: function(user_id, expression_type, callback) {
             pool.getConnection(function(err, con) {
-                var sql = `select user.user_id, user_nickname, user_birthday, user_city, expression_date from user, expressioneach where expressioneach.partner_id='${user_id}' and expressioneach.user_id = user.user_id and expression_type = '${expression_type}'` 
+                var sql = `select user.user_id, user_nickname, user_birthday, user_city, expression_date, user_phone, image from user, expressioneach, image where expressioneach.partner_id='${user_id}' and expressioneach.user_id = user.user_id and expression_type = '${expression_type}' and image.user_id = user.user_id and image.image_usage='mainprofile'` 
                 con.query(sql, function(err, result) {
                     con.release()
                     if(err) callback(err)
@@ -74,7 +74,7 @@ module.exports = function () {
         },
         get_visit_user: function(user_id, visit_type, callback) {
             pool.getConnection(function(err, con) {
-                var sql = `select user.user_id, user_nickname, user_birthday, user_city, visit_date from user, viewhistory where viewhistory.partner_id='${user_id}' and viewhistory.visit_type='${visit_type}' and viewhistory.user_id = user.user_id`
+                var sql = `select user.user_id, user_nickname, user_birthday, user_city, visit_date, user_phone, image from user, viewhistory, image where viewhistory.partner_id='${user_id}' and viewhistory.visit_type='${visit_type}' and viewhistory.user_id = user.user_id and image.user_id = user.user_id and image.image_usage='mainprofile'`
                 con.query(sql, function(err, result) {
                     con.release()
                     if(err) callback(err)
