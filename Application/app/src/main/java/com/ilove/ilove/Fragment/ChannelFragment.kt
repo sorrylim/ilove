@@ -7,16 +7,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import com.ilove.ilove.Adapter.NewUserAdapter
 import com.ilove.ilove.Class.UserInfo
+import com.ilove.ilove.Item.NewUserList
 import com.ilove.ilove.MainActivity.PartnerListActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.fragment_channel.*
 import kotlinx.android.synthetic.main.fragment_channel.view.*
 import kotlinx.android.synthetic.main.fragment_channel.view.layout_sendlike
+import org.json.JSONObject
 
 class ChannelFragment : Fragment() {
 
+    var newUserList = ArrayList<NewUserList>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,9 +42,40 @@ class ChannelFragment : Fragment() {
         var sendMeetBtn = rootView.layout_sendmeet
         var receiveMeetBtn = rootView.layout_receivemeet
         var eachMeetBtn = rootView.layout_eachmeet
-
         var visitProfileBtn = rootView.layout_visitprofile
         var visitStoryBtn = rootView.layout_visitstory
+        var newUserRV = rootView.rv_newmember
+
+        if(UserInfo.GENDER == "M") {
+            VolleyService.getNewUserListReq("F", activity!!, {success->
+                newUserList.clear()
+                var array = success
+                for(i in 0..array.length()-1)
+                {
+                    var json = array[i] as JSONObject
+                    newUserList.add(NewUserList(json.getString("user_id"), json.getString("user_nickname"), json.getString("user_birthday"), json.getString("user_city"),
+                    json.getString("user_recentgps"), json.getString("user_recenttime"), json.getString("user_phone"), json.getString("image")))
+                }
+                newUserRV.setHasFixedSize(true)
+                newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
+                newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
+            })
+        }
+        else {
+            VolleyService.getNewUserListReq("M", activity!!, {success->
+                newUserList.clear()
+                var array = success
+                for(i in 0..array.length()-1)
+                {
+                    var json = array[i] as JSONObject
+                    newUserList.add(NewUserList(json.getString("user_id"), json.getString("user_nickname"), json.getString("user_birthday"), json.getString("user_city"),
+                        json.getString("user_recentgps"), json.getString("user_recenttime"), json.getString("user_phone"), json.getString("image")))
+                }
+                newUserRV.setHasFixedSize(true)
+                newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
+                newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
+            })
+        }
 
         VolleyService.getExpressionCountReq(UserInfo.ID, activity!!, {success->
             var json = success

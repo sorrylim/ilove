@@ -50,4 +50,7 @@ dependencies {
     //이미지
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
+    //이미지 crop
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 }

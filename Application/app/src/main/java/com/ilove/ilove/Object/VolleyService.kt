@@ -185,6 +185,48 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
+    fun getProfileImageReq(userId: String, context: Context, success: (JSONArray) -> Unit) {
+        var url = "${ip}/image/get/profile"
+        var json = JSONObject()
+        json.put("user_id", userId)
+
+        var array = JSONArray()
+        array.put(json)
+
+        var request = object : JsonArrayRequest(
+            Method.POST,
+            url,
+            array,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun getNewUserListReq(userGender: String, context: Context, success: (JSONArray) -> Unit) {
+        var url = "${ip}/user/get/new/list"
+        var json = JSONObject()
+        json.put("user_gender", userGender)
+
+        var array = JSONArray()
+        array.put(json)
+
+        var request = object : JsonArrayRequest(
+            Method.POST,
+            url,
+            array,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
     fun insertHistoryReq(userId: String, partnerId: String, visitType: String, visitDate:String, context:Context, success:(String?) -> Unit) {
         var url = "${ip}/expression/insert/history"
         var json = JSONObject()
@@ -256,7 +298,7 @@ object VolleyService {
         var array = JSONArray()
             .put(json)
 
-        var request=object : JsonArrayRequest(
+        var request = object : JsonArrayRequest(
             Method.POST,
             url,
             array,
