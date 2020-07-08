@@ -11,17 +11,32 @@ import SwiftUI
 struct PartnerView : View {
     
     @State var partnerList:[PartnerModel]=[]
+    @State var visitPartnerList:[VisitPartnerModel]=[]
     @State var type=""
     
     
-    var title:String
+    @State var title:String
     
     var body: some View{
         List{
-            ForEach(partnerList, id: \.user_id){partner in
-                PartnerRow(partner: partner)
+            if title=="내 프로필을 확인한 사람" || title=="내 스토리를 확인한 사람"{
+                ForEach(visitPartnerList, id: \.user_id){partner in
+                    VisitPartnerRow(partner: partner)
+                }
             }
-            .onDelete(perform : delete)
+            else {
+                if title.contains("내가") || title.contains("서로"){
+                    ForEach(partnerList, id: \.user_id){partner in
+                        PartnerRow(partner: partner)
+                    }
+                    .onDelete(perform : delete)
+                }
+                else {
+                    ForEach(partnerList, id: \.user_id){partner in
+                        PartnerRow(partner: partner)
+                    }
+                }
+            }
         }
         .navigationBarTitle("\(self.title)",displayMode: .inline)
         .onAppear{
@@ -29,12 +44,12 @@ struct PartnerView : View {
             case "내 프로필을 확인한 사람":
                 self.type="profile"
                 HttpService.shared.getVisitUserReq(userId: "ksh", visitType: "profile") { (partnerModelArray) -> Void in
-                    self.partnerList=partnerModelArray
+                    self.visitPartnerList=partnerModelArray
                 }
             case "내 스토리를 확인한 사람":
                 self.type="story"
                 HttpService.shared.getVisitUserReq(userId: "ksh", visitType: "story") { ( partnerModelArray) -> Void in
-                    self.partnerList=partnerModelArray
+                    self.visitPartnerList=partnerModelArray
                 }
             case "내가 좋아요를 보낸 이성":
                 self.type="like"
@@ -95,13 +110,15 @@ struct PartnerView : View {
 struct PartnerRow : View{
     
     @State var partner : PartnerModel
+    @State var likeImage = Image(systemName: "heart")
     
     var body: some View {
         VStack{
             Text(partner.expression_date)
                 .font(.system(size:10))
             HStack(spacing: 20){
-                Image(systemName: "pencil")
+                Image(uiImage: try! UIImage(data: Data(contentsOf: URL(string: partner.image)!))!)
+                    .resizable()
                     .frame(width: 50, height: 50)
                 VStack(alignment: .leading){
                     Text(partner.user_nickname)
@@ -111,8 +128,90 @@ struct PartnerRow : View{
                         .font(.system(size:15))
                 }
                 Spacer()
+                likeImage
+                    .foregroundColor(Color.red)
+                    .onTapGesture {
+                        if self.partner.like==0 {
+                            let now = Date()
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            let date=dateFormatter.string(from: now)
+                            
+                            HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.partner.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
+                                if resultModel.result=="success" {
+                                    self.likeImage=Image(systemName: "heart.fill")
+                                }
+                                else if resultModel.result=="eachsuccess" {
+                                    self.likeImage=Image(systemName: "heart.fill")
+                                }
+                                self.partner.like=1
+                            }
+                        }
+                }
             }
             .padding(10)
+        }
+        .onAppear(){
+            if self.partner.like == 1 {
+                self.likeImage=Image(systemName: "heart.fill")
+            }
+            else {
+                self.likeImage=Image(systemName: "heart")
+            }
+        }
+    }
+}
+
+struct VisitPartnerRow : View{
+    @State var partner : VisitPartnerModel
+    @State var likeImage = Image(systemName: "heart")
+    
+    var body: some View {
+        VStack{
+            Text(partner.visit_date)
+                .font(.system(size:10))
+            HStack(spacing: 20){
+                Image(uiImage: try! UIImage(data: Data(contentsOf: URL(string: partner.image)!))!)
+                    .resizable()
+                    .frame(width: 50, height: 50)
+                VStack(alignment: .leading){
+                    Text(partner.user_nickname)
+                        .font(.system(size:20,weight:.bold))
+                    Spacer()
+                    Text("\(partner.user_birthday), \(partner.user_city)")
+                        .font(.system(size:15))
+                }
+                Spacer()
+                likeImage
+                    .foregroundColor(Color.red)
+                    .onTapGesture {
+                        if self.partner.like==0 {
+                            let now = Date()
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            let date=dateFormatter.string(from: now)
+                            
+                            HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.partner.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
+                                if resultModel.result=="success" {
+                                    self.likeImage=Image(systemName: "heart.fill")
+                                }
+                                else if resultModel.result=="eachsuccess" {
+                                    self.likeImage=Image(systemName: "heart.fill")
+                                }
+                                self.partner.like=1
+                            }
+                        }
+                }
+            }
+            .padding(10)
+        }
+        .onAppear(){
+            if self.partner.like == 1 {
+                self.likeImage=Image(systemName: "heart.fill")
+            }
+            else {
+                self.likeImage=Image(systemName: "heart")
+            }
         }
     }
 }

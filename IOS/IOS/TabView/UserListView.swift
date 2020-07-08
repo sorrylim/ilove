@@ -13,17 +13,17 @@ struct UserListView : View{
     @State var userList:[UserModel] = []
     
     var body : some View{
-        List{
-            ForEach(userList, id: \.user_id){user in
-                UserRow(user: user)
-                
+        NavigationView{
+            List{
+                ForEach(userList, id: \.user_id){user in
+                    UserRow(user: user)
+                }
             }
-            
-        }
-        .navigationBarTitle("리스트",displayMode: .inline)
-        .onAppear(){
-            HttpService.shared.getUserListReq(gender: "M", userId: "hyeha") { (userModelArray) -> Void in
-                self.userList=userModelArray
+            .navigationBarTitle("리스트",displayMode: .inline)
+            .onAppear(){
+                HttpService.shared.getUserListReq(gender: "F", userId: "ksh") { (userModelArray) -> Void in
+                    self.userList=userModelArray
+                }
             }
         }
         
@@ -37,7 +37,8 @@ struct UserRow : View{
     
     var body : some View{
         HStack(spacing: 20){
-            Image(systemName: "pencil")
+            Image(uiImage: try! UIImage(data: Data(contentsOf: URL(string: user.image)!))!)
+                .resizable()
                 .frame(width: 100, height: 100)
             VStack(alignment: .leading, spacing: 10){
                 Text("\(user.user_nickname), \(user.user_birthday), \(user.user_city), \(user.user_recentgps)")
@@ -63,7 +64,7 @@ struct UserRow : View{
                 .onTapGesture {
                     if self.user.like==1 {
                         print(self.user)
-                        HttpService.shared.deleteExpressionReq(userId: "hyeha", partnerId: self.user.user_id, expressionType: "like") { (resultModel) -> Void in
+                        HttpService.shared.deleteExpressionReq(userId: "ksh", partnerId: self.user.user_id, expressionType: "like") { (resultModel) -> Void in
                             if resultModel.result=="success" {
                                 self.likeImage=Image(systemName: "heart")
                             }
@@ -76,7 +77,7 @@ struct UserRow : View{
                         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                         let date=dateFormatter.string(from: now)
                         
-                        HttpService.shared.insertExpressionReq(userId: "hyeha", partnerId: self.user.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
+                        HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.user.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
                             if resultModel.result=="success" {
                                 self.likeImage=Image(systemName: "heart.fill")
                             }

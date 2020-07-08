@@ -36,7 +36,7 @@ struct StoryView : View{
             Spacer()
             Image(uiImage: UIImage(data: try! Data(contentsOf: URL(string: self.story.image)!))!)
                 .resizable()
-                .frame(width: 300, height: 300)
+                .frame(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.width/2)
                 .cornerRadius(10)
             Spacer()
             HStack{
@@ -75,7 +75,6 @@ struct StoryView : View{
             .onAppear(){
                 HttpService.shared.getStoryUserReq(userId: "ksh", imageId: self.story.image_id){ (storyUserModel) -> Void in
                     self.storyUser=storyUserModel
-                    print(self.storyUser)
                     if self.storyUser.like==1 {
                         print("1")
                         self.likeImage=Image(systemName: "heart.fill")

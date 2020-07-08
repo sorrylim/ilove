@@ -13,6 +13,8 @@ struct ChannelView : View{
     
     @State var showModal = false
     
+    @State var newUserList:[NewUserModel]=[]
+    
     @State var profileCount : Int = -1
     @State var storyCount : Int = -1
     
@@ -35,28 +37,38 @@ struct ChannelView : View{
                         Spacer()
                     }
                     
-                    VStack(spacing: 20){
-                        HStack{
-                            Spacer()
-                            Image(systemName: "circle")
-                                .resizable()
-                                .frame(width: 80,height: 80)
-                            Spacer()
-                            Image(systemName: "circle")
-                                .resizable()
-                                .frame(width: 80,height: 80)
-                            Spacer()
+                    VStack(spacing: 0){
+                        if newUserList.count > 0 {
+                            HStack{
+                                Spacer()
+                                NewUserCell(newUser: newUserList[0])
+                                if newUserList.count > 1 {
+                                    Spacer()
+                                    NewUserCell(newUser: newUserList[1])
+                                }
+                                else {
+                                    Spacer()
+                                    Text("")
+                                        .frame(width:150,height:150)
+                                }
+                                Spacer()
+                            }
                         }
-                        HStack{
-                            Spacer()
-                            Image(systemName: "circle")
-                                .resizable()
-                                .frame(width: 80,height: 80)
-                            Spacer()
-                            Image(systemName: "circle")
-                                .resizable()
-                                .frame(width: 80,height: 80)
-                            Spacer()
+                        if newUserList.count > 2 {
+                            HStack{
+                                Spacer()
+                                NewUserCell(newUser: newUserList[2])
+                                if newUserList.count > 3 {
+                                    Spacer()
+                                    NewUserCell(newUser: newUserList[3])
+                                }
+                                else {
+                                    Spacer()
+                                    Text("")
+                                        .frame(width:150,height:150)
+                                }
+                                Spacer()
+                            }
                         }
                     }
                     
@@ -209,6 +221,10 @@ struct ChannelView : View{
             .padding()
             .navigationBarTitle("채널",displayMode: .inline)
             .onAppear{
+                HttpService.shared.getNewUserReq(userGender: "F", callback: { (newUserModelArray) -> Void in
+                    self.newUserList=newUserModelArray
+                })
+                
                 
                 HttpService.shared.getViewCountReq(userId: "ksh",callback: { (data) -> Void in
                     self.profileCount=data.profile
@@ -234,3 +250,44 @@ struct ChannelView_Previews: PreviewProvider {
         ChannelView()
     }
 }
+
+struct NewUserCell: View {
+    @State var newUser : NewUserModel
+    
+    //@State var storyVisible=false
+    
+    var body: some View {
+        ZStack{
+            Image(uiImage: UIImage(data: try! Data(contentsOf: URL(string: newUser.image)!))!)
+                .resizable()
+                .frame(width: 150,height: 150)
+                .cornerRadius(10)
+            
+            VStack(spacing:10){
+                Spacer()
+                HStack{
+                    Text("\(newUser.user_nickname),\(newUser.user_birthday)")
+                        .foregroundColor(Color.white)
+                        .font(.system(size: 15, weight: .bold))
+                    Spacer()
+                }
+                HStack{
+                    Text("\(newUser.user_recentgps),\(newUser.user_recenttime)")
+                        .foregroundColor(Color.white)
+                        .font(.system(size: 10, weight: .bold))
+                    Spacer()
+                }
+            }
+            .padding()
+            
+            //.onTapGesture {
+            //self.storyVisible=true
+            /*.sheet(isPresented: $storyVisible){
+             StoryView(story: self.story)
+             }*/
+        }
+    }
+    
+    
+}
+

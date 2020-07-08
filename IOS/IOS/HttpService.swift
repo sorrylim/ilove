@@ -53,6 +53,35 @@ public class HttpService:ObservableObject{
     
     
     //------------------------------Channel------------------------------//
+    func getNewUserReq(userGender: String, callback: @escaping ([NewUserModel]) -> Void){
+        guard let url=URL(string: "\(ip)/user/get/new/list") else{
+            return
+        }
+        
+        let data=[
+            [
+                "user_gender" : userGender
+            ]
+        ]
+        
+        let body=try! JSONSerialization.data(withJSONObject: data)
+        
+        var request=URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else {
+                return
+            }
+            
+            let decoded = try! JSONDecoder().decode([NewUserModel].self, from: data)
+            
+            callback(decoded)
+        }.resume()
+    }
+    
     func getPartnerReq(userId: String, expressionType: String,sendType: String, callback: @escaping ([PartnerModel]) -> Void){
         guard let url=URL(string: "\(ip)/expression/get/\(sendType)/user") else{
             return
@@ -84,7 +113,7 @@ public class HttpService:ObservableObject{
         }.resume()
     }
     
-    func getVisitUserReq(userId: String, visitType: String , callback: @escaping ([PartnerModel]) -> Void){
+    func getVisitUserReq(userId: String, visitType: String , callback: @escaping ([VisitPartnerModel]) -> Void){
         guard let url=URL(string: "\(ip)/expression/get/visit/user") else{
             return
         }
@@ -107,8 +136,7 @@ public class HttpService:ObservableObject{
             guard let data = data else {
                 return
             }
-            
-            let decoded = try! JSONDecoder().decode([PartnerModel].self, from: data)
+            let decoded = try! JSONDecoder().decode([VisitPartnerModel].self, from: data)
             callback(decoded)
             
         }.resume()
@@ -345,7 +373,7 @@ public class HttpService:ObservableObject{
         
         httpBody.appendString("--\(boundary)--")
         
-        print(uiImage.jpegData(compressionQuality: 1))
+        print(uiImage.jpegData(compressionQuality: 0.5))
         
         request.httpBody = httpBody as Data
         

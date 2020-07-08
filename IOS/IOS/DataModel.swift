@@ -37,7 +37,29 @@ struct PartnerModel : Codable {
     var like: Int
     var meet: Int
     var image: String
-    //var userImage: String
+}
+
+struct VisitPartnerModel : Codable {
+    var user_id: String
+    var user_nickname: String
+    var user_birthday: String
+    var user_city: String
+    var visit_date: String
+    var user_phone: String
+    var like: Int
+    var meet: Int
+    var image: String
+}
+
+struct NewUserModel : Codable {
+    var user_id : String
+    var user_nickname : String
+    var user_birthday : String
+    var user_city : String
+    var user_recentgps : String
+    var user_recenttime : String
+    var user_phone : String
+    var image : String
 }
 
 struct UserModel : Codable {
