@@ -11,9 +11,11 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ilove.ilove.Adapter.StoryAdapter
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ImageItem
+import com.ilove.ilove.MainActivity.StoryActivity
 import com.ilove.ilove.MainActivity.WriteStoryActivity
 import com.ilove.ilove.Object.ImageManager
 import com.ilove.ilove.Object.VolleyService
@@ -32,7 +34,12 @@ class StoryFragment : Fragment() {
         val storyRV : RecyclerView = rootView.findViewById(R.id.rv_storyview)
         var myStoryImage: ImageView = rootView.findViewById(R.id.image_mystoryimage)
 
+        var myStoryImageId: Int? = null
+        var myStoryImagePath : String? = null
+
         myStoryImage.setClipToOutline(true)
+
+
 
         writeStoryBtn.setOnClickListener {
             var intent = Intent(activity!!, WriteStoryActivity::class.java)
@@ -55,6 +62,22 @@ class StoryFragment : Fragment() {
             storyRV.setHasFixedSize(true)
             storyRV.layoutManager = GridLayoutManager(activity!!, 3)
             storyRV.adapter = StoryAdapter(activity!!, storyList)
+
+            VolleyService.getMyStoryImageReq(UserInfo.ID, activity!!, {success->
+                var json = success
+                myStoryImageId = json.getInt("image_id")
+                myStoryImagePath = json.getString("image")
+
+                if(myStoryImageId != null) {
+                    Glide.with(activity!!).load(myStoryImagePath).into(myStoryImage)
+                    myStoryImage.setOnClickListener {
+                        var intent = Intent(activity!!, StoryActivity::class.java)
+                        intent.putExtra("image", myStoryImagePath)
+                        intent.putExtra("image_id", myStoryImageId as Int)
+                        startActivity(intent)
+                    }
+                }
+            })
 
         })
 

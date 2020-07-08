@@ -2,6 +2,7 @@ package com.ilove.ilove.Adapter
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.Partner
+import com.ilove.ilove.MainActivity.PartnerActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import com.like.LikeButton
@@ -62,6 +64,22 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
         holder.itemView.text_partnerlistage.text = age.toString() + ", " + partnerList.get(position).userCity
         holder.itemView.image_partnerlistprofile.setClipToOutline(true)
         dateHistory = partnerList.get(position).dateHistory
+
+        holder.itemView.setOnClickListener {
+            var intent = Intent(context, PartnerActivity::class.java)
+            intent.putExtra("userNickname", partnerList.get(position).userNickname)
+            intent.putExtra("userId", partnerList.get(position).userId)
+
+            val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
+            val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+
+            VolleyService.insertHistoryReq(UserInfo.ID, partnerList.get(position).userId, "profile", currentDate, context, {success->
+                if(success == "success")
+                    context.startActivity(intent)
+                else
+                    Toast.makeText(context, "서버와의 통신 오류 입니다.", Toast.LENGTH_SHORT).show()
+            })
+        }
 
 
         holder.itemView.btn_partnerlistlike.setOnLikeListener(object: OnLikeListener {
