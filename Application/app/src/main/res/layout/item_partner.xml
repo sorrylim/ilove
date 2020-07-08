@@ -31,12 +31,11 @@
         android:text="소개글"
         android:textColor="@color/colorMdGrey_900"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_call"
+        app:layout_constraintBottom_toTopOf="@+id/btn_userlike"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/image_userlistprofile"
-        app:layout_constraintTop_toBottomOf="@+id/text_userlistinfo"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/text_userlistinfo" />
 
     <com.like.LikeButton
         android:id="@+id/btn_userlike"
@@ -47,7 +46,6 @@
         app:is_enabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/text_userlistintroduce"
-        app:layout_constraintTop_toBottomOf="@+id/text_userlistintroduce"
         app:like_drawable="@drawable/heart_on"
         app:unlike_drawable="@drawable/heart_off" />
 
@@ -67,9 +65,9 @@
         android:id="@+id/btn_call"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/call_icon"
         app:layout_constraintEnd_toStartOf="@+id/btn_userlike"
-        app:layout_constraintTop_toBottomOf="@+id/image_userlistprofile" />
+        app:layout_constraintTop_toTopOf="@+id/btn_userlike" />
 </androidx.constraintlayout.widget.ConstraintLayout>
