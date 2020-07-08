@@ -42,7 +42,7 @@
                 app:srcCompat="@drawable/default_image" />
 
             <ImageView
-                android:id="@+id/image_editsub1"
+                android:id="@+id/image_editsub2"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="15dp"
@@ -54,14 +54,14 @@
                 app:srcCompat="@drawable/default_image" />
 
             <ImageView
-                android:id="@+id/image_editsub2"
+                android:id="@+id/image_editsub1"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
                 android:scaleType="fitXY"
                 android:background="@drawable/rounded_imageview"
-                app:layout_constraintEnd_toStartOf="@+id/image_editsub1"
+                app:layout_constraintEnd_toStartOf="@+id/image_editsub2"
                 app:layout_constraintTop_toBottomOf="@+id/textView14"
                 app:srcCompat="@drawable/default_image" />
 
@@ -73,7 +73,7 @@
                 android:layout_marginTop="15dp"
                 android:scaleType="fitXY"
                 android:background="@drawable/rounded_imageview"
-                app:layout_constraintStart_toEndOf="@+id/image_editsub1"
+                app:layout_constraintStart_toEndOf="@+id/image_editsub2"
                 app:layout_constraintTop_toBottomOf="@+id/textView14"
                 app:srcCompat="@drawable/default_image" />
 
