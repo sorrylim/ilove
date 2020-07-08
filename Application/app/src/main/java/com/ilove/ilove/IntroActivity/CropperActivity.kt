@@ -26,7 +26,7 @@ class CropperActivity : AppCompatActivity() {
         CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).start(this)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data == null) {
             return
@@ -54,6 +54,6 @@ class CropperActivity : AppCompatActivity() {
         val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
         cursor.moveToFirst()
         return cursor.getString(column_index)
-    }
+    }*/
 
 }

@@ -46,6 +46,7 @@ class PSDialog(activity: Activity) {
         }
     }
 
+
     fun setUserOption(title : String, userOption:String, userOptionList: ArrayList<UserItem.UserOption>, userOptionText: TextView) {
         dialog = Dialog(context!!, android.R.style.Theme_DeviceDefault_Light_NoActionBar)
         val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_useroption, null)
@@ -177,4 +178,6 @@ class PSDialog(activity: Activity) {
 
         return layoutParams
     }
+
+
 }

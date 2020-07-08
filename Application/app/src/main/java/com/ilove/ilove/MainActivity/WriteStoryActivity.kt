@@ -45,7 +45,8 @@ class WriteStoryActivity : PSAppCompatActivity() {
         }
 
         text_insertstory.setOnClickListener {
-            FileUploadUtils.uploadImage(imagePath!!)
+            FileUploadUtils.uploadImage(imagePath!!, "insert", "story", edit_storycontent.text.toString(), null)
+            finish()
         }
 
 

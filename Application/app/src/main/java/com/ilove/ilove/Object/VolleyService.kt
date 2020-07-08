@@ -451,5 +451,23 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
+    fun deleteImageReq(image_id:Int, context:Context, success:(String) -> Unit) {
+        var url = "${ip}/image/delete"
+        var json = JSONObject()
+        json.put("image_id", image_id)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
 
 }
