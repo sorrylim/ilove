@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.ilove.ilove.Class.FileUploadUtils
@@ -21,6 +22,7 @@ import com.ilove.ilove.R
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -28,65 +30,76 @@ import java.io.IOException
 
 class EditProfileActivity : PSAppCompatActivity() {
 
+    companion object {
+
+    }
+
     var imagePath : String? = null
     var imageCaptureUri: Uri? = null
     val PICK_FROM_ALBUM = 1
     var userOptionList = ArrayList<UserItem.UserOption>()
-    var mainProfileImagePath = ""
-    var mainProfileImageId : Int? = null
-    var editProfileImage1Path = ""
-    var editProfileImage1Id : Int? = null
-    var editProfileImage2Path = ""
-    var editProfileImage2Id : Int? = null
-    var editProfileImage3Path = ""
-    var editProfileImage3Id : Int? = null
+    var profileImageList = ArrayList<ImageView>()
+    var profileImageIdList : ArrayList<Int?> = arrayListOf(null, null, null, null)
+
     var editImageId : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
 
-        image_editmain.setClipToOutline(true)
-        image_editsub1.setClipToOutline(true)
-        image_editsub2.setClipToOutline(true)
-        image_editsub3.setClipToOutline(true)
+        var imageMain : ImageView = findViewById(R.id.image_editmain)
+        var imageSub1 : ImageView = findViewById(R.id.image_editsub1)
+        var imageSub2 : ImageView = findViewById(R.id.image_editsub2)
+        var imageSub3 : ImageView = findViewById(R.id.image_editsub3)
+
+        imageMain.setClipToOutline(true)
+        imageSub1.setClipToOutline(true)
+        imageSub2.setClipToOutline(true)
+        imageSub3.setClipToOutline(true)
+
+        profileImageList.add(imageMain)
+        profileImageList.add(imageSub1)
+        profileImageList.add(imageSub2)
+        profileImageList.add(imageSub3)
 
         toolbarBinding(toolbar_editprofile, "프로필 편집", true)
-
         refreshProfileImage()
 
         image_editmain.setOnClickListener{
-            editImageId = mainProfileImageId
+            editImageId = profileImageIdList.get(0)
             photoFromGallery()
         }
 
         image_editsub1.setOnClickListener {
-            if(editProfileImage1Id == null) {
-                photoFromGallery()
-            }
-            else {
-                editImageId = editProfileImage1Id
-                dialogPhotoType()
+            when(profileImageIdList.size) {
+                1 -> photoFromGallery()
+                else -> {
+                    dialogPhotoType()
+                    editImageId = profileImageIdList.get(1)
+                }
             }
         }
 
         image_editsub2.setOnClickListener {
-            if(editProfileImage2Id == null) {
-                photoFromGallery()
-            }
-            else {
-                editImageId = editProfileImage2Id
-                dialogPhotoType()
+            when(profileImageIdList.size) {
+                1 -> photoFromGallery()
+                2 -> photoFromGallery()
+                else -> {
+                    dialogPhotoType()
+                    editImageId = profileImageIdList.get(2)
+                }
             }
         }
 
         image_editsub3.setOnClickListener {
-            if(editProfileImage3Id == null) {
-                photoFromGallery()
-            }
-            else {
-                editImageId = editProfileImage3Id
-                dialogPhotoType()
+            when(profileImageIdList.size) {
+                1 -> photoFromGallery()
+                2 -> photoFromGallery()
+                3 -> photoFromGallery()
+                else -> {
+                    dialogPhotoType()
+                    editImageId = profileImageIdList.get(3)
+                }
             }
         }
 
@@ -466,77 +479,28 @@ class EditProfileActivity : PSAppCompatActivity() {
 
     }
 
+    fun profileImageInit() {
+        for(i in 0..profileImageList.size-1) {
+            profileImageList.get(i).setImageResource(R.drawable.default_image)
+        }
+    }
+
+    fun setProfileImage(array: JSONArray) {
+        profileImageIdList.clear()
+        for(i in 0..array.length()-1) {
+            var json = array[i] as JSONObject
+            Glide.with(this)
+                .load(json.getString("image"))
+                .into(profileImageList.get(i))
+            profileImageIdList.add(json.getInt("image_id"))
+        }
+    }
+
     fun refreshProfileImage() {
         VolleyService.getProfileImageReq(UserInfo.ID, this, {success->
             var array = success
-            if(array.length() == 1) {
-                var json = array[0] as JSONObject
-                mainProfileImageId = json.getInt("image_id")
-                mainProfileImagePath = json.getString("image")
-                Glide.with(this)
-                    .load(mainProfileImagePath)
-                    .into(image_editmain)
-            }
-            else if(array.length() == 2) {
-                var json = array[0] as JSONObject
-                mainProfileImageId = json.getInt("image_id")
-                mainProfileImagePath = json.getString("image")
-                Glide.with(this)
-                    .load(mainProfileImagePath)
-                    .into(image_editmain)
-                var json1 = array[1] as JSONObject
-                editProfileImage1Id = json1.getInt("image_id")
-                editProfileImage1Path = json1.getString("image")
-                Glide.with(this)
-                    .load(editProfileImage1Path)
-                    .into(image_editsub1)
-            }
-            else if(array.length() == 3) {
-                var json = array[0] as JSONObject
-                mainProfileImageId = json.getInt("image_id")
-                mainProfileImagePath = json.getString("image")
-                Glide.with(this)
-                    .load(mainProfileImagePath)
-                    .into(image_editmain)
-                var json1 = array[1] as JSONObject
-                editProfileImage1Id = json1.getInt("image_id")
-                editProfileImage1Path = json1.getString("image")
-                Glide.with(this)
-                    .load(editProfileImage1Path)
-                    .into(image_editsub1)
-                var json2 = array[2] as JSONObject
-                editProfileImage2Id = json2.getInt("image_id")
-                editProfileImage2Path = json2.getString("image")
-                Glide.with(this)
-                    .load(editProfileImage2Path)
-                    .into(image_editsub2)
-            }
-            else if(array.length() == 4) {
-                var json = array[0] as JSONObject
-                mainProfileImageId = json.getInt("image_id")
-                mainProfileImagePath = json.getString("image")
-                Glide.with(this)
-                    .load(mainProfileImagePath)
-                    .into(image_editmain)
-                var json1 = array[1] as JSONObject
-                editProfileImage1Id = json1.getInt("image_id")
-                editProfileImage1Path = json1.getString("image")
-                Glide.with(this)
-                    .load(editProfileImage1Path)
-                    .into(image_editsub1)
-                var json2 = array[2] as JSONObject
-                editProfileImage2Id = json2.getInt("image_id")
-                editProfileImage2Path = json2.getString("image")
-                Glide.with(this)
-                    .load(editProfileImage2Path)
-                    .into(image_editsub2)
-                var json3 = array[3] as JSONObject
-                editProfileImage3Id = json3.getInt("image_id")
-                editProfileImage3Path = json3.getString("image")
-                Glide.with(this)
-                    .load(editProfileImage3Path)
-                    .into(image_editsub3)
-            }
+            profileImageInit()
+            setProfileImage(array)
         })
     }
 
@@ -683,14 +647,13 @@ class EditProfileActivity : PSAppCompatActivity() {
                     var imagePath = resultUri.getPath()
 
                     if(editImageId != null) {
-                        FileUploadUtils.uploadImage(imagePath!!, "update", "", "", editImageId)
-                        refreshProfileImage()
+                        FileUploadUtils.uploadProfileImage(imagePath!!, "", "update", editImageId!!)
                     } else {
-                        FileUploadUtils.uploadImage(imagePath!!, "insert", "profile", "", null)
-                        refreshProfileImage()
+                        FileUploadUtils.uploadProfileImage(imagePath!!, "profile", "insert", null)
                     }
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     val error = result.error
+                    editImageId = null
                 }
             }
 
