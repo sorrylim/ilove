@@ -8,23 +8,24 @@
     <item
         android:id="@+id/bnv_main_story"
         android:icon="@drawable/baseline_detail_category_grey_24"
-        android:title="스토리"
-        />
+        android:iconTint="#474747"
+        android:title="스토리" />
 
     <item
         android:id="@+id/bnv_main_list"
         android:icon="@drawable/outline_list_24"
-        android:title="리스트"
-        />
+        android:iconTint="#474747"
+        android:title="리스트" />
 
     <item
         android:id="@+id/bnv_main_message"
-        android:title="대화방"
-        />
+        android:icon="@drawable/message_icon"
+        android:iconTint="#474747"
+        android:title="대화방" />
 
     <item
         android:id="@+id/bnv_main_profile"
-        android:title="내페이지"
-        />
+        android:icon="@drawable/mypage_icon"
+        android:title="내페이지" />
 
 </menu>

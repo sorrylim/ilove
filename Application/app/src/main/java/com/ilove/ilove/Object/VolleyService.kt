@@ -268,7 +268,7 @@ object VolleyService {
             }
         ){}
 
-        Volley.newRequestQueue(content).add(request)
+        Volley.newRequestQueue(context).add(request)
     }
 
     fun getStoryImageReq(userId:String, imageUsage:String, context: Context, success:(JSONArray)->Unit) {

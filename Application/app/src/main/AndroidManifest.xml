@@ -18,7 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity.MainActivity"></activity>
+        <activity android:name=".MainActivity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".IntroActivity.EditProfileActivity"></activity>
         <activity android:name=".MainActivity.StoryActivity" />
         <activity android:name=".MainActivity.WriteStoryActivity" />
@@ -29,11 +35,6 @@
         <activity android:name=".IntroActivity.AlarmSettingActivity" />
         <activity android:name=".IntroActivity.SettingActivity" />
         <activity android:name=".MainActivity.ChatActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
