@@ -17,9 +17,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="16dp">
 
             <ImageView
                 android:id="@+id/image_storyuserprofile"
@@ -40,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="15dp"
                 android:text="닉네임, 나이"
                 android:textColor="@color/colorMdGrey_900"
                 android:textStyle="bold"
@@ -84,31 +86,30 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:background="@drawable/rounded_imageview"
         android:scaleType="fitXY"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_storycontent"
-        android:background="@drawable/rounded_imageview"
         app:srcCompat="@drawable/default_image" />
 
     <TextView
         android:id="@+id/text_storylikecount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="30dp"
         android:text="좋아요갯수"
         android:textColor="@color/colorMdGrey_900"
         android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@+id/btn_storylike"
-        app:layout_constraintTop_toBottomOf="@+id/image_storyimage" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_storylike" />
 
     <TextView
         android:id="@+id/text_storyviewcount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:text="조회수"
         android:textColor="@color/colorMdGrey_900"
         android:textSize="20dp"
@@ -117,20 +118,32 @@
 
     <com.like.LikeButton
         android:id="@+id/btn_storylike"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         app:anim_scale_factor="2"
         app:circle_end_color="@color/colorMdRed_600"
         app:circle_start_color="@color/colorMdWhite_1000"
         app:dots_primary_color="@color/colorMdGreen_600"
         app:dots_secondary_color="@color/colorMdBlue_300"
-        app:icon_size="20dp"
+        app:icon_size="50dp"
         app:icon_type="heart"
         app:is_enabled="true"
-        app:layout_constraintBottom_toBottomOf="@+id/text_storylikecount"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_storylikecount"
-        app:like_drawable="@drawable/heart_on"
-        app:unlike_drawable="@drawable/heart_off" />
+        app:layout_constraintTop_toBottomOf="@+id/image_storyimage"
+        app:like_drawable="@drawable/bigheart_on"
+        app:unlike_drawable="@drawable/bigheart_off" />
+
+    <ImageView
+        android:id="@+id/imageView39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/text_storyviewcount"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_storyimage"
+        app:srcCompat="@drawable/eye_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -62,7 +62,7 @@ class StoryActivity : PSAppCompatActivity() {
                 VolleyService.insertStoryExpressionReq(UserInfo.ID, imageId, currentDate, this@StoryActivity, {success->
                     if(success=="success") {
                         text_storylikecount.text = (Integer.parseInt(text_storylikecount.text.toString()) + 1).toString()
-                        likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(this@StoryActivity.getResources(), R.drawable.heart_on, null))
+                        likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(this@StoryActivity.getResources(), R.drawable.bigheart_on, null))
                     }
                     else {
                         Toast.makeText(this@StoryActivity, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
@@ -73,7 +73,7 @@ class StoryActivity : PSAppCompatActivity() {
                 VolleyService.deleteStoryExpressionReq(UserInfo.ID, imageId, this@StoryActivity, {success->
                     if(success=="success") {
                         text_storylikecount.text = (Integer.parseInt(text_storylikecount.text.toString()) - 1).toString()
-                        likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(this@StoryActivity.getResources(), R.drawable.heart_off, null))
+                        likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(this@StoryActivity.getResources(), R.drawable.bigheart_off, null))
                     }
                     else {
                         Toast.makeText(this@StoryActivity, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
