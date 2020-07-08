@@ -10,6 +10,7 @@
         android:id="@+id/text_historydate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="날짜"
         android:textColor="@color/colorMdGrey_900"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,5 +72,6 @@
         app:layout_constraintTop_toTopOf="@+id/image_partnerlistprofile"
         app:like_drawable="@drawable/heart_on"
         app:unlike_drawable="@drawable/heart_off" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
