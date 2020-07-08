@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
+import com.ilove.ilove.IntroActivity.EditProfileActivity
 import okhttp3.*
 import java.io.File
 import java.io.IOException
@@ -61,6 +62,10 @@ class FileUploadUtils {
                 override fun onResponse(call: Call, response: Response) {
                     val body = response?.body?.string()
                     Log.d("test", "$body")
+                    var handler=EditProfileActivity.handler
+                    var msg=handler!!.obtainMessage()
+                    msg.what=0
+                    handler.sendMessage(msg)
                 }
             })
         }

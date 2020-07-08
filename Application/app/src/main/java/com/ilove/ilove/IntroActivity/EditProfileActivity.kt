@@ -7,6 +7,8 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageView
@@ -31,7 +33,7 @@ import java.io.IOException
 class EditProfileActivity : PSAppCompatActivity() {
 
     companion object {
-
+        var handler:Handler? = null
     }
 
     var imagePath : String? = null
@@ -40,8 +42,8 @@ class EditProfileActivity : PSAppCompatActivity() {
     var userOptionList = ArrayList<UserItem.UserOption>()
     var profileImageList = ArrayList<ImageView>()
     var profileImageIdList : ArrayList<Int?> = arrayListOf(null, null, null, null)
-
     var editImageId : Int? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,8 +104,6 @@ class EditProfileActivity : PSAppCompatActivity() {
                 }
             }
         }
-
-
 
         VolleyService.getUserOptionReq(UserInfo.ID, this, {success->
             var json = success
@@ -477,6 +477,16 @@ class EditProfileActivity : PSAppCompatActivity() {
             psDialog.show()
         }
 
+        handler=object : Handler() {
+            override fun handleMessage(msg: Message) {
+                when(msg.what){
+                    0 -> {
+                        refreshProfileImage()
+                    }
+                }
+            }
+        }
+
     }
 
     fun profileImageInit() {
@@ -499,6 +509,7 @@ class EditProfileActivity : PSAppCompatActivity() {
     fun refreshProfileImage() {
         VolleyService.getProfileImageReq(UserInfo.ID, this, {success->
             var array = success
+            Log.d("test", "${array.length().toString()}")
             profileImageInit()
             setProfileImage(array)
         })
