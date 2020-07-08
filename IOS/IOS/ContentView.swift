@@ -20,7 +20,7 @@
                     Text("리스트")
                 })
                     .tag(1)
-                StoryView().tabItem({
+                StoryListView().tabItem({
                     Text("스토리")
                 })
                     .tag(2)

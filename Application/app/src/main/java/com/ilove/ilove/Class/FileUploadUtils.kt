@@ -30,9 +30,6 @@ class FileUploadUtils {
                     Log.d("test", "$body")
                 }
             })
-
-
         }
     }
-
 }

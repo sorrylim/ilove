@@ -210,12 +210,12 @@ struct ChannelView : View{
             .navigationBarTitle("채널",displayMode: .inline)
             .onAppear{
                 
-                HttpService.shared.getViewCountReq(userId: "hyeha",callback: { (data) -> Void in
+                HttpService.shared.getViewCountReq(userId: "ksh",callback: { (data) -> Void in
                     self.profileCount=data.profile
                     self.storyCount=data.story
                 })
                 
-                HttpService.shared.getExpressionCountReq(userId: "hyeha", callback: { (data) -> Void in
+                HttpService.shared.getExpressionCountReq(userId: "ksh", callback: { (data) -> Void in
                     self.sendLikeCount=data.send_like
                     self.receiveLikeCount=data.receive_like
                     self.eachLikeCount=data.each_like
