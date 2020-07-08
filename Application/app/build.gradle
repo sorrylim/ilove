@@ -41,9 +41,16 @@ dependencies {
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
     //Volley Service
     implementation 'com.android.volley:volley:1.1.1'
+    //socket
+    implementation('io.socket:socket.io-client:1.0.0'){
+        exclude group: 'org.json', module: 'json'
+    }
     //권한
     implementation 'gun0912.ted:tedpermission:1.0.3'
     //이미지
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
+    //이미지 crop
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 }

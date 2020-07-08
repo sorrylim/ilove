@@ -6,12 +6,26 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.ilove.ilove.Adapter.PersonalityAdapter
+import com.ilove.ilove.Adapter.UserOptionAdapter
+import com.ilove.ilove.Item.UserItem
+import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 
 class PSDialog(activity: Activity) {
+
     var dialog : Dialog? = null
     var context : Activity? = null
+
+    companion object {
+        var userOptionData : String = ""
+    }
 
 
     init {
@@ -30,6 +44,65 @@ class PSDialog(activity: Activity) {
         if(dialog != null) {
             dialog!!.dismiss()
         }
+    }
+
+
+    fun setUserOption(title : String, userOption:String, userOptionList: ArrayList<UserItem.UserOption>, userOptionText: TextView) {
+        dialog = Dialog(context!!, android.R.style.Theme_DeviceDefault_Light_NoActionBar)
+        val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_useroption, null)
+        var titleText : TextView = dialogView.findViewById(R.id.text_useroptiontitle)
+        var userOptionRV: RecyclerView = dialogView.findViewById(R.id.rv_useroption)
+        var updateBtn: ImageView = dialogView.findViewById(R.id.image_updateoption)
+
+        userOptionData = ""
+
+        titleText.text = title
+
+        dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
+        dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
+
+        updateBtn.setOnClickListener {
+            if(userOptionData == "") {
+                Toast.makeText(context, title+"을 선택해주세요", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                if(userOption == "user_city") {
+                    VolleyService.updateUserCityReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
+                        if(success == "success") {
+                            userOptionText.text = userOptionData
+                            dismiss()
+                        }
+                        else {
+                            Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                }
+                else {
+                    VolleyService.updateUserOptionReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
+                        if(success == "success") {
+                            userOptionText.text = userOptionData
+                            dismiss()
+                        }
+                        else {
+                            Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                }
+            }
+        }
+
+
+        if(userOption == "user_personality" || userOption == "user_favoriteperson") {
+            userOptionRV.setHasFixedSize(true)
+            userOptionRV.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            userOptionRV.adapter = PersonalityAdapter(context!!, userOptionList)
+        }
+        else {
+            userOptionRV.setHasFixedSize(true)
+            userOptionRV.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            userOptionRV.adapter = UserOptionAdapter(context!!, userOptionList)
+        }
+
     }
 
     fun setBuyVipDialog() {
@@ -105,4 +178,6 @@ class PSDialog(activity: Activity) {
 
         return layoutParams
     }
+
+
 }

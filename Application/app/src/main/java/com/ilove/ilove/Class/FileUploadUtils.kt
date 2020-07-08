@@ -1,5 +1,10 @@
 package com.ilove.ilove.Class
 
+import android.app.Activity
+import android.content.ContentResolver
+import android.database.Cursor
+import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import okhttp3.*
 import java.io.File
@@ -8,13 +13,14 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
+
 class FileUploadUtils {
     companion object {
-        fun uploadImage(imagePath: String) {
+        fun uploadImage(imagePath: String, uploadType: String, imageUsage:String, imageContent: String, imageId: Int?) {
             val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
             val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
-            var requestBody : RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart("user_id", UserInfo.ID).addFormDataPart("img", "img.jpg", RequestBody.create(MultipartBody.FORM, File(imagePath))).addFormDataPart("image_usage", "story").addFormDataPart("image_content", "ddd").addFormDataPart("image_date", currentDate).build()
+            var requestBody : RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart("user_id", UserInfo.ID).addFormDataPart("img", "img.jpg", RequestBody.create(MultipartBody.FORM, File(imagePath))).addFormDataPart("image_usage", imageUsage).addFormDataPart("image_content", imageContent).addFormDataPart("image_date", currentDate).addFormDataPart("upload_type", uploadType).addFormDataPart("image_id", imageId.toString()).build()
 
             var request : Request = Request.Builder().url("http://18.217.130.157:3000/image/upload").post(requestBody).build()
 
@@ -31,5 +37,7 @@ class FileUploadUtils {
                 }
             })
         }
+
+
     }
 }

@@ -35,9 +35,13 @@ class StoryActivity : PSAppCompatActivity() {
         var imgUrl = intent.getStringExtra("image")
         var imageId = intent.getIntExtra("image_id", 0)
         var userId: String = ""
+        val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
+        val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
         VolleyService.getStoryUserReq(UserInfo.ID, imageId, this, {success->
-            text_storynickname.text = success.getString("user_nickname") + success.getString("user_birthday")
+            var age = currentDate.substring(0, 4).toInt() - success.getString("user_birthday").substring(0, 4).toInt() + 1
+
+            text_storynickname.text = success.getString("user_nickname") + ", " + age
             text_storygps.text = success.getString("user_recentgps")
             text_storycontent.text = success.getString("image_content")
             text_storyviewcount.text = success.getInt("viewcount").toString()
@@ -54,14 +58,11 @@ class StoryActivity : PSAppCompatActivity() {
         })
 
         btn_storylike.setOnLikeListener(object: OnLikeListener {
-            val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-            val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-
             override fun liked(likeButton: LikeButton?) {
                 VolleyService.insertStoryExpressionReq(UserInfo.ID, imageId, currentDate, this@StoryActivity, {success->
                     if(success=="success") {
                         text_storylikecount.text = (Integer.parseInt(text_storylikecount.text.toString()) + 1).toString()
-                        likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(this@StoryActivity.getResources(), R.drawable.heart_on, null))
+                        likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(this@StoryActivity.getResources(), R.drawable.bigheart_on, null))
                     }
                     else {
                         Toast.makeText(this@StoryActivity, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
@@ -72,7 +73,7 @@ class StoryActivity : PSAppCompatActivity() {
                 VolleyService.deleteStoryExpressionReq(UserInfo.ID, imageId, this@StoryActivity, {success->
                     if(success=="success") {
                         text_storylikecount.text = (Integer.parseInt(text_storylikecount.text.toString()) - 1).toString()
-                        likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(this@StoryActivity.getResources(), R.drawable.heart_off, null))
+                        likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(this@StoryActivity.getResources(), R.drawable.bigheart_off, null))
                     }
                     else {
                         Toast.makeText(this@StoryActivity, "서버와의 통신오류", Toast.LENGTH_SHORT).show()

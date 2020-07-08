@@ -45,7 +45,8 @@ class WriteStoryActivity : PSAppCompatActivity() {
         }
 
         text_insertstory.setOnClickListener {
-            FileUploadUtils.uploadImage(imagePath!!)
+            FileUploadUtils.uploadImage(imagePath!!, "insert", "story", edit_storycontent.text.toString(), null)
+            finish()
         }
 
 
@@ -78,10 +79,6 @@ class WriteStoryActivity : PSAppCompatActivity() {
                     val imageBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageCaptureUri)
                     image_writestory.visibility = View.VISIBLE
                     image_writestory.setImageBitmap(imageBitmap)
-
-
-
-
 
                 } catch (e: FileNotFoundException) {
                     // TODO Auto-generated catch block

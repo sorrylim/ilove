@@ -2,7 +2,6 @@ package com.ilove.ilove.Adapter
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +16,7 @@ import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import com.like.LikeButton
 import com.like.OnLikeListener
-import kotlinx.android.synthetic.main.item_partner.view.*
 import kotlinx.android.synthetic.main.item_partnerlist.view.*
-import kotlinx.android.synthetic.main.item_storylist.view.*
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -37,6 +34,12 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
+        val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+
+        var age = currentDate.substring(0, 4).toInt() - partnerList.get(position).userAge.substring(0,4).toInt() + 1
+
+
         if(partnerList.get(position).dateHistory == dateHistory)
         {
             holder.itemView.text_historydate.visibility = View.GONE
@@ -56,14 +59,12 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
             .load(partnerList.get(position).userImage)
             .into(holder.itemView.image_partnerlistprofile)
         holder.itemView.text_partnerlistnickname.text = partnerList.get(position).userNickname
-        holder.itemView.text_partnerlistage.text = partnerList.get(position).userAge + "," + partnerList.get(position).userCity
+        holder.itemView.text_partnerlistage.text = age.toString() + ", " + partnerList.get(position).userCity
         holder.itemView.image_partnerlistprofile.setClipToOutline(true)
         dateHistory = partnerList.get(position).dateHistory
 
 
         holder.itemView.btn_partnerlistlike.setOnLikeListener(object: OnLikeListener {
-            val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-            val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
             override fun liked(likeButton: LikeButton?) {
                 VolleyService.insertExpressionReq(UserInfo.ID, partnerList.get(position).userId, "like", currentDate, context, { success->
