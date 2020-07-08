@@ -70,81 +70,89 @@
         android:id="@+id/text_storycontent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:text="스토리내용"
         android:textColor="@color/colorMdGrey_900"
-        android:textSize="15dp"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_story" />
+        app:layout_constraintStart_toStartOf="@+id/image_storyimage"
+        app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
     <ImageView
         android:id="@+id/image_storyimage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/rounded_imageview"
         android:scaleType="fitXY"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_storycontent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_story"
         app:srcCompat="@drawable/default_image" />
 
     <TextView
         android:id="@+id/text_storylikecount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="좋아요갯수"
         android:textColor="@color/colorMdGrey_900"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_storylike" />
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="@+id/image_storyimage"
+        app:layout_constraintTop_toBottomOf="@+id/image_storyimage" />
 
     <TextView
         android:id="@+id/text_storyviewcount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
         android:text="조회수"
         android:textColor="@color/colorMdGrey_900"
-        android:textSize="20dp"
+        android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="@+id/image_storyimage"
-        app:layout_constraintTop_toBottomOf="@+id/image_storyimage" />
+        app:layout_constraintTop_toTopOf="@+id/imageView39" />
 
     <com.like.LikeButton
         android:id="@+id/btn_storylike"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="5dp"
         app:anim_scale_factor="2"
         app:circle_end_color="@color/colorMdRed_600"
         app:circle_start_color="@color/colorMdWhite_1000"
         app:dots_primary_color="@color/colorMdGreen_600"
         app:dots_secondary_color="@color/colorMdBlue_300"
-        app:icon_size="50dp"
+        app:icon_size="25dp"
         app:icon_type="heart"
         app:is_enabled="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_storyimage"
-        app:like_drawable="@drawable/bigheart_on"
-        app:unlike_drawable="@drawable/bigheart_off" />
+        app:layout_constraintEnd_toStartOf="@+id/imageView39"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView39"
+        app:layout_constraintTop_toTopOf="@+id/textView39"
+        app:like_drawable="@drawable/heart_on"
+        app:unlike_drawable="@drawable/heart_off" />
 
     <ImageView
         android:id="@+id/imageView39"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toStartOf="@+id/text_storyviewcount"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_storyimage"
+        app:layout_constraintTop_toTopOf="@+id/btn_storylike"
         app:srcCompat="@drawable/eye_icon" />
+
+    <TextView
+        android:id="@+id/textView39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="명이 이 스토리를 좋아합니다."
+        android:textColor="#070707"
+        android:textSize="15dp"
+        app:layout_constraintStart_toEndOf="@+id/text_storylikecount"
+        app:layout_constraintTop_toTopOf="@+id/text_storylikecount" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
