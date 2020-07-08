@@ -50,7 +50,7 @@ class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>) 
             .load(userList.get(position).userImage)
             .into(holder.itemView.image_newuser)
         holder.itemView.image_newuser.setClipToOutline(true)
-        holder.itemView.image_newuser.setColorFilter(Color.parseColor("#9E9E9E"), PorterDuff.Mode.MULTIPLY)
+        //holder.itemView.image_newuser.setColorFilter(Color.parseColor("#9E9E9E"), PorterDuff.Mode.MULTIPLY)
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view){
