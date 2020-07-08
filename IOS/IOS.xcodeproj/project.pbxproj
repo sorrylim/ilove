@@ -20,7 +20,7 @@
 		547E620F249C67A400D8B7C4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 547E620E249C67A400D8B7C4 /* Preview Assets.xcassets */; };
 		547E6212249C67A400D8B7C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 547E6210249C67A400D8B7C4 /* LaunchScreen.storyboard */; };
 		547E621C249C829200D8B7C4 /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E621B249C829200D8B7C4 /* UserListView.swift */; };
-		547E621F249C82B400D8B7C4 /* StoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E621E249C82B400D8B7C4 /* StoryView.swift */; };
+		547E621F249C82B400D8B7C4 /* StoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E621E249C82B400D8B7C4 /* StoryListView.swift */; };
 		547E6221249C82CC00D8B7C4 /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E6220249C82CC00D8B7C4 /* ChatListView.swift */; };
 		547E6225249C88E300D8B7C4 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E6224249C88E300D8B7C4 /* ChannelView.swift */; };
 		547E6228249CA27C00D8B7C4 /* WriteStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E6227249CA27C00D8B7C4 /* WriteStoryView.swift */; };
@@ -31,6 +31,7 @@
 		549E5B3724ADB29D00050E62 /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E5B3624ADB29D00050E62 /* MultilineTextField.swift */; };
 		549E5B3924ADB34F00050E62 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E5B3824ADB34F00050E62 /* ImagePicker.swift */; };
 		549E5B3B24ADB39300050E62 /* ExtensionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E5B3A24ADB39300050E62 /* ExtensionClass.swift */; };
+		54BC272E24B4460500DAE862 /* StoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BC272D24B4460500DAE862 /* StoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,7 +50,7 @@
 		547E6211249C67A400D8B7C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		547E6213249C67A400D8B7C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		547E621B249C829200D8B7C4 /* UserListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
-		547E621E249C82B400D8B7C4 /* StoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryView.swift; sourceTree = "<group>"; };
+		547E621E249C82B400D8B7C4 /* StoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryListView.swift; sourceTree = "<group>"; };
 		547E6220249C82CC00D8B7C4 /* ChatListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListView.swift; sourceTree = "<group>"; };
 		547E6224249C88E300D8B7C4 /* ChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelView.swift; sourceTree = "<group>"; };
 		547E6227249CA27C00D8B7C4 /* WriteStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteStoryView.swift; sourceTree = "<group>"; };
@@ -60,6 +61,7 @@
 		549E5B3624ADB29D00050E62 /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
 		549E5B3824ADB34F00050E62 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		549E5B3A24ADB39300050E62 /* ExtensionClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionClass.swift; sourceTree = "<group>"; };
+		54BC272D24B4460500DAE862 /* StoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,7 +155,7 @@
 				547E6226249CA26900D8B7C4 /* Story */,
 				54745B9524A06E6400B32F25 /* MyPageView.swift */,
 				547E621B249C829200D8B7C4 /* UserListView.swift */,
-				547E621E249C82B400D8B7C4 /* StoryView.swift */,
+				547E621E249C82B400D8B7C4 /* StoryListView.swift */,
 				547E6220249C82CC00D8B7C4 /* ChatListView.swift */,
 				547E6224249C88E300D8B7C4 /* ChannelView.swift */,
 			);
@@ -164,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				547E6227249CA27C00D8B7C4 /* WriteStoryView.swift */,
+				54BC272D24B4460500DAE862 /* StoryView.swift */,
 			);
 			path = Story;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54BC272E24B4460500DAE862 /* StoryView.swift in Sources */,
 				547E6203249C67A300D8B7C4 /* AppDelegate.swift in Sources */,
 				547E6208249C67A300D8B7C4 /* IOS.xcdatamodeld in Sources */,
 				547E621C249C829200D8B7C4 /* UserListView.swift in Sources */,
@@ -268,7 +272,7 @@
 				549E5B3724ADB29D00050E62 /* MultilineTextField.swift in Sources */,
 				545D598F24A0A448000B8A5A /* VipGuideView.swift in Sources */,
 				54745B9B24A0724900B32F25 /* ItemManageView.swift in Sources */,
-				547E621F249C82B400D8B7C4 /* StoryView.swift in Sources */,
+				547E621F249C82B400D8B7C4 /* StoryListView.swift in Sources */,
 				547E620A249C67A300D8B7C4 /* ContentView.swift in Sources */,
 				548AD92824A1A772003E27FD /* HttpService.swift in Sources */,
 				54745B9924A071FC00B32F25 /* SettingView.swift in Sources */,
@@ -414,6 +418,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"IOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 6K8FXCD729;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = IOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -433,6 +438,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"IOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 6K8FXCD729;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = IOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
