@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -33,9 +34,11 @@ class StoryFragment : Fragment() {
         val writeStoryBtn : Button = rootView.findViewById(R.id.btn_writestory)
         val storyRV : RecyclerView = rootView.findViewById(R.id.rv_storyview)
         var myStoryImage: ImageView = rootView.findViewById(R.id.image_mystoryimage)
-
         var myStoryImageId: Int? = null
         var myStoryImagePath : String? = null
+
+        var myStoryBlock1 : ImageView = rootView.findViewById(R.id.img_none2)
+        var myStoryBlock2 : TextView = rootView.findViewById(R.id.text_none)
 
         myStoryImage.setClipToOutline(true)
 
@@ -76,6 +79,12 @@ class StoryFragment : Fragment() {
                         intent.putExtra("image_id", myStoryImageId as Int)
                         startActivity(intent)
                     }
+                }
+                else {
+                    myStoryBlock1.visibility = View.VISIBLE
+                    myStoryBlock2.visibility = View.VISIBLE
+                    myStoryBlock1.bringToFront()
+                    myStoryBlock2.bringToFront()
                 }
             })
 
