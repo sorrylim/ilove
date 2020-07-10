@@ -17,13 +17,16 @@ struct StoryListView : View {
     @State var total:Int=0
     
     @State var storyList:[StoryModel]=[]
+    @State var myStoryImage:UIImage=UIImage()
     
     var body: some View{
         NavigationView{
             VStack{
                 HStack{
-                    Image(systemName: "circle")
+                    Image(uiImage: self.myStoryImage)
+                        .resizable()
                         .frame(width:120,height: 120)
+                        .cornerRadius(10)
                     Spacer()
                     VStack{
                         Spacer()
@@ -48,6 +51,7 @@ struct StoryListView : View {
                     Spacer()
                 }
                 .frame(height:120)
+                .padding()
                 
                 VStack(spacing: 0){
                     ForEach(0..<self.rows, id: \.self){i in
@@ -89,6 +93,12 @@ struct StoryListView : View {
                     self.rows+=1
                 }
             }
+            
+            HttpService.shared.getMyStoryImage(userId: "ksh") { (myStoryImageModel) -> Void in
+                KingfisherManager.shared.retrieveImage(with: URL(string: myStoryImageModel.image)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                    self.myStoryImage=image!
+                })
+            }
         }
     }
 }
@@ -108,15 +118,6 @@ struct StoryCell : View{
     @State var storyVisible=false
     
     var body: some View {
-        /*Image(uiImage: UIImage(data: try! Data(contentsOf: imageUrl))!)
-         .resizable()
-         .frame(width: UIScreen.main.bounds.width/3,height: UIScreen.main.bounds.width/3)
-         .onTapGesture {
-         self.storyVisible=true
-         }*/
-        /*.sheet(isPresented: $storyVisible){
-         StoryView(story: self.story)
-         }*/
         Image(uiImage: self.uiImage)
             .resizable()
             .frame(width: UIScreen.main.bounds.width/3, height: UIScreen.main.bounds.width/3)

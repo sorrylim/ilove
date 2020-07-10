@@ -91,3 +91,8 @@ struct StoryUserModel : Codable {
     var viewcount: Int
     var like: Int
 }
+
+struct MyStoryImageModel : Codable {
+    var image_id : Int
+    var image : String
+}

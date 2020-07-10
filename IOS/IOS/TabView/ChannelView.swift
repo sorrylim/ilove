@@ -115,7 +115,8 @@ struct ChannelView : View{
                 
                 Group{
                     HStack{
-                        Image(systemName: "circle")
+                        Image("icon")
+                            .resizable()
                             .frame(width:60,height:60)
                         VStack(alignment: .leading){
                             Text("내 프로필 상단으로 올리기")

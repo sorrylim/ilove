@@ -112,8 +112,11 @@ struct PartnerRow : View{
     
     @State var partner : PartnerModel
     @State var likeImage = Image(systemName: "heart")
+    @State var meetImage = Image("call_icon")
     
     @State var uiImage=UIImage()
+    
+    @State var age=0
     
     var body: some View {
         VStack{
@@ -124,109 +127,146 @@ struct PartnerRow : View{
                 
                 Image(uiImage: self.uiImage)
                     .resizable()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 70, height: 70)
                     .cornerRadius(10)
                 
                 VStack(alignment: .leading){
                     Text(partner.user_nickname)
                         .font(.system(size:20,weight:.bold))
                     Spacer()
-                    Text("\(partner.user_birthday), \(partner.user_city)")
-                        .font(.system(size:15))
-                }
-                Spacer()
-                likeImage
-                    .foregroundColor(Color.red)
-                    .onTapGesture {
-                        if self.partner.like==0 {
-                            let now = Date()
-                            let dateFormatter = DateFormatter()
-                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                            let date=dateFormatter.string(from: now)
-                            
-                            HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.partner.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
-                                if resultModel.result=="success" {
-                                    self.likeImage=Image(systemName: "heart.fill")
+                    HStack(spacing: 10){
+                        Text("\(self.age), \(partner.user_city)")
+                            .font(.system(size:15))
+                        Spacer()
+                        meetImage
+                            .resizable()
+                            .frame(width: 15, height: 15)
+                        likeImage
+                            .foregroundColor(Color.red)
+                            .frame(width: 15, height: 15)
+                            .onTapGesture {
+                                if self.partner.like==0 {
+                                    let now = Date()
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                    let date=dateFormatter.string(from: now)
+                                    
+                                    HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.partner.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
+                                        if resultModel.result=="success" {
+                                            self.likeImage=Image(systemName: "heart.fill")
+                                        }
+                                        else if resultModel.result=="eachsuccess" {
+                                            self.likeImage=Image(systemName: "heart.fill")
+                                        }
+                                        self.partner.like=1
+                                    }
                                 }
-                                else if resultModel.result=="eachsuccess" {
-                                    self.likeImage=Image(systemName: "heart.fill")
-                                }
-                                self.partner.like=1
-                            }
                         }
+                    }
                 }
             }
             .padding(10)
         }
         .onAppear(){
+            KingfisherManager.shared.retrieveImage(with: URL(string: self.partner.image)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                self.uiImage=image!
+            })
+            
             if self.partner.like == 1 {
                 self.likeImage=Image(systemName: "heart.fill")
             }
             else {
                 self.likeImage=Image(systemName: "heart")
             }
+            
+            let now = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let date=dateFormatter.string(from: now)
+            
+            self.age=(Int(date.split(separator: "-")[0]).unsafelyUnwrapped-Int(self.partner.user_birthday.split(separator: "-")[0]).unsafelyUnwrapped+1)
         }
     }
 }
 
 struct VisitPartnerRow : View{
     @State var partner : VisitPartnerModel
+    
     @State var likeImage = Image(systemName: "heart")
+    @State var meetImage = Image("call_icon")
     
     @State var uiImage = UIImage()
+    
+    @State var age=0
     
     var body: some View {
         VStack{
             Text(partner.visit_date)
                 .font(.system(size:10))
             HStack(spacing: 20){
-                /*Image(uiImage: try! UIImage(data: Data(contentsOf: URL(string: partner.image)!))!)
-                    .resizable()
-                 .frame(width: 50, height: 50)*/
                 
                 Image(uiImage: self.uiImage)
                     .resizable()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 70, height: 70)
                     .cornerRadius(10)
                 
                 VStack(alignment: .leading){
                     Text(partner.user_nickname)
                         .font(.system(size:20,weight:.bold))
                     Spacer()
-                    Text("\(partner.user_birthday), \(partner.user_city)")
-                        .font(.system(size:15))
-                }
-                Spacer()
-                likeImage
-                    .foregroundColor(Color.red)
-                    .onTapGesture {
-                        if self.partner.like==0 {
-                            let now = Date()
-                            let dateFormatter = DateFormatter()
-                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                            let date=dateFormatter.string(from: now)
-                            
-                            HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.partner.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
-                                if resultModel.result=="success" {
-                                    self.likeImage=Image(systemName: "heart.fill")
+                    HStack(spacing:10){
+                        Text("\(self.age), \(partner.user_city)")
+                            .font(.system(size:15))
+                        Spacer()
+                        meetImage
+                            .resizable()
+                            .frame(width: 15, height: 15)
+                        likeImage
+                            .foregroundColor(Color.red)
+                            .frame(width: 15, height: 15)
+                            .onTapGesture {
+                                if self.partner.like==0 {
+                                    let now = Date()
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                    let date=dateFormatter.string(from: now)
+                                    
+                                    HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.partner.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
+                                        if resultModel.result=="success" {
+                                            self.likeImage=Image(systemName: "heart.fill")
+                                        }
+                                        else if resultModel.result=="eachsuccess" {
+                                            self.likeImage=Image(systemName: "heart.fill")
+                                        }
+                                        self.partner.like=1
+                                    }
                                 }
-                                else if resultModel.result=="eachsuccess" {
-                                    self.likeImage=Image(systemName: "heart.fill")
-                                }
-                                self.partner.like=1
-                            }
                         }
+                    }
                 }
+                
+                
             }
             .padding(10)
         }
         .onAppear(){
+            KingfisherManager.shared.retrieveImage(with: URL(string: self.partner.image)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                self.uiImage=image!
+            })
+            
             if self.partner.like == 1 {
                 self.likeImage=Image(systemName: "heart.fill")
             }
             else {
                 self.likeImage=Image(systemName: "heart")
             }
+            
+            let now = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let date=dateFormatter.string(from: now)
+            
+            self.age=(Int(date.split(separator: "-")[0]).unsafelyUnwrapped-Int(self.partner.user_birthday.split(separator: "-")[0]).unsafelyUnwrapped+1)
         }
     }
 }
