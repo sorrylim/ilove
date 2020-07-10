@@ -73,14 +73,14 @@
 
             <ImageView
                 android:id="@+id/imageView7"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginBottom="9dp"
                 app:layout_constraintBottom_toTopOf="@+id/textView36"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/default_image" />
+                app:srcCompat="@drawable/vip" />
 
             <TextView
                 android:id="@+id/text_vipticket"
@@ -113,14 +113,14 @@
 
             <ImageView
                 android:id="@+id/imageView8"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginBottom="9dp"
                 app:layout_constraintBottom_toTopOf="@+id/textView37"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/default_image" />
+                app:srcCompat="@drawable/message_candy" />
 
             <TextView
                 android:id="@+id/text_messageticket"
@@ -154,14 +154,14 @@
 
             <ImageView
                 android:id="@+id/imageView9"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginBottom="9dp"
                 app:layout_constraintBottom_toTopOf="@+id/textView38"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/default_image" />
+                app:srcCompat="@drawable/heart_candy" />
 
             <TextView
                 android:id="@+id/text_liketicket"
