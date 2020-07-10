@@ -48,7 +48,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Downloads/remove_red_eye-24px.svg" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/icon.svg" />
                                                 <entry key="opacityPercent" value="80" />
                                               </map>
                                             </option>
@@ -82,8 +82,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/remove_red_eye-24px.svg" />
-                                      <entry key="outputName" value="eye_icon" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/icon.svg" />
+                                      <entry key="outputName" value="pencil_icon" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="000000" />
                                     </map>
