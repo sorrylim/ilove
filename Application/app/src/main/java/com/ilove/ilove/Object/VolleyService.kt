@@ -482,7 +482,6 @@ object VolleyService {
                 success(it)
             },
             Response.ErrorListener {
-
             }) {}
         Volley.newRequestQueue(context).add(request)
     }

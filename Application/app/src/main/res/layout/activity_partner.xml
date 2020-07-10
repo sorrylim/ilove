@@ -53,18 +53,18 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/default_profile" />
 
-    <TextView
-        android:id="@+id/text_partnernickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:text="닉네임"
-        android:textColor="@color/colorMdGrey_900"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_partnerprofile" />
+            <TextView
+                android:id="@+id/text_partnernickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="닉네임"
+                android:textColor="@color/colorMdGrey_900"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_partnerprofile" />
 
     <TextView
         android:id="@+id/text_partnerage"
@@ -76,20 +76,20 @@
         app:layout_constraintStart_toStartOf="@+id/text_partnernickname"
         app:layout_constraintTop_toBottomOf="@+id/text_partnernickname" />
 
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="10dp"
-        android:text="좌우명"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:textColor="@color/colorMdGrey_900"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_partnerage" />
+            <TextView
+                android:id="@+id/textView28"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:text="좌우명"
+                android:textColor="@color/colorMdGrey_900"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_partnerage" />
 
     <TextView
         android:id="@+id/text_partnerintroduce"
@@ -105,21 +105,21 @@
         app:layout_constraintStart_toStartOf="@+id/textView28"
         app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
-    <TextView
-        android:id="@+id/textView30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:text="프로필"
-        android:textSize="20dp"
-        android:textColor="@color/colorMdGrey_900"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_partnerintroduce" />
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="프로필"
+                android:textColor="@color/colorMdGrey_900"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_partnerintroduce" />
 
     <TextView
-        android:id="@+id/textView32"
+        android:id="@+id/text_partnerheight1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -138,13 +138,13 @@
         android:textSize="15dp"
         android:textColor="@color/colorMdGrey_900"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView32"
+        app:layout_constraintBottom_toBottomOf="@+id/text_partnerheight1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView32"
-        app:layout_constraintTop_toTopOf="@+id/textView32" />
+        app:layout_constraintStart_toEndOf="@+id/text_partnerheight1"
+        app:layout_constraintTop_toTopOf="@+id/text_partnerheight1" />
 
     <TextView
-        android:id="@+id/textView33"
+        android:id="@+id/text_partnerweight1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -153,7 +153,7 @@
         android:textColor="@color/colorMdGrey_700"
         android:textSize="15dp"
         app:layout_constraintStart_toStartOf="@+id/textView30"
-        app:layout_constraintTop_toBottomOf="@+id/textView32" />
+        app:layout_constraintTop_toBottomOf="@+id/text_partnerheight1" />
 
     <TextView
         android:id="@+id/text_partnerweight"
@@ -163,10 +163,10 @@
         android:textSize="15dp"
         android:textColor="@color/colorMdGrey_900"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView33"
+        app:layout_constraintBottom_toBottomOf="@+id/text_partnerweight1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView33"
-        app:layout_constraintTop_toTopOf="@+id/textView33" />
+        app:layout_constraintStart_toEndOf="@+id/text_partnerweight1"
+        app:layout_constraintTop_toTopOf="@+id/text_partnerweight1" />
 
     <TextView
         android:id="@+id/textView35"
@@ -176,7 +176,7 @@
         android:layout_marginTop="15dp"
         android:text="혈액형"
         app:layout_constraintStart_toStartOf="@+id/textView30"
-        app:layout_constraintTop_toBottomOf="@+id/textView33" />
+        app:layout_constraintTop_toBottomOf="@+id/text_partnerweight1" />
 
     <TextView
         android:id="@+id/text_partnerbloodtype"

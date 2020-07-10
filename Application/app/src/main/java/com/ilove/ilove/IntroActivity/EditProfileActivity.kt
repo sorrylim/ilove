@@ -509,7 +509,6 @@ class EditProfileActivity : PSAppCompatActivity() {
     fun refreshProfileImage() {
         VolleyService.getProfileImageReq(UserInfo.ID, this, {success->
             var array = success
-            Log.d("test", "${array.length().toString()}")
             profileImageInit()
             setProfileImage(array)
         })
