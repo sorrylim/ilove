@@ -69,6 +69,9 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
             var intent = Intent(context, PartnerActivity::class.java)
             intent.putExtra("userNickname", partnerList.get(position).userNickname)
             intent.putExtra("userId", partnerList.get(position).userId)
+            intent.putExtra("userAge", age.toString())
+            intent.putExtra("userCity", partnerList.get(position).userCity)
+
 
             val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
             val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
@@ -83,7 +86,6 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
 
 
         holder.itemView.btn_partnerlistlike.setOnLikeListener(object: OnLikeListener {
-
             override fun liked(likeButton: LikeButton?) {
                 VolleyService.insertExpressionReq(UserInfo.ID, partnerList.get(position).userId, "like", currentDate, context, { success->
                     when(success) {

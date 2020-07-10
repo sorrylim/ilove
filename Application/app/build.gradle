@@ -53,4 +53,7 @@ dependencies {
 
     //이미지 crop
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
+    //circle indicator
+    implementation 'me.relex:circleindicator:2.1.4'
 }

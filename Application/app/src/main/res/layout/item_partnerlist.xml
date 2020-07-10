@@ -74,7 +74,7 @@
         app:unlike_drawable="@drawable/heart_off" />
 
     <Button
-        android:id="@+id/btn_call"
+        android:id="@+id/btn_partnerlistcall"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="5dp"

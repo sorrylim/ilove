@@ -88,6 +88,8 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
             var intent = Intent(context, PartnerActivity::class.java)
             intent.putExtra("userNickname", userList.get(position).userNickname)
             intent.putExtra("userId", userList.get(position).userId)
+            intent.putExtra("userAge", age.toString())
+            intent.putExtra("userCity", userList.get(position).userCity)
 
             val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
             val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
