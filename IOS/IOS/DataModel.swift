@@ -68,8 +68,7 @@ struct UserModel : Codable {
     var user_birthday : String
     var user_city : String
     var user_recentgps : String
-    var user_introduce : String
-    var user_certification : String?
+    var user_previewintroduce : String?
     var user_phone : String
     var like : Int
     var meet : Int
