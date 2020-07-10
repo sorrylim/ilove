@@ -86,7 +86,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                     json.getInt("like"), json.getInt("meet"))
                 partnerList.add(partner)
             }
-            VolleyService.getEach2UserReq("ljs", expressionType, this, {success->
+            VolleyService.getEach2UserReq(UserInfo.ID, expressionType, this, {success->
                 var array = success
                 for(i in 0..array!!.length()-1) {
                     var json = array[i] as JSONObject

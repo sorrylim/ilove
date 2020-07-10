@@ -73,13 +73,21 @@
         app:like_drawable="@drawable/heart_on"
         app:unlike_drawable="@drawable/heart_off" />
 
-    <Button
+    <com.like.LikeButton
         android:id="@+id/btn_partnerlistcall"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/call_icon"
+        app:circle_end_color="@color/colorMdRed_600"
+        app:circle_start_color="@color/colorMdWhite_1000"
+        app:dots_primary_color="@color/colorMdGreen_600"
+        app:dots_secondary_color="@color/colorMdBlue_300"
+        app:icon_size="30dp"
+        app:icon_type="heart"
+        app:is_enabled="true"
+        app:like_drawable="@drawable/call_icon"
+        app:unlike_drawable="@drawable/call_n_icon"
         app:layout_constraintEnd_toStartOf="@+id/btn_partnerlistlike"
         app:layout_constraintTop_toTopOf="@+id/btn_partnerlistlike" />
 
