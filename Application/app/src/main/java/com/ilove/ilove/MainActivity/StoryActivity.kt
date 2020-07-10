@@ -63,7 +63,7 @@ class StoryActivity : PSAppCompatActivity() {
             text_storyviewcount.text = success.getInt("viewcount").toString()
             text_storylikecount.text = success.getInt("likecount").toString()
             userId = success.getString("user_id")
-            Glide.with(this).load(imgUrl).into(image_storyimage)
+            Glide.with(this).load(imgUrl).apply(RequestOptions().centerCrop()).into(image_storyimage)
 
             if(success.getInt("like") == 1) {
                 btn_storylike.setLiked(true)

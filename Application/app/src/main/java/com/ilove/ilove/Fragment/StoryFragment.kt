@@ -49,6 +49,11 @@ class StoryFragment : Fragment() {
             startActivity(intent)
         }
 
+        myStoryImage.setOnClickListener {
+            var intent = Intent(activity!!, WriteStoryActivity::class.java)
+            startActivity(intent)
+        }
+
         VolleyService.getStoryImageReq(UserInfo.ID, "story", activity!!, { success->
             storyList.clear()
 
@@ -79,15 +84,10 @@ class StoryFragment : Fragment() {
                         intent.putExtra("image_id", myStoryImageId as Int)
                         startActivity(intent)
                     }
-                }
-                else {
-                    myStoryBlock1.visibility = View.VISIBLE
-                    myStoryBlock2.visibility = View.VISIBLE
-                    myStoryBlock1.bringToFront()
-                    myStoryBlock2.bringToFront()
+                    myStoryBlock1.visibility = View.INVISIBLE
+                    myStoryBlock2.visibility = View.INVISIBLE
                 }
             })
-
         })
 
         return rootView

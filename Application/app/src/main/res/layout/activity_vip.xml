@@ -47,10 +47,11 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
                 android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/textView23"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_guidevipheader"
+                app:layout_constraintTop_toTopOf="@+id/textView22"
                 app:srcCompat="@drawable/message_candy" />
 
             <TextView
@@ -71,6 +72,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
                 android:text="좋아요가 연결된 상대와는 어떠한 제한 없이 무제한 메세지 이용이 가능합니다 마음껏 채팅을 즐겨보세요!"
                 android:textColor="@color/colorMdGrey_700"
@@ -84,10 +86,10 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
                 android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/textView25"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="@+id/textView24"
                 app:srcCompat="@drawable/profile" />
 
             <TextView
@@ -95,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="40dp"
                 android:text="프로필 열람 무제한"
                 android:textColor="@color/colorMdGrey_900"
                 android:textSize="15dp"
@@ -108,7 +110,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
                 android:text="아이러브 모든 유저의 상세프로필을 열람할 수 있습니다. 당신의 스타일을 찾아 연락해보세요!"
                 android:textColor="@color/colorMdGrey_700"
@@ -122,10 +124,10 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
                 android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/textView27"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3"
+                app:layout_constraintTop_toTopOf="@+id/textView26"
                 app:srcCompat="@drawable/heart_candy" />
 
             <TextView
@@ -133,7 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="40dp"
                 android:text="매일 좋아요 5개 지급"
                 android:textColor="@color/colorMdGrey_900"
                 android:textSize="15dp"
@@ -146,6 +148,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
                 android:text="매일마다 지급되는 5개의 좋아요를 잘 활용하여 매칭확률을 높이세요!"
                 android:textColor="@color/colorMdGrey_700"
@@ -159,10 +162,10 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
                 android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/textView29"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView4"
+                app:layout_constraintTop_toTopOf="@+id/textView28"
                 app:srcCompat="@drawable/meet" />
 
             <TextView
@@ -170,7 +173,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="40dp"
                 android:text="매일 만나봐요 1개 지급"
                 android:textColor="@color/colorMdGrey_900"
                 android:textSize="15dp"
@@ -183,6 +186,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
                 android:text="매일마다 지급되는 만나봐요를 잘 활용하여 미팅확률을 높이세요!"
                 android:textColor="@color/colorMdGrey_700"
@@ -196,7 +200,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="100dp"
-                android:layout_marginTop="200dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="100dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/more_rounded_corner_shape_button"

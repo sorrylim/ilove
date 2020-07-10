@@ -56,6 +56,8 @@ class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>) 
             var intent = Intent(context, PartnerActivity::class.java)
             intent.putExtra("userId", userList.get(position).userId)
             intent.putExtra("userNickname", userList.get(position).userNickname)
+            intent.putExtra("userAge", age.toString())
+            intent.putExtra("userCity", userList.get(position).userCity)
             context.startActivity(intent)
         }
     }
