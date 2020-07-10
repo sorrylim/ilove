@@ -61,13 +61,19 @@
         app:layout_constraintStart_toEndOf="@+id/image_userlistprofile"
         app:layout_constraintTop_toTopOf="@+id/image_userlistprofile" />
 
-    <Button
+
+    <com.like.LikeButton
         android:id="@+id/btn_call"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/call_icon"
+        app:icon_size="30dp"
+        app:icon_type="heart"
+        app:is_enabled="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_userlike"
-        app:layout_constraintTop_toTopOf="@+id/btn_userlike" />
+        app:layout_constraintTop_toTopOf="@+id/btn_userlike"
+        app:like_drawable="@drawable/call_icon"
+        app:unlike_drawable="@drawable/call_n_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>
