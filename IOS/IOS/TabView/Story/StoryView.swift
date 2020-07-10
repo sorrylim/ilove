@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import class Kingfisher.KingfisherManager
 
 struct StoryView : View{
     
@@ -15,7 +16,11 @@ struct StoryView : View{
     @State var story : StoryModel
     @State var storyUser = StoryUserModel(user_id: "", user_nickname: "", user_birthday: "", user_recentgps: "", image_content: "", likecount: 0, viewcount: 0, like: 0)
     
+    @State var uiImage=UIImage()
+    
     @State var likeImage: Image = Image(systemName: "heart")
+    
+    @State var age=0
     
     var body : some View{
         VStack{
@@ -24,7 +29,7 @@ struct StoryView : View{
                     .resizable()
                     .frame(width:20,height: 20)
                 VStack(alignment: .leading){
-                    Text("\(self.storyUser.user_nickname), \(self.storyUser.user_birthday)")
+                    Text("\(self.storyUser.user_nickname), \(self.age)")
                     Text("\(self.storyUser.user_recentgps)")
                         .font(.system(size:15))
                         .foregroundColor(Color.gray)
@@ -34,10 +39,12 @@ struct StoryView : View{
             .padding()
             Text("\(self.storyUser.image_content)")
             Spacer()
-            Image(uiImage: UIImage(data: try! Data(contentsOf: URL(string: self.story.image)!))!)
+            
+            Image(uiImage: self.uiImage)
                 .resizable()
                 .frame(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.width/2)
                 .cornerRadius(10)
+            
             Spacer()
             HStack{
                 likeImage
@@ -73,6 +80,10 @@ struct StoryView : View{
             }
             .padding()
             .onAppear(){
+                KingfisherManager.shared.retrieveImage(with: URL(string: self.story.image)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                    self.uiImage=image!
+                })
+                
                 HttpService.shared.getStoryUserReq(userId: "ksh", imageId: self.story.image_id){ (storyUserModel) -> Void in
                     self.storyUser=storyUserModel
                     if self.storyUser.like==1 {
@@ -92,6 +103,8 @@ struct StoryView : View{
                     HttpService.shared.insertHistoryReq(userId: "ksh", partnerId: self.story.user_id, visitType: "story", visitDate: date){ (resultModel) -> Void in
                         
                     }
+                    
+                    self.age=(Int(date.split(separator: "-")[0]).unsafelyUnwrapped-Int(self.storyUser.user_birthday.split(separator: "-")[0]).unsafelyUnwrapped+1)
                 }
             }
         }

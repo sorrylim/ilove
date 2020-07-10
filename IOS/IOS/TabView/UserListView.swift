@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import class Kingfisher.KingfisherManager
 
 struct UserListView : View{
     
@@ -33,19 +34,29 @@ struct UserRow : View{
     
     @State var user : UserModel
     
+    @State var uiImage = UIImage()
+    
     @State var likeImage: Image = Image(systemName: "heart")
     
     var body : some View{
         HStack(spacing: 20){
-            Image(uiImage: try! UIImage(data: Data(contentsOf: URL(string: user.image)!))!)
+            Image(uiImage: self.uiImage)
                 .resizable()
                 .frame(width: 100, height: 100)
+                .cornerRadius(10)
+            
             VStack(alignment: .leading, spacing: 10){
                 Text("\(user.user_nickname), \(user.user_birthday), \(user.user_city), \(user.user_recentgps)")
                     .font(.system(size : 10))
                     .foregroundColor(.gray)
-                Text(user.user_introduce)
-                    .font(.system(size: 15))
+                if user.user_previewintroduce != nil {
+                    Text(user.user_previewintroduce!)
+                        .font(.system(size: 15))
+                }
+                else {
+                    Text("")
+                        .font(.system(size:15))
+                }
                 Spacer()
             }
             Spacer()
@@ -91,5 +102,10 @@ struct UserRow : View{
             }
         }
         .padding(10)
+        .onAppear(){
+            KingfisherManager.shared.retrieveImage(with: URL(string: self.user.image)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                self.uiImage=image!
+            })
+        }
     }
 }

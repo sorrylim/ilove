@@ -8,8 +8,10 @@
 
 import SwiftUI
 
+import class Kingfisher.KingfisherManager
 
 struct ChannelView : View{
+    
     
     @State var showModal = false
     
@@ -252,21 +254,29 @@ struct ChannelView_Previews: PreviewProvider {
 }
 
 struct NewUserCell: View {
+    
     @State var newUser : NewUserModel
     
+    @State var uiImage = UIImage()
     //@State var storyVisible=false
+    @State var age = 0
     
     var body: some View {
         ZStack{
-            Image(uiImage: UIImage(data: try! Data(contentsOf: URL(string: newUser.image)!))!)
-                .resizable()
-                .frame(width: 150,height: 150)
-                .cornerRadius(10)
+            Image(uiImage: self.uiImage)
+             .resizable()
+             .frame(width: 150,height: 150)
+             .cornerRadius(10)
+            
+            /*CustomImageView(urlString: newUser.image)
+                .frame(width: 150, height: 150)
+                .cornerRadius(10)*/
+            
             
             VStack(spacing:10){
                 Spacer()
                 HStack{
-                    Text("\(newUser.user_nickname),\(newUser.user_birthday)")
+                    Text("\(newUser.user_nickname),\(self.age)")
                         .foregroundColor(Color.white)
                         .font(.system(size: 15, weight: .bold))
                     Spacer()
@@ -279,7 +289,18 @@ struct NewUserCell: View {
                 }
             }
             .padding()
-            
+            .onAppear(){
+                KingfisherManager.shared.retrieveImage(with: URL(string: self.newUser.image)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                    self.uiImage=image!
+                })
+                
+                let now = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                let date=dateFormatter.string(from: now)
+                
+                self.age=(Int(date.split(separator: "-")[0]).unsafelyUnwrapped-Int(self.newUser.user_birthday.split(separator: "-")[0]).unsafelyUnwrapped+1)
+            }
             //.onTapGesture {
             //self.storyVisible=true
             /*.sheet(isPresented: $storyVisible){
