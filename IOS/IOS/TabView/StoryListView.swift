@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import class Kingfisher.KingfisherManager
 
 struct StoryListView : View {
     
@@ -52,11 +53,11 @@ struct StoryListView : View {
                     ForEach(0..<self.rows, id: \.self){i in
                         HStack(spacing:0){
                             Spacer()
-                            StoryCell(story: self.storyList[i*3],imageUrl: URL(string: self.storyList[i*3].image)!)
+                            StoryCell(story: self.storyList[i*3])
                             if i*3+1<self.total {
-                                StoryCell(story: self.storyList[i*3+1],imageUrl: URL(string: self.storyList[i*3+1].image)!)
+                                StoryCell(story: self.storyList[i*3+1])
                                 if i*3+2<self.total {
-                                    StoryCell(story: self.storyList[i*3+2],imageUrl: URL(string: self.storyList[i+2].image)!)
+                                    StoryCell(story: self.storyList[i*3+2])
                                 }
                                 else{
                                     Text("")
@@ -101,20 +102,34 @@ struct StoryListView_Previews: PreviewProvider {
 struct StoryCell : View{
     
     @State var story : StoryModel
-    @State var imageUrl : URL
+    
+    @State var uiImage = UIImage()
     
     @State var storyVisible=false
     
     var body: some View {
-        Image(uiImage: UIImage(data: try! Data(contentsOf: imageUrl))!)
+        /*Image(uiImage: UIImage(data: try! Data(contentsOf: imageUrl))!)
+         .resizable()
+         .frame(width: UIScreen.main.bounds.width/3,height: UIScreen.main.bounds.width/3)
+         .onTapGesture {
+         self.storyVisible=true
+         }*/
+        /*.sheet(isPresented: $storyVisible){
+         StoryView(story: self.story)
+         }*/
+        Image(uiImage: self.uiImage)
             .resizable()
-            .frame(width: UIScreen.main.bounds.width/3,height: UIScreen.main.bounds.width/3)
+            .frame(width: UIScreen.main.bounds.width/3, height: UIScreen.main.bounds.width/3)
             .onTapGesture {
                 self.storyVisible=true
         }
         .sheet(isPresented: $storyVisible){
-            StoryView(story: self.story)
+            StoryView(story:self.story)
         }
-        
+        .onAppear(){
+            KingfisherManager.shared.retrieveImage(with: URL(string: self.story.image)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                self.uiImage=image!
+            })
+        }
     }
 }

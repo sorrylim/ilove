@@ -42,6 +42,7 @@ class PartnerActivity : PSAppCompatActivity() {
 
             viewpager_partnerprofile.adapter = PartnerProfileAdapter(this, profileImageList, profileImageList.size)
 
+
             indicator.setViewPager(viewpager_partnerprofile)
             indicator.bringToFront()
             indicator.createIndicators(profileImageList.size, 0)

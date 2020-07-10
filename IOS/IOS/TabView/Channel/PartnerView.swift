@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import class Kingfisher.KingfisherManager
 
 struct PartnerView : View {
     
@@ -112,14 +113,20 @@ struct PartnerRow : View{
     @State var partner : PartnerModel
     @State var likeImage = Image(systemName: "heart")
     
+    @State var uiImage=UIImage()
+    
     var body: some View {
         VStack{
             Text(partner.expression_date)
                 .font(.system(size:10))
             HStack(spacing: 20){
-                Image(uiImage: try! UIImage(data: Data(contentsOf: URL(string: partner.image)!))!)
+                
+                
+                Image(uiImage: self.uiImage)
                     .resizable()
-                    .frame(width: 50, height: 50)
+                    .frame(width: 100, height: 100)
+                    .cornerRadius(10)
+                
                 VStack(alignment: .leading){
                     Text(partner.user_nickname)
                         .font(.system(size:20,weight:.bold))
@@ -166,14 +173,22 @@ struct VisitPartnerRow : View{
     @State var partner : VisitPartnerModel
     @State var likeImage = Image(systemName: "heart")
     
+    @State var uiImage = UIImage()
+    
     var body: some View {
         VStack{
             Text(partner.visit_date)
                 .font(.system(size:10))
             HStack(spacing: 20){
-                Image(uiImage: try! UIImage(data: Data(contentsOf: URL(string: partner.image)!))!)
+                /*Image(uiImage: try! UIImage(data: Data(contentsOf: URL(string: partner.image)!))!)
                     .resizable()
-                    .frame(width: 50, height: 50)
+                 .frame(width: 50, height: 50)*/
+                
+                Image(uiImage: self.uiImage)
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .cornerRadius(10)
+                
                 VStack(alignment: .leading){
                     Text(partner.user_nickname)
                         .font(.system(size:20,weight:.bold))
