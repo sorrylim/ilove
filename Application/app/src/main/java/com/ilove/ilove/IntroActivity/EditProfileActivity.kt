@@ -2,6 +2,7 @@ package com.ilove.ilove.IntroActivity
 
 import android.app.Activity
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
@@ -9,7 +10,9 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
+import com.ilove.ilove.Class.FileUploadUtils
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
@@ -18,9 +21,11 @@ import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.android.synthetic.main.activity_cropper.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_write_story.*
 import org.json.JSONObject
+import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 
@@ -649,12 +654,24 @@ class EditProfileActivity : PSAppCompatActivity() {
                 val result = CropImage.getActivityResult(data)
                 if (resultCode == Activity.RESULT_OK) {
                     val resultUri: Uri = result.uri
+                    var imagePath = cropImageView.setImageUriAsync(resultUri)
+
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     val error = result.error
                 }
             }
 
         }
+    }
+
+    fun getPath(uri: Uri) : String {
+        val projection =
+            arrayOf(MediaStore.Images.Media.DATA)
+        val loader: CursorLoader = CursorLoader(this, uri, projection, null, null, null)
+        val cursor: Cursor = loader.loadInBackground()!!
+        val columnIndex: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        cursor.moveToFirst()
+        return cursor.getString(columnIndex)
     }
 
 
