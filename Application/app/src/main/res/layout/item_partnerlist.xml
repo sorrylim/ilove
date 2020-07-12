@@ -10,6 +10,7 @@
         android:id="@+id/text_historydate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="날짜"
         android:textColor="@color/colorMdGrey_900"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,15 +56,15 @@
 
     <com.like.LikeButton
         android:id="@+id/btn_partnerlistlike"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="15dp"
         app:anim_scale_factor="2"
         app:circle_end_color="@color/colorMdRed_600"
         app:circle_start_color="@color/colorMdWhite_1000"
         app:dots_primary_color="@color/colorMdGreen_600"
         app:dots_secondary_color="@color/colorMdBlue_300"
-        app:icon_size="20dp"
+        app:icon_size="30dp"
         app:icon_type="heart"
         app:is_enabled="true"
         app:layout_constraintBottom_toBottomOf="@+id/image_partnerlistprofile"
@@ -71,5 +72,23 @@
         app:layout_constraintTop_toTopOf="@+id/image_partnerlistprofile"
         app:like_drawable="@drawable/heart_on"
         app:unlike_drawable="@drawable/heart_off" />
+
+    <com.like.LikeButton
+        android:id="@+id/btn_partnerlistcall"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        app:circle_end_color="@color/colorMdRed_600"
+        app:circle_start_color="@color/colorMdWhite_1000"
+        app:dots_primary_color="@color/colorMdGreen_600"
+        app:dots_secondary_color="@color/colorMdBlue_300"
+        app:icon_size="30dp"
+        app:icon_type="heart"
+        app:is_enabled="true"
+        app:like_drawable="@drawable/call_icon"
+        app:unlike_drawable="@drawable/call_n_icon"
+        app:layout_constraintEnd_toStartOf="@+id/btn_partnerlistlike"
+        app:layout_constraintTop_toTopOf="@+id/btn_partnerlistlike" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

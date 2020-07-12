@@ -1,16 +1,21 @@
 package com.ilove.ilove.IntroActivity
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import androidx.loader.content.CursorLoader
+import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.ilove.ilove.Class.FileUploadUtils
 import com.ilove.ilove.Class.PSAppCompatActivity
@@ -23,7 +28,7 @@ import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_cropper.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
-import kotlinx.android.synthetic.main.activity_write_story.*
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.io.FileNotFoundException
@@ -32,107 +37,78 @@ import java.io.IOException
 
 class EditProfileActivity : PSAppCompatActivity() {
 
+    companion object {
+        var handler:Handler? = null
+    }
+
     var imagePath : String? = null
     var imageCaptureUri: Uri? = null
     val PICK_FROM_ALBUM = 1
     var userOptionList = ArrayList<UserItem.UserOption>()
-    var mainProfileImagePath = ""
-    var mainProfileImageId : Int? = null
-    var editProfileImage1Path = ""
-    var editProfileImage1Id : Int? = null
-    var editProfileImage2Path = ""
-    var editProfileImage2Id : Int? = null
-    var editProfileImage3Path = ""
-    var editProfileImage3Id : Int? = null
+    var profileImageList = ArrayList<ImageView>()
+    var profileImageIdList : ArrayList<Int?> = arrayListOf(null, null, null, null)
+    var editImageId : Int? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
 
-        image_editmain.setClipToOutline(true)
-        image_editsub1.setClipToOutline(true)
-        image_editsub2.setClipToOutline(true)
-        image_editsub3.setClipToOutline(true)
+        var imageMain : ImageView = findViewById(R.id.image_editmain)
+        var imageSub1 : ImageView = findViewById(R.id.image_editsub1)
+        var imageSub2 : ImageView = findViewById(R.id.image_editsub2)
+        var imageSub3 : ImageView = findViewById(R.id.image_editsub3)
+
+        imageMain.setClipToOutline(true)
+        imageSub1.setClipToOutline(true)
+        imageSub2.setClipToOutline(true)
+        imageSub3.setClipToOutline(true)
+
+        profileImageList.add(imageMain)
+        profileImageList.add(imageSub1)
+        profileImageList.add(imageSub2)
+        profileImageList.add(imageSub3)
 
         toolbarBinding(toolbar_editprofile, "프로필 편집", true)
+        refreshProfileImage()
 
         image_editmain.setOnClickListener{
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            intent.setType("image/*")
-            startActivityForResult(intent, PICK_FROM_ALBUM)
+            editImageId = profileImageIdList.get(0)
+            photoFromGallery()
         }
 
-        VolleyService.getProfileImageReq(UserInfo.ID, this, {success->
-            var array = success
-            if(array.length() == 1) {
-                var json = array[0] as JSONObject
-                mainProfileImageId = json.getInt("image_id")
-                mainProfileImagePath = json.getString("image")
-                Glide.with(this)
-                    .load(mainProfileImagePath)
-                    .into(image_editmain)
+        image_editsub1.setOnClickListener {
+            when(profileImageIdList.size) {
+                1 -> photoFromGallery()
+                else -> {
+                    dialogPhotoType()
+                    editImageId = profileImageIdList.get(1)
+                }
             }
-            else if(array.length() == 2) {
-                var json = array[0] as JSONObject
-                mainProfileImageId = json.getInt("image_id")
-                mainProfileImagePath = json.getString("image")
-                Glide.with(this)
-                    .load(mainProfileImagePath)
-                    .into(image_editmain)
-                var json1 = array[1] as JSONObject
-                editProfileImage1Id = json1.getInt("image_id")
-                editProfileImage1Path = json1.getString("image")
-                Glide.with(this)
-                    .load(editProfileImage1Path)
-                    .into(image_editsub1)
+        }
+
+        image_editsub2.setOnClickListener {
+            when(profileImageIdList.size) {
+                1 -> photoFromGallery()
+                2 -> photoFromGallery()
+                else -> {
+                    dialogPhotoType()
+                    editImageId = profileImageIdList.get(2)
+                }
             }
-            else if(array.length() == 3) {
-                var json = array[0] as JSONObject
-                mainProfileImageId = json.getInt("image_id")
-                mainProfileImagePath = json.getString("image")
-                Glide.with(this)
-                    .load(mainProfileImagePath)
-                    .into(image_editmain)
-                var json1 = array[1] as JSONObject
-                editProfileImage1Id = json1.getInt("image_id")
-                editProfileImage1Path = json1.getString("image")
-                Glide.with(this)
-                    .load(editProfileImage1Path)
-                    .into(image_editsub1)
-                var json2 = array[2] as JSONObject
-                editProfileImage2Id = json2.getInt("image_id")
-                editProfileImage2Path = json2.getString("image")
-                Glide.with(this)
-                    .load(editProfileImage2Path)
-                    .into(image_editsub2)
+        }
+
+        image_editsub3.setOnClickListener {
+            when(profileImageIdList.size) {
+                1 -> photoFromGallery()
+                2 -> photoFromGallery()
+                3 -> photoFromGallery()
+                else -> {
+                    dialogPhotoType()
+                    editImageId = profileImageIdList.get(3)
+                }
             }
-            else if(array.length() == 4) {
-                var json = array[0] as JSONObject
-                mainProfileImageId = json.getInt("image_id")
-                mainProfileImagePath = json.getString("image")
-                Glide.with(this)
-                    .load(mainProfileImagePath)
-                    .into(image_editmain)
-                var json1 = array[1] as JSONObject
-                editProfileImage1Id = json1.getInt("image_id")
-                editProfileImage1Path = json1.getString("image")
-                Glide.with(this)
-                    .load(editProfileImage1Path)
-                    .into(image_editsub1)
-                var json2 = array[2] as JSONObject
-                editProfileImage2Id = json2.getInt("image_id")
-                editProfileImage2Path = json2.getString("image")
-                Glide.with(this)
-                    .load(editProfileImage2Path)
-                    .into(image_editsub2)
-                var json3 = array[3] as JSONObject
-                editProfileImage3Id = json3.getInt("image_id")
-                editProfileImage3Path = json3.getString("image")
-                Glide.with(this)
-                    .load(editProfileImage3Path)
-                    .into(image_editsub3)
-            }
-        })
+        }
 
         VolleyService.getUserOptionReq(UserInfo.ID, this, {success->
             var json = success
@@ -506,6 +482,41 @@ class EditProfileActivity : PSAppCompatActivity() {
             psDialog.show()
         }
 
+        handler=object : Handler() {
+            override fun handleMessage(msg: Message) {
+                when(msg.what){
+                    0 -> {
+                        refreshProfileImage()
+                    }
+                }
+            }
+        }
+
+    }
+
+    fun profileImageInit() {
+        for(i in 0..profileImageList.size-1) {
+            profileImageList.get(i).setImageResource(R.drawable.default_image)
+        }
+    }
+
+    fun setProfileImage(array: JSONArray) {
+        profileImageIdList.clear()
+        for(i in 0..array.length()-1) {
+            var json = array[i] as JSONObject
+            Glide.with(this)
+                .load(json.getString("image"))
+                .into(profileImageList.get(i))
+            profileImageIdList.add(json.getInt("image_id"))
+        }
+    }
+
+    fun refreshProfileImage() {
+        VolleyService.getProfileImageReq(UserInfo.ID, this, {success->
+            var array = success
+            profileImageInit()
+            setProfileImage(array)
+        })
     }
 
     fun height() {
@@ -630,16 +641,10 @@ class EditProfileActivity : PSAppCompatActivity() {
         when (requestCode) {
             PICK_FROM_ALBUM -> {
                 imageCaptureUri = data!!.data
-                //imagePath = /*Environment.getExternalStorageDirectory().getAbsolutePath() +*/ getPath(imageCaptureUri!!)
                 Log.d("test", "$imagePath")
 
                 try {
-                   /* val imageBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageCaptureUri)
-                    image_writestory.visibility = View.VISIBLE
-                    image_writestory.setImageBitmap(imageBitmap)*/
-
-                    CropImage.activity(imageCaptureUri).setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1920, 1080)
-                        .setCropShape(CropImageView.CropShape.RECTANGLE).start(this)
+                    CropImage.activity(imageCaptureUri).setGuidelines(CropImageView.Guidelines.ON).start(this)
 
                 } catch (e: FileNotFoundException) {
                     // TODO Auto-generated catch block
@@ -654,28 +659,55 @@ class EditProfileActivity : PSAppCompatActivity() {
                 val result = CropImage.getActivityResult(data)
                 if (resultCode == Activity.RESULT_OK) {
                     val resultUri: Uri = result.uri
-                    var imagePath = cropImageView.setImageUriAsync(resultUri)
+                    var imagePath = resultUri.getPath()
 
+                    if(editImageId != null) {
+                        FileUploadUtils.uploadProfileImage(imagePath!!, "", "update", editImageId!!)
+                    } else {
+                        FileUploadUtils.uploadProfileImage(imagePath!!, "profile", "insert", null)
+                    }
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     val error = result.error
+                    editImageId = null
                 }
             }
 
         }
     }
 
-    fun getPath(uri: Uri) : String {
-        val projection =
-            arrayOf(MediaStore.Images.Media.DATA)
-        val loader: CursorLoader = CursorLoader(this, uri, projection, null, null, null)
-        val cursor: Cursor = loader.loadInBackground()!!
-        val columnIndex: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        cursor.moveToFirst()
-        return cursor.getString(columnIndex)
+    fun dialogPhotoType() {
+        var dialog = Dialog(this)
+
+        dialog.setContentView(R.layout.dialog_phototype)
+        var editPhotoBtn : TextView = dialog.findViewById(R.id.text_editphoto)
+        var deletePhotoBtn : TextView = dialog.findViewById(R.id.text_deletephoto)
+
+        editPhotoBtn.setOnClickListener{
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            intent.setType("image/*")
+            startActivityForResult(intent, PICK_FROM_ALBUM)
+            dialog.dismiss()
+        }
+
+        deletePhotoBtn.setOnClickListener {
+            VolleyService.deleteImageReq(editImageId!!, this, {success->
+                if(success == "success") {
+                    editImageId = null
+                    refreshProfileImage()
+                }
+            })
+
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
-
-
+    fun photoFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.setType("image/*")
+        startActivityForResult(intent, PICK_FROM_ALBUM)
+    }
 
 
 }

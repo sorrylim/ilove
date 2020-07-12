@@ -13,14 +13,24 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:scaleType="fitXY"
         android:background="@drawable/rounded_imageview"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/default_image" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/image_newuser"
+        app:layout_constraintEnd_toEndOf="@+id/image_newuser"
+        app:layout_constraintStart_toStartOf="@+id/image_newuser"
+        app:layout_constraintTop_toTopOf="@+id/image_newuser"
+        app:srcCompat="@drawable/background_gray" />
 
     <TextView
         android:id="@+id/text_newusernicknameage"
@@ -29,8 +39,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
         android:text="닉네임, 나이"
-        android:textSize="15dp"
         android:textColor="#FFFFFF"
+        android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/text_newuserrecentdata"
         app:layout_constraintStart_toStartOf="@+id/image_newuser" />
 
@@ -41,8 +51,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
         android:text="최근데이터"
-        android:textSize="10dp"
         android:textColor="#FFFFFF"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/image_newuser"
         app:layout_constraintStart_toStartOf="@+id/image_newuser" />
 

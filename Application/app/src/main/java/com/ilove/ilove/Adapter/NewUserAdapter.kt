@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ImageItem
 import com.ilove.ilove.Item.NewUserList
+import com.ilove.ilove.MainActivity.PartnerActivity
 import com.ilove.ilove.MainActivity.StoryActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
@@ -50,7 +51,15 @@ class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>) 
             .load(userList.get(position).userImage)
             .into(holder.itemView.image_newuser)
         holder.itemView.image_newuser.setClipToOutline(true)
-        holder.itemView.image_newuser.setColorFilter(Color.parseColor("#9E9E9E"), PorterDuff.Mode.MULTIPLY)
+
+        holder.itemView.setOnClickListener {
+            var intent = Intent(context, PartnerActivity::class.java)
+            intent.putExtra("userId", userList.get(position).userId)
+            intent.putExtra("userNickname", userList.get(position).userNickname)
+            intent.putExtra("userAge", age.toString())
+            intent.putExtra("userCity", userList.get(position).userCity)
+            context.startActivity(intent)
+        }
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view){
