@@ -38,6 +38,9 @@ class WriteStoryActivity : PSAppCompatActivity() {
         toolbarBinding(toolbar_writestory, "스토리작성", true)
 
 
+        checkPermissions()
+
+
         text_addphoto.setOnClickListener {
             var albumIntent = Intent(Intent.ACTION_PICK)
             albumIntent.setType("image/*")
@@ -72,7 +75,7 @@ class WriteStoryActivity : PSAppCompatActivity() {
         when (requestCode) {
             PICK_FROM_ALBUM -> {
                 imageCaptureUri = data!!.data
-                imagePath = /*Environment.getExternalStorageDirectory().getAbsolutePath() +*/ getPath(imageCaptureUri!!)
+                imagePath = getPath(imageCaptureUri!!)
                 Log.d("test", "$imagePath")
 
                 try {
@@ -101,6 +104,7 @@ class WriteStoryActivity : PSAppCompatActivity() {
                 rejectedPermissionList.add(permission)
             }
         }
+
         if(rejectedPermissionList.isNotEmpty()){
             val array = arrayOfNulls<String>(rejectedPermissionList.size)
             ActivityCompat.requestPermissions(this,rejectedPermissionList.toArray(array), 100)

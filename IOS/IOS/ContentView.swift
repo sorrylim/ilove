@@ -21,14 +21,17 @@
                 })
                     .tag(1)
                 StoryListView().tabItem({
+                    Image("baseline_detail_category_grey_24")
                     Text("스토리")
                 })
                     .tag(2)
                 ChatListView().tabItem({
+                    Image("message_icon")
                     Text("대화방")
                 })
                     .tag(3)
                 MyPageView().tabItem({
+                    Image("mypage_icon")
                     Text("내 페이지")
                 })
                     .tag(4)

@@ -24,22 +24,26 @@ struct ItemManageView : View {
                 .font(.system(size:20))
             HStack{
                 VStack{
-                    Image(systemName: "pencil.circle")
+                    Image("vip")
+                        .resizable()
                         .frame(width:100,height: 100)
                     Text("정회원")
                     Text("\(vipTicket)일")
                         .foregroundColor(Color.orange)
                 }
                 VStack{
-                    Image(systemName: "pencil.circle")
+                    Image("message_candy")
+                        .resizable()
                         .frame(width:100,height: 100)
                     Text("메세지 이용권")
                     Text("\(msgTicket)일")
                         .foregroundColor(Color.orange)
                 }
                 VStack{
-                    Image(systemName: "pencil.circle")
+                    Image(systemName: "heart.fill")
+                        .resizable()
                         .frame(width:100,height: 100)
+                        .foregroundColor(Color.red)
                     Text("좋아요")
                     Text("\(likeTicket)개")
                         .foregroundColor(Color.orange)

@@ -3,6 +3,7 @@ package com.ilove.ilove.IntroActivity
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
@@ -11,6 +12,8 @@ import android.os.Handler
 import android.os.Message
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
+import androidx.loader.content.CursorLoader
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -23,9 +26,11 @@ import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.android.synthetic.main.activity_cropper.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 
