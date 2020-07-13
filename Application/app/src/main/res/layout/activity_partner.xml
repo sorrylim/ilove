@@ -62,20 +62,20 @@
         app:layout_constraintStart_toStartOf="@+id/text_partnernickname"
         app:layout_constraintTop_toBottomOf="@+id/text_partnernickname" />
 
-            <TextView
-                android:id="@+id/textView28"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="20dp"
-                android:text="좌우명"
-                android:textColor="@color/colorMdGrey_900"
-                android:textSize="25dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerage" />
+                <TextView
+                    android:id="@+id/textView28"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="좌우명"
+                    android:textColor="@color/colorMdGrey_900"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view28" />
 
     <TextView
         android:id="@+id/text_partnerintroduce"
@@ -91,18 +91,18 @@
         app:layout_constraintStart_toStartOf="@+id/textView28"
         app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
-            <TextView
-                android:id="@+id/textView30"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:text="프로필"
-                android:textColor="@color/colorMdGrey_900"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerintroduce" />
+                <TextView
+                    android:id="@+id/textView30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="프로필"
+                    android:textColor="@color/colorMdGrey_900"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view29" />
 
             <TextView
                 android:id="@+id/text_partnerheight1"
@@ -638,18 +638,17 @@
                 app:layout_constraintStart_toEndOf="@+id/text_partnerlanguage1"
                 app:layout_constraintTop_toTopOf="@+id/text_partnerlanguage1" />
 
-            <TextView
-                android:id="@+id/text_partnerhobby"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:text="취미"
-                android:textColor="@color/colorMdGrey_900"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerlanguage1" />
+                <TextView
+                    android:id="@+id/text_partnerhobby"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="취미"
+                    android:textColor="@color/colorMdGrey_700"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView30"
+                    app:layout_constraintTop_toBottomOf="@+id/view30" />
 
             <TextView
                 android:id="@+id/text_partnerpersonality"
@@ -658,9 +657,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:text="성격"
-                android:textColor="@color/colorMdGrey_900"
+                android:textColor="@color/colorMdGrey_700"
                 android:textSize="20dp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView30"
                 app:layout_constraintTop_toBottomOf="@+id/text_partnerhobby" />
 
@@ -671,9 +669,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:text="내가 좋아하는 성격"
-                android:textColor="@color/colorMdGrey_900"
+                android:textColor="@color/colorMdGrey_700"
                 android:textSize="20dp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView30"
                 app:layout_constraintTop_toBottomOf="@+id/text_partnerpersonality" />
 
@@ -684,7 +681,9 @@
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" >
+
+                </androidx.viewpager2.widget.ViewPager2>
 
                 <me.relex.circleindicator.CircleIndicator3
                     android:id="@+id/indicator"
@@ -699,6 +698,36 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent" />
+
+                <View
+                    android:id="@+id/view28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="@color/colorMdGrey_500"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_partnerage" />
+
+                <View
+                    android:id="@+id/view29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="@color/colorMdGrey_500"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_partnerintroduce" />
+
+                <View
+                    android:id="@+id/view30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="@color/colorMdGrey_500"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_partnerlanguage" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
