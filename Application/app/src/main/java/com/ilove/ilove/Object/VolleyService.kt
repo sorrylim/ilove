@@ -268,7 +268,7 @@ object VolleyService {
             }
         ){}
 
-        Volley.newRequestQueue(content).add(request)
+        Volley.newRequestQueue(context).add(request)
     }
 
     fun getStoryImageReq(userId:String, imageUsage:String, context: Context, success:(JSONArray)->Unit) {
@@ -409,5 +409,24 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
+    fun sendFCMReq(roomId: String, title: String, content: String, context: Context) {
 
+        var url = "${ip}/chat_room/fcm/send"
+
+        var json = JSONObject()
+        json.put("topic", roomId)
+        json.put("content", content)
+        json.put("title",title)
+
+        var request = object : JsonObjectRequest(Method.POST,
+            url,
+            json,
+            Response.Listener {
+            },
+            Response.ErrorListener {
+            }) {
+        }
+
+        Volley.newRequestQueue(context).add(request)
+    }
 }
