@@ -37,6 +37,15 @@ router.post('/get/list', function(req, res, next) {
   })
 })
 
+router.post('/get/new', function(req, res, next) {
+  var user_gender = req.body[0].user_gender
+
+  db_user.get_new_user_list(user_gender, function(err, result) {
+    if(err) console.log(err)
+    else res.send(result)
+  })
+})
+
 router.post('/option', function(req, res, next) {
   var user_id = req.body.user_id
   var user_option = req.body.user_option

@@ -14,7 +14,8 @@ struct VipGuideView : View {
             Text("정회원님만의 무료혜택!")
                 .font(.system(size:25))
             HStack{
-                Image(systemName: "pencil.circle")
+                Image("message_candy")
+                    .resizable()
                     .frame(width:100,height: 100)
                 Spacer()
                 VStack(alignment: .leading){
@@ -30,7 +31,8 @@ struct VipGuideView : View {
                 Spacer()
             }
             HStack{
-                Image(systemName: "pencil.circle")
+                Image("profile")
+                    .resizable()
                     .frame(width:100,height: 100)
                 Spacer()
                 VStack(alignment: .leading){
@@ -45,8 +47,10 @@ struct VipGuideView : View {
                 }
             }
             HStack{
-                Image(systemName: "pencil.circle")
+                Image(systemName: "heart.fill")
+                    .resizable()
                     .frame(width:100,height: 100)
+                    .foregroundColor(Color.red)
                 Spacer()
                 VStack(alignment: .leading){
                     Spacer()
@@ -61,7 +65,8 @@ struct VipGuideView : View {
                 Spacer()
             }
             HStack{
-                Image(systemName: "pencil.circle")
+                Image("meet")
+                    .resizable()
                     .frame(width:100,height: 100)
                 Spacer()
                 VStack(alignment: .leading){

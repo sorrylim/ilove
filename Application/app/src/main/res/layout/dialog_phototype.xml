@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/text_editphoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="사진편집"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:textColor="@color/colorMdGrey_900"/>
+
+    <View
+        android:id="@+id/view27"
+        android:layout_width="match_parent"
+        android:background="@color/colorMdGrey_500"
+        android:layout_height="1dp" />
+
+    <TextView
+        android:id="@+id/text_deletephoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="사진삭제"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:textColor="@color/colorMdGrey_900"/>
+</LinearLayout>

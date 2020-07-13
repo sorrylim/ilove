@@ -12,6 +12,8 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Adapter.PersonalityAdapter
 import com.ilove.ilove.Adapter.UserOptionAdapter
 import com.ilove.ilove.Item.UserItem
@@ -45,6 +47,7 @@ class PSDialog(activity: Activity) {
             dialog!!.dismiss()
         }
     }
+
 
     fun setUserOption(title : String, userOption:String, userOptionList: ArrayList<UserItem.UserOption>, userOptionText: TextView) {
         dialog = Dialog(context!!, android.R.style.Theme_DeviceDefault_Light_NoActionBar)
@@ -122,12 +125,15 @@ class PSDialog(activity: Activity) {
         }*/
     }
 
-    fun setEachExpressionLikeDialog(userNickname:String, userAgeCity:String) {
+    fun setEachExpressionLikeDialog(userNickname:String, userAgeCity:String, userImage:String) {
         dialog!!.setContentView(R.layout.dialog_eachexpressionlike)
         var chatBtn : Button = dialog!!.findViewById(R.id.btn_eachexpressionlike)
         var cancelBtn : TextView = dialog!!.findViewById(R.id.text_eachexpressionlikecancel)
         var nicknameText: TextView = dialog!!.findViewById(R.id.text_eachexpressionlikenickname)
         var agecityText: TextView = dialog!!.findViewById(R.id.text_eachexpressionlikeagecity)
+        var expressionLikeProfile: ImageView = dialog!!.findViewById(R.id.image_eachexpressionlikeprofile)
+
+        Glide.with(context!!).load(userImage).apply(RequestOptions().circleCrop()).into(expressionLikeProfile)
 
         nicknameText.text = userNickname
         agecityText.text = userAgeCity
@@ -141,13 +147,16 @@ class PSDialog(activity: Activity) {
         }
     }
 
-    fun setEachExpressionMeetDialog(userNickname:String, userAgeCity:String, userPhone:String) {
+    fun setEachExpressionMeetDialog(userNickname:String, userAgeCity:String, userPhone:String, userImage: String) {
         dialog!!.setContentView(R.layout.dialog_eachexpressionmeet)
         var openBtn : Button = dialog!!.findViewById(R.id.btn_eachexpressionmeet)
         var cancelBtn : TextView = dialog!!.findViewById(R.id.text_eachexpressionmeetcancel)
         var phoneText : TextView = dialog!!.findViewById(R.id.text_eachexpressionmeetphone)
         var nicknameText: TextView = dialog!!.findViewById(R.id.text_eachexpressionmeetnickname)
         var agecityText : TextView = dialog!!.findViewById(R.id.text_eachexpressionmeetagecity)
+        var expressionMeetProfile: ImageView = dialog!!.findViewById(R.id.image_eachexpressionmeetprofile)
+
+        Glide.with(context!!).load(userImage).apply(RequestOptions().circleCrop()).into(expressionMeetProfile)
 
         phoneText.text = userPhone
         nicknameText.text = userNickname
@@ -177,4 +186,6 @@ class PSDialog(activity: Activity) {
 
         return layoutParams
     }
+
+
 }

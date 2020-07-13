@@ -37,10 +37,15 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
+        val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+
+        var age = currentDate.substring(0, 4).toInt() - userList.get(position).userAge.substring(0,4).toInt() + 1
+
         Glide.with(holder.itemView)
             .load(userList.get(position).userImage)
             .into(holder.itemView.image_userlistprofile)
-        holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + ", " + userList.get(position).userAge + ", " + userList.get(position).userCity + ", " + userList.get(position).recentGps
+        holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + ", " + age + ", " + userList.get(position).userCity + ", " + userList.get(position).recentGps
         holder.itemView.text_userlistintroduce.text = userList.get(position).userIntroduce
         holder.itemView.image_userlistprofile.setClipToOutline(true)
 
@@ -51,18 +56,22 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
             holder.itemView.btn_userlike.setLiked(false)
         }
 
-        holder.itemView.btn_userlike.setOnLikeListener(object: OnLikeListener {
-            val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-            val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        if(userList.get(position).meet == 1) {
+            holder.itemView.btn_call.setLiked(true)
+        }
+        else if(userList.get(position).meet == 0) {
+            holder.itemView.btn_call.setLiked(false)
+        }
 
+        holder.itemView.btn_userlike.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "like", currentDate, context, {success->
                     when(success) {
                         "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
                         "eachsuccess" -> {
-                            likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
+                            likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_off, null))
                             var dialog = PSDialog(context as Activity)
-                            dialog.setEachExpressionLikeDialog(userList.get(position).userNickname, userList.get(position).userAge + ", " + userList.get(position).userCity)
+                            dialog.setEachExpressionLikeDialog(userList.get(position).userNickname, userList.get(position).userAge + ", " + userList.get(position).userCity, userList.get(position).userImage)
                             dialog.show()
                         }
                         else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
@@ -81,11 +90,39 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
             }
         })
 
+        holder.itemView.btn_call.setOnLikeListener(object: OnLikeListener {
+            override fun liked(likeButton: LikeButton?) {
+                VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "meet", currentDate, context, {success->
+                    when(success) {
+                        "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_icon, null))
+                        "eachsuccess" -> {
+                            likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_icon, null))
+                            var dialog = PSDialog(context as Activity)
+                            dialog.setEachExpressionMeetDialog(userList.get(position).userNickname, userList.get(position).userAge + ", " + userList.get(position).userCity, userList.get(position).userPhone, userList.get(position).userImage)
+                            dialog.show()
+                        }
+                        else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+            override fun unLiked(likeButton: LikeButton?) {
+                VolleyService.deleteExpressionReq(UserInfo.ID, userList.get(position).userId, "meet", context, {success->
+                    if(success=="success") {
+                        likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_n_icon, null))
+                    }
+                    else {
+                        Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+        })
+
         holder.itemView.setOnClickListener {
             var intent = Intent(context, PartnerActivity::class.java)
             intent.putExtra("userNickname", userList.get(position).userNickname)
             intent.putExtra("userId", userList.get(position).userId)
-            intent.putExtra("userImage", userList.get(position).userImage)
+            intent.putExtra("userAge", age.toString())
+            intent.putExtra("userCity", userList.get(position).userCity)
 
             val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
             val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))

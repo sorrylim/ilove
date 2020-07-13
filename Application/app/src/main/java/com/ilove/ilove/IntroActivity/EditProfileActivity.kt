@@ -1,58 +1,114 @@
 package com.ilove.ilove.IntroActivity
 
+import android.app.Activity
+import android.app.Dialog
+import android.content.Intent
+import android.database.Cursor
+import android.graphics.Color
+import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
+import android.provider.MediaStore
+import android.util.Log
+import android.view.View
+import androidx.loader.content.CursorLoader
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.ilove.ilove.Class.FileUploadUtils
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.UserItem
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.android.synthetic.main.activity_cropper.*
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+
 
 class EditProfileActivity : PSAppCompatActivity() {
 
+    companion object {
+        var handler:Handler? = null
+    }
+
+    var imagePath : String? = null
+    var imageCaptureUri: Uri? = null
+    val PICK_FROM_ALBUM = 1
     var userOptionList = ArrayList<UserItem.UserOption>()
+    var profileImageList = ArrayList<ImageView>()
+    var profileImageIdList : ArrayList<Int?> = arrayListOf(null, null, null, null)
+    var editImageId : Int? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
 
-        image_editmain.setClipToOutline(true)
-        image_editsub1.setClipToOutline(true)
-        image_editsub2.setClipToOutline(true)
-        image_editsub3.setClipToOutline(true)
+        var imageMain : ImageView = findViewById(R.id.image_editmain)
+        var imageSub1 : ImageView = findViewById(R.id.image_editsub1)
+        var imageSub2 : ImageView = findViewById(R.id.image_editsub2)
+        var imageSub3 : ImageView = findViewById(R.id.image_editsub3)
 
-        /*var height : String? = null
-        var bodyType : String? = null
-        var bloodType : String? = null
-        var city: String? = null
-        var job : String? = null
-        var education : String? = null
-        var holiday: String? = null
-        var cigarette : String? = null
-        var alcohol : String? = null
-        var religion : String? = null
-        var brother : String? = null
-        var country: String? = null
-        var salary : String? = null
-        var asset : String? = null
-        var marriageHistory: String? = null
-        var children : String? = null
-        var marriagePlan: String? = null
-        var childrenPlan: String? = null
-        var parenting: String? = null
-        var wishDate : String? = null
-        var dateCost: String? = null
-        var roommate: String? = null
-        var language: String? = null
-        var interest : String? = null
-        var personality: String? = null
-        var favoritePerson: String? = null*/
+        imageMain.setClipToOutline(true)
+        imageSub1.setClipToOutline(true)
+        imageSub2.setClipToOutline(true)
+        imageSub3.setClipToOutline(true)
 
-
+        profileImageList.add(imageMain)
+        profileImageList.add(imageSub1)
+        profileImageList.add(imageSub2)
+        profileImageList.add(imageSub3)
 
         toolbarBinding(toolbar_editprofile, "프로필 편집", true)
+        refreshProfileImage()
+
+        image_editmain.setOnClickListener{
+            editImageId = profileImageIdList.get(0)
+            photoFromGallery()
+        }
+
+        image_editsub1.setOnClickListener {
+            when(profileImageIdList.size) {
+                1 -> photoFromGallery()
+                else -> {
+                    dialogPhotoType()
+                    editImageId = profileImageIdList.get(1)
+                }
+            }
+        }
+
+        image_editsub2.setOnClickListener {
+            when(profileImageIdList.size) {
+                1 -> photoFromGallery()
+                2 -> photoFromGallery()
+                else -> {
+                    dialogPhotoType()
+                    editImageId = profileImageIdList.get(2)
+                }
+            }
+        }
+
+        image_editsub3.setOnClickListener {
+            when(profileImageIdList.size) {
+                1 -> photoFromGallery()
+                2 -> photoFromGallery()
+                3 -> photoFromGallery()
+                else -> {
+                    dialogPhotoType()
+                    editImageId = profileImageIdList.get(3)
+                }
+            }
+        }
 
         VolleyService.getUserOptionReq(UserInfo.ID, this, {success->
             var json = success
@@ -60,131 +116,183 @@ class EditProfileActivity : PSAppCompatActivity() {
             if(json.getString("user_height") != "null")
             {
                 text_editheight.text = json.getString("user_height")
+                text_editheight.setTextColor(Color.parseColor("#FFA500"))
+                text_editheight.setTypeface(text_editheight.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_bodytype") != "null")
             {
                 text_editbody.text = json.getString("user_bodytype")
+                text_editbody.setTextColor(Color.parseColor("#FFA500"))
+                text_editbody.setTypeface(text_editbody.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_bloodtype") != "null")
             {
                 text_editbloodtype.text = json.getString("user_bloodtype")
+                text_editbloodtype.setTextColor(Color.parseColor("#FFA500"))
+                text_editbloodtype.setTypeface(text_editbloodtype.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_city") != "null")
             {
                 text_editcity.text = json.getString("user_city")
+                text_editcity.setTextColor(Color.parseColor("#FFA500"))
+                text_editcity.setTypeface(text_editcity.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_job") != "null")
             {
                 text_editjob.text = json.getString("user_job")
+                text_editjob.setTextColor(Color.parseColor("#FFA500"))
+                text_editjob.setTypeface(text_editjob.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_education") != "null")
             {
                 text_editeducation.text = json.getString("user_education")
+                text_editeducation.setTextColor(Color.parseColor("#FFA500"))
+                text_editeducation.setTypeface(text_editeducation.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_holiday") != "null")
             {
                 text_editholiday.text = json.getString("user_holiday")
+                text_editholiday.setTextColor(Color.parseColor("#FFA500"))
+                text_editholiday.setTypeface(text_editholiday.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_cigarette") != "null")
             {
                 text_editcigarette.text = json.getString("user_cigarette")
+                text_editcigarette.setTextColor(Color.parseColor("#FFA500"))
+                text_editcigarette.setTypeface(text_editcigarette.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_alcohol") != "null")
             {
                 text_editalcohol.text = json.getString("user_alcohol")
+                text_editalcohol.setTextColor(Color.parseColor("#FFA500"))
+                text_editalcohol.setTypeface(text_editalcohol.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_religion") != "null")
             {
                 text_editreligion.text = json.getString("user_religion")
+                text_editreligion.setTextColor(Color.parseColor("#FFA500"))
+                text_editreligion.setTypeface(text_editreligion.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_brother") != "null")
             {
                 text_editbrother.text = json.getString("user_brother")
+                text_editbrother.setTextColor(Color.parseColor("#FFA500"))
+                text_editbrother.setTypeface(text_editbrother.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_country") != "null")
             {
                 text_editcountry.text = json.getString("user_country")
+                text_editcountry.setTextColor(Color.parseColor("#FFA500"))
+                text_editcountry.setTypeface(text_editcountry.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_salary") != "null")
             {
                 text_editsalary.text = json.getString("user_salary")
+                text_editsalary.setTextColor(Color.parseColor("#FFA500"))
+                text_editsalary.setTypeface(text_editsalary.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_asset") != "null")
             {
                 text_editasset.text = json.getString("user_asset")
+                text_editasset.setTextColor(Color.parseColor("#FFA500"))
+                text_editasset.setTypeface(text_editasset.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_marriagehistory") != "null")
             {
                 text_editmarriagehistory.text = json.getString("user_marriagehistory")
+                text_editmarriagehistory.setTextColor(Color.parseColor("#FFA500"))
+                text_editmarriagehistory.setTypeface(text_editmarriagehistory.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_children") != "null")
             {
                 text_editchildren.text = json.getString("user_children")
+                text_editchildren.setTextColor(Color.parseColor("#FFA500"))
+                text_editchildren.setTypeface(text_editchildren.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_marriageplan") != "null")
             {
                 text_editmarriageplan.text = json.getString("user_marriageplan")
+                text_editmarriageplan.setTextColor(Color.parseColor("#FFA500"))
+                text_editmarriageplan.setTypeface(text_editmarriageplan.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_childrenplan") != "null")
             {
                 text_editchildrenplan.text = json.getString("user_childrenplan")
+                text_editchildrenplan.setTextColor(Color.parseColor("#FFA500"))
+                text_editchildrenplan.setTypeface(text_editchildrenplan.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_parenting") != "null")
             {
                 text_editparenting.text = json.getString("user_parenting")
+                text_editparenting.setTextColor(Color.parseColor("#FFA500"))
+                text_editparenting.setTypeface(text_editparenting.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_wishdate") != "null")
             {
                 text_editwishdate.text = json.getString("user_wishdate")
+                text_editwishdate.setTextColor(Color.parseColor("#FFA500"))
+                text_editwishdate.setTypeface(text_editwishdate.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_datecost") != "null")
             {
                 text_editdatecost.text = json.getString("user_datecost")
+                text_editdatecost.setTextColor(Color.parseColor("#FFA500"))
+                text_editdatecost.setTypeface(text_editdatecost.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_roommate") != "null")
             {
                 text_editroommate.text = json.getString("user_roommate")
+                text_editroommate.setTextColor(Color.parseColor("#FFA500"))
+                text_editroommate.setTypeface(text_editroommate.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_language") != "null")
             {
                 text_editlanguage.text = json.getString("user_language")
+                text_editlanguage.setTextColor(Color.parseColor("#FFA500"))
+                text_editlanguage.setTypeface(text_editlanguage.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_interest") != "null")
             {
                 text_editinterest.text = json.getString("user_interest")
+                text_editinterest.setTextColor(Color.parseColor("#FFA500"))
+                text_editinterest.setTypeface(text_editinterest.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_personality") != "null")
             {
                 text_editpersonality.text = json.getString("user_personality")
+                text_editpersonality.setTextColor(Color.parseColor("#FFA500"))
+                text_editpersonality.setTypeface(text_editpersonality.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_favoriteperson") != "null")
             {
                 text_editfavoriteperson.text = json.getString("user_favoriteperson")
+                text_editfavoriteperson.setTextColor(Color.parseColor("#FFA500"))
+                text_editfavoriteperson.setTypeface(text_editfavoriteperson.getTypeface(), Typeface.BOLD)
             }
 
         })
@@ -374,6 +482,41 @@ class EditProfileActivity : PSAppCompatActivity() {
             psDialog.show()
         }
 
+        handler=object : Handler() {
+            override fun handleMessage(msg: Message) {
+                when(msg.what){
+                    0 -> {
+                        refreshProfileImage()
+                    }
+                }
+            }
+        }
+
+    }
+
+    fun profileImageInit() {
+        for(i in 0..profileImageList.size-1) {
+            profileImageList.get(i).setImageResource(R.drawable.default_image)
+        }
+    }
+
+    fun setProfileImage(array: JSONArray) {
+        profileImageIdList.clear()
+        for(i in 0..array.length()-1) {
+            var json = array[i] as JSONObject
+            Glide.with(this)
+                .load(json.getString("image"))
+                .into(profileImageList.get(i))
+            profileImageIdList.add(json.getInt("image_id"))
+        }
+    }
+
+    fun refreshProfileImage() {
+        VolleyService.getProfileImageReq(UserInfo.ID, this, {success->
+            var array = success
+            profileImageInit()
+            setProfileImage(array)
+        })
     }
 
     fun height() {
@@ -488,7 +631,83 @@ class EditProfileActivity : PSAppCompatActivity() {
         userOptionList = arrayListOf(UserItem.UserOption("귀여운"), UserItem.UserOption("털털한"), UserItem.UserOption("잘 웃는"), UserItem.UserOption("유머러스한"), UserItem.UserOption("다정다감한"), UserItem.UserOption("엄청 착한"), UserItem.UserOption("순수한"), UserItem.UserOption("박력있는"), UserItem.UserOption("듬직한"), UserItem.UserOption("마음이 예쁜"), UserItem.UserOption("욕 안하는"), UserItem.UserOption("열정적인"))
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data == null) {
+            return
+        }
 
+
+        when (requestCode) {
+            PICK_FROM_ALBUM -> {
+                imageCaptureUri = data!!.data
+                Log.d("test", "$imagePath")
+
+                try {
+                    CropImage.activity(imageCaptureUri).setGuidelines(CropImageView.Guidelines.ON).start(this)
+
+                } catch (e: FileNotFoundException) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace()
+                } catch (e: IOException) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace()
+                }
+
+            }
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                val result = CropImage.getActivityResult(data)
+                if (resultCode == Activity.RESULT_OK) {
+                    val resultUri: Uri = result.uri
+                    var imagePath = resultUri.getPath()
+
+                    if(editImageId != null) {
+                        FileUploadUtils.uploadProfileImage(imagePath!!, "", "update", editImageId!!)
+                    } else {
+                        FileUploadUtils.uploadProfileImage(imagePath!!, "profile", "insert", null)
+                    }
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    val error = result.error
+                    editImageId = null
+                }
+            }
+
+        }
+    }
+
+    fun dialogPhotoType() {
+        var dialog = Dialog(this)
+
+        dialog.setContentView(R.layout.dialog_phototype)
+        var editPhotoBtn : TextView = dialog.findViewById(R.id.text_editphoto)
+        var deletePhotoBtn : TextView = dialog.findViewById(R.id.text_deletephoto)
+
+        editPhotoBtn.setOnClickListener{
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            intent.setType("image/*")
+            startActivityForResult(intent, PICK_FROM_ALBUM)
+            dialog.dismiss()
+        }
+
+        deletePhotoBtn.setOnClickListener {
+            VolleyService.deleteImageReq(editImageId!!, this, {success->
+                if(success == "success") {
+                    editImageId = null
+                    refreshProfileImage()
+                }
+            })
+
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    fun photoFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.setType("image/*")
+        startActivityForResult(intent, PICK_FROM_ALBUM)
+    }
 
 
 }

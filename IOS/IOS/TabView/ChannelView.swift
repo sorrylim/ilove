@@ -8,10 +8,14 @@
 
 import SwiftUI
 
+import class Kingfisher.KingfisherManager
 
 struct ChannelView : View{
     
+    
     @State var showModal = false
+    
+    @State var newUserList:[NewUserModel]=[]
     
     @State var profileCount : Int = -1
     @State var storyCount : Int = -1
@@ -35,28 +39,38 @@ struct ChannelView : View{
                         Spacer()
                     }
                     
-                    VStack(spacing: 20){
-                        HStack{
-                            Spacer()
-                            Image(systemName: "circle")
-                                .resizable()
-                                .frame(width: 80,height: 80)
-                            Spacer()
-                            Image(systemName: "circle")
-                                .resizable()
-                                .frame(width: 80,height: 80)
-                            Spacer()
+                    VStack(spacing: 0){
+                        if newUserList.count > 0 {
+                            HStack{
+                                Spacer()
+                                NewUserCell(newUser: newUserList[0])
+                                if newUserList.count > 1 {
+                                    Spacer()
+                                    NewUserCell(newUser: newUserList[1])
+                                }
+                                else {
+                                    Spacer()
+                                    Text("")
+                                        .frame(width:150,height:150)
+                                }
+                                Spacer()
+                            }
                         }
-                        HStack{
-                            Spacer()
-                            Image(systemName: "circle")
-                                .resizable()
-                                .frame(width: 80,height: 80)
-                            Spacer()
-                            Image(systemName: "circle")
-                                .resizable()
-                                .frame(width: 80,height: 80)
-                            Spacer()
+                        if newUserList.count > 2 {
+                            HStack{
+                                Spacer()
+                                NewUserCell(newUser: newUserList[2])
+                                if newUserList.count > 3 {
+                                    Spacer()
+                                    NewUserCell(newUser: newUserList[3])
+                                }
+                                else {
+                                    Spacer()
+                                    Text("")
+                                        .frame(width:150,height:150)
+                                }
+                                Spacer()
+                            }
                         }
                     }
                     
@@ -101,7 +115,8 @@ struct ChannelView : View{
                 
                 Group{
                     HStack{
-                        Image(systemName: "circle")
+                        Image("icon")
+                            .resizable()
                             .frame(width:60,height:60)
                         VStack(alignment: .leading){
                             Text("내 프로필 상단으로 올리기")
@@ -209,13 +224,17 @@ struct ChannelView : View{
             .padding()
             .navigationBarTitle("채널",displayMode: .inline)
             .onAppear{
+                HttpService.shared.getNewUserReq(userGender: "F", callback: { (newUserModelArray) -> Void in
+                    self.newUserList=newUserModelArray
+                })
                 
-                HttpService.shared.getViewCountReq(userId: "hyeha",callback: { (data) -> Void in
+                
+                HttpService.shared.getViewCountReq(userId: "ksh",callback: { (data) -> Void in
                     self.profileCount=data.profile
                     self.storyCount=data.story
                 })
                 
-                HttpService.shared.getExpressionCountReq(userId: "hyeha", callback: { (data) -> Void in
+                HttpService.shared.getExpressionCountReq(userId: "ksh", callback: { (data) -> Void in
                     self.sendLikeCount=data.send_like
                     self.receiveLikeCount=data.receive_like
                     self.eachLikeCount=data.each_like
@@ -234,3 +253,63 @@ struct ChannelView_Previews: PreviewProvider {
         ChannelView()
     }
 }
+
+struct NewUserCell: View {
+    
+    @State var newUser : NewUserModel
+    
+    @State var uiImage = UIImage()
+    //@State var storyVisible=false
+    @State var age = 0
+    
+    var body: some View {
+        ZStack{
+            Image(uiImage: self.uiImage)
+             .resizable()
+             .frame(width: 150,height: 150)
+             .cornerRadius(10)
+            
+            /*CustomImageView(urlString: newUser.image)
+                .frame(width: 150, height: 150)
+                .cornerRadius(10)*/
+            
+            
+            VStack(spacing:10){
+                Spacer()
+                HStack{
+                    Text("\(newUser.user_nickname),\(self.age)")
+                        .foregroundColor(Color.white)
+                        .font(.system(size: 15, weight: .bold))
+                    Spacer()
+                }
+                HStack{
+                    Text("\(newUser.user_recentgps),\(newUser.user_recenttime)")
+                        .foregroundColor(Color.white)
+                        .font(.system(size: 10, weight: .bold))
+                    Spacer()
+                }
+            }
+            .padding()
+            .onAppear(){
+                KingfisherManager.shared.retrieveImage(with: URL(string: self.newUser.image)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                    self.uiImage=image!
+                })
+                
+                let now = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                let date=dateFormatter.string(from: now)
+                
+                self.age=(Int(date.split(separator: "-")[0]).unsafelyUnwrapped-Int(self.newUser.user_birthday.split(separator: "-")[0]).unsafelyUnwrapped+1)
+            }
+            //.onTapGesture {
+            //self.storyVisible=true
+            /*.sheet(isPresented: $storyVisible){
+             StoryView(story: self.story)
+             }*/
+        }
+    }
+    
+    
+}
+

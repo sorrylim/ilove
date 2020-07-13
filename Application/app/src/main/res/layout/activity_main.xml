@@ -39,8 +39,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/colorMdWhite_1000"
-        app:labelVisibilityMode="labeled"
         app:itemBackground="@color/colorMdWhite_1000"
+        app:itemIconSize="24dp"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_bnv_main">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>

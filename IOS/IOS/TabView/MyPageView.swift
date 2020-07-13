@@ -14,7 +14,8 @@ struct MyPageView : View{
             ScrollView(){
                 HStack{
                     Spacer()
-                    Image(systemName: "circle")
+                    Image("default_image")
+                        .resizable()
                         .frame(width:100,height: 100)
                     Spacer(minLength:20)
                     VStack{
@@ -36,18 +37,19 @@ struct MyPageView : View{
                 
                 NavigationLink(destination: SettingView()){
                     HStack{
-                        Image(systemName: "list.dash")
+                        Image("setting_icon")
+                            .resizable()
                             .frame(width:25,height:25)
-                            .foregroundColor(Color.black)
                         
                         Text("설정")
-                            .foregroundColor(Color.black)
                             .font(.system(size:20))
                         Spacer()
                     }
                 }
+                .foregroundColor(Color.black)
                 HStack{
-                    Image(systemName: "list.dash")
+                    Image("message_icon")
+                        .resizable()
                         .frame(width:25,height:25)
                     Text("1:1 문의")
                         .font(.system(size:20))
@@ -56,25 +58,28 @@ struct MyPageView : View{
                 
                 NavigationLink(destination: ItemManageView()){
                     HStack{
-                        Image(systemName: "list.dash")
+                        Image("baseline_detail_category_grey_24")
+                            .resizable()
                             .frame(width:25,height:25)
-                            .foregroundColor(Color.black)
                         
                         Text("아이템 관리")
                             .font(.system(size:20))
-                            .foregroundColor(Color.black)
                         Spacer()
                     }
                 }
+                .foregroundColor(Color.black)
+                
                 HStack{
-                    Image(systemName: "list.dash")
+                    Image("kakao_icon")
+                        .resizable()
                         .frame(width:25,height:25)
                     Text("카톡으로 초대하기")
                         .font(.system(size:20))
                     Spacer()
                 }
                 HStack{
-                    Image(systemName: "list.dash")
+                    Image("information_icon")
+                        .resizable()
                         .frame(width:25,height:25)
                     Text("제휴 안내")
                         .font(.system(size:20))
