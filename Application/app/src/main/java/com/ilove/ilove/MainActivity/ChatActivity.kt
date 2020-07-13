@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Adapter.ChatAdapter
 import com.ilove.ilove.Item.ChatItem
+import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Object.SocketService
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
@@ -28,14 +30,23 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
+
+
+        var intent=intent
+        var room=intent.getSerializableExtra("room") as ChatRoomItem
         list_chat.adapter=chatAdapter
+
+        FirebaseMessaging.getInstance().subscribeToTopic(room.roomId!!)
+            .addOnCompleteListener {
+                var msg = "${room.roomId} subscribe success"
+                if (!it.isSuccessful) msg = "${room.roomId} subscribe fail"
+            }
 
         SocketService.connectSocket()
         SocketService.init()
 
-        SocketService.emitJoin("test_room")
-        VolleyService.chatInitReq("test_room",this,{success ->
-            Log.d("test",success!!.toString())
+        SocketService.emitJoin(room.roomId)
+        VolleyService.chatInitReq(room.roomId,this,{success ->
             if(success!!.length()!=0) {
                 var array = success!!
                 for (i in 0..array.length() - 1) {

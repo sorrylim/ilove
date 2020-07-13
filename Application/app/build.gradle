@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -37,9 +38,11 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    //FCM 알림
+    //파이어베이스
+    implementation 'com.google.firebase:firebase-core:17.0.0'
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
-    
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+
     //좋아요버튼
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
     //Volley Service

@@ -31,5 +31,6 @@ class UserInfo : Application() {
         var CANDYCOUNT: Int = 0
         var LIKECOUNT: Int = 0
         var MESSAGETICKET: Int = 0
+        var TOKEN: String?=""
     }
 }

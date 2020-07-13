@@ -3,6 +3,8 @@ package com.ilove.ilove.Object
 import android.content.Context
 import android.util.Log
 import android.graphics.Bitmap
+import com.android.volley.Request
+import com.android.volley.Request.Method.POST
 import com.android.volley.Response
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.JsonArrayRequest
@@ -10,6 +12,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.reflect.Method
 
 object VolleyService {
     val ip= "http://18.217.130.157:3000"
@@ -185,6 +188,48 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
+    fun getProfileImageReq(userId: String, context: Context, success: (JSONArray) -> Unit) {
+        var url = "${ip}/image/get/profile"
+        var json = JSONObject()
+        json.put("user_id", userId)
+
+        var array = JSONArray()
+        array.put(json)
+
+        var request = object : JsonArrayRequest(
+            Method.POST,
+            url,
+            array,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun getNewUserListReq(userGender: String, context: Context, success: (JSONArray) -> Unit) {
+        var url = "${ip}/user/get/new/list"
+        var json = JSONObject()
+        json.put("user_gender", userGender)
+
+        var array = JSONArray()
+        array.put(json)
+
+        var request = object : JsonArrayRequest(
+            Method.POST,
+            url,
+            array,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
     fun insertHistoryReq(userId: String, partnerId: String, visitType: String, visitDate:String, context:Context, success:(String?) -> Unit) {
         var url = "${ip}/expression/insert/history"
         var json = JSONObject()
@@ -256,7 +301,7 @@ object VolleyService {
         var array = JSONArray()
             .put(json)
 
-        var request=object : JsonArrayRequest(
+        var request = object : JsonArrayRequest(
             Method.POST,
             url,
             array,
@@ -409,6 +454,41 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
+    fun deleteImageReq(imageId:Int, context:Context, success:(String) -> Unit) {
+        var url = "${ip}/image/delete"
+        var json = JSONObject()
+        json.put("image_id", imageId)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun getMyStoryImageReq(userId:String, context:Context, success:(JSONObject) -> Unit) {
+        var url = "${ip}/image/get/my/story"
+        var json = JSONObject()
+        json.put("user_id", userId)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
     fun sendFCMReq(roomId: String, title: String, content: String, context: Context) {
 
         var url = "${ip}/chat_room/fcm/send"
@@ -417,6 +497,52 @@ object VolleyService {
         json.put("topic", roomId)
         json.put("content", content)
         json.put("title",title)
+
+        var request = object : JsonObjectRequest(Method.POST,
+            url,
+            json,
+            Response.Listener {
+            },
+            Response.ErrorListener {
+            }) {
+        }
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun getMyChatRoom(userId: String, context: Context, success: (JSONArray) -> Unit) {
+        var url="${ip}/room/get/my/room"
+
+        var json = JSONObject()
+            .put("user_id",userId)
+
+        var array = JSONArray()
+            .put(json)
+
+        var request = object : JsonArrayRequest(
+            Method.POST,
+            url,
+            array,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+                Log.d("test","${it}")
+            }) {
+
+        }
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun updateToken(userId: String,token: String?,context: Context, success: (JSONObject) -> Unit) {
+        var url="${ip}/user/update/token"
+
+        var json=JSONObject()
+            .put("user_id",userId)
+            .put("token",token)
+
+        Log.d("test","${token}")
 
         var request = object : JsonObjectRequest(Method.POST,
             url,

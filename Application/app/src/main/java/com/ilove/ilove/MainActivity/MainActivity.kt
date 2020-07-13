@@ -1,17 +1,15 @@
 package com.ilove.ilove.MainActivity
 
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import androidx.fragment.app.Fragment
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomnavigation.LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED
-import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.iid.FirebaseInstanceId
 import com.ilove.ilove.Class.PSAppCompatActivity
+import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Fragment.*
+import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -26,6 +24,22 @@ class MainActivity : PSAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("test", "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+                else {
+                    // Get new Instance ID token
+                    val token = task.result?.token
+
+                    VolleyService.updateToken(UserInfo.ID, token, this, { success ->
+                        UserInfo.TOKEN = token
+                    })
+                }
+            })
 
         bnv_main.setOnNavigationItemSelectedListener(navListener)
 
