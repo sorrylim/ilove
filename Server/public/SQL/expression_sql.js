@@ -154,7 +154,7 @@ module.exports = function () {
         },
         delete_expressioneach_data: function(user_id, partner_id, expression_type,callback) {
             pool.getConnection(function(err, con) {
-                var sql = `delete from expressioneach where user_id='${user_id}' and partner_id='${partner_id}' or user_id='${partner_id}' and partner_id='${user_id}' and expression_type='${expression_type}'`
+                var sql = `delete from expressioneach where expression_type='${expression_type}' and (user_id='${user_id}' and partner_id='${partner_id}') or (user_id='${partner_id}' and partner_id='${user_id}')`
                 con.query(sql, function(err, result) {
                     con.release()
                     if(err) callback(err)

@@ -555,4 +555,26 @@ object VolleyService {
 
         Volley.newRequestQueue(context).add(request)
     }
+
+    fun updateIntroduce(userId: String, introduceType: String, introduceData:String, context:Context, success: (String) -> Unit) {
+        var url="${ip}/user/update/introduce"
+
+        var json=JSONObject()
+            .put("user_id",userId)
+            .put("introduce_type", introduceType)
+            .put("introduce_data", introduceData)
+
+
+        var request = object : JsonObjectRequest(Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+            }) {
+        }
+
+        Volley.newRequestQueue(context).add(request)
+    }
 }

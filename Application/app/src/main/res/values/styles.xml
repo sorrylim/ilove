@@ -14,4 +14,18 @@
         <item name="android:windowEnterAnimation">@anim/anim_slide_in_right</item>
         <item name="android:windowExitAnimation">@anim/anim_exit_in_right</item>
     </style>
+
+    <style name="popCasterDlgTheme" parent="@style/ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
 </resources>

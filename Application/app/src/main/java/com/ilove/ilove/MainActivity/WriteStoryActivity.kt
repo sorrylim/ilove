@@ -1,5 +1,6 @@
 package com.ilove.ilove.MainActivity
 
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -8,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -17,6 +19,7 @@ import com.ilove.ilove.Class.FileUploadUtils
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_write_story.*
+import kotlinx.android.synthetic.main.item_storylist.*
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,6 +39,13 @@ class WriteStoryActivity : PSAppCompatActivity() {
         setContentView(R.layout.activity_write_story)
 
         toolbarBinding(toolbar_writestory, "스토리작성", true)
+
+        var displayMetrics: DisplayMetrics = DisplayMetrics()
+        this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics) // 화면의 가로길이를 구함
+        var width = displayMetrics.widthPixels
+        image_writestory.getLayoutParams().width = width
+        image_writestory.getLayoutParams().height = width
+        image_writestory.requestLayout()
 
 
         checkPermissions()

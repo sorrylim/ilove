@@ -78,6 +78,7 @@ class EditProfileActivity : PSAppCompatActivity() {
         }
 
         image_editsub1.setOnClickListener {
+            editImageId = null
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 else -> {
@@ -88,6 +89,7 @@ class EditProfileActivity : PSAppCompatActivity() {
         }
 
         image_editsub2.setOnClickListener {
+            editImageId = null
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 2 -> photoFromGallery()
@@ -99,6 +101,7 @@ class EditProfileActivity : PSAppCompatActivity() {
         }
 
         image_editsub3.setOnClickListener {
+            editImageId = null
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 2 -> photoFromGallery()
@@ -112,6 +115,16 @@ class EditProfileActivity : PSAppCompatActivity() {
 
         VolleyService.getUserOptionReq(UserInfo.ID, this, {success->
             var json = success
+
+            if(json.getString("user_introduce") != "null")
+            {
+                text_editintroduce.text = json.getString("user_introduce")
+            }
+
+            if(json.getString("user_previewintroduce") != "null")
+            {
+                text_editpreviewintroduce.text = json.getString("user_previewintroduce")
+            }
 
             if(json.getString("user_height") != "null")
             {
@@ -298,6 +311,16 @@ class EditProfileActivity : PSAppCompatActivity() {
         })
 
         var psDialog = PSDialog(this)
+
+        layout_editpreviewintroduce.setOnClickListener {
+            psDialog.setPreviewIntroduce(text_editpreviewintroduce)
+            psDialog.show()
+        }
+
+        layout_editintroduce.setOnClickListener {
+            psDialog.setIntroduce(text_editintroduce)
+            psDialog.show()
+        }
 
 
         layout_editheight.setOnClickListener {
