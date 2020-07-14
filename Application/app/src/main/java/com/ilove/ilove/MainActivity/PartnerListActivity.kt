@@ -24,9 +24,9 @@ class PartnerListActivity : PSAppCompatActivity() {
         setContentView(R.layout.activity_partner_list)
 
         var intent = intent
-        var listType:String = intent.getStringExtra("listType")
+        var listType = intent.getStringExtra("listType")
 
-        toolbarBinding(toolbar_partnerlist, listType, true)
+        toolbarBinding(toolbar_partnerlist, listType!!, true)
 
         when(listType) {
             "내가 좋아요를 보낸 이성" -> sendUserList("like")

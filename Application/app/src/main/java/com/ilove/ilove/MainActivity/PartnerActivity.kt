@@ -30,9 +30,9 @@ class PartnerActivity : PSAppCompatActivity() {
         viewpager_partnerprofile.setClipToOutline(true)
 
 
-        toolbarCenterBinding(toolbar_partner, userNickname, true)
+        toolbarCenterBinding(toolbar_partner, userNickname!!, true)
 
-        VolleyService.getProfileImageReq(userId, this, {success->
+        VolleyService.getProfileImageReq(userId!!, this, {success->
             profileImageList.clear()
             var array = success
             for(i in 0..array.length()-1) {

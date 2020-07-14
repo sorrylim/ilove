@@ -36,7 +36,7 @@ class ChatAdapter : BaseAdapter() {
 
         val time = item.chatTime!!.split(" ")[1].split(":")
         val hour=time[0].toInt()
-        val min=time[1].toInt()
+        val min=time[1]
         var timeStr=""
         if(hour<12)
             timeStr="오전 ${hour}:${min}"

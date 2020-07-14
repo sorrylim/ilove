@@ -100,7 +100,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
                         "eachsuccess" -> {
                             likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
                             var dialog = PSDialog(context as Activity)
-                            dialog.setEachExpressionLikeDialog(partnerList.get(position).userNickname, partnerList.get(position).userAge + ", " + partnerList.get(position).userCity, partnerList.get(position).userImage)
+                            dialog.setEachExpressionLikeDialog(partnerList.get(position).userId,partnerList.get(position).userNickname, partnerList.get(position).userAge + ", " + partnerList.get(position).userCity, partnerList.get(position).userImage)
                             dialog.show()
                         }
                         else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()

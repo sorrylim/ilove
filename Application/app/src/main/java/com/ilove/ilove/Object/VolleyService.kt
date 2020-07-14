@@ -10,6 +10,7 @@ import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.ilove.ilove.Class.UserInfo
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.reflect.Method
@@ -550,6 +551,28 @@ object VolleyService {
             Response.Listener {
             },
             Response.ErrorListener {
+            }) {
+        }
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun createRoomReq(userId: String, userNickname: String, context: Context, success: (JSONObject) -> Unit) {
+        var url="${ip}/room/create/room"
+
+        var json=JSONObject()
+            .put("room_maker", UserInfo.ID)
+            .put("room_partner",userId)
+            .put("room_title","${UserInfo.NICKNAME}&${userNickname}")
+
+        var request = object : JsonObjectRequest(Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+                Log.d("test",it.toString())
             }) {
         }
 

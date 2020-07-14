@@ -31,8 +31,7 @@ public abstract class PSAppCompatActivity : AppCompatActivity() {
         return toolbar
     }
 
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item != null) {
             when (item.itemId) {
                 android.R.id.home -> {
@@ -43,4 +42,8 @@ public abstract class PSAppCompatActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+/*
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        
+    }*/
 }
