@@ -27,6 +27,7 @@
 		547E622B249CAFFA00D8B7C4 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E622A249CAFFA00D8B7C4 /* EditProfileView.swift */; };
 		548AD92824A1A772003E27FD /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AD92724A1A772003E27FD /* HttpService.swift */; };
 		548AD92E24A1CD40003E27FD /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AD92D24A1CD40003E27FD /* DataModel.swift */; };
+		5494D0A824BD9E4B00ED2C08 /* EachAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5494D0A724BD9E4B00ED2C08 /* EachAlert.swift */; };
 		5497A40D24A09A94005BBC1A /* AlarmSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5497A40C24A09A94005BBC1A /* AlarmSettingView.swift */; };
 		549E5B3724ADB29D00050E62 /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E5B3624ADB29D00050E62 /* MultilineTextField.swift */; };
 		549E5B3924ADB34F00050E62 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E5B3824ADB34F00050E62 /* ImagePicker.swift */; };
@@ -58,6 +59,7 @@
 		547E622A249CAFFA00D8B7C4 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		548AD92724A1A772003E27FD /* HttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
 		548AD92D24A1CD40003E27FD /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		5494D0A724BD9E4B00ED2C08 /* EachAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachAlert.swift; sourceTree = "<group>"; };
 		5497A40C24A09A94005BBC1A /* AlarmSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingView.swift; sourceTree = "<group>"; };
 		549E5B3624ADB29D00050E62 /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
 		549E5B3824ADB34F00050E62 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			children = (
 				549E5B3624ADB29D00050E62 /* MultilineTextField.swift */,
 				549E5B3824ADB34F00050E62 /* ImagePicker.swift */,
+				5494D0A724BD9E4B00ED2C08 /* EachAlert.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				5451D1EC24A2F8610035EA91 /* PartnerView.swift in Sources */,
 				547E6228249CA27C00D8B7C4 /* WriteStoryView.swift in Sources */,
 				54745B9624A06E6400B32F25 /* MyPageView.swift in Sources */,
+				5494D0A824BD9E4B00ED2C08 /* EachAlert.swift in Sources */,
 				549E5B3724ADB29D00050E62 /* MultilineTextField.swift in Sources */,
 				545D598F24A0A448000B8A5A /* VipGuideView.swift in Sources */,
 				54745B9B24A0724900B32F25 /* ItemManageView.swift in Sources */,

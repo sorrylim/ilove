@@ -14,27 +14,29 @@ struct PartnerView : View {
     @State var partnerList:[PartnerModel]=[]
     @State var visitPartnerList:[VisitPartnerModel]=[]
     @State var type=""
-    
+    @State var eachAlertVisible = false;
     
     @State var title:String
     
     var body: some View{
-        List{
-            if title=="내 프로필을 확인한 사람" || title=="내 스토리를 확인한 사람"{
-                ForEach(visitPartnerList, id: \.user_id){partner in
-                    VisitPartnerRow(partner: partner)
-                }
-            }
-            else {
-                if title.contains("내가") || title.contains("서로"){
-                    ForEach(partnerList, id: \.user_id){partner in
-                        PartnerRow(partner: partner)
+        VStack{
+            List{
+                if title=="내 프로필을 확인한 사람" || title=="내 스토리를 확인한 사람"{
+                    ForEach(visitPartnerList, id: \.user_id){partner in
+                        VisitPartnerRow(partner: partner)
                     }
-                    .onDelete(perform : delete)
                 }
                 else {
-                    ForEach(partnerList, id: \.user_id){partner in
-                        PartnerRow(partner: partner)
+                    if title.contains("내가") || title.contains("서로"){
+                        ForEach(partnerList, id: \.user_id){partner in
+                            PartnerRow(partner: partner)
+                        }
+                        .onDelete(perform : delete)
+                    }
+                    else {
+                        ForEach(partnerList, id: \.user_id){partner in
+                            PartnerRow(partner: partner)
+                        }
                     }
                 }
             }
@@ -92,6 +94,7 @@ struct PartnerView : View {
                 print("default")
             }
         }
+        
     }
     
     func delete(at offsets: IndexSet){
@@ -99,9 +102,18 @@ struct PartnerView : View {
             return;
         }
         if let first = offsets.first {
-            HttpService.shared.deleteExpressionReq(userId: "ksh", partnerId: partnerList[first].user_id, expressionType: "like") { (resultModel) -> Void in
-                if resultModel.result=="success" {
-                    self.partnerList.remove(at: first)
+            if self.title == "내가 좋아요를 보낸 이성" || self.title == "서로 좋아요가 연결된 이성"{
+                HttpService.shared.deleteExpressionReq(userId: "ksh", partnerId: partnerList[first].user_id, expressionType: "like") { (resultModel) -> Void in
+                    if resultModel.result=="success" {
+                        self.partnerList.remove(at: first)
+                    }
+                }
+            }
+            else {
+                HttpService.shared.deleteExpressionReq(userId: "ksh", partnerId: partnerList[first].user_id, expressionType: "meet") { (resultModel) -> Void in
+                    if resultModel.result=="success" {
+                        self.partnerList.remove(at: first)
+                    }
                 }
             }
         }
@@ -141,6 +153,24 @@ struct PartnerRow : View{
                         meetImage
                             .resizable()
                             .frame(width: 15, height: 15)
+                            .onTapGesture {
+                                if self.partner.meet==0{
+                                    let now = Date()
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                    let date=dateFormatter.string(from: now)
+                                    
+                                    HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.partner.user_id, expressionType: "meet", expressionDate: date) { (resultModel) -> Void in
+                                        if resultModel.result=="success" {
+                                            self.meetImage=Image("call_icon")
+                                        }
+                                        else if resultModel.result=="eachsuccess" {
+                                            self.meetImage=Image("call_icon")
+                                        }
+                                        self.partner.meet=1
+                                    }
+                                }
+                        }
                         likeImage
                             .foregroundColor(Color.red)
                             .frame(width: 15, height: 15)
@@ -177,6 +207,13 @@ struct PartnerRow : View{
             }
             else {
                 self.likeImage=Image(systemName: "heart")
+            }
+            
+            if self.partner.meet == 1{
+                self.meetImage=Image("call_icon")
+            }
+            else {
+                self.meetImage=Image("call_n_icon")
             }
             
             let now = Date()
@@ -221,6 +258,24 @@ struct VisitPartnerRow : View{
                         meetImage
                             .resizable()
                             .frame(width: 15, height: 15)
+                            .onTapGesture {
+                                if self.partner.meet==0{
+                                    let now = Date()
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                    let date=dateFormatter.string(from: now)
+                                    
+                                    HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.partner.user_id, expressionType: "meet", expressionDate: date) { (resultModel) -> Void in
+                                        if resultModel.result=="success" {
+                                            self.meetImage=Image("call_icon")
+                                        }
+                                        else if resultModel.result=="eachsuccess" {
+                                            self.meetImage=Image("call_icon")
+                                        }
+                                        self.partner.meet=1
+                                    }
+                                }
+                        }
                         likeImage
                             .foregroundColor(Color.red)
                             .frame(width: 15, height: 15)
@@ -259,6 +314,13 @@ struct VisitPartnerRow : View{
             }
             else {
                 self.likeImage=Image(systemName: "heart")
+            }
+            
+            if self.partner.meet == 1 {
+                self.meetImage=Image("call_icon")
+            }
+            else {
+                self.meetImage=Image("call_n_icon")
             }
             
             let now = Date()

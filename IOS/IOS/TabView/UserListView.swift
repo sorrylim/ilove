@@ -69,6 +69,41 @@ struct UserRow : View{
                     meetImage
                         .resizable()
                         .frame(width: 15, height: 15)
+                        .onAppear(){
+                            if self.user.meet==1 {
+                                self.meetImage=Image("call_icon")
+                            }
+                            else {
+                                self.meetImage=Image("call_n_icon")
+                            }
+                    }
+                    .onTapGesture {
+                        if self.user.meet==1 {
+                            print(self.user)
+                            HttpService.shared.deleteExpressionReq(userId: "ksh", partnerId: self.user.user_id, expressionType: "meet") { (resultModel) -> Void in
+                                if resultModel.result=="success" {
+                                    self.meetImage=Image("call_n_icon")
+                                }
+                                self.user.meet=0
+                            }
+                        }
+                        else {
+                            let now = Date()
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            let date=dateFormatter.string(from: now)
+                            
+                            HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.user.user_id, expressionType: "meet", expressionDate: date) { (resultModel) -> Void in
+                                if resultModel.result=="success" {
+                                    self.meetImage=Image("call_icon")
+                                }
+                                else if resultModel.result=="eachsuccess" {
+                                    self.meetImage=Image("call_icon")
+                                }
+                                self.user.meet=1
+                            }
+                        }
+                    }
                     likeImage
                         .foregroundColor(.red)
                         .frame(width: 15, height: 15)
