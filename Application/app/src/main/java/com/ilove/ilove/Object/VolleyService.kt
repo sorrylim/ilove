@@ -592,11 +592,9 @@ object VolleyService {
             url,
             json,
             Response.Listener {
-                success(it)
+                success(it.getString("result"))
             },
             Response.ErrorListener {
-                Log.d("test",it.toString())
-                success(it.getString("result"))
             }) {
         }
 
