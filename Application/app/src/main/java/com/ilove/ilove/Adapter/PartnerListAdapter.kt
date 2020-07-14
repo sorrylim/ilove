@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.Partner
@@ -65,7 +66,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
             holder.itemView.btn_partnerlistcall.setLiked(false)
         }
         Glide.with(holder.itemView)
-            .load(partnerList.get(position).userImage)
+            .load(partnerList.get(position).userImage).apply(RequestOptions().circleCrop())
             .into(holder.itemView.image_partnerlistprofile)
         holder.itemView.text_partnerlistnickname.text = partnerList.get(position).userNickname
         holder.itemView.text_partnerlistage.text = age.toString() + ", " + partnerList.get(position).userCity

@@ -7,10 +7,7 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,9 +51,62 @@ class PSDialog(activity: Activity) {
         }
     }
 
+    fun setPreviewIntroduce(introduceText: TextView) {
+        dialog = Dialog(context!!, R.style.popCasterDlgTheme)
+        var dialogView = context!!.layoutInflater.inflate(R.layout.dialog_editpreviewintroduce, null)
+
+        dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
+        dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
+
+        var previewIntroduce : EditText = dialogView.findViewById(R.id.edit_editpreviewintroduce)
+        var updatePreviewIntroduce : ImageView = dialogView.findViewById(R.id.image_updatepreviewintroduce)
+
+        updatePreviewIntroduce.setOnClickListener {
+            VolleyService.updateIntroduce(UserInfo.ID, "user_previewintroduce", previewIntroduce.text.toString(), context!!, {success->
+                if(success == "success") {
+                    dismiss()
+                    introduceText.text = previewIntroduce.text.toString()
+                }
+                else {
+                    Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                }
+            } )
+        }
+
+    }
+
+    fun setIntroduce(introduceText: TextView) {
+        dialog = Dialog(context!!, R.style.popCasterDlgTheme)
+        var dialogView = context!!.layoutInflater.inflate(R.layout.dialog_editintroduce, null)
+
+        dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
+        dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
+
+        var lengthCheck: TextView = dialogView.findViewById(R.id.text_editintroducecheck)
+        var introduce : EditText = dialogView.findViewById(R.id.edit_editintroduce)
+        var updateIntroduce : ImageView = dialogView.findViewById(R.id.image_updateintroduce)
+
+        updateIntroduce.setOnClickListener {
+            if(introduce.text.length < 50) {
+                lengthCheck.visibility = View.VISIBLE
+            }
+            else {
+                VolleyService.updateIntroduce(UserInfo.ID, "user_introduce", introduce.text.toString(), context!!, {success->
+                    if(success == "success") {
+                        dismiss()
+                        introduceText.text = introduce.text.toString()
+                    }
+                    else {
+                        Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                    }
+                } )
+            }
+        }
+    }
+
 
     fun setUserOption(title : String, userOption:String, userOptionList: ArrayList<UserItem.UserOption>, userOptionText: TextView) {
-        dialog = Dialog(context!!, android.R.style.Theme_DeviceDefault_Light_NoActionBar)
+        dialog = Dialog(context!!, R.style.popCasterDlgTheme)
         val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_useroption, null)
         var titleText : TextView = dialogView.findViewById(R.id.text_useroptiontitle)
         var userOptionRV: RecyclerView = dialogView.findViewById(R.id.rv_useroption)

@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ImageItem
 import com.ilove.ilove.Item.NewUserList
@@ -45,10 +46,17 @@ class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>) 
 
         var age = currentDate.toInt() - userList.get(position).userAge.substring(0, 4).toInt() + 1
 
+        /*var displayMetrics: DisplayMetrics = DisplayMetrics()
+        (holder.itemView.getContext() as Activity).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics) // 화면의 가로길이를 구함
+        var width = displayMetrics.widthPixels / 2
+        holder.itemView.image_newuser.getLayoutParams().width = width
+        holder.itemView.image_newuser.getLayoutParams().height = width
+        holder.itemView.image_newuser.requestLayout()*/
+
         holder.itemView.text_newusernicknameage.text = userList.get(position).userNickname + ", " + age.toString()
         holder.itemView.text_newuserrecentdata.text = userList.get(position).recentGps + ", " + userList.get(position).recentTime
         Glide.with(holder.itemView)
-            .load(userList.get(position).userImage)
+            .load(userList.get(position).userImage).apply(RequestOptions().fitCenter())
             .into(holder.itemView.image_newuser)
         holder.itemView.image_newuser.setClipToOutline(true)
 
