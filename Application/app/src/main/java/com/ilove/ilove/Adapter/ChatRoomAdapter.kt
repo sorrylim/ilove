@@ -2,6 +2,7 @@ package com.ilove.ilove.Adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,18 +37,23 @@ class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoom
         else
             holder.itemView.text_title.text=roomTitle[0]
 
-        val time = chatRoom.lastChatTime!!.split(" ")[1].split("|")
-        val hour=time[0].toInt()
-        val min=time[1].toInt()
-        var timeStr=""
-        if(hour<12)
-            timeStr="오전 ${hour}:${min}"
-        else
-            timeStr="오후 ${hour-12}:${min}"
-        holder.itemView.text_last_chat_time.text = timeStr
+        if(chatRoom.lastChat!="null" && chatRoom.lastChatTime!="null") {
+            val time = chatRoom.lastChatTime!!.split(" ")[1].split(":")
+            val hour = time[0].toInt()
+            val min = time[1]
+            var timeStr = ""
+            if (hour < 12)
+                timeStr = "오전 ${hour}:${min}"
+            else
+                timeStr = "오후 ${hour - 12}:${min}"
+            holder.itemView.text_last_chat_time.text = timeStr
 
-        holder.itemView.text_last_chat.text = "${chatRoom.lastChat}"
-
+            holder.itemView.text_last_chat.text = "${chatRoom.lastChat}"
+        }
+        else {
+            holder.itemView.text_last_chat_time.text=""
+            holder.itemView.text_last_chat.text=""
+        }
         holder.view.setOnClickListener {
             var intent = Intent(context, ChatActivity::class.java)
             intent.putExtra("room", chatRoom)
@@ -76,4 +82,8 @@ class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoom
     }
 
     fun selector(room: ChatRoomItem): String = room.lastChatTime!!
+
+    fun clear(){
+        chatRoomList.clear()
+    }
 }

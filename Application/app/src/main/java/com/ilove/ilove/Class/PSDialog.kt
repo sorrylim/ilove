@@ -4,18 +4,24 @@ import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Adapter.PersonalityAdapter
 import com.ilove.ilove.Adapter.UserOptionAdapter
+import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Item.UserItem
+import com.ilove.ilove.MainActivity.ChatActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 
@@ -179,7 +185,7 @@ class PSDialog(activity: Activity) {
         }*/
     }
 
-    fun setEachExpressionLikeDialog(userNickname:String, userAgeCity:String, userImage:String) {
+    fun setEachExpressionLikeDialog(userId:String,userNickname:String, userAgeCity:String, userImage:String) {
         dialog!!.setContentView(R.layout.dialog_eachexpressionlike)
         var chatBtn : Button = dialog!!.findViewById(R.id.btn_eachexpressionlike)
         var cancelBtn : TextView = dialog!!.findViewById(R.id.text_eachexpressionlikecancel)
@@ -193,7 +199,28 @@ class PSDialog(activity: Activity) {
         agecityText.text = userAgeCity
 
         chatBtn.setOnClickListener {
+            VolleyService.createRoomReq(userId,userNickname,context!!,{success ->
+                var json=success
+                var room=ChatRoomItem(
+                    json.getString("room_id"),
+                    json.getString("room_maker"),
+                    json.getString("room_partner"),
+                    json.getString("room_title"),
+                    "",
+                    ""
+                )
 
+                FirebaseMessaging.getInstance().subscribeToTopic(room.roomId)
+                    .addOnCompleteListener {
+                        Log.d("test","success subscribe to topic")
+                    }
+
+                var intent = Intent(context, ChatActivity::class.java)
+
+                intent.putExtra("room",room)
+                ContextCompat.startActivity(context!!, intent, null)
+                dismiss()
+            })
         }
 
         cancelBtn.setOnClickListener {

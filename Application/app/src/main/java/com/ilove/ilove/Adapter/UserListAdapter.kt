@@ -71,7 +71,7 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
                         "eachsuccess" -> {
                             likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_off, null))
                             var dialog = PSDialog(context as Activity)
-                            dialog.setEachExpressionLikeDialog(userList.get(position).userNickname, userList.get(position).userAge + ", " + userList.get(position).userCity, userList.get(position).userImage)
+                            dialog.setEachExpressionLikeDialog(userList.get(position).userId,userList.get(position).userNickname, userList.get(position).userAge + ", " + userList.get(position).userCity, userList.get(position).userImage)
                             dialog.show()
                         }
                         else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()

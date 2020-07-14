@@ -7,6 +7,7 @@ import android.os.Message
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Adapter.ChatAdapter
+import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ChatItem
 import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Object.SocketService
@@ -25,6 +26,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     var chatAdapter=ChatAdapter()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +47,7 @@ class ChatActivity : AppCompatActivity() {
         SocketService.connectSocket()
         SocketService.init()
 
-        SocketService.emitJoin(room.roomId)
+        SocketService.emitJoin(room.roomId, room.partner)
         VolleyService.chatInitReq(room.roomId,this,{success ->
             if(success!!.length()!=0) {
                 var array = success!!
@@ -62,9 +64,9 @@ class ChatActivity : AppCompatActivity() {
             val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
             var json=JSONObject()
-                .put("room_id","test_room")
-                .put("chat_speaker", "ksh")
-                .put("chat_speaker_nickname","ksh")
+                .put("room_id",room.roomId)
+                .put("chat_speaker", UserInfo.ID)
+                .put("chat_speaker_nickname",UserInfo.NICKNAME)
                 .put("chat_content", "${edit_chat.text}")
                 .put("chat_time", currentDate)
 
@@ -86,6 +88,11 @@ class ChatActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        SocketService.disconnectSocket()
     }
 
     fun addChatItem(json : JSONObject){
