@@ -10,6 +10,9 @@
     <string name="guidelikecontent">서로<font color="#FFA500"><b>좋아요</b></font>가 연결되면\n <font color="#FFA500"><b>첫번째 메세지</b></font>를 보낼수 있습니다. </string>
     <string name="buyvip"><b>정회원</b>신청하기</string>
     <string name="buyvipcontent">1개월 구독 <b>0원</b>\n(부가세별도)</string>
+    <string name="viewhistory"><font color="#212121">방문 내역은 </font><font color="#e53935">일주일</font><font color="#212121"> 동안 보관됩니다.</font></string>
+    <string name="likehistory"><font color="#212121">좋아요 내역은 </font><font color="#e53935">일주일</font><font color="#212121"> 동안 보관됩니다.</font></string>
+    <string name="meethistory"><font color="#212121">연락주세요 내역은 </font><font color="#e53935">일주일</font><font color="#212121"> 동안 보관됩니다.</font></string>
 
     <string name="default_notification_channel_id">ilove_id</string>
     <string name="default_notification_channel_name">ilove_name</string>

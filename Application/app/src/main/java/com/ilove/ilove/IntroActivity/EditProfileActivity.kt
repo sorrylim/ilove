@@ -6,6 +6,7 @@ import android.content.Intent
 import android.database.Cursor
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -13,10 +14,12 @@ import android.os.Message
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.Window
 import androidx.loader.content.CursorLoader
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.FileUploadUtils
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.PSDialog
@@ -528,7 +531,7 @@ class EditProfileActivity : PSAppCompatActivity() {
         for(i in 0..array.length()-1) {
             var json = array[i] as JSONObject
             Glide.with(this)
-                .load(json.getString("image"))
+                .load(json.getString("image")).apply(RequestOptions().override(640, 640))
                 .into(profileImageList.get(i))
             profileImageIdList.add(json.getInt("image_id"))
         }
@@ -700,8 +703,10 @@ class EditProfileActivity : PSAppCompatActivity() {
 
     fun dialogPhotoType() {
         var dialog = Dialog(this)
-
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setContentView(R.layout.dialog_phototype)
+
         var editPhotoBtn : TextView = dialog.findViewById(R.id.text_editphoto)
         var deletePhotoBtn : TextView = dialog.findViewById(R.id.text_deletephoto)
 

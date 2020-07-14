@@ -44,14 +44,16 @@ class StoryActivity : PSAppCompatActivity() {
         var userId: String = ""
         var userNickname: String = ""
         var age: String = ""
+        var userCity : String = ""
         val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
         val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
         VolleyService.getStoryUserReq(UserInfo.ID, imageId, this, {success->
             age = (currentDate.substring(0, 4).toInt() - success.getString("user_birthday").substring(0, 4).toInt() + 1).toString()
-            userNickname = success.getString("user_nickname") + ", " + age
-            text_storynickname.text = userNickname
+            userNickname = success.getString("user_nickname")
+            text_storynickname.text = userNickname + ", " + age
             text_storygps.text = success.getString("user_recentgps")
+            userCity = success.getString("user_city")
 
             if(success.getString("image_content") == "NULL") {
                 text_storycontent.visibility = View.GONE
@@ -81,6 +83,9 @@ class StoryActivity : PSAppCompatActivity() {
                     intent.putExtra("userNickname", userNickname)
                     intent.putExtra("userId", userId)
                     intent.putExtra("userImage", json.getString("image"))
+                    intent.putExtra("userAge", age)
+                    intent.putExtra("userCity", userCity)
+
                     startActivity(intent)
                 }
             })

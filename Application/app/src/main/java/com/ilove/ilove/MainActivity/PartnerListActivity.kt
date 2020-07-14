@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ilove.ilove.Adapter.PartnerListAdapter
@@ -42,6 +43,17 @@ class PartnerListActivity : PSAppCompatActivity() {
     }
 
     fun sendUserList(expressionType: String) {
+        when(expressionType) {
+            "like" -> {
+                var history = getText(R.string.likehistory)
+                text_history.setText(history)
+            }
+            "meet" -> {
+                var history = getText(R.string.meethistory)
+                text_history.setText(history)
+            }
+        }
+
         VolleyService.getSendUserReq(UserInfo.ID, expressionType, this, {success->
             partnerList.clear()
             var array = success
@@ -59,6 +71,17 @@ class PartnerListActivity : PSAppCompatActivity() {
     }
 
     fun receiveUserList(expressionType: String) {
+        when(expressionType) {
+            "like" -> {
+                var history = getText(R.string.likehistory)
+                text_history.setText(history)
+            }
+            "meet" -> {
+                var history = getText(R.string.meethistory)
+                text_history.setText(history)
+            }
+        }
+
         VolleyService.getReceiveUserReq(UserInfo.ID, expressionType, this, {success->
             partnerList.clear()
             var array = success
@@ -76,6 +99,17 @@ class PartnerListActivity : PSAppCompatActivity() {
     }
 
     fun eachUserList(expressionType: String) {
+        when(expressionType) {
+            "like" -> {
+                var history = getText(R.string.likehistory)
+                text_history.setText(history)
+            }
+            "meet" -> {
+                var history = getText(R.string.meethistory)
+                text_history.setText(history)
+            }
+        }
+
         VolleyService.getEach1UserReq(UserInfo.ID, expressionType, this, {success->
             partnerList.clear()
             var array = success
@@ -103,6 +137,8 @@ class PartnerListActivity : PSAppCompatActivity() {
     }
 
     fun visitUserList(visitType:String) {
+        var history = getText(R.string.viewhistory)
+        text_history.setText(history)
         VolleyService.getVisitUserReq(UserInfo.ID, visitType, this, {success->
             partnerList.clear()
             var array = success

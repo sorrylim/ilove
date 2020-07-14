@@ -2,6 +2,8 @@ package com.ilove.ilove.Class
 
 import android.app.Activity
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -30,6 +32,7 @@ class PSDialog(activity: Activity) {
     init {
         dialog = Dialog(activity)
         dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         context = activity
     }
 
@@ -159,6 +162,7 @@ class PSDialog(activity: Activity) {
 
     fun setBuyVipDialog() {
         dialog!!.setContentView(R.layout.dialog_buyvip)
+
         var buyBtn : Button = dialog!!.findViewById(R.id.btn_buyvippurchase)
         var cancelBtn : Button = dialog!!.findViewById(R.id.btn_buyvipcancel)
 

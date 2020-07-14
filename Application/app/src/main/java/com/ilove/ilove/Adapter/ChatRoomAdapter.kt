@@ -36,7 +36,7 @@ class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoom
         else
             holder.itemView.text_title.text=roomTitle[0]
 
-        val time = chatRoom.lastChatTime!!.split(" ")[1].split(":")
+        val time = chatRoom.lastChatTime!!.split(" ")[1].split("|")
         val hour=time[0].toInt()
         val min=time[1].toInt()
         var timeStr=""
