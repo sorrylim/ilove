@@ -90,7 +90,7 @@ class PartnerActivity : PSAppCompatActivity() {
         text_partnerage.text = userCity + ", " + userAge
 
 
-        toolbarCenterBinding(toolbar_partner, userNickname!!, true)
+        //toolbarCenterBinding(toolbar_partner, userNickname!!, true)
 
         VolleyService.getProfileImageReq(userId!!, this, {success->
             profileImageList.clear()
