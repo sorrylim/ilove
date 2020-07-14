@@ -292,23 +292,48 @@ class EditProfileActivity : PSAppCompatActivity() {
 
             if(json.getString("user_interest") != "null")
             {
-                text_editinterest.text = json.getString("user_interest")
-                text_editinterest.setTextColor(Color.parseColor("#FFA500"))
-                text_editinterest.setTypeface(text_editinterest.getTypeface(), Typeface.BOLD)
+                if(json.getString("user_interest").length > 8) {
+                    text_editinterest.text = json.getString("user_interest").substring(0, 9) + "..."
+                    text_editinterest.setTextColor(Color.parseColor("#FFA500"))
+                    text_editinterest.setTypeface(text_editinterest.getTypeface(), Typeface.BOLD)
+                }
+                else {
+                    text_editinterest.text = json.getString("user_interest")
+                    text_editinterest.setTextColor(Color.parseColor("#FFA500"))
+                    text_editinterest.setTypeface(text_editinterest.getTypeface(), Typeface.BOLD)
+                }
+
             }
 
             if(json.getString("user_personality") != "null")
             {
-                text_editpersonality.text = json.getString("user_personality")
-                text_editpersonality.setTextColor(Color.parseColor("#FFA500"))
-                text_editpersonality.setTypeface(text_editpersonality.getTypeface(), Typeface.BOLD)
+                if(json.getString("user_personality").length > 8) {
+                    text_editpersonality.text = json.getString("user_personality").substring(0, 9) + "..."
+                    text_editpersonality.setTextColor(Color.parseColor("#FFA500"))
+                    text_editpersonality.setTypeface(text_editpersonality.getTypeface(), Typeface.BOLD)
+                }
+                else {
+                    text_editpersonality.text = json.getString("user_personality")
+                    text_editpersonality.setTextColor(Color.parseColor("#FFA500"))
+                    text_editpersonality.setTypeface(text_editpersonality.getTypeface(), Typeface.BOLD)
+                }
+
             }
 
             if(json.getString("user_favoriteperson") != "null")
             {
-                text_editfavoriteperson.text = json.getString("user_favoriteperson")
-                text_editfavoriteperson.setTextColor(Color.parseColor("#FFA500"))
-                text_editfavoriteperson.setTypeface(text_editfavoriteperson.getTypeface(), Typeface.BOLD)
+                if(json.getString("user_favoriteperson").length > 8)
+                {
+                    text_editfavoriteperson.text = json.getString("user_favoriteperson").substring(0, 9) + "..."
+                    text_editfavoriteperson.setTextColor(Color.parseColor("#FFA500"))
+                    text_editfavoriteperson.setTypeface(text_editfavoriteperson.getTypeface(), Typeface.BOLD)
+                }
+                else {
+                    text_editfavoriteperson.text = json.getString("user_favoriteperson")
+                    text_editfavoriteperson.setTextColor(Color.parseColor("#FFA500"))
+                    text_editfavoriteperson.setTypeface(text_editfavoriteperson.getTypeface(), Typeface.BOLD)
+                }
+
             }
 
         })

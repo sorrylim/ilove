@@ -141,8 +141,14 @@ class PSDialog(activity: Activity) {
                 else {
                     VolleyService.updateUserOptionReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
                         if(success == "success") {
-                            userOptionText.text = userOptionData
-                            dismiss()
+                            if(userOptionData.length > 8) {
+                                userOptionText.text = userOptionData.substring(0, 9) + "..."
+                                dismiss()
+                            }
+                            else {
+                                userOptionText.text = userOptionData
+                                dismiss()
+                            }
                         }
                         else {
                             Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
@@ -153,7 +159,7 @@ class PSDialog(activity: Activity) {
         }
 
 
-        if(userOption == "user_personality" || userOption == "user_favoriteperson") {
+        if(userOption == "user_personality" || userOption == "user_favoriteperson" || userOption == "user_interest") {
             userOptionRV.setHasFixedSize(true)
             userOptionRV.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             userOptionRV.adapter = PersonalityAdapter(context!!, userOptionList)

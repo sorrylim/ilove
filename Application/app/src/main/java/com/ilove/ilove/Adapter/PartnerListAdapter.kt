@@ -85,8 +85,6 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
             intent.putExtra("userCity", partnerList.get(position).userCity)
 
 
-            val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-            val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
             VolleyService.insertHistoryReq(UserInfo.ID, partnerList.get(position).userId, "profile", currentDate, context, {success->
                 if(success == "success")
@@ -105,7 +103,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
                         "eachsuccess" -> {
                             likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
                             var dialog = PSDialog(context as Activity)
-                            dialog.setEachExpressionLikeDialog(partnerList.get(position).userId,partnerList.get(position).userNickname, partnerList.get(position).userAge + ", " + partnerList.get(position).userCity, partnerList.get(position).userImage)
+                            dialog.setEachExpressionLikeDialog(partnerList.get(position).userId,partnerList.get(position).userNickname, age.toString() + ", " + partnerList.get(position).userCity, partnerList.get(position).userImage)
                             dialog.show()
                         }
                         else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
@@ -132,7 +130,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
                         "eachsuccess" -> {
                             likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_icon, null))
                             var dialog = PSDialog(context as Activity)
-                            dialog.setEachExpressionMeetDialog(partnerList.get(position).userNickname, partnerList.get(position).userAge + ", " + partnerList.get(position).userCity, partnerList.get(position).userPhone, partnerList.get(position).userImage)
+                            dialog.setEachExpressionMeetDialog(partnerList.get(position).userNickname, age.toString() + ", " + partnerList.get(position).userCity, partnerList.get(position).userPhone, partnerList.get(position).userImage)
                             dialog.show()
                         }
                         else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
