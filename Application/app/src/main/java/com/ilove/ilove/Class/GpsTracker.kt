@@ -31,8 +31,19 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
     }
 
 
-    fun distanceTo(userLocation : Location, partnerLocation: Location) {
+    fun getDistance(userLatitude: String, userLongitude: String, partnerLatitude: String, partnerLongitude: String) : String {
+        var locationA : Location = Location("pointA")
+        var locationB : Location = Location("pointB")
 
+        locationA.setLatitude(userLatitude.toDouble())
+        locationA.setLongitude(userLongitude.toDouble())
+
+        locationB.setLatitude(partnerLatitude.toDouble())
+        locationB.setLongitude(partnerLongitude.toDouble())
+
+        var distance = locationA.distanceTo(locationB).toInt().toString()
+
+        return distance
     }
 
     fun getGps() : Location? {
@@ -127,5 +138,31 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
         {
             locationManager!!.removeUpdates(this);
         }
+    }
+
+    enum class TimeValue(val value: Int,val maximum : Int, val msg : String) {
+        SEC(60,60,"분 전"),
+        MIN(60,60,"시간 전"),
+        HOUR(24,24,"일 전"),
+        DAY(30,30,"달 전"),
+        MONTH(12,12,"년 전")
+    }
+
+    fun timeDiff(time : Long):String{
+        val curTime = System.currentTimeMillis()
+        var diffTime = (curTime- time) / 1000
+        var msg: String? = null
+        if(diffTime < TimeValue.SEC.value )
+            msg= "방금 전"
+        else {
+            for (i in TimeValue.values()) {
+                diffTime /= i.value
+                if (diffTime < i.maximum) {
+                    msg= diffTime.toString() + i.msg
+                    break
+                }
+            }
+        }
+        return msg!!
     }
 }

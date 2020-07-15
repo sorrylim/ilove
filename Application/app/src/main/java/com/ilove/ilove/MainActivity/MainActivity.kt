@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
@@ -22,9 +23,11 @@ import com.ilove.ilove.Fragment.*
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_main.*
-import java.time.ZoneId
-import java.time.ZonedDateTime
+import java.sql.Time
+import java.text.SimpleDateFormat
+import java.time.*
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 
@@ -56,6 +59,21 @@ class MainActivity : PSAppCompatActivity() {
         else {
             checkRunTimePermission()
         }
+
+        /*var gpsTracker = GpsTracker(this)
+
+        var date = "2020-07-15 12:17:07"
+
+        var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        var partnerDate : Date = simpleDateFormat.parse(date)
+
+        var curTime = System.currentTimeMillis()
+        val dateFormat = SimpleDateFormat("yyyy-mm-dd hh:mm:ss")
+        val curDate = dateFormat.format(curTime)
+
+        Toast.makeText(this, timeDiff(partnerDate.getTime()), Toast.LENGTH_LONG).show()
+
+        Toast.makeText(this, gpsTracker.getDistance(35.8446984, 128.5479911, 35.8539492, 128.5790978), Toast.LENGTH_SHORT).show()*/
 
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
@@ -269,5 +287,7 @@ class MainActivity : PSAppCompatActivity() {
 
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
+
 
 }

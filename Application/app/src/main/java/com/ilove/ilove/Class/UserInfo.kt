@@ -5,7 +5,7 @@ import android.location.Location
 
 class UserInfo : Application() {
     companion object {
-        var ID: String = "ksh"
+        var ID: String = ""
         var PW: String = ""
         var NICKNAME: String = ""
         var BIRTHDAY : String = ""
