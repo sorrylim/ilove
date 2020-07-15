@@ -18,6 +18,42 @@ import java.lang.reflect.Method
 object VolleyService {
     val ip= "http://18.217.130.157:3000"
 
+    fun loginReq(userId: String, userPassword: String, context: Context, success: (JSONObject) -> Unit) {
+        val url = "${ip}/user/login"
+
+        val json = JSONObject()
+        json.put("user_id", userId)
+
+        var result = JSONObject()
+
+        var request = object : JsonObjectRequest(Method.POST
+            , url
+            , json
+            , Response.Listener {
+                result.put("user", it)
+                if (userPassword != it.getString("user_password"))
+                    result.put("code", 2)
+                else if (userPassword == it.getString("user_Password"))
+                    result.put("code", 3)
+                success(result)
+            }
+            , Response.ErrorListener {
+                Log.d("test",it.toString())
+                if (it is com.android.volley.TimeoutError) {
+                    Log.d("test", "TimeoutError")
+                    result.put("code", 0)
+                } else if (it is com.android.volley.ParseError) {
+                    Log.d("test", "ParserError")
+                    result.put("code", 1)
+                }
+                success(result)
+            }
+        ) {
+        }
+        //요청을 보내는 부분
+        Volley.newRequestQueue(context).add(request)
+    }
+
     fun getExpressionCountReq(userId:String, context: Context, success: (JSONObject?) -> Unit) {
         var url = "${ip}/expression/get/count"
 
@@ -586,6 +622,28 @@ object VolleyService {
             .put("user_id",userId)
             .put("introduce_type", introduceType)
             .put("introduce_data", introduceData)
+
+
+        var request = object : JsonObjectRequest(Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+            }) {
+        }
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun updateRecentGps(userId: String, userRecentGps: String, userRecentTime: String, context:Context, success: (String) -> Unit) {
+        var url="${ip}/user/update/recentgps"
+
+        var json=JSONObject()
+            .put("user_id",userId)
+            .put("user_recentgps", userRecentGps)
+            .put("user_recenttime", userRecentTime)
 
 
         var request = object : JsonObjectRequest(Method.POST,
