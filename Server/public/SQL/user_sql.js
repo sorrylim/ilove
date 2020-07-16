@@ -42,6 +42,16 @@ module.exports = function () {
         })
       })
     },
+    update_introduce: function(user_id, introduce_type, introduce_data, clalback) {
+      pool.getConnection(function(err, con) {
+        var sql = `update user set ${introduce_type} = '${introduce_data}' where user_id='${user_id}'`
+        con.query(sql, function(err, result) {
+          con.release()
+          if(err) callback(err)
+          else callback(null, result)
+        })
+      })
+    },
     pool: pool
   }
 }

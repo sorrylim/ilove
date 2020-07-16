@@ -3,9 +3,12 @@ package com.ilove.ilove.Adapter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -44,12 +47,12 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
         var age = currentDate.substring(0, 4).toInt() - partnerList.get(position).userAge.substring(0,4).toInt() + 1
 
 
-        if(partnerList.get(position).dateHistory == dateHistory)
+        if(partnerList.get(position).dateHistory.substring(0, 10) == dateHistory)
         {
             holder.itemView.text_historydate.visibility = View.GONE
         }
         else {
-            holder.itemView.text_historydate.text = partnerList.get(position).dateHistory
+            holder.itemView.text_historydate.text = partnerList.get(position).dateHistory.substring(0, 10)
         }
 
         if(partnerList.get(position).like == 1) {
@@ -65,13 +68,14 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
         else if(partnerList.get(position).meet == 0) {
             holder.itemView.btn_partnerlistcall.setLiked(false)
         }
+
         Glide.with(holder.itemView)
             .load(partnerList.get(position).userImage).apply(RequestOptions().circleCrop())
             .into(holder.itemView.image_partnerlistprofile)
         holder.itemView.text_partnerlistnickname.text = partnerList.get(position).userNickname
         holder.itemView.text_partnerlistage.text = age.toString() + ", " + partnerList.get(position).userCity
         holder.itemView.image_partnerlistprofile.setClipToOutline(true)
-        dateHistory = partnerList.get(position).dateHistory
+        dateHistory = partnerList.get(position).dateHistory.substring(0, 10)
 
         holder.itemView.setOnClickListener {
             var intent = Intent(context, PartnerActivity::class.java)
@@ -81,8 +85,6 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
             intent.putExtra("userCity", partnerList.get(position).userCity)
 
 
-            val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-            val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
             VolleyService.insertHistoryReq(UserInfo.ID, partnerList.get(position).userId, "profile", currentDate, context, {success->
                 if(success == "success")
@@ -101,7 +103,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
                         "eachsuccess" -> {
                             likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
                             var dialog = PSDialog(context as Activity)
-                            dialog.setEachExpressionLikeDialog(partnerList.get(position).userId,partnerList.get(position).userNickname, partnerList.get(position).userAge + ", " + partnerList.get(position).userCity, partnerList.get(position).userImage)
+                            dialog.setEachExpressionLikeDialog(partnerList.get(position).userId,partnerList.get(position).userNickname, age.toString() + ", " + partnerList.get(position).userCity, partnerList.get(position).userImage)
                             dialog.show()
                         }
                         else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
@@ -128,7 +130,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
                         "eachsuccess" -> {
                             likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_icon, null))
                             var dialog = PSDialog(context as Activity)
-                            dialog.setEachExpressionMeetDialog(partnerList.get(position).userNickname, partnerList.get(position).userAge + ", " + partnerList.get(position).userCity, partnerList.get(position).userPhone, partnerList.get(position).userImage)
+                            dialog.setEachExpressionMeetDialog(partnerList.get(position).userNickname, age.toString() + ", " + partnerList.get(position).userCity, partnerList.get(position).userPhone, partnerList.get(position).userImage)
                             dialog.show()
                         }
                         else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()

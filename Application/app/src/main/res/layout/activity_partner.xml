@@ -6,741 +6,709 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity.PartnerActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_partner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/text_maintoolbar"
-            android:textSize="20dp"
-            android:textColor="@color/colorMdGrey_900"
-            />
-    </androidx.appcompat.widget.Toolbar>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_partner">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/text_partnernickname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="닉네임"
-                    android:textColor="@color/colorMdGrey_900"
-                    android:textSize="30dp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/indicator" />
-
-    <TextView
-        android:id="@+id/text_partnerage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="나이, 지역"
-        android:textSize="20dp"
-        android:textColor="@color/colorMdGrey_900"
-        app:layout_constraintStart_toStartOf="@+id/text_partnernickname"
-        app:layout_constraintTop_toBottomOf="@+id/text_partnernickname" />
-
-                <TextView
-                    android:id="@+id/text_partnerintroduce"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:text="소개글"
-                    android:textColor="@color/colorMdGrey_700"
-                    android:textSize="20dp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view28" />
-
-                <TextView
-                    android:id="@+id/textView30"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:text="프로필"
-                    android:textColor="@color/colorMdGrey_900"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view29" />
-
-            <TextView
-                android:id="@+id/text_partnerheight1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="키"
-                android:textColor="@color/colorMdGrey_700"
-                android:textSize="15dp"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/textView30" />
-
-            <TextView
-                android:id="@+id/text_partnerheight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="키"
-                android:textColor="@color/colorMdGrey_900"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerheight1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerheight1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerheight1" />
-
-            <TextView
-                android:id="@+id/text_partnerbodytype1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="체형"
-                android:textColor="@color/colorMdGrey_700"
-                android:textSize="15dp"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerheight1" />
-
-            <TextView
-                android:id="@+id/text_partnerbodytype"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="체형"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerbodytype1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerbodytype1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerbodytype1" />
-
-            <TextView
-                android:id="@+id/text_partnerbloodtype1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="혈액형"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerbodytype1" />
-
-            <TextView
-                android:id="@+id/text_partnerbloodtype"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="혈액형"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerbloodtype1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerbloodtype1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerbloodtype1" />
-
-            <TextView
-                android:id="@+id/text_partnerjob1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="직업"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerbloodtype1" />
-
-            <TextView
-                android:id="@+id/text_partnerjob"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="직업"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerjob1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerjob1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerjob1" />
-
-            <TextView
-                android:id="@+id/text_partnereducation1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="학력"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerjob1" />
-
-            <TextView
-                android:id="@+id/text_partnereducation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="학력"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnereducation1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnereducation1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnereducation1" />
-
-            <TextView
-                android:id="@+id/text_partnerholiday1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="휴일"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnereducation1" />
-
-            <TextView
-                android:id="@+id/text_partnerholiday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="휴일"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerholiday1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerholiday1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerholiday1" />
-
-            <TextView
-                android:id="@+id/text_partnercigarette1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="담배"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerholiday1" />
-
-            <TextView
-                android:id="@+id/text_partnercigarette"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="담배"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnercigarette1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnercigarette1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnercigarette1" />
-
-            <TextView
-                android:id="@+id/text_partneralcohol1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="술"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnercigarette1" />
-
-            <TextView
-                android:id="@+id/text_partneralcohol"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="술"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partneralcohol1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partneralcohol1"
-                app:layout_constraintTop_toTopOf="@+id/text_partneralcohol1" />
-
-            <TextView
-                android:id="@+id/text_partnerreligion1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="종교"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partneralcohol1" />
-
-            <TextView
-                android:id="@+id/text_partnerreligion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="종교"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerreligion1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerreligion1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerreligion1" />
-
-            <TextView
-                android:id="@+id/text_partnerbrother1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="형제자매"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerreligion1" />
-
-            <TextView
-                android:id="@+id/text_partnerbrother"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="형제자매"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerbrother1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerbrother1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerbrother1" />
-
-            <TextView
-                android:id="@+id/text_partnercountry1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="국적"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerbrother1" />
-
-            <TextView
-                android:id="@+id/text_partnercountry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="국적"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnercountry1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnercountry1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnercountry1" />
-
-            <TextView
-                android:id="@+id/text_partnersalary1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="연수입"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnercountry1" />
-
-            <TextView
-                android:id="@+id/text_partnersalary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="연수입"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnersalary1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnersalary1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnersalary1" />
-
-            <TextView
-                android:id="@+id/text_partnerasset1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="재산"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnersalary1" />
-
-            <TextView
-                android:id="@+id/text_partnerasset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="재산"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerasset1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerasset1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerasset1" />
-
-            <TextView
-                android:id="@+id/text_partnermarriagehistory1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="혼인이력"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerasset1" />
-
-            <TextView
-                android:id="@+id/text_partnermarriagehistory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="혼인이력"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnermarriagehistory1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnermarriagehistory1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnermarriagehistory1" />
-
-            <TextView
-                android:id="@+id/text_partnerchildren1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="자녀"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnermarriagehistory1" />
-
-            <TextView
-                android:id="@+id/text_partnerchildren"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="자녀"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerchildren1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerchildren1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerchildren1" />
-
-            <TextView
-                android:id="@+id/text_partnermarriageplan1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="결혼계획"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerchildren1" />
-
-            <TextView
-                android:id="@+id/text_partnermarriageplan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="결혼계획"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnermarriageplan1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnermarriageplan1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnermarriageplan1" />
-
-            <TextView
-                android:id="@+id/text_partnerchildrenplan1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="자녀계획"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnermarriageplan1" />
-
-            <TextView
-                android:id="@+id/text_partnerchildrenplan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="자녀계획"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerchildrenplan1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerchildrenplan1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerchildrenplan1" />
-
-            <TextView
-                android:id="@+id/text_partnerparenting1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="가사, 육아"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerchildrenplan1" />
-
-            <TextView
-                android:id="@+id/text_partnerparenting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="가사, 육아"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerparenting1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerparenting1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerparenting1" />
-
-            <TextView
-                android:id="@+id/text_partnerwishdate1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="첫 데이트까지 희망사항"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerparenting1" />
-
-            <TextView
-                android:id="@+id/text_partnerwishdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="첫 데이트까지 희망사항"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerwishdate1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerwishdate1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerwishdate1" />
-
-            <TextView
-                android:id="@+id/text_partnerdatecost1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="첫 데이트 비용"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerwishdate1" />
-
-            <TextView
-                android:id="@+id/text_partnerdatecost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="첫 데이트 비용"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerdatecost1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerdatecost1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerdatecost1" />
-
-            <TextView
-                android:id="@+id/text_partnerroommate1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="동거인"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerdatecost1" />
-
-            <TextView
-                android:id="@+id/text_partnerroommate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="동거인"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerroommate1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerroommate1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerroommate1" />
-
-            <TextView
-                android:id="@+id/text_partnerlanguage1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="사용 가능 언어"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/text_partnerroommate1" />
-
-            <TextView
-                android:id="@+id/text_partnerlanguage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="사용 가능 언어"
-                android:textColor="@color/colorMdGrey_900"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/text_partnerlanguage1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_partnerlanguage1"
-                app:layout_constraintTop_toTopOf="@+id/text_partnerlanguage1" />
-
-                <TextView
-                    android:id="@+id/text_partnerhobby"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:text="취미"
-                    android:textColor="@color/colorMdGrey_700"
-                    android:textSize="20dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view30" />
-
-                <TextView
-                    android:id="@+id/text_partnerpersonality"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="성격"
-                    android:textColor="@color/colorMdGrey_700"
-                    android:textSize="20dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_hobby" />
-
-                <TextView
-                    android:id="@+id/textView62"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="내가 좋아하는 성격"
-                    android:textColor="@color/colorMdGrey_700"
-                    android:textSize="20dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_partnerpersonality" />
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/viewpager_partnerprofile"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_height="match_parent">
 
-                </androidx.viewpager2.widget.ViewPager2>
+                        <TextView
+                            android:id="@+id/text_partnernickname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:text="닉네임"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textSize="25dp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/indicator" />
 
-                <me.relex.circleindicator.CircleIndicator3
-                    android:id="@+id/indicator"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_gravity="bottom"
-                    app:ci_drawable="@drawable/circle_white"
-                    app:ci_height="7dp"
-                    app:ci_margin="4dp"
-                    app:ci_width="7dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/viewpager_partnerprofile"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:id="@+id/text_partnerage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="나이, 지역"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textSize="20dp"
+                            app:layout_constraintStart_toStartOf="@+id/text_partnernickname"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnernickname" />
 
-                <View
-                    android:id="@+id/view28"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@color/colorMdGrey_500"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_partnerage" />
+                        <TextView
+                            android:id="@+id/text_partnerintroduce"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:text="소개글"
+                            android:textColor="@color/colorMdGrey_700"
+                            android:textSize="20dp"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/view28" />
 
-                <View
-                    android:id="@+id/view29"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@color/colorMdGrey_500"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_partnerintroduce" />
+                        <TextView
+                            android:id="@+id/textView30"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:text="프로필"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/view29" />
 
-                <View
-                    android:id="@+id/view30"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@color/colorMdGrey_500"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_partnerlanguage" />
+                        <TextView
+                            android:id="@+id/text_partnerheight1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="키"
+                            android:textColor="@color/colorMdGrey_700"
+                            android:textSize="15dp"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
-                <LinearLayout
-                    android:id="@+id/layout_hobby"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_partnerhobby"></LinearLayout>
+                        <TextView
+                            android:id="@+id/text_partnerheight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:text="키"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerheight1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerheight1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerheight1" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/text_partnerbodytype1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="체형"
+                            android:textColor="@color/colorMdGrey_700"
+                            android:textSize="15dp"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerheight1" />
 
-    </androidx.core.widget.NestedScrollView>
+                        <TextView
+                            android:id="@+id/text_partnerbodytype"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="체형"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerbodytype1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerbodytype1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerbodytype1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerbloodtype1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="혈액형"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerbodytype1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerbloodtype"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="혈액형"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerbloodtype1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerbloodtype1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerbloodtype1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerjob1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="직업"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerbloodtype1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerjob"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="직업"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerjob1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerjob1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerjob1" />
+
+                        <TextView
+                            android:id="@+id/text_partnereducation1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="학력"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerjob1" />
+
+                        <TextView
+                            android:id="@+id/text_partnereducation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="학력"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnereducation1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnereducation1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnereducation1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerholiday1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="휴일"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnereducation1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerholiday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="휴일"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerholiday1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerholiday1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerholiday1" />
+
+                        <TextView
+                            android:id="@+id/text_partnercigarette1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="담배"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerholiday1" />
+
+                        <TextView
+                            android:id="@+id/text_partnercigarette"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="담배"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnercigarette1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnercigarette1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnercigarette1" />
+
+                        <TextView
+                            android:id="@+id/text_partneralcohol1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="술"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnercigarette1" />
+
+                        <TextView
+                            android:id="@+id/text_partneralcohol"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="술"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partneralcohol1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partneralcohol1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partneralcohol1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerreligion1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="종교"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partneralcohol1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerreligion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="종교"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerreligion1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerreligion1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerreligion1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerbrother1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="형제자매"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerreligion1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerbrother"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="형제자매"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerbrother1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerbrother1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerbrother1" />
+
+                        <TextView
+                            android:id="@+id/text_partnercountry1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="국적"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerbrother1" />
+
+                        <TextView
+                            android:id="@+id/text_partnercountry"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="국적"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnercountry1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnercountry1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnercountry1" />
+
+                        <TextView
+                            android:id="@+id/text_partnersalary1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="연수입"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnercountry1" />
+
+                        <TextView
+                            android:id="@+id/text_partnersalary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="연수입"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnersalary1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnersalary1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnersalary1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerasset1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="재산"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnersalary1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerasset"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="재산"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerasset1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerasset1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerasset1" />
+
+                        <TextView
+                            android:id="@+id/text_partnermarriagehistory1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="혼인이력"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerasset1" />
+
+                        <TextView
+                            android:id="@+id/text_partnermarriagehistory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="혼인이력"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnermarriagehistory1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnermarriagehistory1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnermarriagehistory1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerchildren1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="자녀"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnermarriagehistory1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerchildren"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="자녀"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerchildren1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerchildren1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerchildren1" />
+
+                        <TextView
+                            android:id="@+id/text_partnermarriageplan1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="결혼계획"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerchildren1" />
+
+                        <TextView
+                            android:id="@+id/text_partnermarriageplan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="결혼계획"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnermarriageplan1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnermarriageplan1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnermarriageplan1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerchildrenplan1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="자녀계획"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnermarriageplan1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerchildrenplan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="자녀계획"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerchildrenplan1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerchildrenplan1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerchildrenplan1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerparenting1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="가사, 육아"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerchildrenplan1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerparenting"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="가사, 육아"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerparenting1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerparenting1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerparenting1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerwishdate1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="첫 데이트까지 희망사항"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerparenting1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerwishdate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="첫 데이트까지 희망사항"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerwishdate1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerwishdate1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerwishdate1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerdatecost1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="첫 데이트 비용"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerwishdate1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerdatecost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="첫 데이트 비용"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerdatecost1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerdatecost1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerdatecost1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerroommate1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="동거인"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerdatecost1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerroommate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="동거인"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerroommate1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerroommate1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerroommate1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerlanguage1"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="사용 가능 언어"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@+id/textView30"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerroommate1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerlanguage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="사용 가능 언어"
+                            android:textColor="@color/colorMdGrey_900"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerlanguage1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_partnerlanguage1"
+                            app:layout_constraintTop_toTopOf="@+id/text_partnerlanguage1" />
+
+                        <TextView
+                            android:id="@+id/text_partnerhobby"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:text="취미"
+                            android:textColor="@color/colorMdGrey_700"
+                            android:textSize="20dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/view30" />
+
+                        <TextView
+                            android:id="@+id/text_partnerpersonality"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:text="성격"
+                            android:textColor="@color/colorMdGrey_700"
+                            android:textSize="20dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/layout_hobby" />
+
+                        <TextView
+                            android:id="@+id/textView62"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:text="내가 좋아하는 성격"
+                            android:textColor="@color/colorMdGrey_700"
+                            android:textSize="20dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerpersonality" />
+
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/viewpager_partnerprofile"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </androidx.viewpager2.widget.ViewPager2>
+
+                        <me.relex.circleindicator.CircleIndicator3
+                            android:id="@+id/indicator"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_gravity="bottom"
+                            app:ci_drawable="@drawable/circle_white"
+                            app:ci_height="7dp"
+                            app:ci_margin="4dp"
+                            app:ci_width="7dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/viewpager_partnerprofile"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <View
+                            android:id="@+id/view28"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@color/colorMdGrey_300"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerage" />
+
+                        <View
+                            android:id="@+id/view29"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@color/colorMdGrey_300"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerintroduce" />
+
+                        <View
+                            android:id="@+id/view30"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@color/colorMdGrey_300"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerlanguage" />
+
+                        <LinearLayout
+                            android:id="@+id/layout_hobby"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerhobby"></LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

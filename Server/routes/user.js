@@ -1,57 +1,130 @@
-var pool = require('../../config/db_config');
+var express = require('express');
+var async = require('async');
+var router = express.Router();
 
-module.exports = function () {
-  return {
-    get_user_list: function(user_gender, callback) {
-      pool.getConnection(function(err, con) {
-        var sql = `select user.user_id, user_nickname, user_birthday, user_city, user_recentgps, user_previewintroduce, user_phone, image from user, image where user_gender='${user_gender}' and user.user_id=image.user_id and image.image_usage='mainprofile'`
-        con.query(sql, function(err, result) {
-          con.release()
-          if(err) callback(err)
-          else callback(null, result)
-        })
+var db_user = require('../public/SQL/user_sql')()
+var db_expression = require('../public/SQL/expression_sql')()
+
+router.post('/get/list', function(req, res, next) {
+  var user_gender = req.body[0].user_gender
+  var user_id = req.body[0].user_id
+
+  db_user.get_user_list(user_gender, function(err, user) {
+    if(err) console.log(err)
+    else {
+      db_expression.get_expression_data(user_id, function(err, expression) {
+        if(err) console.log(err)
+        else {
+          for (var i in user) {
+            user[i]["like"] = 0;
+            user[i]["meet"] = 0;
+
+            for (var j in expression) {
+
+              if(user[i]["user_id"] == expression[j]["partner_id"] && expression[j]["expression_type"] == "like") {
+                user[i]["like"] = 1;
+              }
+              else if(user[i]["user_id"] == expression[j]["partner_id"] && expression[j]["expression_type"] == "meet") {
+                user[i]["meet"] = 1;
+              }
+            }
+          }
+          res.send(user);
+          console.log(user);
+        }
       })
-    },
-    get_new_user_list : function(user_gender, callback) {
-      pool.getConnection(function(err, con) {
-        var sql = `select user.user_id, user_nickname, user_birthday, user_city, user_recentgps, user_recenttime, user_phone, image from user, image where user_gender='${user_gender}' and user.user_id=image.user_id and image.image_usage='mainprofile' order by user_signdate desc limit 4`
-        con.query(sql, function(err, result) {
-          con.release()
-          if(err) callback(err)
-          else callback(null, result)
+    }
+  })
+})
+
+router.post('/get/new/list', function(req, res, next) {
+  var user_gender = req.body[0].user_gender
+
+  db_user.get_new_user_list(user_gender, function(err, result) {
+    if(err) console.log(err)
+    else res.send(result)
+  })
+})
+
+router.post('/update/option', function(req, res, next) {
+  var user_id = req.body.user_id
+  var user_option = req.body.user_option
+  var user_optiondata = req.body.user_optiondata
+
+  db_user.update_option(user_id, user_option, user_optiondata, function(err, result) {
+    if(err) console.log(err)
+    else {
+      var object = new Object()
+      object.result = "success"
+      res.send(object)
+    }
+  })
+})
+
+router.post('/update/option/city', function(req, res, next) {
+  var user_id = req.body.user_id
+  var user_option = req.body.user_option
+  var user_optiondata = req.body.user_optiondata
+
+  db_user.update_option_city(user_id, user_option, user_optiondata, function(err, result) {
+    if(err) console.log(err)
+    else {
+      var object = new Object()
+      object.result = "success"
+      res.send(object)
+    }
+  })
+})
+
+router.post('/update/token',function(req,res,next){
+        var user_id=req.body.user_id
+        var token=req.body.token
+
+        console.log(`${user_id}, ${token}`)
+
+        db_user.update_token(user_id,token,function(err, result){
+                if(err) console.log(err)
+                else{
+                        var obj=new Object()
+                        obj.result="success"
+                        res.send(obj)
+                }
         })
+})
+
+router.post('/get/option', function(req, res, next) {
+  var user_id = req.body.user_id
+
+  db_user.get_option(user_id, function(err, option) {
+    if(err) console.log(err)
+    else {
+      db_user.get_option_city(user_id, function(err, result) {
+        if(err) console.log(err)
+        else {
+          option[0]["user_city"] = result[0]["user_city"];
+          option[0]["user_introduce"] = result[0]["user_introduce"];
+          option[0]["user_previewintroduce"] = result[0]["user_previewintroduce"];
+          console.log(option[0]);
+          res.send(option[0]);
+        }
       })
-    },
-    update_option: function(user_id, user_option, user_optiondata, callback) {
-      pool.getConnection(function(err, con) {
-        var sql = `update useroption set ${user_option} = '${user_optiondata}' where user_id='${user_id}'`
-        con.query(sql, function(err, result) {
-          con.release()
-          if(err) callback(err)
-          else callback(null, result)
-        })
-      })
-    },
-    update_option_city: function(user_id, user_option, user_optiondata, callback) {
-      pool.getConnection(function(err, con) {
-        var sql = `update user set ${user_option} = '${user_optiondata}' where user_id='${user_id}'`
-        con.query(sql, function(err, result) {
-          con.release()
-          if(err) callback(err)
-          else callback(null, result)
-        })
-      })
-    },
-    get_option_city: function(user_id, callback) {
-      pool.getConnection(function(err, con) {
-        var sql = `select user_city, user_previewintroduce, user_introduce from user where user_id='${user_id}'`
-        con.query(sql, function(err, result) {
-          con.release()
-          if(err) callback(err)
-          else callback(null, result)
-        })
-      })
-    },
-    pool: pool
-  }
-}
+    }
+  })
+})
+
+router.post('/update/introduce', function(req, res, next) {
+  var user_id = req.body.user_id
+  var introduce_type = req.body.introduce_type
+  var introduce_data = req.body.introduce_data
+
+  db_user.update_introduce(user_id, introduce_type, introduce_data, function(err, result) {
+    if(err) console.log(err)
+    else {
+      var object = new Object()
+      object.result = "success"
+      res.send(object)
+    }
+  })
+})
+
+module.exports = router;

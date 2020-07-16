@@ -2,6 +2,8 @@ package com.ilove.ilove.Class
 
 import android.app.Activity
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.content.Intent
 import android.util.Log
 import android.view.View
@@ -36,6 +38,7 @@ class PSDialog(activity: Activity) {
     init {
         dialog = Dialog(activity)
         dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         context = activity
     }
 
@@ -138,8 +141,14 @@ class PSDialog(activity: Activity) {
                 else {
                     VolleyService.updateUserOptionReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
                         if(success == "success") {
-                            userOptionText.text = userOptionData
-                            dismiss()
+                            if(userOptionData.length > 8) {
+                                userOptionText.text = userOptionData.substring(0, 9) + "..."
+                                dismiss()
+                            }
+                            else {
+                                userOptionText.text = userOptionData
+                                dismiss()
+                            }
                         }
                         else {
                             Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
@@ -150,7 +159,7 @@ class PSDialog(activity: Activity) {
         }
 
 
-        if(userOption == "user_personality" || userOption == "user_favoriteperson") {
+        if(userOption == "user_personality" || userOption == "user_favoriteperson" || userOption == "user_interest") {
             userOptionRV.setHasFixedSize(true)
             userOptionRV.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             userOptionRV.adapter = PersonalityAdapter(context!!, userOptionList)
@@ -165,6 +174,7 @@ class PSDialog(activity: Activity) {
 
     fun setBuyVipDialog() {
         dialog!!.setContentView(R.layout.dialog_buyvip)
+
         var buyBtn : Button = dialog!!.findViewById(R.id.btn_buyvippurchase)
         var cancelBtn : Button = dialog!!.findViewById(R.id.btn_buyvipcancel)
 
