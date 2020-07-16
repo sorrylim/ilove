@@ -46,6 +46,8 @@
             }
             .onAppear(){
                 ContentView.rootView=self
+                
+                
             }
         }
         

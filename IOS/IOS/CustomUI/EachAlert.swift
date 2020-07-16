@@ -13,7 +13,7 @@ struct EachAlert: View {
     var userId:String
     var userNickname:String
     var userAge:Int
-    var userCity:String
+    var userRecentTime:String
     var uiImage:UIImage
     @Binding var showing:Bool
     
@@ -32,7 +32,7 @@ struct EachAlert: View {
             
             Text("\(userNickname)")
                 .font(.system(size:15))
-            Text("\(userAge), \(userCity)")
+            Text("\(userAge), \(userRecentTime)")
                 .font(.system(size:10))
             
             /*NavigationLink(destination: ChatListView()){
@@ -44,7 +44,6 @@ struct EachAlert: View {
              .cornerRadius(25)
              }*/
             
-            
             NavigationLink(destination: ChatView(room: ChatRoomModel(room_id: "", room_maker: "", room_partner: "", room_title: "", chat_content: "", chat_time: ""))){
                 Text("대화시작하기")
                     .font(.system(size: 15))
@@ -54,6 +53,14 @@ struct EachAlert: View {
                     .background(Color.orange)
                     .cornerRadius(20)
             }
+            
+            Text("닫기")
+                .font(.system(size: 13))
+                .foregroundColor(Color.gray)
+                .onTapGesture {
+                    self.showing=false
+            }
+            
         }
         .frame(width:230, height: 300)
         .background(Color.white)

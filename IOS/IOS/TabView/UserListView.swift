@@ -16,7 +16,7 @@ struct UserListView : View{
     @State var alertUserId = ""
     @State var alertUserNickname = ""
     @State var alertUserAge = 0
-    @State var alertUserCity = ""
+    @State var alertUserRecentTime = ""
     @State var alertUiImage = UIImage()
     @State var alertVisible = false
     
@@ -37,18 +37,18 @@ struct UserListView : View{
                 }
                 if alertVisible {
                     GeometryReader{_ in
-                        EachAlert(userId: self.alertUserId, userNickname: self.alertUserNickname, userAge: self.alertUserAge, userCity: self.alertUserCity,uiImage: self.alertUiImage, showing: self.$alertVisible)
+                        EachAlert(userId: self.alertUserId, userNickname: self.alertUserNickname, userAge: self.alertUserAge, userRecentTime: self.alertUserRecentTime,uiImage: self.alertUiImage, showing: self.$alertVisible)
                     }.background(Color.black.opacity(0.5).edgesIgnoringSafeArea(.all))
                 }
             //}
         }
     }
     
-    mutating func setVisible(userId: String, userNickname: String, userAge: Int, userCity: String,uiImage:UIImage, alertVisible: Bool){
+    mutating func setVisible(userId: String, userNickname: String, userAge: Int, userRecentTime: String,uiImage:UIImage, alertVisible: Bool){
         self.alertUserId=userId
         self.alertUserNickname=userNickname
         self.alertUserAge=userAge
-        self.alertUserCity=userCity
+        self.alertUserRecentTime=userRecentTime
         self.alertUiImage=uiImage
         self.alertVisible=alertVisible
     }
@@ -77,7 +77,7 @@ struct UserRow : View{
                 .cornerRadius(10)
             
             VStack(alignment: .leading, spacing: 10){
-                Text("\(user.user_nickname), \(age), \(user.user_city), \(user.user_recentgps)")
+                Text("\(user.user_nickname), \(age), \(user.user_recenttime), \(user.user_recentgps)")
                     .font(.system(size : 10))
                     .foregroundColor(.gray)
                 if user.user_previewintroduce != nil {
@@ -165,7 +165,7 @@ struct UserRow : View{
                                 }
                                 else if resultModel.result=="eachsuccess" {
                                     self.likeImage=Image(systemName: "heart.fill")
-                                    self.view.setVisible(userId: self.user.user_id, userNickname: self.user.user_nickname, userAge: self.age, userCity: self.user.user_city,uiImage: self.uiImage, alertVisible: true)
+                                    self.view.setVisible(userId: self.user.user_id, userNickname: self.user.user_nickname, userAge: self.age, userRecentTime: self.user.user_recenttime,uiImage: self.uiImage, alertVisible: true)
                                 }
                                 self.user.like=1
                             }

@@ -20,7 +20,7 @@ struct PartnerView : View {
     @State var alertUserId = ""
     @State var alertUserNickname = ""
     @State var alertUserAge = 0
-    @State var alertUserCity = ""
+    @State var alertUserRecentTime = ""
     @State var alertUiImage = UIImage()
     @State var alertVisible = false
     
@@ -49,7 +49,7 @@ struct PartnerView : View {
             
             if alertVisible {
                 GeometryReader{_ in
-                    EachAlert(userId: self.alertUserId, userNickname: self.alertUserNickname, userAge: self.alertUserAge, userCity: self.alertUserCity,uiImage: self.alertUiImage, showing: self.$alertVisible)
+                    EachAlert(userId: self.alertUserId, userNickname: self.alertUserNickname, userAge: self.alertUserAge, userRecentTime: self.alertUserRecentTime,uiImage: self.alertUiImage, showing: self.$alertVisible)
                 }.background(Color.black.opacity(0.5).edgesIgnoringSafeArea(.all))
             }
         }
@@ -109,11 +109,11 @@ struct PartnerView : View {
         
     }
     
-    mutating func setVisible(userId: String, userNickname: String, userAge: Int, userCity: String,uiImage:UIImage, alertVisible: Bool){
+    mutating func setVisible(userId: String, userNickname: String, userAge: Int, userRecentTime: String,uiImage:UIImage, alertVisible: Bool){
         self.alertUserId=userId
         self.alertUserNickname=userNickname
         self.alertUserAge=userAge
-        self.alertUserCity=userCity
+        self.alertUserRecentTime=userRecentTime
         self.alertUiImage=uiImage
         self.alertVisible=alertVisible
     }
@@ -170,7 +170,7 @@ struct PartnerRow : View{
                         .font(.system(size:20,weight:.bold))
                     Spacer()
                     HStack(spacing: 10){
-                        Text("\(self.age), \(partner.user_city)")
+                        Text("\(self.age), \(partner.user_recenttime)")
                             .font(.system(size:15))
                         Spacer()
                         meetImage
@@ -210,7 +210,7 @@ struct PartnerRow : View{
                                         }
                                         else if resultModel.result=="eachsuccess" {
                                             self.likeImage=Image(systemName: "heart.fill")
-                                            self.view.setVisible(userId: self.partner.user_id, userNickname: self.partner.user_nickname, userAge: self.age, userCity: self.partner.user_city, uiImage: self.uiImage, alertVisible: true)
+                                            self.view.setVisible(userId: self.partner.user_id, userNickname: self.partner.user_nickname, userAge: self.age, userRecentTime: self.partner.user_recenttime, uiImage: self.uiImage, alertVisible: true)
                                         }
                                         self.partner.like=1
                                     }
@@ -277,7 +277,7 @@ struct VisitPartnerRow : View{
                         .font(.system(size:20,weight:.bold))
                     Spacer()
                     HStack(spacing:10){
-                        Text("\(self.age), \(partner.user_city)")
+                        Text("\(self.age), \(partner.user_recenttime)")
                             .font(.system(size:15))
                         Spacer()
                         meetImage
@@ -317,7 +317,7 @@ struct VisitPartnerRow : View{
                                         }
                                         else if resultModel.result=="eachsuccess" {
                                             self.likeImage=Image(systemName: "heart.fill")
-                                            self.view.setVisible(userId: self.partner.user_id, userNickname: self.partner.user_nickname, userAge: self.age, userCity: self.partner.user_city, uiImage: self.uiImage, alertVisible: true)
+                                            self.view.setVisible(userId: self.partner.user_id, userNickname: self.partner.user_nickname, userAge: self.age, userRecentTime: self.partner.user_recenttime, uiImage: self.uiImage, alertVisible: true)
                                         }
                                         self.partner.like=1
                                     }
