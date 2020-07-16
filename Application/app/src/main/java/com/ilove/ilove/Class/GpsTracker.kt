@@ -41,7 +41,22 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
         locationB.setLatitude(partnerLatitude.toDouble())
         locationB.setLongitude(partnerLongitude.toDouble())
 
-        var distance = locationA.distanceTo(locationB).toInt().toString()
+        var distanceInt = locationA.distanceTo(locationB)
+        var distance = ""
+
+        if(distanceInt < 100) {
+            distance = String.format("%.0f", distanceInt) + "m"
+        }
+        else if(100<= distanceInt && distanceInt < 1000) {
+            distance = (distanceInt - (distanceInt%100)).toString()
+        }
+        else if(1000<=distanceInt && distanceInt < 10000) {
+            distanceInt /= 1000
+            distance = String.format("%.1f", distanceInt) + "km"
+        }
+        else if(10000<=distanceInt) {
+            distance = String.format("%.0f", (distanceInt - distanceInt%1000)) + "km"
+        }
 
         return distance
     }

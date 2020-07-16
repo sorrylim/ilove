@@ -196,9 +196,9 @@ class MainActivity : PSAppCompatActivity() {
                 currentDate.replace(":", "")
                 currentDate.replace(" ", "")
 
-                UserInfo.LOCATION = gpsTracker.getGps()
-                UserInfo.LATITUDE = gpsTracker.getLatitude()
-                UserInfo.LONGITUDE = gpsTracker.getLongitude()
+                UserInfo.LATITUDE = gpsTracker.getLatitude().toString()
+                UserInfo.LONGITUDE = gpsTracker.getLongitude().toString()
+
                 VolleyService.updateRecentGps(UserInfo.ID, UserInfo.LATITUDE.toString() + "," + UserInfo.LONGITUDE.toString() , currentDate,this, {success->
                     if(success != "success") {
                         Toast.makeText(this, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
@@ -224,9 +224,8 @@ class MainActivity : PSAppCompatActivity() {
         if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED && hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
             var gpsTracker = GpsTracker(this)
 
-            UserInfo.LOCATION = gpsTracker.getGps()
-            UserInfo.LATITUDE = gpsTracker.getLatitude()
-            UserInfo.LONGITUDE = gpsTracker.getLongitude()
+            UserInfo.LATITUDE = gpsTracker.getLatitude().toString()
+            UserInfo.LONGITUDE = gpsTracker.getLongitude().toString()
 
             VolleyService.updateRecentGps(UserInfo.ID, UserInfo.LATITUDE.toString() + "," + UserInfo.LONGITUDE.toString() , currentDate,this, {success->
                 if(success != "success") {

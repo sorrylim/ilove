@@ -14,6 +14,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.Partner
@@ -24,9 +25,12 @@ import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.item_partner.view.*
 import kotlinx.android.synthetic.main.item_partnerlist.view.*
+import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner>) : RecyclerView.Adapter<PartnerListAdapter.ViewHolder>() {
     var dateHistory : String = ""
@@ -41,10 +45,12 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-        val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        var gpsTracker = GpsTracker(context as Activity)
+        var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        var curDate = simpleDateFormat.format(System.currentTimeMillis())
+        var partnerDate : Date = simpleDateFormat.parse(partnerList.get(position).recentTime)
 
-        var age = currentDate.substring(0, 4).toInt() - partnerList.get(position).userAge.substring(0,4).toInt() + 1
+        var age = curDate.substring(0, 4).toInt() - partnerList.get(position).userAge.substring(0,4).toInt() + 1
 
 
         if(partnerList.get(position).dateHistory.substring(0, 10) == dateHistory)
@@ -72,8 +78,8 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
         Glide.with(holder.itemView)
             .load(partnerList.get(position).userImage).apply(RequestOptions().circleCrop())
             .into(holder.itemView.image_partnerlistprofile)
-        holder.itemView.text_partnerlistnickname.text = partnerList.get(position).userNickname
-        holder.itemView.text_partnerlistage.text = age.toString() + ", " + partnerList.get(position).userCity
+        holder.itemView.text_partnerlistnickname.text = partnerList.get(position).userNickname + ", " + age.toString()
+                holder.itemView.text_partnerlistrecenttime.text = gpsTracker.timeDiff(partnerDate.getTime())
         holder.itemView.image_partnerlistprofile.setClipToOutline(true)
         dateHistory = partnerList.get(position).dateHistory.substring(0, 10)
 
@@ -86,7 +92,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
 
 
 
-            VolleyService.insertHistoryReq(UserInfo.ID, partnerList.get(position).userId, "profile", currentDate, context, {success->
+            VolleyService.insertHistoryReq(UserInfo.ID, partnerList.get(position).userId, "profile", curDate, context, {success->
                 if(success == "success")
                     context.startActivity(intent)
                 else
@@ -97,7 +103,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
 
         holder.itemView.btn_partnerlistlike.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
-                VolleyService.insertExpressionReq(UserInfo.ID, partnerList.get(position).userId, "like", currentDate, context, { success->
+                VolleyService.insertExpressionReq(UserInfo.ID, partnerList.get(position).userId, "like", curDate, context, { success->
                     when(success) {
                         "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
                         "eachsuccess" -> {
@@ -124,7 +130,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
 
         holder.itemView.btn_partnerlistcall.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
-                VolleyService.insertExpressionReq(UserInfo.ID, partnerList.get(position).userId, "meet", currentDate, context, { success->
+                VolleyService.insertExpressionReq(UserInfo.ID, partnerList.get(position).userId, "meet", curDate, context, { success->
                     when(success) {
                         "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_icon, null))
                         "eachsuccess" -> {

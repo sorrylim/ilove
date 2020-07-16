@@ -32,7 +32,7 @@ class ListFragment : Fragment() {
                 for(i in 0..array!!.length()-1) {
                     var json = array[i] as JSONObject
                     var partner = UserList(json.getString("user_id"), json.getString("user_nickname"),
-                    json.getString("user_birthday"), json.getString("user_city"), json.getString("user_recentgps"),
+                    json.getString("user_birthday"), json.getString("user_city"), json.getString("user_recentgps"), json.getString("user_recenttime"),
                     json.getString("user_previewintroduce"), json.getString("user_phone"), json.getString("image"), json.getInt("like"), json.getInt("meet"))
                     userList.add(partner)
                 }
@@ -48,7 +48,7 @@ class ListFragment : Fragment() {
                 for(i in 0..array!!.length()-1) {
                     var json = array[i] as JSONObject
                     var partner = UserList(json.getString("user_id"), json.getString("user_nickname"),
-                        json.getString("user_birthday"), json.getString("user_city"), json.getString("user_recentgps"),
+                        json.getString("user_birthday"), json.getString("user_city"), json.getString("user_recentgps"), json.getString("user_recenttime"),
                         json.getString("user_previewintroduce"), json.getString("user_phone"), json.getString("image"),
                         json.getInt("like"), json.getInt("meet"))
                     userList.add(partner)
@@ -58,8 +58,6 @@ class ListFragment : Fragment() {
                 partnerListRV.adapter = UserListAdapter(activity!!, userList)
             })
         }
-
-
 
         return rootView
     }

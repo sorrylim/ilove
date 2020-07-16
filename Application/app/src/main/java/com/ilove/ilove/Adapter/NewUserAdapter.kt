@@ -3,31 +3,21 @@ package com.ilove.ilove.Adapter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.UserInfo
-import com.ilove.ilove.Item.ImageItem
 import com.ilove.ilove.Item.NewUserList
 import com.ilove.ilove.MainActivity.PartnerActivity
-import com.ilove.ilove.MainActivity.StoryActivity
-import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
-import kotlinx.android.synthetic.main.activity_partner.*
 import kotlinx.android.synthetic.main.item_newuser.view.*
-import kotlinx.android.synthetic.main.item_partnerlist.view.*
-import kotlinx.android.synthetic.main.item_storylist.view.*
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>) : RecyclerView.Adapter<NewUserAdapter.ViewHolder>() {
 
@@ -41,20 +31,18 @@ class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>) 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-        val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy"))
+        var gpsTracker = GpsTracker(context as Activity)
+        var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        var curDate = simpleDateFormat.format(System.currentTimeMillis())
+        var partnerDate : Date = simpleDateFormat.parse(userList.get(position).recentTime)
+        var age = curDate.substring(0, 4).toInt() - userList.get(position).userAge.substring(0, 4).toInt() + 1
+        var location : List<String> = userList.get(position).recentGps.split(",")
 
-        var age = currentDate.toInt() - userList.get(position).userAge.substring(0, 4).toInt() + 1
+        var distance = gpsTracker.getDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1))
 
-        /*var displayMetrics: DisplayMetrics = DisplayMetrics()
-        (holder.itemView.getContext() as Activity).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics) // 화면의 가로길이를 구함
-        var width = displayMetrics.widthPixels / 2
-        holder.itemView.image_newuser.getLayoutParams().width = width
-        holder.itemView.image_newuser.getLayoutParams().height = width
-        holder.itemView.image_newuser.requestLayout()*/
 
         holder.itemView.text_newusernicknameage.text = userList.get(position).userNickname + ", " + age.toString()
-        holder.itemView.text_newuserrecentdata.text = userList.get(position).recentGps + ", " + userList.get(position).recentTime
+        holder.itemView.text_newuserrecentdata.text = distance + ", " + gpsTracker.timeDiff(partnerDate.getTime())
         Glide.with(holder.itemView)
             .load(userList.get(position).userImage).apply(RequestOptions().fitCenter())
             .into(holder.itemView.image_newuser)
