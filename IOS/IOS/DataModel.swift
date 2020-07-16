@@ -31,7 +31,8 @@ struct PartnerModel : Codable {
     var user_id: String
     var user_nickname: String
     var user_birthday: String
-    var user_city: String
+    //var user_city: String
+    var user_recenttime: String
     var expression_date: String
     var user_phone: String
     var like: Int
@@ -43,7 +44,8 @@ struct VisitPartnerModel : Codable {
     var user_id: String
     var user_nickname: String
     var user_birthday: String
-    var user_city: String
+    //var user_city: String
+    var user_recenttime: String
     var visit_date: String
     var user_phone: String
     var like: Int
@@ -66,8 +68,9 @@ struct UserModel : Codable {
     var user_id : String
     var user_nickname : String
     var user_birthday : String
-    var user_city : String
+    //var user_city : String
     var user_recentgps : String
+    var user_recenttime : String
     var user_previewintroduce : String?
     var user_phone : String
     var like : Int
@@ -95,4 +98,13 @@ struct StoryUserModel : Codable {
 struct MyStoryImageModel : Codable {
     var image_id : Int
     var image : String
+}
+
+struct ChatRoomModel : Codable {
+    var room_id : String
+    var room_maker : String
+    var room_partner : String
+    var room_title : String
+    var chat_content : String
+    var chat_time : String
 }

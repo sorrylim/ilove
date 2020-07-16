@@ -528,7 +528,7 @@ object VolleyService {
 
     fun sendFCMReq(roomId: String, title: String, content: String, context: Context) {
 
-        var url = "${ip}/chat_room/fcm/send"
+        var url = "${ip}/chat/fcm/send"
 
         var json = JSONObject()
         json.put("topic", roomId)

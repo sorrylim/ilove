@@ -7,7 +7,7 @@ class UserInfo : Application() {
     companion object {
         var ID: String = "ksh"
         var PW: String = "F"
-        var NICKNAME: String = ""
+        var NICKNAME: String = "ksh"
         var BIRTHDAY : String = ""
         var GENDER: String = "M"
         var AUTHORITY: String = ""

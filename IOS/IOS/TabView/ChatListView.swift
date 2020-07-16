@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ChatListView : View{
     var body: some View{
-        NavigationView{
+        VStack{
             Text("대화방")
             .navigationBarTitle("대화방",displayMode: .inline)
         }

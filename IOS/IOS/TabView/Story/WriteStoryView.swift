@@ -25,7 +25,7 @@ struct WriteStoryView : View{
     @State var value : CGFloat=0
     
     var body: some View{
-        NavigationView{
+        //NavigationView{
             VStack{
                 MultilineTextField(text:"당신에 대해 이야기 해주세요",content: $content)
                 HStack{
@@ -79,7 +79,7 @@ struct WriteStoryView : View{
                 }){
                     Text("등록")
             })
-        }
+        //}
         
     }
     

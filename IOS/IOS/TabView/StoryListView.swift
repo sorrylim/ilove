@@ -20,7 +20,7 @@ struct StoryListView : View {
     @State var myStoryImage:UIImage=UIImage()
     
     var body: some View{
-        NavigationView{
+        //NavigationView{
             VStack{
                 HStack{
                     Image(uiImage: self.myStoryImage)
@@ -79,7 +79,7 @@ struct StoryListView : View {
                 Spacer()
             }
             .navigationBarTitle("스토리",displayMode: .inline)
-        }
+        //}
         .sheet(isPresented: $writeVisible){
             WriteStoryView(showing: self.$writeVisible)
         }
