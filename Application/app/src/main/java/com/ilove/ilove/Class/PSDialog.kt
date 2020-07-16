@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.messaging.FirebaseMessaging
+import com.ilove.ilove.Adapter.MessageCandyAdapter
 import com.ilove.ilove.Adapter.PersonalityAdapter
 import com.ilove.ilove.Adapter.UserOptionAdapter
 import com.ilove.ilove.Item.ChatRoomItem
@@ -255,6 +256,41 @@ class PSDialog(activity: Activity) {
             cancelBtn.setText("닫기")
             openBtn.visibility = View.GONE
         }
+
+        cancelBtn.setOnClickListener {
+            dismiss()
+        }
+    }
+
+    fun setMessageTicketDialog() {
+        dialog!!.setContentView(R.layout.dialog_messageticket)
+        var messageCandyCount : RecyclerView = dialog!!.findViewById(R.id.rv_messagecandycount)
+        var chargeBtn : Button = dialog!!.findViewById(R.id.btn_messagechargecandy)
+        var cancelText : TextView = dialog!!.findViewById(R.id.text_cancelmessage)
+        var negativeText : TextView = dialog!!.findViewById(R.id.text_negativecharge)
+
+        var candyCount : ArrayList<UserItem.MessageTicket> = arrayListOf(UserItem.MessageTicket("1", "7"),
+            UserItem.MessageTicket("5", "21"), UserItem.MessageTicket("10", "40"),
+            UserItem.MessageTicket("15", "60"), UserItem.MessageTicket("30", "110"))
+
+        messageCandyCount.setHasFixedSize(true)
+        messageCandyCount.layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
+        messageCandyCount.adapter = MessageCandyAdapter(context!!, candyCount, negativeText, dialog!!)
+
+
+        cancelText.setOnClickListener {
+            dialog!!.dismiss()
+        }
+    }
+
+    fun setPurchaseMessageTicket() {
+        dialog!!.setContentView(R.layout.dialog_purchasecheck)
+
+        var acceptBtn : Button = dialog!!.findViewById(R.id.btn_dialogaccept)
+        var cancelBtn : Button = dialog!!.findViewById(R.id.btn_dialogcancel)
+        var titleText : TextView = dialog!!.findViewById(R.id.text_dialogtitle)
+
+        titleText.text = "메세지 이용권 구매"
 
         cancelBtn.setOnClickListener {
             dismiss()

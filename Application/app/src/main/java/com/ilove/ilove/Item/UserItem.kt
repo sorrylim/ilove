@@ -5,4 +5,10 @@ class UserItem {
         val title:String,
         var isSelected: Boolean = false
     )
+
+    data class MessageTicket(
+        val day: String,
+        val candyCount : String,
+        var isSelected: Boolean = false
+    )
 }

@@ -5,6 +5,15 @@ var router = express.Router();
 var db_user = require('../public/SQL/user_sql')()
 var db_expression = require('../public/SQL/expression_sql')()
 
+router.post('/login', function(req, res, next) {
+  var user_id = req.body.user_id
+
+  db_user.login(user_id, function(err, result) {
+    if(err) console.log(err)
+    else res.send(result)
+  })
+})
+
 router.post('/get/list', function(req, res, next) {
   var user_gender = req.body[0].user_gender
   var user_id = req.body[0].user_id
@@ -123,6 +132,26 @@ router.post('/update/introduce', function(req, res, next) {
       var object = new Object()
       object.result = "success"
       res.send(object)
+    }
+  })
+})
+
+router.post('/update/recentgps', function(req, res, next) {
+  var user_id = req.body.user_id
+  var user_recentgps = req.body.user_recentgps
+  var user_recenttime = req.body.user_recenttime
+
+  db_user.update_recentgps(user_id, user_recentgps, function(err, result) {
+    if(err) console.log(err)
+    else {
+      db_user.update_recenttime(user_id, user_recenttime, function(err, result) {
+        if(err) console.log(err)
+        else {
+          var object = new Object()
+          object.result = "success"
+          res.send(object)
+        }
+      })
     }
   })
 })

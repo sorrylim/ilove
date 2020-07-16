@@ -658,4 +658,23 @@ object VolleyService {
 
         Volley.newRequestQueue(context).add(request)
     }
+
+    fun getItemCount(userId: String, context:Context, success: (JSONObject) -> Unit) {
+        var url="${ip}/user/get/item/count"
+
+        var json=JSONObject()
+            .put("user_id",userId)
+
+        var request = object : JsonObjectRequest(Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+            }) {
+        }
+
+        Volley.newRequestQueue(context).add(request)
+    }
 }

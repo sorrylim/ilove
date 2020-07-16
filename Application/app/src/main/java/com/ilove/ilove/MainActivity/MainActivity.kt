@@ -96,7 +96,6 @@ class MainActivity : PSAppCompatActivity() {
         if (savedInstanceState == null) {
             channelFragment = ChannelFragment()
             supportFragmentManager.beginTransaction().add(R.id.frame_main, channelFragment!!).commit()
-            toolbarCenterBinding(toolbar_main, "아이러브", false)
         }
     }
 
@@ -192,10 +191,6 @@ class MainActivity : PSAppCompatActivity() {
             if(checkResult) {
                 var gpsTracker = GpsTracker(this)
 
-                currentDate.replace("-", "")
-                currentDate.replace(":", "")
-                currentDate.replace(" ", "")
-
                 UserInfo.LATITUDE = gpsTracker.getLatitude().toString()
                 UserInfo.LONGITUDE = gpsTracker.getLongitude().toString()
 
@@ -223,6 +218,7 @@ class MainActivity : PSAppCompatActivity() {
         val hasCoarseLocationPermission = ContextCompat.checkSelfPermission(this@MainActivity, android.Manifest.permission.ACCESS_COARSE_LOCATION)
         if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED && hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
             var gpsTracker = GpsTracker(this)
+
 
             UserInfo.LATITUDE = gpsTracker.getLatitude().toString()
             UserInfo.LONGITUDE = gpsTracker.getLongitude().toString()
