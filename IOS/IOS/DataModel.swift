@@ -96,3 +96,12 @@ struct MyStoryImageModel : Codable {
     var image_id : Int
     var image : String
 }
+
+struct ChatRoomModel : Codable {
+    var room_id : String
+    var room_maker : String
+    var room_partner : String
+    var room_title : String
+    var chat_content : String
+    var chat_time : String
+}

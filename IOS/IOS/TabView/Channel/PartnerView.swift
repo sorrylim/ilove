@@ -14,31 +14,43 @@ struct PartnerView : View {
     @State var partnerList:[PartnerModel]=[]
     @State var visitPartnerList:[VisitPartnerModel]=[]
     @State var type=""
-    @State var eachAlertVisible = false;
     
     @State var title:String
     
+    @State var alertUserId = ""
+    @State var alertUserNickname = ""
+    @State var alertUserAge = 0
+    @State var alertUserCity = ""
+    @State var alertUiImage = UIImage()
+    @State var alertVisible = false
+    
     var body: some View{
-        VStack{
+        ZStack{
             List{
                 if title=="내 프로필을 확인한 사람" || title=="내 스토리를 확인한 사람"{
                     ForEach(visitPartnerList, id: \.user_id){partner in
-                        VisitPartnerRow(partner: partner)
+                        VisitPartnerRow(partner: partner,view: self)
                     }
                 }
                 else {
                     if title.contains("내가") || title.contains("서로"){
                         ForEach(partnerList, id: \.user_id){partner in
-                            PartnerRow(partner: partner)
+                            PartnerRow(partner: partner, view: self)
                         }
                         .onDelete(perform : delete)
                     }
                     else {
                         ForEach(partnerList, id: \.user_id){partner in
-                            PartnerRow(partner: partner)
+                            PartnerRow(partner: partner, view: self)
                         }
                     }
                 }
+            }
+            
+            if alertVisible {
+                GeometryReader{_ in
+                    EachAlert(userId: self.alertUserId, userNickname: self.alertUserNickname, userAge: self.alertUserAge, userCity: self.alertUserCity,uiImage: self.alertUiImage, showing: self.$alertVisible)
+                }.background(Color.black.opacity(0.5).edgesIgnoringSafeArea(.all))
             }
         }
         .navigationBarTitle("\(self.title)",displayMode: .inline)
@@ -97,6 +109,15 @@ struct PartnerView : View {
         
     }
     
+    mutating func setVisible(userId: String, userNickname: String, userAge: Int, userCity: String,uiImage:UIImage, alertVisible: Bool){
+        self.alertUserId=userId
+        self.alertUserNickname=userNickname
+        self.alertUserAge=userAge
+        self.alertUserCity=userCity
+        self.alertUiImage=uiImage
+        self.alertVisible=alertVisible
+    }
+    
     func delete(at offsets: IndexSet){
         if type=="story" || type=="profile" {
             return;
@@ -123,6 +144,8 @@ struct PartnerView : View {
 struct PartnerRow : View{
     
     @State var partner : PartnerModel
+    @State var view : PartnerView
+    
     @State var likeImage = Image(systemName: "heart")
     @State var meetImage = Image("call_icon")
     
@@ -187,6 +210,7 @@ struct PartnerRow : View{
                                         }
                                         else if resultModel.result=="eachsuccess" {
                                             self.likeImage=Image(systemName: "heart.fill")
+                                            self.view.setVisible(userId: self.partner.user_id, userNickname: self.partner.user_nickname, userAge: self.age, userCity: self.partner.user_city, uiImage: self.uiImage, alertVisible: true)
                                         }
                                         self.partner.like=1
                                     }
@@ -228,6 +252,7 @@ struct PartnerRow : View{
 
 struct VisitPartnerRow : View{
     @State var partner : VisitPartnerModel
+    @State var view : PartnerView
     
     @State var likeImage = Image(systemName: "heart")
     @State var meetImage = Image("call_icon")
@@ -292,6 +317,7 @@ struct VisitPartnerRow : View{
                                         }
                                         else if resultModel.result=="eachsuccess" {
                                             self.likeImage=Image(systemName: "heart.fill")
+                                            self.view.setVisible(userId: self.partner.user_id, userNickname: self.partner.user_nickname, userAge: self.age, userCity: self.partner.user_city, uiImage: self.uiImage, alertVisible: true)
                                         }
                                         self.partner.like=1
                                     }

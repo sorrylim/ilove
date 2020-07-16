@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		540DA57C24BED4DD009434E4 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540DA57B24BED4DD009434E4 /* ChatView.swift */; };
 		5451D1EC24A2F8610035EA91 /* PartnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5451D1EB24A2F8610035EA91 /* PartnerView.swift */; };
 		545D598F24A0A448000B8A5A /* VipGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545D598E24A0A448000B8A5A /* VipGuideView.swift */; };
 		54745B9624A06E6400B32F25 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54745B9524A06E6400B32F25 /* MyPageView.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		540DA57B24BED4DD009434E4 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		5451D1EB24A2F8610035EA91 /* PartnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerView.swift; sourceTree = "<group>"; };
 		545D598E24A0A448000B8A5A /* VipGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VipGuideView.swift; sourceTree = "<group>"; };
 		54745B9524A06E6400B32F25 /* MyPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
@@ -90,6 +92,14 @@
 				BE943F990410B844241EE6B5 /* Pods_IOS.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		540DA57D24BED7BF009434E4 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				540DA57B24BED4DD009434E4 /* ChatView.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		5451D1EA24A2F8480035EA91 /* Channel */ = {
@@ -169,6 +179,7 @@
 		547E621D249C82A300D8B7C4 /* TabView */ = {
 			isa = PBXGroup;
 			children = (
+				540DA57D24BED7BF009434E4 /* Chat */,
 				5451D1EA24A2F8480035EA91 /* Channel */,
 				54745B9724A0702A00B32F25 /* MyPage */,
 				547E6226249CA26900D8B7C4 /* Story */,
@@ -336,6 +347,7 @@
 				547E6203249C67A300D8B7C4 /* AppDelegate.swift in Sources */,
 				547E6208249C67A300D8B7C4 /* IOS.xcdatamodeld in Sources */,
 				547E621C249C829200D8B7C4 /* UserListView.swift in Sources */,
+				540DA57C24BED4DD009434E4 /* ChatView.swift in Sources */,
 				549E5B3B24ADB39300050E62 /* ExtensionClass.swift in Sources */,
 				547E622B249CAFFA00D8B7C4 /* EditProfileView.swift in Sources */,
 				547E6225249C88E300D8B7C4 /* ChannelView.swift in Sources */,
