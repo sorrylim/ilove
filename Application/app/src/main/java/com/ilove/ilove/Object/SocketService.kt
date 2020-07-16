@@ -12,11 +12,27 @@ object SocketService {
     var ip="http://18.217.130.157:3001"
     var socket: Socket = IO.socket(ip)
 
+    var connecting: Boolean = false
+
+    fun connectSocket(){
+        if(!connecting) {
+            socket.connect()
+            socket.on("connect", onConnect)
+            socket.on("msg", onMsg)
+            connecting=true
+        }
+    }
+
+    fun disconnectSocket(){
+        socket.disconnect()
+    }
+
     val onConnect: Emitter.Listener= Emitter.Listener {
+        Log.d("test","Socket Connect")
     }
 
     val onMsg: Emitter.Listener= Emitter.Listener {
-        Log.d("test",it[0].toString())
+        Log.d("test","onMsg")
 
         var handler=ChatActivity.handler
         var msg=handler!!.obtainMessage()
@@ -32,33 +48,13 @@ object SocketService {
         handler2.sendMessage(msg2)
     }
 
-    fun connectSocket(){
-        socket.connect()
-    }
-
-    fun disconnectSocket(){
-        socket.disconnect()
-    }
-
-    fun init(){
-        socket.on(Socket.EVENT_CONNECT, onConnect)
-        socket.on("msg",onMsg)
-    }
-
     fun emitMsg(json: JSONObject){
         socket.emit("msg",json)
-
-        var handler=MessageFragment.handler
-        var msg=handler!!.obtainMessage()
-
-        msg.what=0
-        handler.sendMessage(msg)
     }
 
-    fun emitJoin(roomId : String, roomPartner : String) {
+    fun emitJoin(roomId : String) {
         var json=JSONObject()
             .put("room_id",roomId)
-            .put("room_partner",roomPartner)
 
         socket.emit("join",json)
     }

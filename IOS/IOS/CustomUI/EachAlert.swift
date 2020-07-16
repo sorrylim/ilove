@@ -35,16 +35,7 @@ struct EachAlert: View {
             Text("\(userAge), \(userRecentTime)")
                 .font(.system(size:10))
             
-            /*NavigationLink(destination: ChatListView()){
-             Text("대화시작하기")
-             .font(.system(size: 15,weight: .bold))
-             .foregroundColor(Color.white)
-             .padding()
-             .background(Color.orange)
-             .cornerRadius(25)
-             }*/
-            
-            NavigationLink(destination: ChatView(room: ChatRoomModel(room_id: "", room_maker: "", room_partner: "", room_title: "", chat_content: "", chat_time: ""))){
+            NavigationLink(destination: ChatView(room: ChatRoomModel(room_id: "", room_maker: UserInfo.shared.ID, room_partner: userId, room_title: userNickname, chat_content: "", chat_time: ""))){
                 Text("대화시작하기")
                     .font(.system(size: 15))
                     .foregroundColor(Color.white)

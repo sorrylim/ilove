@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.util.Log
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Adapter.ChatAdapter
 import com.ilove.ilove.Class.UserInfo
@@ -32,8 +31,6 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-
-
         var intent=intent
         var room=intent.getSerializableExtra("room") as ChatRoomItem
         list_chat.adapter=chatAdapter
@@ -45,9 +42,8 @@ class ChatActivity : AppCompatActivity() {
             }
 
         SocketService.connectSocket()
-        SocketService.init()
 
-        SocketService.emitJoin(room.roomId, room.partner)
+        SocketService.emitJoin(room.roomId)
         VolleyService.chatInitReq(room.roomId,this,{success ->
             if(success!!.length()!=0) {
                 var array = success!!
@@ -55,10 +51,14 @@ class ChatActivity : AppCompatActivity() {
                     var json=array[i] as JSONObject
                     addChatItem(json)
                 }
+
+                list_chat.setSelection(list_chat.adapter.getCount() - 1);
             }
         })
 
         btn_send.setOnClickListener {
+
+            if(edit_chat.text.toString()=="") return@setOnClickListener
 
             val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
             val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
@@ -73,16 +73,18 @@ class ChatActivity : AppCompatActivity() {
             addChatItem(json)
 
             SocketService.emitMsg(json)
+            //VolleyService.sendFCMReq(room.roomId,room.roomTitle,"${UserInfo.NICKNAME} : ${edit_chat.text}",this)
 
             edit_chat.setText("")
         }
+
 
         handler=object : Handler(){
             override fun handleMessage(msg: Message) {
                 when(msg!!.what) {
                     0 -> {
                         var json=msg.obj as JSONObject
-                        if(json.getString("chat_speaker")!="ksh")
+                        if(json.getString("chat_speaker")!=UserInfo.ID)
                             addChatItem(json)
                     }
                 }
@@ -92,7 +94,7 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        SocketService.disconnectSocket()
+        //SocketService.disconnectSocket()
     }
 
     fun addChatItem(json : JSONObject){

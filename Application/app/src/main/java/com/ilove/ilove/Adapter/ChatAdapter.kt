@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ChatItem
 import com.ilove.ilove.R
 import kotlin.collections.ArrayList
@@ -68,7 +69,7 @@ class ChatAdapter : BaseAdapter() {
     fun addItem(
         chatItem: ChatItem
     ) {
-        if (chatItem.chatSpeaker == "ksh")
+        if (chatItem.chatSpeaker == UserInfo.ID)
             chatItem.isMyChat = true
         else
             chatItem.isMyChat = false

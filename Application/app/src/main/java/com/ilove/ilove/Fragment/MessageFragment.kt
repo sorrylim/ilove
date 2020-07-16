@@ -42,7 +42,6 @@ class MessageFragment : Fragment() {
             override fun handleMessage(msg: Message) {
                 when(msg.what){
                     0 -> {
-                        Log.d("test","adasd")
                         refreshList(chatRoomRV,chatRoomList, chatRoomAdapter)
                     }
                 }
