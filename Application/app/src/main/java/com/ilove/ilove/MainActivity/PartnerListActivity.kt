@@ -61,7 +61,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                 var json = array[i] as JSONObject
                 var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
                     json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"),json.getString("image"),
-                    json.getInt("like"), json.getInt("meet"))
+                    json.getString("user_recenttime"),json.getInt("like"), json.getInt("meet"))
                 partnerList.add(partner)
             }
             rv_partnerlist.setHasFixedSize(true)
@@ -89,7 +89,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                 var json = array[i] as JSONObject
                 var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
                     json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"), json.getString("image"),
-                    json.getInt("like"), json.getInt("meet"))
+                    json.getString("user_recenttime"),json.getInt("like"), json.getInt("meet"))
                 partnerList.add(partner)
             }
             rv_partnerlist.setHasFixedSize(true)
@@ -117,7 +117,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                 var json = array[i] as JSONObject
                 var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
                     json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"), json.getString("image"),
-                    json.getInt("like"), json.getInt("meet"))
+                    json.getString("user_recenttime"), json.getInt("like"), json.getInt("meet"))
                 partnerList.add(partner)
             }
             VolleyService.getEach2UserReq(UserInfo.ID, expressionType, this, {success->
@@ -126,7 +126,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                     var json = array[i] as JSONObject
                     var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
                         json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"), json.getString("image"),
-                        json.getInt("like"), json.getInt("meet"))
+                        json.getString("user_recenttime"), json.getInt("like"), json.getInt("meet"))
                     partnerList.add(partner)
                 }
                 rv_partnerlist.setHasFixedSize(true)
@@ -146,7 +146,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                 var json = array[i] as JSONObject
                 var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
                     json.getString("user_birthday"), json.getString("user_city"), json.getString("visit_date"), json.getString("user_phone"), json.getString("image"),
-                    json.getInt("like"), json.getInt("meet"))
+                    json.getString("user_recenttime"),json.getInt("like"), json.getInt("meet"))
                 partnerList.add(partner)
             }
             rv_partnerlist.setHasFixedSize(true)

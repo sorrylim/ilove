@@ -5,11 +5,11 @@ import android.location.Location
 
 class UserInfo : Application() {
     companion object {
-        var ID: String = ""
-        var PW: String = ""
+        var ID: String = "ksh"
+        var PW: String = "F"
         var NICKNAME: String = ""
         var BIRTHDAY : String = ""
-        var GENDER: String = ""
+        var GENDER: String = "M"
         var AUTHORITY: String = ""
         var BLOCKING: Int = 0
         var PHONE: String = ""
@@ -22,8 +22,7 @@ class UserInfo : Application() {
         var LIKECOUNT: Int = 0
         var MESSAGETICKET: Int = 0
         var TOKEN: String?=""
-        var LATITUDE: Double? = null
-        var LONGITUDE : Double? = null
-        var LOCATION: Location? = null
+        var LATITUDE: String? = null
+        var LONGITUDE : String? = null
     }
 }

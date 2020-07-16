@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
@@ -34,6 +35,7 @@ class StoryActivity : PSAppCompatActivity() {
         toolbarBinding(toolbar_story, "", true)
 
         var image : ImageView = findViewById(R.id.image_storyimage)
+        var gpsTracker = GpsTracker(this)
 
 
         image.setClipToOutline(true)
@@ -49,10 +51,12 @@ class StoryActivity : PSAppCompatActivity() {
         val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
         VolleyService.getStoryUserReq(UserInfo.ID, imageId, this, {success->
+            var location : List<String> = success.getString("user_recentgps").split(",")
+            var distance = gpsTracker.getDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1))
             age = (currentDate.substring(0, 4).toInt() - success.getString("user_birthday").substring(0, 4).toInt() + 1).toString()
             userNickname = success.getString("user_nickname")
             text_storynickname.text = userNickname + ", " + age
-            text_storygps.text = success.getString("user_recentgps")
+            text_storygps.text = distance
             userCity = success.getString("user_city")
 
             if(success.getString("image_content") == "NULL") {
