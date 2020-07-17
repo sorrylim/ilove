@@ -1,6 +1,7 @@
 package com.ilove.ilove.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,14 +36,14 @@ class ChatAdapter : BaseAdapter() {
         val inflater =
             context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
+        var timeStr = ""
         val time = item.chatTime!!.split(" ")[1].split(":")
-        val hour=time[0].toInt()
-        val min=time[1]
-        var timeStr=""
-        if(hour<12)
-            timeStr="오전 ${hour}:${min}"
+        val hour = time[0].toInt()
+        val min = time[1]
+        if (hour < 12)
+            timeStr = "오전 ${hour}:${min}"
         else
-            timeStr="오후 ${hour-12}:${min}"
+            timeStr = "오후 ${hour - 12}:${min}"
 
         if (!item.isMyChat!!) {
             view = inflater.inflate(R.layout.item_chat, parent, false)
@@ -73,6 +74,8 @@ class ChatAdapter : BaseAdapter() {
             chatItem.isMyChat = true
         else
             chatItem.isMyChat = false
+
+        Log.d("test",chatItem.toString())
 
         chatList.add(chatItem)
     }

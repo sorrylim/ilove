@@ -9,6 +9,7 @@ import android.media.RingtoneManager
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.ilove.ilove.Fragment.MessageFragment
 import com.ilove.ilove.MainActivity.MainActivity
 import com.ilove.ilove.R
 
@@ -20,6 +21,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(p0: RemoteMessage) {
         if(p0.notification!=null){
+            var handler = MessageFragment.handler
+            var msg=handler!!.obtainMessage()
+            msg.what=0
+            handler.sendMessage(msg)
+
             if(!isAppOnForeground(applicationContext)) {
                 sendNotification(p0.to, p0.notification?.title, p0.notification?.body)
             }

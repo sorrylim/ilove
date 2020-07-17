@@ -13,6 +13,7 @@ import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.MainActivity.ChatActivity
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.item_chatroom.view.*
+import kotlin.concurrent.timer
 
 class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoomItem>) :
     RecyclerView.Adapter<ChatRoomAdapter.ViewHolder>() {
@@ -76,6 +77,7 @@ class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoom
             }
         }
     }
+
 
     fun sortByLastChat() {
         chatRoomList.sortByDescending { selector(it) }

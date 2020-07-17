@@ -658,4 +658,38 @@ object VolleyService {
 
         Volley.newRequestQueue(context).add(request)
     }
+
+    fun insertChatReq(
+        roomId: String,
+        userId: String,
+        userNickname: String,
+        chatContent: String,
+        currentDate: String?,
+        context:Context,
+        success: (String) -> Unit
+    ) {
+
+        val url = "${ip}/chat/insert/chat"
+
+        var json=JSONObject()
+            .put("room_id",roomId)
+            .put("chat_speaker",userId)
+            .put("chat_speaker_nickname",userNickname)
+            .put("chat_content",chatContent)
+            .put("chat_time",currentDate)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
 }

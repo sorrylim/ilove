@@ -1,7 +1,6 @@
 package com.ilove.ilove.Object
 
 import android.util.Log
-import com.ilove.ilove.Fragment.MessageFragment
 import com.ilove.ilove.MainActivity.ChatActivity
 import io.socket.client.IO
 import io.socket.client.Socket
@@ -14,11 +13,12 @@ object SocketService {
 
     var connecting: Boolean = false
 
-    fun connectSocket(){
+    fun connectSocket(roomId: String){
         if(!connecting) {
             socket.connect()
-            socket.on("connect", onConnect)
+            socket.on("join", onJoin)
             socket.on("msg", onMsg)
+            emitJoin(roomId)
             connecting=true
         }
     }
@@ -27,7 +27,7 @@ object SocketService {
         socket.disconnect()
     }
 
-    val onConnect: Emitter.Listener= Emitter.Listener {
+    val onJoin: Emitter.Listener= Emitter.Listener {
         Log.d("test","Socket Connect")
     }
 
@@ -40,15 +40,10 @@ object SocketService {
         msg.what=0
         msg.obj=it[0]
         handler.sendMessage(msg)
-
-        var handler2=MessageFragment.handler
-        var msg2=handler2!!.obtainMessage()
-
-        msg.what=0
-        handler2.sendMessage(msg2)
     }
 
     fun emitMsg(json: JSONObject){
+        Log.d("test","emit Msg ")
         socket.emit("msg",json)
     }
 
@@ -57,5 +52,12 @@ object SocketService {
             .put("room_id",roomId)
 
         socket.emit("join",json)
+    }
+
+    fun emitLeave(roomId : String){
+        var json=JSONObject()
+            .put("room_id",roomId)
+
+        socket.emit("leave",json)
     }
 }
