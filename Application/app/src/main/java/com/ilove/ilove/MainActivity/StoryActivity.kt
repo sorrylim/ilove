@@ -24,9 +24,11 @@ import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.activity_story.*
 import kotlinx.android.synthetic.main.item_storylist.view.*
 import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class StoryActivity : PSAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,18 +48,18 @@ class StoryActivity : PSAppCompatActivity() {
         var userId: String = ""
         var userNickname: String = ""
         var age: String = ""
-        var userCity : String = ""
-        val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-        val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+
+        var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        var curDate = simpleDateFormat.format(System.currentTimeMillis())
 
         VolleyService.getStoryUserReq(UserInfo.ID, imageId, this, {success->
-            var location : List<String> = success.getString("user_recentgps").split(",")
-            var distance = gpsTracker.getDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1))
-            age = (currentDate.substring(0, 4).toInt() - success.getString("user_birthday").substring(0, 4).toInt() + 1).toString()
+            var gpsTracker = GpsTracker(this)
+            var partnerDate : Date = simpleDateFormat.parse(success.getString("user_recenttime"))
+
+            age = (curDate.substring(0, 4).toInt() - success.getString("user_birthday").substring(0, 4).toInt() + 1).toString()
             userNickname = success.getString("user_nickname")
             text_storynickname.text = userNickname + ", " + age
-            text_storygps.text = distance
-            userCity = success.getString("user_city")
+            text_storyrecenttime.text = gpsTracker.timeDiff(partnerDate.getTime())
 
             if(success.getString("image_content") == "NULL") {
                 text_storycontent.visibility = View.GONE
@@ -88,7 +90,6 @@ class StoryActivity : PSAppCompatActivity() {
                     intent.putExtra("userId", userId)
                     intent.putExtra("userImage", json.getString("image"))
                     intent.putExtra("userAge", age)
-                    intent.putExtra("userCity", userCity)
 
                     startActivity(intent)
                 }
@@ -97,7 +98,7 @@ class StoryActivity : PSAppCompatActivity() {
 
         btn_storylike.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
-                VolleyService.insertStoryExpressionReq(UserInfo.ID, imageId, currentDate, this@StoryActivity, {success->
+                VolleyService.insertStoryExpressionReq(UserInfo.ID, imageId, curDate, this@StoryActivity, {success->
                     if(success=="success") {
                         text_storylikecount.text = (Integer.parseInt(text_storylikecount.text.toString()) + 1).toString()
                         likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(this@StoryActivity.getResources(), R.drawable.bigheart_on, null))

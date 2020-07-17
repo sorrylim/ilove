@@ -24,7 +24,11 @@ import com.ilove.ilove.R
 import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.item_partner.view.*
+import kotlinx.android.synthetic.main.item_partnerlist.*
 import kotlinx.android.synthetic.main.item_partnerlist.view.*
+import kotlinx.android.synthetic.main.item_partnerlist.view.btn_each
+import kotlinx.android.synthetic.main.item_partnerlist.view.btn_partnerlistcall
+import kotlinx.android.synthetic.main.item_partnerlist.view.btn_partnerlistlike
 import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -32,7 +36,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner>) : RecyclerView.Adapter<PartnerListAdapter.ViewHolder>() {
+class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner>, val listType: String) : RecyclerView.Adapter<PartnerListAdapter.ViewHolder>() {
     var dateHistory : String = ""
 
     override fun getItemCount(): Int {
@@ -45,6 +49,19 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if(listType == "eachlike") {
+            holder.itemView.btn_partnerlistcall.visibility = View.GONE
+            holder.itemView.btn_partnerlistlike.visibility = View.GONE
+            holder.itemView.btn_each.visibility = View.VISIBLE
+            holder.itemView.btn_each.setText("대화하기")
+        }
+        else if(listType == "eachmeet") {
+            holder.itemView.btn_partnerlistcall.visibility = View.GONE
+            holder.itemView.btn_partnerlistlike.visibility = View.GONE
+            holder.itemView.btn_each.visibility = View.VISIBLE
+            holder.itemView.btn_each.setText("연락처 열람")
+        }
+
         var gpsTracker = GpsTracker(context as Activity)
         var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         var curDate = simpleDateFormat.format(System.currentTimeMillis())

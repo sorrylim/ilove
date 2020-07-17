@@ -17,8 +17,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.messaging.FirebaseMessaging
+import com.ilove.ilove.Adapter.MessageCandyAdapter
 import com.ilove.ilove.Adapter.PersonalityAdapter
 import com.ilove.ilove.Adapter.UserOptionAdapter
+import com.ilove.ilove.IntroActivity.ChargeCandyActivity
 import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Item.UserItem
 import com.ilove.ilove.MainActivity.ChatActivity
@@ -27,8 +29,9 @@ import com.ilove.ilove.R
 
 class PSDialog(activity: Activity) {
 
-    var dialog : Dialog? = null
+
     var context : Activity? = null
+    var dialog : Dialog? = null
 
     companion object {
         var userOptionData : String = ""
@@ -261,6 +264,31 @@ class PSDialog(activity: Activity) {
         }
     }
 
+    fun setMessageTicketDialog() {
+        dialog!!.setContentView(R.layout.dialog_messageticket)
+        var messageCandyCount : RecyclerView = dialog!!.findViewById(R.id.rv_messagecandycount)
+        var chargeBtn : Button = dialog!!.findViewById(R.id.btn_messagechargecandy)
+        var cancelText : TextView = dialog!!.findViewById(R.id.text_cancelmessage)
+        var negativeText : TextView = dialog!!.findViewById(R.id.text_negativecharge)
+        
+        var candyCount : ArrayList<UserItem.MessageTicket> = arrayListOf(UserItem.MessageTicket("1", "7"),
+            UserItem.MessageTicket("5", "21"), UserItem.MessageTicket("10", "40"),
+            UserItem.MessageTicket("15", "60"), UserItem.MessageTicket("30", "110"))
+
+        messageCandyCount.setHasFixedSize(true)
+        messageCandyCount.layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
+        messageCandyCount.adapter = MessageCandyAdapter(context!!, candyCount, negativeText)
+
+
+        chargeBtn.setOnClickListener {
+            var intent = Intent(context, ChargeCandyActivity::class.java)
+            context!!.startActivity(intent)
+        }
+
+        cancelText.setOnClickListener {
+            dialog!!.dismiss()
+        }
+    }
 
 
     private fun getLayoutParams(dialog: Dialog): WindowManager.LayoutParams {

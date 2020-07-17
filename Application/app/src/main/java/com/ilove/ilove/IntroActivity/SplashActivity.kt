@@ -80,6 +80,7 @@ class SplashActivity : AppCompatActivity() {
                         UserInfo.CANDYCOUNT=user.getInt("user_candycount")
                         UserInfo.LIKECOUNT=user.getInt("user_likecount")
                         UserInfo.MESSAGETICKET=user.getInt("user_messageticket")
+                        UserInfo.VIP = user.getInt("user_vip")
 
 
                         var pref=this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
@@ -100,6 +101,7 @@ class SplashActivity : AppCompatActivity() {
                             .putInt("CANDYCOUNT", UserInfo.CANDYCOUNT)
                             .putInt("LIKECOUNT", UserInfo.LIKECOUNT)
                             .putInt("MESSAGETICKET", UserInfo.MESSAGETICKET)
+                            .putInt("VIP", UserInfo.VIP)
                             .apply()
 
                         Handler().postDelayed({

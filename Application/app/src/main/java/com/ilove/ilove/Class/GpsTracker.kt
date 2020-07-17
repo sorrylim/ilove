@@ -45,17 +45,17 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
         var distance = ""
 
         if(distanceInt < 100) {
-            distance = String.format("%.0f", distanceInt) + "m"
+            distance = String.format("%.0f", distanceInt)
         }
         else if(100<= distanceInt && distanceInt < 1000) {
             distance = (distanceInt - (distanceInt%100)).toString()
         }
         else if(1000<=distanceInt && distanceInt < 10000) {
             distanceInt /= 1000
-            distance = String.format("%.1f", distanceInt) + "km"
+            distance = String.format("%.1f", distanceInt)
         }
         else if(10000<=distanceInt) {
-            distance = String.format("%.0f", (distanceInt - distanceInt%1000)) + "km"
+            distance = String.format("%.0f", (distanceInt - distanceInt%1000))
         }
 
         return distance
