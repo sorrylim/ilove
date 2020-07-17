@@ -72,6 +72,7 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
         holder.itemView.btn_userlike.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "like", curDate, context, {success->
+                    VolleyService.sendFCMReq(userList.get(position).userId,"like",context)
                     when(success) {
                         "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
                         "eachsuccess" -> {

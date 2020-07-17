@@ -5,19 +5,24 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
+import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Item.Partner
+import com.ilove.ilove.MainActivity.ChatActivity
 import com.ilove.ilove.MainActivity.PartnerActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
@@ -29,6 +34,7 @@ import kotlinx.android.synthetic.main.item_partnerlist.view.*
 import kotlinx.android.synthetic.main.item_partnerlist.view.btn_each
 import kotlinx.android.synthetic.main.item_partnerlist.view.btn_partnerlistcall
 import kotlinx.android.synthetic.main.item_partnerlist.view.btn_partnerlistlike
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -54,6 +60,56 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
             holder.itemView.btn_partnerlistlike.visibility = View.GONE
             holder.itemView.btn_each.visibility = View.VISIBLE
             holder.itemView.btn_each.setText("대화하기")
+            holder.itemView.btn_each.setOnClickListener {
+                VolleyService.checkChatRoom(UserInfo.ID,partnerList[position].userId,context, {success ->
+                    if(success!=null){
+                        var json=success as JSONObject
+
+                        var roomTitleArray=json.getString("room_title").split("&")
+
+                        var roomTitle=""
+                        if(UserInfo.NICKNAME==roomTitleArray[0]) roomTitle=roomTitleArray[1]
+                        else roomTitle=roomTitleArray[0]
+
+                        var room=ChatRoomItem(
+                            json.getString("room_id"),
+                            json.getString("room_maker"),
+                            json.getString("room_partner"),
+                            roomTitle,
+                            "",
+                            ""
+                        )
+
+                        var intent=Intent(context,ChatActivity::class.java)
+                        intent.putExtra("room",room)
+                        context.startActivity(intent)
+                    }
+                    else{
+                        VolleyService.createRoomReq(partnerList[position].userId,partnerList[position].userNickname,context,{success ->
+                            var json=success
+                            var room=ChatRoomItem(
+                                json.getString("room_id"),
+                                json.getString("room_maker"),
+                                json.getString("room_partner"),
+                                json.getString("room_title"),
+                                "",
+                                ""
+                            )
+
+                            FirebaseMessaging.getInstance().subscribeToTopic(room.roomId)
+                                .addOnCompleteListener {
+                                    Log.d("test","success subscribe to topic")
+                                }
+
+                            var intent = Intent(context, ChatActivity::class.java)
+
+                            intent.putExtra("room",room)
+                            context.startActivity(intent)
+                        })
+                    }
+                })
+
+            }
         }
         else if(listType == "eachmeet") {
             holder.itemView.btn_partnerlistcall.visibility = View.GONE

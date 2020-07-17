@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -27,7 +28,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             handler.sendMessage(msg)
 
             if(!isAppOnForeground(applicationContext)) {
-                sendNotification(p0.to, p0.notification?.title, p0.notification?.body)
+                sendNotification(p0.to, p0.notification?.title!!, p0.notification?.body)
             }
             else{
             }

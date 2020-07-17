@@ -31,6 +31,8 @@ class ChatActivity : AppCompatActivity() {
     var ref : DatabaseReference? = null
     var query : Query? = null
 
+    var init=0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
@@ -38,6 +40,19 @@ class ChatActivity : AppCompatActivity() {
         var intent=intent
         room=intent.getSerializableExtra("room") as ChatRoomItem
         list_chat.adapter=chatAdapter
+
+        VolleyService.chatInitReq(room!!.roomId,this,{success ->
+            if(success!!.length()!=0) {
+                var array = success!!
+                for (i in 0..array.length() - 1) {
+                    var json=array[i] as JSONObject
+                    addChatItem(json)
+                }
+
+                list_chat.setSelection(list_chat.adapter.getCount() - 1);
+                init=1
+            }
+        })
 
         FirebaseMessaging.getInstance().subscribeToTopic(room!!.roomId!!)
             .addOnCompleteListener {
@@ -68,17 +83,18 @@ class ChatActivity : AppCompatActivity() {
             }
         })
 
+        /*
         VolleyService.chatInitReq(room!!.roomId,this,{success ->
             if(success!!.length()!=0) {
                 var array = success!!
                 for (i in 0..array.length() - 1) {
                     var json=array[i] as JSONObject
-                    addChatItem(json)
+                    //addChatItem(json)
                 }
 
                 list_chat.setSelection(list_chat.adapter.getCount() - 1);
             }
-        })
+        })*/
 
         btn_send.setOnClickListener {
 
@@ -140,6 +156,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     fun chatConversation(snapshot: DataSnapshot) {
+        if(init==0) return
         var i = snapshot.children.iterator()
         while (i.hasNext()) {
 

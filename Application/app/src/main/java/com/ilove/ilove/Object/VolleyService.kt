@@ -526,19 +526,24 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
-    fun sendFCMReq(roomId: String, title: String, content: String, context: Context) {
+    fun sendFCMReq(userId: String, type: String, context:Context) {
 
-        var url = "${ip}/chat/fcm/send"
+        var url = "${ip}/chat/send/fcm"
 
         var json = JSONObject()
-        json.put("topic", roomId)
-        json.put("content", content)
+        json.put("user_id", userId)
+
+        var title="좋아요 알림"
         json.put("title",title)
+        var content="${UserInfo.NICKNAME}님이 좋아요를 눌렀습니다"
+        json.put("content", content)
+        json.put("type", type)
 
         var request = object : JsonObjectRequest(Method.POST,
             url,
             json,
             Response.Listener {
+                Log.d("test",it.toString())
             },
             Response.ErrorListener {
             }) {
@@ -548,7 +553,7 @@ object VolleyService {
     }
 
     fun getMyChatRoom(userId: String, context: Context, success: (JSONArray) -> Unit) {
-        var url="${ip}/room/get/my/room"
+        var url="${ip}/chat/get/my/room"
 
         var json = JSONObject()
             .put("user_id",userId)
@@ -594,7 +599,7 @@ object VolleyService {
     }
 
     fun createRoomReq(userId: String, userNickname: String, context: Context, success: (JSONObject) -> Unit) {
-        var url="${ip}/room/create/room"
+        var url="${ip}/chat/create/room"
 
         var json=JSONObject()
             .put("room_maker", UserInfo.ID)
@@ -691,5 +696,37 @@ object VolleyService {
         ){}
 
         Volley.newRequestQueue(context).add(request)
+    }
+
+    fun checkChatRoom(userId: String, partnerId: String, context: Context, success: (JSONObject?) -> Unit) {
+        val url = "${ip}/chat/check/room"
+
+        var json=JSONObject()
+            .put("user_id",userId)
+            .put("partner_id",partnerId)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+                if(it is com.android.volley.ParseError)
+                    success(null)
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun updateAlarm(
+        userId: String,
+        alarmType: String,
+        alarmState: Boolean,
+        success: (String) -> Unit
+    ) {
+
     }
 }
