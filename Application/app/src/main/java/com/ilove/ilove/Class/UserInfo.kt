@@ -1,7 +1,6 @@
 package com.ilove.ilove.Class
 
 import android.app.Application
-import android.location.Location
 
 class UserInfo : Application() {
     companion object {

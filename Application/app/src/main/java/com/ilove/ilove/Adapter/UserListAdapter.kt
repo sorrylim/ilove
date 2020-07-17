@@ -46,14 +46,12 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
         var curDate = simpleDateFormat.format(System.currentTimeMillis())
         var partnerDate : Date = simpleDateFormat.parse(userList.get(position).recentTime)
         var age = curDate.substring(0, 4).toInt() - userList.get(position).userAge.substring(0, 4).toInt() + 1
-        var location : List<String> = userList.get(position).recentGps.split(",")
-
-        var distance = gpsTracker.getDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1))
 
         Glide.with(holder.itemView)
             .load(userList.get(position).userImage)
             .into(holder.itemView.image_userlistprofile)
-        holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + ", " + age + ", " + distance + "," + gpsTracker.timeDiff(partnerDate.getTime())
+        holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + " " + age
+        holder.itemView.text_userlistrecent.text =  userList.get(position).recentGps + "km" + ", " + gpsTracker.timeDiff(partnerDate.getTime())
         holder.itemView.text_userlistintroduce.text = userList.get(position).userIntroduce
         holder.itemView.image_userlistprofile.setClipToOutline(true)
 

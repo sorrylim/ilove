@@ -34,6 +34,12 @@ class ItemActivity : PSAppCompatActivity() {
             psDialog.show()
         }
 
+        btn_chargecandy.setOnClickListener {
+            var intent = Intent(this, ChargeCandyActivity::class.java)
+            startActivity(intent)
+        }
+
+
 
     }
 }

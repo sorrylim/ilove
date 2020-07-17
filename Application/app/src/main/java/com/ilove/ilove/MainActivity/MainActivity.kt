@@ -20,6 +20,7 @@ import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Fragment.*
+import com.ilove.ilove.IntroActivity.ChargeCandyActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -58,6 +59,11 @@ class MainActivity : PSAppCompatActivity() {
         }
         else {
             checkRunTimePermission()
+        }
+
+        btn_candy.setOnClickListener {
+            var intent = Intent(this, ChargeCandyActivity::class.java)
+            startActivity(intent)
         }
 
         /*var gpsTracker = GpsTracker(this)

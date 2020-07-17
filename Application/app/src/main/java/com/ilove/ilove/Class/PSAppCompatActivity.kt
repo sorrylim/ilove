@@ -17,7 +17,7 @@ public abstract class PSAppCompatActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(backPress)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
-        toolbar.text_maintoolbar.text = titleText
+        toolbar.text_maintoolbar.setText(titleText)
         return toolbar
     }
 

@@ -92,4 +92,17 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_partnerlistlike"
         app:layout_constraintTop_toTopOf="@+id/btn_partnerlistlike" />
 
+    <Button
+        android:id="@+id/btn_each"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/more_rounded_corner_shape_button"
+        android:textColor="@color/colorMdWhite_1000"
+        android:textSize="15dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/text_partnerlistrecenttime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_partnerlistnickname" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,10 +54,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:text="닉네임, 나이, 거리, 접속시간"
-        android:textSize="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="닉네임, 나이"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorMdGrey_900"
         app:layout_constraintStart_toEndOf="@+id/image_userlistprofile"
         app:layout_constraintTop_toTopOf="@+id/image_userlistprofile" />
 
@@ -76,4 +76,15 @@
         app:layout_constraintTop_toTopOf="@+id/btn_userlike"
         app:like_drawable="@drawable/call_icon"
         app:unlike_drawable="@drawable/call_n_icon" />
+
+    <TextView
+        android:id="@+id/text_userlistrecent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="거리, 시간"
+        android:textColor="@color/colorMdGrey_900"
+        app:layout_constraintBottom_toBottomOf="@+id/text_userlistinfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_userlistinfo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
