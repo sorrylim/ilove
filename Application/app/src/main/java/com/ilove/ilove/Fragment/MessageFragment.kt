@@ -20,9 +20,13 @@ import org.json.JSONObject
 
 class MessageFragment : Fragment() {
 
-    companion object {
-        var handler:Handler? = null
+    companion object{
+        var handler: Handler? = null
     }
+
+    var chatRoomRV : RecyclerView? = null
+    var chatRoomList = ArrayList<ChatRoomItem>()
+    var chatRoomAdapter : ChatRoomAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,25 +34,27 @@ class MessageFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_message, container, false)
-        var chatRoomRV =rootView.findViewById<RecyclerView>(R.id.rv_chatroom)
-        var chatRoomList = ArrayList<ChatRoomItem>()
-        var chatRoomAdapter = ChatRoomAdapter(activity!!, chatRoomList!!)
-
-
-        refreshList(chatRoomRV,chatRoomList,chatRoomAdapter)
-
+        chatRoomRV =rootView.findViewById<RecyclerView>(R.id.rv_chatroom)
+        chatRoomAdapter = ChatRoomAdapter(activity!!, chatRoomList!!)
 
         handler=object : Handler(){
             override fun handleMessage(msg: Message) {
+
                 when(msg.what){
                     0 -> {
-                        refreshList(chatRoomRV,chatRoomList, chatRoomAdapter)
+                        refreshList(chatRoomRV!!,chatRoomList,chatRoomAdapter!!)
                     }
                 }
             }
         }
 
         return rootView
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        refreshList(chatRoomRV!!,chatRoomList,chatRoomAdapter!!)
     }
 
     private fun refreshList(
@@ -80,8 +86,6 @@ class MessageFragment : Fragment() {
                     )
                 )
             }
-
-            Log.d("test",array.toString())
 
             chatRoomAdapter.sortByLastChat()
         })
