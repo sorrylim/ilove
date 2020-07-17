@@ -31,53 +31,94 @@ class PartnerActivity : PSAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_partner)
 
+
+
+
+
+
+
         var hobbyLayout : LinearLayout = findViewById(R.id.layout_hobby)
 
-        var linear : LinearLayout = LinearLayout(this)
+        /*var linear : LinearLayout = LinearLayout(this)
         linear.setOrientation(LinearLayout.HORIZONTAL)
-        var params : LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        var params : LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         linear.setLayoutParams(params)
 
-        hobbyLayout.addView(linear)
+        hobbyLayout.addView(linear)*/
 
 
-        for(i in 0..6) {
-            var displayMetrics: DisplayMetrics = DisplayMetrics()
-            this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics)
-            var dm = getResources().getDisplayMetrics()
-            var view : TextView = TextView(this)
-            var width = Math.round(10 * dm.density)
-            var padding = Math.round(15 * dm.density)
-            var size = Math.round(20 * dm.density)
+        var displayMetrics: DisplayMetrics = DisplayMetrics()
+        this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics)
+        var width = displayMetrics.widthPixels
 
+        var textList = ArrayList<TextView>()
+        var linearList = ArrayList<LinearLayout>()
+        var linearCount : Int = 0
+        var filledWidth : Int = 0
 
-            var test = view.getPaint().measureText("도도")
-            widthData += (width + padding + test.toInt())
-            Log.d("test", "$widthData")
-            if(displayMetrics.widthPixels < widthData)
-            {
-                hobbyLayout.addView(linear)
-                widthData = 0
-            }
+        var dm = getResources().getDisplayMetrics()
+        var topPadding = Math.round(5 * dm.density)
+        var padding = Math.round(15 * dm.density)
+        var margin = Math.round(20 * dm.density)
+        var layoutMargin = Math.round(5 * dm.density)
+
+        for(i in 0..10) {
+            var view = TextView(this)
 
             var layoutParams : LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            layoutParams.rightMargin = width
+            layoutParams.setMargins(margin, 0, 0, 0)
             view.setLayoutParams(layoutParams)
 
-
-            view.setPadding(padding, 10 , padding, 10)
+            view.setPadding(padding, topPadding, padding, topPadding)
             view.setBackgroundResource(R.drawable.more_rounded_corner_shape_button)
             view.setTextColor(Color.BLACK)
             view.setText("도도")
             view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20f)
 
-            linear.addView(view)
+            view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+            widthData += view.measuredWidth + margin
 
-            //Toast.makeText(this, (test).toString(), Toast.LENGTH_SHORT).show()
+            textList.add(view)
         }
 
+        if(width < widthData) {
+            for(i in 0..widthData/width) {
+                var linear : LinearLayout = LinearLayout(this)
+                linear.setOrientation(LinearLayout.HORIZONTAL)
+                var params : LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                params.setMargins(0, 0, 0, layoutMargin)
+                linear.setLayoutParams(params)
+                linearList.add(linear)
+            }
+        }
 
+        for(i in 0..textList.size-1) {
+            textList.get(i).measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            filledWidth += (textList.get(i).measuredWidth + margin)
+
+            if(linearCount < linearList.size && filledWidth < width) {
+                linearList.get(linearCount).addView(textList.get(i))
+            }
+            else {
+                filledWidth = textList.get(i).measuredWidth + margin
+                linearCount++
+                linearList.get(linearCount).addView(textList.get(i))
+            }
+        }
+
+        for(i in 0..linearList.size-1) {
+            hobbyLayout.addView(linearList.get(i))
+        }
+
+        Log.d("test", "widthData : ${widthData} deviceWidth :${width} linearLayoutCount: ${linearList.size} textViewCount: ${textList.size}")
+
+
+        image_partnerbackpress.bringToFront()
+
+        image_partnerbackpress.setOnClickListener {
+            finish()
+        }
 
 
         var intent = intent
