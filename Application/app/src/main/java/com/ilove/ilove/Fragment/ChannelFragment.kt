@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ilove.ilove.Adapter.NewUserAdapter
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.NewUserList
@@ -45,6 +47,60 @@ class ChannelFragment : Fragment() {
         var visitProfileBtn = rootView.layout_visitprofile
         var visitStoryBtn = rootView.layout_visitstory
         var newUserRV = rootView.rv_newmember
+        var swipeLayout: SwipeRefreshLayout = rootView.layout_swipe
+        var nestedScrollView : NestedScrollView = rootView.scroll_channel
+
+        nestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER)
+
+        swipeLayout.setOnRefreshListener {
+            VolleyService.getExpressionCountReq(UserInfo.ID, activity!!, {success->
+                var json = success
+                sendLikeCount.text = json!!.getInt("send_like").toString() + "명"
+                receiveLikeCount.text = json!!.getInt("receive_like").toString() + "명"
+                eachLikeCount.text = json!!.getInt("each_like").toString() + "명"
+                sendMeetCount.text = json!!.getInt("send_meet").toString() + "명"
+                receiveMeetCount.text = json!!.getInt("receive_meet").toString() + "명"
+                eachMeetCount.text = json!!.getInt("each_meet").toString() + "명"
+
+                VolleyService.getCountViewReq(UserInfo.ID, activity!!, {success->
+                    var json = success
+                    visitProfileCount.text = json!!.getInt("profile").toString() + "명"
+                    visitStoryCount.text = json!!.getInt("story").toString() + "명"
+
+                    if(UserInfo.GENDER == "M") {
+                        VolleyService.getNewUserListReq("F", activity!!, {success->
+                            newUserList.clear()
+                            var array = success
+                            for(i in 0..array.length()-1)
+                            {
+                                var json = array[i] as JSONObject
+                                newUserList.add(NewUserList(json.getString("user_id"), json.getString("user_nickname"), json.getString("user_birthday"), json.getString("user_city"),
+                                    json.getString("user_recentgps"), json.getString("user_recenttime"), json.getString("user_phone"), json.getString("image")))
+                            }
+                            newUserRV.setHasFixedSize(true)
+                            newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
+                            newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
+                        })
+                    }
+                    else {
+                        VolleyService.getNewUserListReq("M", activity!!, {success->
+                            newUserList.clear()
+                            var array = success
+                            for(i in 0..array.length()-1)
+                            {
+                                var json = array[i] as JSONObject
+                                newUserList.add(NewUserList(json.getString("user_id"), json.getString("user_nickname"), json.getString("user_birthday"), json.getString("user_city"),
+                                    json.getString("user_recentgps"), json.getString("user_recenttime"), json.getString("user_phone"), json.getString("image")))
+                            }
+                            newUserRV.setHasFixedSize(true)
+                            newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
+                            newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
+                        })
+                    }
+                })
+                swipeLayout.setRefreshing(false)
+            })
+        }
 
         if(UserInfo.GENDER == "M") {
             VolleyService.getNewUserListReq("F", activity!!, {success->
@@ -133,6 +189,5 @@ class ChannelFragment : Fragment() {
         intent.putExtra("listType", input)
         startActivity(intent)
     }
-
 
 }

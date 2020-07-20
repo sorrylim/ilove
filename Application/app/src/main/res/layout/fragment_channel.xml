@@ -6,8 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.ChannelFragment">
 
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/layout_swipe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_channel"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +40,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_newmember"
                 android:layout_width="0dp"
-                android:layout_height="203dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -150,10 +155,12 @@
                 android:id="@+id/layout_upprofile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_profilecheck">
+                app:layout_constraintTop_toBottomOf="@+id/layout_eachmeet">
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -196,13 +203,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:text="아이러브 좋아요"
                 android:textColor="@color/colorMdGrey_900"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_upprofile" />
+                app:layout_constraintTop_toBottomOf="@+id/layout_profilecheck" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_sendlike"
@@ -405,8 +412,6 @@
                 android:id="@+id/layout_eachmeet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layout_receivemeet">
@@ -442,5 +447,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

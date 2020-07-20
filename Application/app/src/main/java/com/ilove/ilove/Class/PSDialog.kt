@@ -134,6 +134,7 @@ class PSDialog(activity: Activity) {
                     VolleyService.updateUserCityReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
                         if(success == "success") {
                             userOptionText.text = userOptionData
+                            userOptionText.setTextColor(Color.parseColor("#FF8C00"))
                             dismiss()
                         }
                         else {
@@ -146,10 +147,12 @@ class PSDialog(activity: Activity) {
                         if(success == "success") {
                             if(userOptionData.length > 8) {
                                 userOptionText.text = userOptionData.substring(0, 9) + "..."
+                                userOptionText.setTextColor(Color.parseColor("#FF8C00"))
                                 dismiss()
                             }
                             else {
                                 userOptionText.text = userOptionData
+                                userOptionText.setTextColor(Color.parseColor("#FF8C00"))
                                 dismiss()
                             }
                         }
