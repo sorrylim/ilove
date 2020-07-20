@@ -8,5 +8,6 @@ data class ChatRoomItem (
     var partner:String,
     var roomTitle:String,
     var lastChat:String?,
-    var lastChatTime:String?
+    var lastChatTime:String?,
+    var imageUrl:String?
 ) : Serializable

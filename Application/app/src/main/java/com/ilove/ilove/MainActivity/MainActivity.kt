@@ -16,10 +16,12 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Fragment.*
+import com.ilove.ilove.IntroActivity.ChargeCandyActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -53,11 +55,20 @@ class MainActivity : PSAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        FirebaseMessaging.getInstance().subscribeToTopic(UserInfo.ID)
+            .addOnCompleteListener {
+                Log.d("test","success subscribe to topic")
+            }
         if(!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting()
         }
         else {
             checkRunTimePermission()
+        }
+
+        btn_candy.setOnClickListener {
+            var intent = Intent(this, ChargeCandyActivity::class.java)
+            startActivity(intent)
         }
 
         /*var gpsTracker = GpsTracker(this)

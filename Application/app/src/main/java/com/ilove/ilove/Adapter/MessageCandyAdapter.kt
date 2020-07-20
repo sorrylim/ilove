@@ -30,7 +30,7 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-class MessageCandyAdapter(val context: Context, val messageCandyCount:ArrayList<UserItem.MessageTicket>, var negativeText: TextView, var dialog: Dialog) : RecyclerView.Adapter<MessageCandyAdapter.ViewHolder>() {
+class MessageCandyAdapter(val context: Context, val messageCandyCount:ArrayList<UserItem.MessageTicket>, var negativeText: TextView) : RecyclerView.Adapter<MessageCandyAdapter.ViewHolder>() {
 
     var tempPosition : Int? = null
 
@@ -104,10 +104,6 @@ class MessageCandyAdapter(val context: Context, val messageCandyCount:ArrayList<
             }
             else {
                 negativeText.visibility = View.INVISIBLE
-                dialog.dismiss()
-                var psDialog = PSDialog(context as Activity)
-                psDialog.setPurchaseMessageTicket()
-                psDialog.show()
             }
         }
     }

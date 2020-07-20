@@ -1,11 +1,14 @@
 package com.ilove.ilove.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.marginLeft
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ChatItem
 import com.ilove.ilove.R
@@ -35,22 +38,37 @@ class ChatAdapter : BaseAdapter() {
         val inflater =
             context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
+        var timeStr = ""
         val time = item.chatTime!!.split(" ")[1].split(":")
-        val hour=time[0].toInt()
-        val min=time[1]
-        var timeStr=""
-        if(hour<12)
-            timeStr="오전 ${hour}:${min}"
+        val hour = time[0].toInt()
+        val min = time[1]
+        if (hour < 12)
+            timeStr = "오전 ${hour}:${min}"
         else
-            timeStr="오후 ${hour-12}:${min}"
+            timeStr = "오후 ${hour - 12}:${min}"
 
         if (!item.isMyChat!!) {
             view = inflater.inflate(R.layout.item_chat, parent, false)
+
             var textSpeaker = view!!.findViewById(R.id.text_speaker) as TextView
-            textSpeaker!!.text = item.chatSpeakerNickname
             var textContent = view!!.findViewById(R.id.text_content) as TextView
             var textTime = view.findViewById(R.id.text_time) as TextView
+            var textUnreadCount = view.findViewById(R.id.text_unread_count) as TextView
 
+            if(chatList.count()>1) {
+                var beforeItem = chatList[position - 1]
+                if(beforeItem.isMyChat!!) textSpeaker!!.text = item.chatSpeakerNickname
+                else {
+                    textSpeaker.visibility=View.GONE
+
+                    var constraintSet = ConstraintSet()
+
+                }
+
+            }
+
+            if(item.unreadCount!!.toInt()>0) textUnreadCount.text = item.unreadCount
+            else textUnreadCount.text = ""
             textContent.text = item.chatContent
             textTime.text = timeStr
         } else {
@@ -58,7 +76,10 @@ class ChatAdapter : BaseAdapter() {
 
             var textContent = view!!.findViewById(R.id.text_content) as TextView
             var textTime = view.findViewById(R.id.text_time) as TextView
+            var textUnreadCount = view.findViewById(R.id.text_unread_count) as TextView
 
+            if(item.unreadCount!!.toInt()>0) textUnreadCount.text = item.unreadCount
+            else textUnreadCount.text = ""
             textContent.text = item.chatContent
             textTime.text = timeStr
         }
@@ -79,5 +100,13 @@ class ChatAdapter : BaseAdapter() {
 
     fun clear() {
         chatList.clear()
+    }
+
+    fun readChat(chatSpeaker: String, chatTime: String) {
+        chatList.forEach {
+            if(it.chatSpeaker==chatSpeaker && it.chatTime==chatTime){
+                it.unreadCount=0.toString()
+            }
+        }
     }
 }

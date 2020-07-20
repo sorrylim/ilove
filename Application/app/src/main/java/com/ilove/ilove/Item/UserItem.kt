@@ -11,4 +11,10 @@ class UserItem {
         val candyCount : String,
         var isSelected: Boolean = false
     )
+
+    data class Candy(
+        val candyCount: String,
+        val candyAmount : String,
+        var isSelected: Boolean = false
+    )
 }

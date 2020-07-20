@@ -1,11 +1,6 @@
 package com.ilove.ilove.MainActivity
 
-import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -15,19 +10,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSAppCompatActivity
-import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.activity_story.*
-import kotlinx.android.synthetic.main.item_storylist.view.*
 import org.json.JSONObject
 import java.text.SimpleDateFormat
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class StoryActivity : PSAppCompatActivity() {
@@ -99,6 +89,7 @@ class StoryActivity : PSAppCompatActivity() {
         btn_storylike.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 VolleyService.insertStoryExpressionReq(UserInfo.ID, imageId, curDate, this@StoryActivity, {success->
+                    VolleyService.sendFCMReq(userId,"likestory",this@StoryActivity)
                     if(success=="success") {
                         text_storylikecount.text = (Integer.parseInt(text_storylikecount.text.toString()) + 1).toString()
                         likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(this@StoryActivity.getResources(), R.drawable.bigheart_on, null))

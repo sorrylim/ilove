@@ -45,17 +45,18 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
         var distance = ""
 
         if(distanceInt < 100) {
-            distance = String.format("%.0f", distanceInt) + "m"
+            //distance = String.format("%.0f", distanceInt)
+            distance = "근처"
         }
         else if(100<= distanceInt && distanceInt < 1000) {
             distance = (distanceInt - (distanceInt%100)).toString()
         }
         else if(1000<=distanceInt && distanceInt < 10000) {
             distanceInt /= 1000
-            distance = String.format("%.1f", distanceInt) + "km"
+            distance = String.format("%.1f", distanceInt)
         }
         else if(10000<=distanceInt) {
-            distance = String.format("%.0f", (distanceInt - distanceInt%1000)) + "km"
+            distance = String.format("%.0f", (distanceInt - distanceInt%1000))
         }
 
         return distance
@@ -156,18 +157,18 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
     }
 
     enum class TimeValue(val value: Int,val maximum : Int, val msg : String) {
-        SEC(60,60,"분 전"),
-        MIN(60,60,"시간 전"),
-        HOUR(24,24,"일 전"),
-        DAY(30,30,"달 전"),
-        MONTH(12,12,"년 전")
+        SEC(60,60,"분"),
+        MIN(60,60,"시간"),
+        HOUR(24,24,"일"),
+        DAY(30,30,"달"),
+        MONTH(12,12,"년")
     }
 
     fun timeDiff(time : Long):String{
         val curTime = System.currentTimeMillis()
         var diffTime = (curTime- time) / 1000
         var msg: String? = null
-        if(diffTime < TimeValue.SEC.value )
+        if(diffTime < TimeValue.SEC.value)
             msg= "방금 전"
         else {
             for (i in TimeValue.values()) {

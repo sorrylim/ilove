@@ -2,18 +2,14 @@ package com.ilove.ilove.Object
 
 import android.content.Context
 import android.util.Log
-import android.graphics.Bitmap
-import com.android.volley.Request
-import com.android.volley.Request.Method.POST
 import com.android.volley.Response
-import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.ilove.ilove.Class.UserInfo
+import com.ilove.ilove.Fragment.MessageFragment
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.reflect.Method
 
 object VolleyService {
     val ip= "http://18.217.130.157:3000"
@@ -526,19 +522,44 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
-    fun sendFCMReq(roomId: String, title: String, content: String, context: Context) {
+    fun sendFCMReq(userId: String, type: String, context:Context) {
 
-        var url = "${ip}/chat/fcm/send"
+        var url = "${ip}/chat/send/fcm"
 
         var json = JSONObject()
-        json.put("topic", roomId)
-        json.put("content", content)
+        json.put("user_id", userId)
+
+        var title=""
+        var content=""
+        if(type=="like") {
+            title = "${UserInfo.NICKNAME}님이 좋아요를 눌렀어요!"
+            content = "상대의 프로필을 확인해보세요"
+        }
+        else if(type=="meet") {
+            title = "${UserInfo.NICKNAME}님이 연락해요를 눌렀어요!"
+            content = "상대의 프로필을 확인해보세요"
+        }
+        else if(type=="visitprofile"){
+            title = "${UserInfo.NICKNAME}님이 프로필을 방문했어요!"
+            content = "상대의 프로필을 방문해보세요"
+        }
+        else if(type=="visitstory"){
+            title = "${UserInfo.NICKNAME}님이 스토리를 방문했어요!"
+            content = "상대의 스토리를 방문해보세요"
+        }
+        else if(type=="likestory"){
+            title = "${UserInfo.NICKNAME}님이 스토리를 좋아해요!"
+            content = "상대의 스토리를 방문해보세요"
+        }
         json.put("title",title)
+        json.put("content", content)
+        json.put("type", type)
 
         var request = object : JsonObjectRequest(Method.POST,
             url,
             json,
             Response.Listener {
+                Log.d("test",it.toString())
             },
             Response.ErrorListener {
             }) {
@@ -548,7 +569,7 @@ object VolleyService {
     }
 
     fun getMyChatRoom(userId: String, context: Context, success: (JSONArray) -> Unit) {
-        var url="${ip}/room/get/my/room"
+        var url="${ip}/chat/get/my/room"
 
         var json = JSONObject()
             .put("user_id",userId)
@@ -594,7 +615,7 @@ object VolleyService {
     }
 
     fun createRoomReq(userId: String, userNickname: String, context: Context, success: (JSONObject) -> Unit) {
-        var url="${ip}/room/create/room"
+        var url="${ip}/chat/create/room"
 
         var json=JSONObject()
             .put("room_maker", UserInfo.ID)
@@ -659,21 +680,111 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
-    fun getItemCount(userId: String, context:Context, success: (JSONObject) -> Unit) {
-        var url="${ip}/user/get/item/count"
+    fun insertChatReq(
+        roomId: String,
+        userId: String,
+        userNickname: String,
+        chatPartner: String,
+        chatContent: String,
+        currentDate: String?,
+        context:Context,
+        success: (String) -> Unit
+    ) {
+
+        val url = "${ip}/chat/insert/chat"
+
+        var json=JSONObject()
+            .put("room_id",roomId)
+            .put("chat_speaker",userId)
+            .put("chat_speaker_nickname",userNickname)
+            .put("chat_content",chatContent)
+            .put("chat_time",currentDate)
+            .put("chat_partner",chatPartner)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun checkChatRoom(userId: String, partnerId: String, context: Context, success: (JSONObject?) -> Unit) {
+        val url = "${ip}/chat/check/room"
 
         var json=JSONObject()
             .put("user_id",userId)
+            .put("partner_id",partnerId)
 
-        var request = object : JsonObjectRequest(Method.POST,
+        val request=object : JsonObjectRequest(
+            Method.POST,
             url,
             json,
             Response.Listener {
                 success(it)
             },
             Response.ErrorListener {
-            }) {
-        }
+                if(it is com.android.volley.ParseError)
+                    success(null)
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun updateAlarm(
+        userId: String,
+        alarmType: String,
+        alarmState: Boolean,
+        context: Context
+    ) {
+
+        var url = "${ip}/user/update/alarm"
+
+        var json=JSONObject()
+            .put("user_id",userId)
+            .put("alarm_type",alarmType)
+
+        if(alarmState) json.put("alarm_state",1)
+        else json.put("alarm_state",0)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun readChatReq(roomId: String, chatTime: String?, context: Context, success : (String) -> Unit) {
+        val url = "${ip}/chat/read/chat"
+
+        var json=JSONObject()
+            .put("room_id",roomId)
+            .put("chat_time",chatTime)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+            }
+        ){}
 
         Volley.newRequestQueue(context).add(request)
     }

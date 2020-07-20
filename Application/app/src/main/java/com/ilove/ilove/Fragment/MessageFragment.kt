@@ -12,17 +12,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ilove.ilove.Adapter.ChatRoomAdapter
 import com.ilove.ilove.Class.UserInfo
-import com.ilove.ilove.Item.ChatItem
 import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
+import org.json.JSONArray
 import org.json.JSONObject
 
 class MessageFragment : Fragment() {
 
-    companion object {
-        var handler:Handler? = null
+    companion object{
+        var handler: Handler? = null
     }
+
+    var chatRoomRV : RecyclerView? = null
+    var chatRoomList = ArrayList<ChatRoomItem>()
+    var chatRoomAdapter : ChatRoomAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,25 +34,27 @@ class MessageFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_message, container, false)
-        var chatRoomRV =rootView.findViewById<RecyclerView>(R.id.rv_chatroom)
-        var chatRoomList = ArrayList<ChatRoomItem>()
-        var chatRoomAdapter = ChatRoomAdapter(activity!!, chatRoomList!!)
-
-
-        refreshList(chatRoomRV,chatRoomList,chatRoomAdapter)
-
+        chatRoomRV =rootView.findViewById<RecyclerView>(R.id.rv_chatroom)
+        chatRoomAdapter = ChatRoomAdapter(activity!!, chatRoomList!!)
 
         handler=object : Handler(){
             override fun handleMessage(msg: Message) {
+
                 when(msg.what){
                     0 -> {
-                        refreshList(chatRoomRV,chatRoomList, chatRoomAdapter)
+                        refreshList(chatRoomRV!!,chatRoomList,chatRoomAdapter!!)
                     }
                 }
             }
         }
 
         return rootView
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        refreshList(chatRoomRV!!,chatRoomList,chatRoomAdapter!!)
     }
 
     private fun refreshList(
@@ -69,21 +75,36 @@ class MessageFragment : Fragment() {
             for(i in 0..array.length()-1){
                 var json=array[i] as JSONObject
 
-                chatRoomList.add(
-                    ChatRoomItem(
-                        json.getString("room_id"),
-                        json.getString("room_maker"),
-                        json.getString("room_partner"),
-                        json.getString("room_title"),
-                        json.getString("chat_content").split("|")[0],
-                        json.getString("chat_time")
-                    )
-                )
+                if(UserInfo.ID==json.getString(("room_maker"))) {
+                    VolleyService.getProfileImageReq(json.getString("room_partner"),activity!!,{success ->
+                        var imageJson=success[0] as JSONObject
+                        addChatRoom(json,imageJson.getString("image"))
+                    })
+                }
+                else{
+                    VolleyService.getProfileImageReq(json.getString("room_maker"),activity!!,{success ->
+                        var imageJson=success[0] as JSONObject
+                        addChatRoom(json,imageJson.getString("image"))
+                    })
+                }
             }
-
-            Log.d("test",array.toString())
 
             chatRoomAdapter.sortByLastChat()
         })
+    }
+
+    fun addChatRoom(json: JSONObject, imageUrl: String){
+
+        chatRoomList.add(
+            ChatRoomItem(
+                json.getString("room_id"),
+                json.getString("room_maker"),
+                json.getString("room_partner"),
+                json.getString("room_title"),
+                json.getString("chat_content").split("|")[0],
+                json.getString("chat_time"),
+                imageUrl
+            )
+        )
     }
 }

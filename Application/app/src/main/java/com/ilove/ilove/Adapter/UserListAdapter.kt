@@ -46,14 +46,12 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
         var curDate = simpleDateFormat.format(System.currentTimeMillis())
         var partnerDate : Date = simpleDateFormat.parse(userList.get(position).recentTime)
         var age = curDate.substring(0, 4).toInt() - userList.get(position).userAge.substring(0, 4).toInt() + 1
-        var location : List<String> = userList.get(position).recentGps.split(",")
-
-        var distance = gpsTracker.getDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1))
 
         Glide.with(holder.itemView)
             .load(userList.get(position).userImage)
             .into(holder.itemView.image_userlistprofile)
-        holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + ", " + age + ", " + distance + "," + gpsTracker.timeDiff(partnerDate.getTime())
+        holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + " " + age + " " + userList.get(position).userCity
+        holder.itemView.text_userlistrecent.text =  userList.get(position).recentGps + "km" + ", " + gpsTracker.timeDiff(partnerDate.getTime())
         holder.itemView.text_userlistintroduce.text = userList.get(position).userIntroduce
         holder.itemView.image_userlistprofile.setClipToOutline(true)
 
@@ -74,6 +72,7 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
         holder.itemView.btn_userlike.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "like", curDate, context, {success->
+                    VolleyService.sendFCMReq(userList.get(position).userId,"like",context)
                     when(success) {
                         "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
                         "eachsuccess" -> {
@@ -101,6 +100,7 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
         holder.itemView.btn_call.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "meet", curDate, context, {success->
+                    VolleyService.sendFCMReq(userList.get(position).userId,"meet",context)
                     when(success) {
                         "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_icon, null))
                         "eachsuccess" -> {
@@ -136,6 +136,7 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
             val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
             VolleyService.insertHistoryReq(UserInfo.ID, userList.get(position).userId, "profile", currentDate, context, {success->
+                VolleyService.sendFCMReq(userList.get(position).userId,"visitprofile",context)
                 if(success == "success")
                     context.startActivity(intent)
                 else

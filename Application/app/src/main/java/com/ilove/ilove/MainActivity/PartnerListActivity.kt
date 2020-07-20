@@ -14,6 +14,7 @@ import com.ilove.ilove.Item.Partner
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_partner_list.*
+import kotlinx.android.synthetic.main.item_partnerlist.*
 import org.json.JSONObject
 
 class PartnerListActivity : PSAppCompatActivity() {
@@ -32,10 +33,15 @@ class PartnerListActivity : PSAppCompatActivity() {
         when(listType) {
             "내가 좋아요를 보낸 이성" -> sendUserList("like")
             "나에게 좋아요를 보낸 이성" -> receiveUserList("like")
-            "서로 좋아요가 연결된 이성" -> eachUserList("like")
+            "서로 좋아요가 연결된 이성" -> {
+                eachUserList("like")
+
+            }
             "내가 만나고 싶은 그대" -> sendUserList("meet")
             "나를 만나고 싶어하는 그대" -> receiveUserList("meet")
-            "서로 연락처를 주고받은 그대" -> eachUserList("meet")
+            "서로 연락처를 주고받은 그대" -> {
+                eachUserList("meet")
+            }
             "내 프로필을 확인한 사람" -> visitUserList("profile")
             "내 스토리를 확인한 사람" -> visitUserList("story")
         }
@@ -66,7 +72,7 @@ class PartnerListActivity : PSAppCompatActivity() {
             }
             rv_partnerlist.setHasFixedSize(true)
             rv_partnerlist.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-            rv_partnerlist.adapter = PartnerListAdapter(this, partnerList)
+            rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "send")
         })
     }
 
@@ -94,7 +100,7 @@ class PartnerListActivity : PSAppCompatActivity() {
             }
             rv_partnerlist.setHasFixedSize(true)
             rv_partnerlist.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-            rv_partnerlist.adapter = PartnerListAdapter(this, partnerList)
+            rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "receive")
         })
     }
 
@@ -131,7 +137,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                 }
                 rv_partnerlist.setHasFixedSize(true)
                 rv_partnerlist.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-                rv_partnerlist.adapter = PartnerListAdapter(this, partnerList)
+                rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "each"+expressionType)
             })
         })
     }
@@ -151,7 +157,7 @@ class PartnerListActivity : PSAppCompatActivity() {
             }
             rv_partnerlist.setHasFixedSize(true)
             rv_partnerlist.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-            rv_partnerlist.adapter = PartnerListAdapter(this, partnerList)
+            rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "visit")
         })
     }
 }

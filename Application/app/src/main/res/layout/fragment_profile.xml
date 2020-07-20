@@ -13,9 +13,12 @@
         android:layout_height="100dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_imageview"
-        android:src="@drawable/default_profile"
+        app:layout_constraintDimensionRatio="1:1"
+        android:src="@drawable/default_image"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +29,6 @@
         android:text="닉네임"
         android:textColor="@color/colorMdGrey_900"
         android:textSize="25dp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/image_mypageprofile"
         app:layout_constraintEnd_toEndOf="@+id/btn_editprofile"
         app:layout_constraintHorizontal_bias="0.0"

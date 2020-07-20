@@ -8,11 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.MainActivity.ChatActivity
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.item_chatroom.view.*
+import kotlinx.android.synthetic.main.item_newuser.view.*
+import kotlin.concurrent.timer
 
 class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoomItem>) :
     RecyclerView.Adapter<ChatRoomAdapter.ViewHolder>() {
@@ -59,6 +63,13 @@ class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoom
             intent.putExtra("room", chatRoom)
             ContextCompat.startActivity(context, intent, null)
         }
+
+        Glide.with(holder.itemView)
+            .load(chatRoom.imageUrl).apply(RequestOptions().fitCenter()).apply(
+                RequestOptions().override(640,640))
+            .into(holder.itemView.image_chatroom)
+        holder.itemView.image_chatroom.setClipToOutline(true)
+
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -76,6 +87,7 @@ class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoom
             }
         }
     }
+
 
     fun sortByLastChat() {
         chatRoomList.sortByDescending { selector(it) }

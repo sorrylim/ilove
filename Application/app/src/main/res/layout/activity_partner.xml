@@ -7,16 +7,29 @@
     tools:context=".MainActivity.PartnerActivity">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_partner"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/image_partnerbackpress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/viewpager_partnerprofile"
+                            app:srcCompat="@drawable/icon_arrow_left" />
 
                         <TextView
                             android:id="@+id/text_partnernickname"
@@ -26,7 +39,7 @@
                             android:layout_marginTop="20dp"
                             android:text="닉네임"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textSize="25dp"
+                            android:textSize="20dp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/indicator" />
@@ -37,7 +50,7 @@
                             android:layout_height="wrap_content"
                             android:text="나이, 지역"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textSize="20dp"
+                            android:textSize="15dp"
                             app:layout_constraintStart_toStartOf="@+id/text_partnernickname"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnernickname" />
 
@@ -50,7 +63,7 @@
                             android:layout_marginEnd="20dp"
                             android:text="소개글"
                             android:textColor="@color/colorMdGrey_700"
-                            android:textSize="20dp"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -64,8 +77,7 @@
                             android:layout_marginTop="20dp"
                             android:text="프로필"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textSize="20dp"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/view29" />
@@ -77,8 +89,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             android:text="키"
-                            android:textColor="@color/colorMdGrey_700"
-                            android:textSize="15dp"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/textView30" />
@@ -91,7 +103,6 @@
                             android:text="키"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:textStyle="bold"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerheight1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -105,8 +116,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="체형"
-                            android:textColor="@color/colorMdGrey_700"
-                            android:textSize="15dp"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerheight1" />
@@ -117,7 +128,7 @@
                             android:layout_height="wrap_content"
                             android:text="체형"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerbodytype1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -129,8 +140,9 @@
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="13dp"
                             android:text="혈액형"
+                            android:textColor="@color/colorMdGrey_500"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerbodytype1" />
@@ -141,7 +153,7 @@
                             android:layout_height="wrap_content"
                             android:text="혈액형"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerbloodtype1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -155,6 +167,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="직업"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerbloodtype1" />
@@ -165,7 +179,7 @@
                             android:layout_height="wrap_content"
                             android:text="직업"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerjob1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -179,6 +193,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="학력"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerjob1" />
@@ -189,7 +205,7 @@
                             android:layout_height="wrap_content"
                             android:text="학력"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnereducation1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -203,6 +219,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="휴일"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnereducation1" />
@@ -213,7 +231,7 @@
                             android:layout_height="wrap_content"
                             android:text="휴일"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerholiday1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -227,6 +245,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="담배"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerholiday1" />
@@ -237,7 +257,7 @@
                             android:layout_height="wrap_content"
                             android:text="담배"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnercigarette1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -251,6 +271,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="술"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnercigarette1" />
@@ -261,7 +283,7 @@
                             android:layout_height="wrap_content"
                             android:text="술"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partneralcohol1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -275,6 +297,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="종교"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partneralcohol1" />
@@ -285,7 +309,7 @@
                             android:layout_height="wrap_content"
                             android:text="종교"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerreligion1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -299,6 +323,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="형제자매"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerreligion1" />
@@ -309,7 +334,7 @@
                             android:layout_height="wrap_content"
                             android:text="형제자매"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerbrother1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -323,6 +348,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="국적"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerbrother1" />
@@ -333,7 +360,7 @@
                             android:layout_height="wrap_content"
                             android:text="국적"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnercountry1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -347,6 +374,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="연수입"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnercountry1" />
@@ -357,7 +386,7 @@
                             android:layout_height="wrap_content"
                             android:text="연수입"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnersalary1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -371,6 +400,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="재산"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnersalary1" />
@@ -381,7 +412,7 @@
                             android:layout_height="wrap_content"
                             android:text="재산"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerasset1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -395,6 +426,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="혼인이력"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerasset1" />
@@ -405,7 +438,7 @@
                             android:layout_height="wrap_content"
                             android:text="혼인이력"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnermarriagehistory1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -419,6 +452,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="자녀"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnermarriagehistory1" />
@@ -429,7 +464,7 @@
                             android:layout_height="wrap_content"
                             android:text="자녀"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerchildren1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -443,6 +478,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="결혼계획"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerchildren1" />
@@ -453,7 +490,7 @@
                             android:layout_height="wrap_content"
                             android:text="결혼계획"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnermarriageplan1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -467,6 +504,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="자녀계획"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnermarriageplan1" />
@@ -477,7 +516,7 @@
                             android:layout_height="wrap_content"
                             android:text="자녀계획"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerchildrenplan1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -491,6 +530,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="가사, 육아"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerchildrenplan1" />
@@ -501,7 +542,7 @@
                             android:layout_height="wrap_content"
                             android:text="가사, 육아"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerparenting1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -515,6 +556,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="첫 데이트까지 희망사항"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerparenting1" />
@@ -525,7 +568,7 @@
                             android:layout_height="wrap_content"
                             android:text="첫 데이트까지 희망사항"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerwishdate1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -539,6 +582,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="첫 데이트 비용"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerwishdate1" />
@@ -549,7 +594,7 @@
                             android:layout_height="wrap_content"
                             android:text="첫 데이트 비용"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerdatecost1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -563,6 +608,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="동거인"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerdatecost1" />
@@ -573,7 +620,7 @@
                             android:layout_height="wrap_content"
                             android:text="동거인"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerroommate1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -587,6 +634,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="15dp"
                             android:text="사용 가능 언어"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="13dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerroommate1" />
@@ -597,7 +646,7 @@
                             android:layout_height="wrap_content"
                             android:text="사용 가능 언어"
                             android:textColor="@color/colorMdGrey_900"
-                            android:textStyle="bold"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerlanguage1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -613,6 +662,7 @@
                             android:text="취미"
                             android:textColor="@color/colorMdGrey_700"
                             android:textSize="20dp"
+                            android:visibility="gone"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/view30" />
 
@@ -622,23 +672,25 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="20dp"
-                            android:text="성격"
-                            android:textColor="@color/colorMdGrey_700"
-                            android:textSize="20dp"
+                            android:text="내 성격은"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="15dp"
+                            android:visibility="gone"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/layout_hobby" />
 
                         <TextView
-                            android:id="@+id/textView62"
+                            android:id="@+id/text_partnerfavoriteperson"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="20dp"
-                            android:text="내가 좋아하는 성격"
-                            android:textColor="@color/colorMdGrey_700"
-                            android:textSize="20dp"
+                            android:text="내가 좋아하는 친구는"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="15dp"
+                            android:visibility="gone"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/text_partnerpersonality" />
+                            app:layout_constraintTop_toBottomOf="@+id/layout_personality" />
 
                         <androidx.viewpager2.widget.ViewPager2
                             android:id="@+id/viewpager_partnerprofile"
@@ -701,11 +753,46 @@
                             android:id="@+id/layout_hobby"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
                             android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/text_partnerhobby"></LinearLayout>
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerhobby"
+                            app:layout_constraintVertical_bias="0.0"></LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_personality"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerpersonality"
+                            app:layout_constraintVertical_bias="0.0"></LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_favoriteperson"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerfavoriteperson"
+                            app:layout_constraintVertical_bias="0.0"></LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

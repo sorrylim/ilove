@@ -20,6 +20,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Adapter.MessageCandyAdapter
 import com.ilove.ilove.Adapter.PersonalityAdapter
 import com.ilove.ilove.Adapter.UserOptionAdapter
+import com.ilove.ilove.IntroActivity.ChargeCandyActivity
 import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Item.UserItem
 import com.ilove.ilove.MainActivity.ChatActivity
@@ -28,8 +29,9 @@ import com.ilove.ilove.R
 
 class PSDialog(activity: Activity) {
 
-    var dialog : Dialog? = null
+
     var context : Activity? = null
+    var dialog : Dialog? = null
 
     companion object {
         var userOptionData : String = ""
@@ -132,6 +134,7 @@ class PSDialog(activity: Activity) {
                     VolleyService.updateUserCityReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
                         if(success == "success") {
                             userOptionText.text = userOptionData
+                            userOptionText.setTextColor(Color.parseColor("#FF8C00"))
                             dismiss()
                         }
                         else {
@@ -144,10 +147,12 @@ class PSDialog(activity: Activity) {
                         if(success == "success") {
                             if(userOptionData.length > 8) {
                                 userOptionText.text = userOptionData.substring(0, 9) + "..."
+                                userOptionText.setTextColor(Color.parseColor("#FF8C00"))
                                 dismiss()
                             }
                             else {
                                 userOptionText.text = userOptionData
+                                userOptionText.setTextColor(Color.parseColor("#FF8C00"))
                                 dismiss()
                             }
                         }
@@ -214,6 +219,7 @@ class PSDialog(activity: Activity) {
                     json.getString("room_partner"),
                     json.getString("room_title"),
                     "",
+                    "",
                     ""
                 )
 
@@ -268,35 +274,25 @@ class PSDialog(activity: Activity) {
         var chargeBtn : Button = dialog!!.findViewById(R.id.btn_messagechargecandy)
         var cancelText : TextView = dialog!!.findViewById(R.id.text_cancelmessage)
         var negativeText : TextView = dialog!!.findViewById(R.id.text_negativecharge)
-
+        
         var candyCount : ArrayList<UserItem.MessageTicket> = arrayListOf(UserItem.MessageTicket("1", "7"),
             UserItem.MessageTicket("5", "21"), UserItem.MessageTicket("10", "40"),
             UserItem.MessageTicket("15", "60"), UserItem.MessageTicket("30", "110"))
 
         messageCandyCount.setHasFixedSize(true)
         messageCandyCount.layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
-        messageCandyCount.adapter = MessageCandyAdapter(context!!, candyCount, negativeText, dialog!!)
+        messageCandyCount.adapter = MessageCandyAdapter(context!!, candyCount, negativeText)
 
+
+        chargeBtn.setOnClickListener {
+            var intent = Intent(context, ChargeCandyActivity::class.java)
+            context!!.startActivity(intent)
+        }
 
         cancelText.setOnClickListener {
             dialog!!.dismiss()
         }
     }
-
-    fun setPurchaseMessageTicket() {
-        dialog!!.setContentView(R.layout.dialog_purchasecheck)
-
-        var acceptBtn : Button = dialog!!.findViewById(R.id.btn_dialogaccept)
-        var cancelBtn : Button = dialog!!.findViewById(R.id.btn_dialogcancel)
-        var titleText : TextView = dialog!!.findViewById(R.id.text_dialogtitle)
-
-        titleText.text = "메세지 이용권 구매"
-
-        cancelBtn.setOnClickListener {
-            dismiss()
-        }
-    }
-
 
 
     private fun getLayoutParams(dialog: Dialog): WindowManager.LayoutParams {

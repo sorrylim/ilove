@@ -82,6 +82,16 @@ module.exports = function () {
         })
       })
     },
+    get_item_count : function(user_id, callback) {
+      pool.getConnection(function(err, con) {
+        var sql = `select user_candycount, user_likecount, user_messageticket from user where user_id='${user_id}'`
+        con.query(sql, function(err, result) {
+          con.release()
+          if(err) callback(err)
+          else callback(null, result)
+        })
+      })
+    },
     pool: pool
   }
 }
