@@ -533,9 +533,29 @@ object VolleyService {
         var json = JSONObject()
         json.put("user_id", userId)
 
-        var title="좋아요 알림"
+        var title=""
+        var content=""
+        if(type=="like") {
+            title = "${UserInfo.NICKNAME}님이 좋아요를 눌렀어요!"
+            content = "상대의 프로필을 확인해보세요"
+        }
+        else if(type=="meet") {
+            title = "${UserInfo.NICKNAME}님이 연락해요를 눌렀어요!"
+            content = "상대의 프로필을 확인해보세요"
+        }
+        else if(type=="visitprofile"){
+            title = "${UserInfo.NICKNAME}님이 프로필을 방문했어요!"
+            content = "상대의 프로필을 방문해보세요"
+        }
+        else if(type=="visitstory"){
+            title = "${UserInfo.NICKNAME}님이 스토리를 방문했어요!"
+            content = "상대의 스토리를 방문해보세요"
+        }
+        else if(type=="likestory"){
+            title = "${UserInfo.NICKNAME}님이 스토리를 좋아해요!"
+            content = "상대의 스토리를 방문해보세요"
+        }
         json.put("title",title)
-        var content="${UserInfo.NICKNAME}님이 좋아요를 눌렀습니다"
         json.put("content", content)
         json.put("type", type)
 
@@ -668,6 +688,7 @@ object VolleyService {
         roomId: String,
         userId: String,
         userNickname: String,
+        chatPartner: String,
         chatContent: String,
         currentDate: String?,
         context:Context,
@@ -682,6 +703,7 @@ object VolleyService {
             .put("chat_speaker_nickname",userNickname)
             .put("chat_content",chatContent)
             .put("chat_time",currentDate)
+            .put("chat_partner",chatPartner)
 
         val request=object : JsonObjectRequest(
             Method.POST,

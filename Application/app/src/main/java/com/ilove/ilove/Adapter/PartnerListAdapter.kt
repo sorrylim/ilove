@@ -166,6 +166,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
 
 
             VolleyService.insertHistoryReq(UserInfo.ID, partnerList.get(position).userId, "profile", curDate, context, {success->
+                VolleyService.sendFCMReq(partnerList.get(position).userId, "visitprofile", context)
                 if(success == "success")
                     context.startActivity(intent)
                 else
@@ -177,6 +178,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
         holder.itemView.btn_partnerlistlike.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 VolleyService.insertExpressionReq(UserInfo.ID, partnerList.get(position).userId, "like", curDate, context, { success->
+                    VolleyService.sendFCMReq(partnerList.get(position).userId,"llke",context)
                     when(success) {
                         "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
                         "eachsuccess" -> {
@@ -204,6 +206,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
         holder.itemView.btn_partnerlistcall.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 VolleyService.insertExpressionReq(UserInfo.ID, partnerList.get(position).userId, "meet", curDate, context, { success->
+                    VolleyService.sendFCMReq(partnerList.get(position).userId,"meet",context)
                     when(success) {
                         "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_icon, null))
                         "eachsuccess" -> {

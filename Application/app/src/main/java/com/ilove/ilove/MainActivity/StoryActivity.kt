@@ -99,6 +99,7 @@ class StoryActivity : PSAppCompatActivity() {
         btn_storylike.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 VolleyService.insertStoryExpressionReq(UserInfo.ID, imageId, curDate, this@StoryActivity, {success->
+                    VolleyService.sendFCMReq(userId,"likestory",this@StoryActivity)
                     if(success=="success") {
                         text_storylikecount.text = (Integer.parseInt(text_storylikecount.text.toString()) + 1).toString()
                         likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(this@StoryActivity.getResources(), R.drawable.bigheart_on, null))
