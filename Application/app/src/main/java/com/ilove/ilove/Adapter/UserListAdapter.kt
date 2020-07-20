@@ -50,7 +50,7 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
         Glide.with(holder.itemView)
             .load(userList.get(position).userImage)
             .into(holder.itemView.image_userlistprofile)
-        holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + " " + age
+        holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + " " + age + " " + userList.get(position).userCity
         holder.itemView.text_userlistrecent.text =  userList.get(position).recentGps + "km" + ", " + gpsTracker.timeDiff(partnerDate.getTime())
         holder.itemView.text_userlistintroduce.text = userList.get(position).userIntroduce
         holder.itemView.image_userlistprofile.setClipToOutline(true)

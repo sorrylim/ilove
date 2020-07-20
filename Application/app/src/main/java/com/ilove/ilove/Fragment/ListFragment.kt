@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ilove.ilove.Adapter.UserListAdapter
 import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.UserInfo
@@ -35,6 +36,21 @@ class ListFragment : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_list, container, false)
         var sortGps : TextView = rootView!!.findViewById(R.id.text_sortgps)
         var sortTime : TextView = rootView!!.findViewById(R.id.text_sorttime)
+        var userListRV : RecyclerView = rootView!!.findViewById(R.id.rv_userlist)
+        var swipeLayout : SwipeRefreshLayout = rootView!!.findViewById(R.id.layout_swipe)
+
+        swipeLayout.setOnRefreshListener {
+            if(sortType == 0) {
+                sortGps()
+                swipeLayout.setRefreshing(false)
+            }
+            else {
+                sortTime()
+                swipeLayout.setRefreshing(false)
+            }
+        }
+
+        userListRV.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
         sortGps()
         sortGps.setTypeface(null, Typeface.BOLD)

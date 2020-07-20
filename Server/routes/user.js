@@ -156,4 +156,13 @@ router.post('/update/recentgps', function(req, res, next) {
   })
 })
 
+router.post('/get/item/count', function(req, res, next) {
+  var user_id = req.body.user_id
+
+  db_user.get_item_count(user_id, function(err, result) {
+    if(err) console.log(err)
+    else res.send(result[0])
+  })
+})
+
 module.exports = router;

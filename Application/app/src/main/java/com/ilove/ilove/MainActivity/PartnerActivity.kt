@@ -19,6 +19,7 @@ import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_partner.*
+import kotlinx.android.synthetic.main.fragment_channel.*
 import org.json.JSONObject
 
 class PartnerActivity : PSAppCompatActivity() {
@@ -26,100 +27,36 @@ class PartnerActivity : PSAppCompatActivity() {
     var profileImageList = ArrayList<String>()
     var currentLayout: LinearLayout? = null
     var widthData : Int = 0
+    var width : Int = 0
+    var textViewList = ArrayList<TextView>()
+    var linearList = ArrayList<LinearLayout>()
+    var linearCount : Int = 0
+    var filledWidth : Int = 0
+    var dm : DisplayMetrics? = null
+    var topPadding = 0
+    var padding = 0
+    var margin = 0
+    var layoutMargin = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_partner)
 
 
-
-
-
-
-
-        var hobbyLayout : LinearLayout = findViewById(R.id.layout_hobby)
-
-        /*var linear : LinearLayout = LinearLayout(this)
-        linear.setOrientation(LinearLayout.HORIZONTAL)
-        var params : LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-        linear.setLayoutParams(params)
-
-        hobbyLayout.addView(linear)*/
-
-
         var displayMetrics: DisplayMetrics = DisplayMetrics()
         this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics)
-        var width = displayMetrics.widthPixels
-
-        var textList = ArrayList<TextView>()
-        var linearList = ArrayList<LinearLayout>()
-        var linearCount : Int = 0
-        var filledWidth : Int = 0
-
-        var dm = getResources().getDisplayMetrics()
-        var topPadding = Math.round(5 * dm.density)
-        var padding = Math.round(15 * dm.density)
-        var margin = Math.round(20 * dm.density)
-        var layoutMargin = Math.round(5 * dm.density)
-
-        for(i in 0..10) {
-            var view = TextView(this)
-
-            var layoutParams : LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            layoutParams.setMargins(margin, 0, 0, 0)
-            view.setLayoutParams(layoutParams)
-
-            view.setPadding(padding, topPadding, padding, topPadding)
-            view.setBackgroundResource(R.drawable.more_rounded_corner_shape_button)
-            view.setTextColor(Color.BLACK)
-            view.setText("도도")
-            view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20f)
-
-            view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-            widthData += view.measuredWidth + margin
-
-            textList.add(view)
-        }
-
-        if(width < widthData) {
-            for(i in 0..widthData/width) {
-                var linear : LinearLayout = LinearLayout(this)
-                linear.setOrientation(LinearLayout.HORIZONTAL)
-                var params : LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                params.setMargins(0, 0, 0, layoutMargin)
-                linear.setLayoutParams(params)
-                linearList.add(linear)
-            }
-        }
-
-        for(i in 0..textList.size-1) {
-            textList.get(i).measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            filledWidth += (textList.get(i).measuredWidth + margin)
-
-            if(linearCount < linearList.size && filledWidth < width) {
-                linearList.get(linearCount).addView(textList.get(i))
-            }
-            else {
-                filledWidth = textList.get(i).measuredWidth + margin
-                linearCount++
-                linearList.get(linearCount).addView(textList.get(i))
-            }
-        }
-
-        for(i in 0..linearList.size-1) {
-            hobbyLayout.addView(linearList.get(i))
-        }
-
-        Log.d("test", "widthData : ${widthData} deviceWidth :${width} linearLayoutCount: ${linearList.size} textViewCount: ${textList.size}")
-
+        width = displayMetrics.widthPixels
+        dm = getResources().getDisplayMetrics()
+        topPadding = Math.round(5 * dm!!.density)
+        padding = Math.round(15 * dm!!.density)
+        margin = Math.round(10 * dm!!.density)
+        layoutMargin = Math.round(5 * dm!!.density)
 
         image_partnerbackpress.bringToFront()
 
         image_partnerbackpress.setOnClickListener {
             finish()
         }
-
 
         var intent = intent
         var userNickname = intent.getStringExtra("userNickname")
@@ -129,6 +66,8 @@ class PartnerActivity : PSAppCompatActivity() {
 
         text_partnernickname.text = userNickname
         text_partnerage.text = userCity + ", " + userAge
+
+        scroll_partner.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
 
         //toolbarCenterBinding(toolbar_partner, userNickname!!, true)
@@ -373,8 +312,100 @@ class PartnerActivity : PSAppCompatActivity() {
                     view30.visibility = View.VISIBLE
                 }
 
+                if(json.getString("user_interest") != "null")
+                {
+                    text_partnerhobby.visibility = View.VISIBLE
+                    layout_hobby.visibility = View.VISIBLE
+
+                    var hobby : List<String> = json.getString("user_interest").split(" ")
+                    setLayout(layout_hobby, hobby)
+                }
+
+                if(json.getString("user_personality") != "null")
+                {
+                    text_partnerpersonality.visibility = View.VISIBLE
+                    layout_personality.visibility = View.VISIBLE
+
+                    var personality : List<String> = json.getString("user_personality").split(" ")
+                    setLayout(layout_personality, personality)
+                }
+
+                if(json.getString("user_favoriteperson") != "null")
+                {
+                    text_partnerfavoriteperson.visibility = View.VISIBLE
+                    layout_favoriteperson.visibility = View.VISIBLE
+
+                    var favoriteperson : List<String> = json.getString("user_favoriteperson").split(" ")
+                    setLayout(layout_favoriteperson, favoriteperson)
+                }
+
             })
         })
+    }
+
+    fun setLayout(layout: LinearLayout, textList: List<String>) {
+        widthData = 0
+        filledWidth = 0
+        linearCount = 0
+        textViewList.clear()
+        linearList.clear()
+        for(i in 0..textList.size-2) {
+            var view = TextView(this)
+
+            var layoutParams : LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            layoutParams.setMargins(0, 0, margin, 0)
+            view.setLayoutParams(layoutParams)
+
+            view.setPadding(padding, topPadding, padding, topPadding)
+            view.setBackgroundResource(R.drawable.more_rounded_corner_shape_button)
+            view.setTextColor(Color.WHITE)
+            view.setText(textList.get(i))
+            view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15f)
+
+            view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+            widthData += view.measuredWidth + margin
+
+            textViewList.add(view)
+        }
+
+        var test = width - Math.round(20*dm!!.density)
+
+        if(test < widthData) {
+            for(i in 0..widthData/test) {
+                var linear : LinearLayout = LinearLayout(this)
+                linear.setOrientation(LinearLayout.HORIZONTAL)
+                var params : LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                params.setMargins(0, 0, 0, layoutMargin)
+                linear.setLayoutParams(params)
+                linearList.add(linear)
+            }
+        }
+        else {
+            var linear : LinearLayout = LinearLayout(this)
+            linear.setOrientation(LinearLayout.HORIZONTAL)
+            var params : LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            params.setMargins(0, 0, 0, layoutMargin)
+            linear.setLayoutParams(params)
+            linearList.add(linear)
+        }
+
+        for(i in 0..textViewList.size-1) {
+            textViewList.get(i).measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            filledWidth += (textViewList.get(i).measuredWidth + margin)
+
+            if(linearCount < linearList.size && filledWidth < width) {
+                linearList.get(linearCount).addView(textViewList.get(i))
+            }
+            else {
+                filledWidth = textViewList.get(i).measuredWidth + margin
+                linearCount++
+                linearList.get(linearCount).addView(textViewList.get(i))
+            }
+        }
+
+        for(i in 0..linearList.size-1) {
+            layout.addView(linearList.get(i))
+        }
     }
 
 
