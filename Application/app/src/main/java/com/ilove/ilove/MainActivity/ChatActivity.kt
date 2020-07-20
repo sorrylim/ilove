@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.util.Log
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Adapter.ChatAdapter
+import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ChatItem
+import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Object.SocketService
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
@@ -24,57 +26,75 @@ class ChatActivity : AppCompatActivity() {
 
     var chatAdapter=ChatAdapter()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
+        var intent=intent
+        var room=intent.getSerializableExtra("room") as ChatRoomItem
         list_chat.adapter=chatAdapter
 
-        SocketService.connectSocket()
-        SocketService.init()
+        FirebaseMessaging.getInstance().subscribeToTopic(room.roomId!!)
+            .addOnCompleteListener {
+                var msg = "${room.roomId} subscribe success"
+                if (!it.isSuccessful) msg = "${room.roomId} subscribe fail"
+            }
 
-        SocketService.emitJoin("test_room")
-        VolleyService.chatInitReq("test_room",this,{success ->
-            Log.d("test",success!!.toString())
+        SocketService.connectSocket()
+
+        SocketService.emitJoin(room.roomId)
+        VolleyService.chatInitReq(room.roomId,this,{success ->
             if(success!!.length()!=0) {
                 var array = success!!
                 for (i in 0..array.length() - 1) {
                     var json=array[i] as JSONObject
                     addChatItem(json)
                 }
+
+                list_chat.setSelection(list_chat.adapter.getCount() - 1);
             }
         })
 
         btn_send.setOnClickListener {
 
+            if(edit_chat.text.toString()=="") return@setOnClickListener
+
             val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
             val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
             var json=JSONObject()
-                .put("room_id","test_room")
-                .put("chat_speaker", "ksh")
-                .put("chat_speaker_nickname","ksh")
+                .put("room_id",room.roomId)
+                .put("chat_speaker", UserInfo.ID)
+                .put("chat_speaker_nickname",UserInfo.NICKNAME)
                 .put("chat_content", "${edit_chat.text}")
                 .put("chat_time", currentDate)
 
             addChatItem(json)
 
             SocketService.emitMsg(json)
+            //VolleyService.sendFCMReq(room.roomId,room.roomTitle,"${UserInfo.NICKNAME} : ${edit_chat.text}",this)
 
             edit_chat.setText("")
         }
+
 
         handler=object : Handler(){
             override fun handleMessage(msg: Message) {
                 when(msg!!.what) {
                     0 -> {
                         var json=msg.obj as JSONObject
-                        if(json.getString("chat_speaker")!="ksh")
+                        if(json.getString("chat_speaker")!=UserInfo.ID)
                             addChatItem(json)
                     }
                 }
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        //SocketService.disconnectSocket()
     }
 
     fun addChatItem(json : JSONObject){

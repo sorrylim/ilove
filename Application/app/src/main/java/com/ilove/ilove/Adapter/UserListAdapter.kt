@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.Partner
@@ -21,9 +22,12 @@ import com.like.LikeButton
 import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.item_partner.view.*
 import kotlinx.android.synthetic.main.item_partnerlist.view.*
+import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
@@ -37,15 +41,19 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-        val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        var gpsTracker = GpsTracker(context as Activity)
+        var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        var curDate = simpleDateFormat.format(System.currentTimeMillis())
+        var partnerDate : Date = simpleDateFormat.parse(userList.get(position).recentTime)
+        var age = curDate.substring(0, 4).toInt() - userList.get(position).userAge.substring(0, 4).toInt() + 1
+        var location : List<String> = userList.get(position).recentGps.split(",")
 
-        var age = currentDate.substring(0, 4).toInt() - userList.get(position).userAge.substring(0,4).toInt() + 1
+        var distance = gpsTracker.getDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1))
 
         Glide.with(holder.itemView)
             .load(userList.get(position).userImage)
             .into(holder.itemView.image_userlistprofile)
-        holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + ", " + age + ", " + userList.get(position).userCity + ", " + userList.get(position).recentGps
+        holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + ", " + age + ", " + distance + "," + gpsTracker.timeDiff(partnerDate.getTime())
         holder.itemView.text_userlistintroduce.text = userList.get(position).userIntroduce
         holder.itemView.image_userlistprofile.setClipToOutline(true)
 
@@ -65,13 +73,13 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
 
         holder.itemView.btn_userlike.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
-                VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "like", currentDate, context, {success->
+                VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "like", curDate, context, {success->
                     when(success) {
                         "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
                         "eachsuccess" -> {
                             likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_off, null))
                             var dialog = PSDialog(context as Activity)
-                            dialog.setEachExpressionLikeDialog(userList.get(position).userNickname, userList.get(position).userAge + ", " + userList.get(position).userCity, userList.get(position).userImage)
+                            dialog.setEachExpressionLikeDialog(userList.get(position).userId,userList.get(position).userNickname, userList.get(position).userAge + ", " + userList.get(position).userCity, userList.get(position).userImage)
                             dialog.show()
                         }
                         else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
@@ -92,7 +100,7 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
 
         holder.itemView.btn_call.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
-                VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "meet", currentDate, context, {success->
+                VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "meet", curDate, context, {success->
                     when(success) {
                         "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_icon, null))
                         "eachsuccess" -> {

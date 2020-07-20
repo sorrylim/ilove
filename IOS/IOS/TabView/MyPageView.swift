@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MyPageView : View{
     var body: some View{
-        NavigationView{
+        //NavigationView{
             ScrollView(){
                 HStack{
                     Spacer()
@@ -89,7 +89,7 @@ struct MyPageView : View{
             }
             .padding()
             .navigationBarTitle("내 페이지",displayMode: .inline)
-        }
+        //}
     }
 }
 

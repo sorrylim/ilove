@@ -6,6 +6,7 @@ import android.content.Intent
 import android.database.Cursor
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -13,10 +14,12 @@ import android.os.Message
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.Window
 import androidx.loader.content.CursorLoader
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.FileUploadUtils
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.PSDialog
@@ -78,6 +81,7 @@ class EditProfileActivity : PSAppCompatActivity() {
         }
 
         image_editsub1.setOnClickListener {
+            editImageId = null
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 else -> {
@@ -88,6 +92,7 @@ class EditProfileActivity : PSAppCompatActivity() {
         }
 
         image_editsub2.setOnClickListener {
+            editImageId = null
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 2 -> photoFromGallery()
@@ -99,6 +104,7 @@ class EditProfileActivity : PSAppCompatActivity() {
         }
 
         image_editsub3.setOnClickListener {
+            editImageId = null
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 2 -> photoFromGallery()
@@ -112,6 +118,16 @@ class EditProfileActivity : PSAppCompatActivity() {
 
         VolleyService.getUserOptionReq(UserInfo.ID, this, {success->
             var json = success
+
+            if(json.getString("user_introduce") != "null")
+            {
+                text_editintroduce.text = json.getString("user_introduce")
+            }
+
+            if(json.getString("user_previewintroduce") != "null")
+            {
+                text_editpreviewintroduce.text = json.getString("user_previewintroduce")
+            }
 
             if(json.getString("user_height") != "null")
             {
@@ -276,28 +292,63 @@ class EditProfileActivity : PSAppCompatActivity() {
 
             if(json.getString("user_interest") != "null")
             {
-                text_editinterest.text = json.getString("user_interest")
-                text_editinterest.setTextColor(Color.parseColor("#FFA500"))
-                text_editinterest.setTypeface(text_editinterest.getTypeface(), Typeface.BOLD)
+                if(json.getString("user_interest").length > 8) {
+                    text_editinterest.text = json.getString("user_interest").substring(0, 9) + "..."
+                    text_editinterest.setTextColor(Color.parseColor("#FFA500"))
+                    text_editinterest.setTypeface(text_editinterest.getTypeface(), Typeface.BOLD)
+                }
+                else {
+                    text_editinterest.text = json.getString("user_interest")
+                    text_editinterest.setTextColor(Color.parseColor("#FFA500"))
+                    text_editinterest.setTypeface(text_editinterest.getTypeface(), Typeface.BOLD)
+                }
+
             }
 
             if(json.getString("user_personality") != "null")
             {
-                text_editpersonality.text = json.getString("user_personality")
-                text_editpersonality.setTextColor(Color.parseColor("#FFA500"))
-                text_editpersonality.setTypeface(text_editpersonality.getTypeface(), Typeface.BOLD)
+                if(json.getString("user_personality").length > 8) {
+                    text_editpersonality.text = json.getString("user_personality").substring(0, 9) + "..."
+                    text_editpersonality.setTextColor(Color.parseColor("#FFA500"))
+                    text_editpersonality.setTypeface(text_editpersonality.getTypeface(), Typeface.BOLD)
+                }
+                else {
+                    text_editpersonality.text = json.getString("user_personality")
+                    text_editpersonality.setTextColor(Color.parseColor("#FFA500"))
+                    text_editpersonality.setTypeface(text_editpersonality.getTypeface(), Typeface.BOLD)
+                }
+
             }
 
             if(json.getString("user_favoriteperson") != "null")
             {
-                text_editfavoriteperson.text = json.getString("user_favoriteperson")
-                text_editfavoriteperson.setTextColor(Color.parseColor("#FFA500"))
-                text_editfavoriteperson.setTypeface(text_editfavoriteperson.getTypeface(), Typeface.BOLD)
+                if(json.getString("user_favoriteperson").length > 8)
+                {
+                    text_editfavoriteperson.text = json.getString("user_favoriteperson").substring(0, 9) + "..."
+                    text_editfavoriteperson.setTextColor(Color.parseColor("#FFA500"))
+                    text_editfavoriteperson.setTypeface(text_editfavoriteperson.getTypeface(), Typeface.BOLD)
+                }
+                else {
+                    text_editfavoriteperson.text = json.getString("user_favoriteperson")
+                    text_editfavoriteperson.setTextColor(Color.parseColor("#FFA500"))
+                    text_editfavoriteperson.setTypeface(text_editfavoriteperson.getTypeface(), Typeface.BOLD)
+                }
+
             }
 
         })
 
         var psDialog = PSDialog(this)
+
+        layout_editpreviewintroduce.setOnClickListener {
+            psDialog.setPreviewIntroduce(text_editpreviewintroduce)
+            psDialog.show()
+        }
+
+        layout_editintroduce.setOnClickListener {
+            psDialog.setIntroduce(text_editintroduce)
+            psDialog.show()
+        }
 
 
         layout_editheight.setOnClickListener {
@@ -505,7 +556,7 @@ class EditProfileActivity : PSAppCompatActivity() {
         for(i in 0..array.length()-1) {
             var json = array[i] as JSONObject
             Glide.with(this)
-                .load(json.getString("image"))
+                .load(json.getString("image")).apply(RequestOptions().override(640, 640))
                 .into(profileImageList.get(i))
             profileImageIdList.add(json.getInt("image_id"))
         }
@@ -677,8 +728,10 @@ class EditProfileActivity : PSAppCompatActivity() {
 
     fun dialogPhotoType() {
         var dialog = Dialog(this)
-
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setContentView(R.layout.dialog_phototype)
+
         var editPhotoBtn : TextView = dialog.findViewById(R.id.text_editphoto)
         var deletePhotoBtn : TextView = dialog.findViewById(R.id.text_deletephoto)
 

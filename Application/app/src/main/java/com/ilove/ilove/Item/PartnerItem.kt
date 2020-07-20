@@ -10,6 +10,7 @@ data class Partner(
     val dateHistory: String,
     val userPhone: String,
     val userImage: String,
+    val recentTime: String,
     val like: Int,
     val meet: Int
 )
@@ -31,6 +32,7 @@ data class UserList(
     val userAge: String,
     val userCity: String,
     val recentGps: String,
+    val recentTime: String,
     val userIntroduce: String,
     val userPhone: String,
     val userImage: String,

@@ -9,33 +9,50 @@
     import SwiftUI
     
     struct ContentView: View {
+        
+        static var rootView : ContentView? = nil
+        
+        @State var title = "아이러브"
+        
         var body: some View {
-            TabView{
-                ChannelView().tabItem({
-                    Text("채널")
-                })
-                    .tag(0)
-                UserListView().tabItem({
-                    Image(systemName: "list.dash")
-                    Text("리스트")
-                })
-                    .tag(1)
-                StoryListView().tabItem({
-                    Image("baseline_detail_category_grey_24")
-                    Text("스토리")
-                })
-                    .tag(2)
-                ChatListView().tabItem({
-                    Image("message_icon")
-                    Text("대화방")
-                })
-                    .tag(3)
-                MyPageView().tabItem({
-                    Image("mypage_icon")
-                    Text("내 페이지")
-                })
-                    .tag(4)
+            NavigationView{
+                TabView{
+                    ChannelView().tabItem({
+                        Text("채널")
+                    })
+                        .tag(0)
+                    UserListView().tabItem({
+                        Image(systemName: "list.dash")
+                        Text("리스트")
+                    })
+                        .tag(1)
+                    StoryListView().tabItem({
+                        Image("baseline_detail_category_grey_24")
+                        Text("스토리")
+                    })
+                        .tag(2)
+                    ChatListView().tabItem({
+                        Image("message_icon")
+                        Text("대화방")
+                    })
+                        .tag(3)
+                    MyPageView().tabItem({
+                        Image("mypage_icon")
+                        Text("내 페이지")
+                    })
+                        .tag(4)
+                }
+                .navigationBarTitle("\(self.title)",displayMode: .inline)
             }
+            .onAppear(){
+                ContentView.rootView=self
+                
+                
+            }
+        }
+        
+        func setTitle(title: String){
+            self.title=title
         }
     }
     

@@ -485,5 +485,35 @@ public class HttpService:ObservableObject{
         }.resume()
     }
     //------------------------------Story------------------------------//
+    
+    //------------------------------Chat------------------------------//
+    func createRoomReq(userId: String, userNickname: String, callback:@escaping (ChatRoomModel) -> Void){
+        guard let url = URL(string: "\(ip)/image/insert/expression") else{
+            return
+        }
+        
+        let data=[
+            "room_maker" : "ksh",
+            "room_partner" : userId,
+            "room_partner_title" : "ksh&\(userNickname)}"
+        ]
+        
+        let body = try! JSONSerialization.data(withJSONObject: data)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            guard let data = data else{
+                return
+            }
+            
+            let decoded = try! JSONDecoder().decode(ChatRoomModel.self, from: data)
+            callback(decoded)
+        }.resume()
+    }
+    //------------------------------Chat------------------------------//
 }
 

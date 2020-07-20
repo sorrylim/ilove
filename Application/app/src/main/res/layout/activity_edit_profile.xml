@@ -102,7 +102,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/image_editsub1" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_editpreviewintroduce"
+                android:id="@+id/layout_editintroduce"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -112,14 +112,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView32">
 
                 <TextView
-                    android:id="@+id/text_editpreviewintroduce"
+                    android:id="@+id/text_editintroduce"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="10dp"
-                    android:text="한줄 소개를 입력해주세요."
+                    android:text="자기 소개를 입력해주세요."
                     android:textColor="@color/colorMdGrey_700"
                     android:textSize="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -149,10 +149,10 @@
                 android:textStyle="bold"
                 android:textColor="@color/colorMdGrey_900"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_previewintroduce" />
+                app:layout_constraintTop_toBottomOf="@+id/layout_editpreviewintroduce" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_previewintroduce"
+                android:id="@+id/layout_editpreviewintroduce"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -162,14 +162,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView31">
 
                 <TextView
-                    android:id="@+id/text_editintroduce"
+                    android:id="@+id/text_editpreviewintroduce"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="10dp"
-                    android:text="자기 소개를 입력해주세요."
+                    android:text="한줄 소개를 입력해주세요."
                     android:textColor="@color/colorMdGrey_700"
                     android:textSize="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -195,7 +195,7 @@
                 android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_editpreviewintroduce">
+                app:layout_constraintTop_toBottomOf="@+id/layout_editintroduce">
 
                 <TextView
                     android:id="@+id/textView40"

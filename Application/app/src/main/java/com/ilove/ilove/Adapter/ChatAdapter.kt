@@ -1,7 +1,6 @@
 package com.ilove.ilove.Adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +9,6 @@ import android.widget.TextView
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ChatItem
 import com.ilove.ilove.R
-import java.text.DateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -44,7 +37,7 @@ class ChatAdapter : BaseAdapter() {
 
         val time = item.chatTime!!.split(" ")[1].split(":")
         val hour=time[0].toInt()
-        val min=time[1].toInt()
+        val min=time[1]
         var timeStr=""
         if(hour<12)
             timeStr="오전 ${hour}:${min}"
@@ -76,7 +69,7 @@ class ChatAdapter : BaseAdapter() {
     fun addItem(
         chatItem: ChatItem
     ) {
-        if (chatItem.chatSpeaker == "ksh")
+        if (chatItem.chatSpeaker == UserInfo.ID)
             chatItem.isMyChat = true
         else
             chatItem.isMyChat = false

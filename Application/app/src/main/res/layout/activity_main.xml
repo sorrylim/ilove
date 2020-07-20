@@ -6,23 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity.MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@color/colorMdWhite_1000"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" >
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
 
         <TextView
+            android:id="@+id/text_maintoolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/text_maintoolbar"
-            android:textSize="20dp"
             android:textColor="@color/colorMdGrey_900"
-            />
-    </androidx.appcompat.widget.Toolbar>
+            android:textSize="20dp"
+            android:text="아이러브"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_candy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:background="@color/colorMdWhite_1000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_candy" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/frame_main"
@@ -45,4 +58,6 @@
         app:menu="@menu/menu_bnv_main">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

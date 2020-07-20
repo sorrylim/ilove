@@ -11,7 +11,7 @@ import class Kingfisher.KingfisherManager
 
 struct StoryListView : View {
     
-    @State var writeVisiable=false
+    @State var writeVisible=false
     
     @State var rows:Int=0
     @State var total:Int=0
@@ -20,7 +20,7 @@ struct StoryListView : View {
     @State var myStoryImage:UIImage=UIImage()
     
     var body: some View{
-        NavigationView{
+        //NavigationView{
             VStack{
                 HStack{
                     Image(uiImage: self.myStoryImage)
@@ -31,7 +31,7 @@ struct StoryListView : View {
                     VStack{
                         Spacer()
                         Button(action: {
-                            self.writeVisiable=true
+                            self.writeVisible=true
                         }) {
                             Text("스토리 작성하기")
                                 .font(.system(size: 15,weight: .bold))
@@ -79,9 +79,9 @@ struct StoryListView : View {
                 Spacer()
             }
             .navigationBarTitle("스토리",displayMode: .inline)
-        }
-        .sheet(isPresented: $writeVisiable){
-            WriteStoryView(showing: self.$writeVisiable)
+        //}
+        .sheet(isPresented: $writeVisible){
+            WriteStoryView(showing: self.$writeVisible)
         }
         .onAppear(){
             HttpService.shared.getStoryImageReq(userId: "ksh"){ (storyModelArray) -> Void in

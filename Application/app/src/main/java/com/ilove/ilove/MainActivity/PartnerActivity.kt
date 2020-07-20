@@ -1,7 +1,18 @@
 package com.ilove.ilove.MainActivity
 
+import android.app.Activity
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.util.Log
+import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.ilove.ilove.Adapter.PartnerProfileAdapter
 import com.ilove.ilove.Class.PSAppCompatActivity
@@ -13,10 +24,61 @@ import org.json.JSONObject
 class PartnerActivity : PSAppCompatActivity() {
 
     var profileImageList = ArrayList<String>()
+    var currentLayout: LinearLayout? = null
+    var widthData : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_partner)
+
+        var hobbyLayout : LinearLayout = findViewById(R.id.layout_hobby)
+
+        var linear : LinearLayout = LinearLayout(this)
+        linear.setOrientation(LinearLayout.HORIZONTAL)
+        var params : LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        linear.setLayoutParams(params)
+
+        hobbyLayout.addView(linear)
+
+
+        for(i in 0..6) {
+            var displayMetrics: DisplayMetrics = DisplayMetrics()
+            this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics)
+            var dm = getResources().getDisplayMetrics()
+            var view : TextView = TextView(this)
+            var width = Math.round(10 * dm.density)
+            var padding = Math.round(15 * dm.density)
+            var size = Math.round(20 * dm.density)
+
+
+            var test = view.getPaint().measureText("도도")
+            widthData += (width + padding + test.toInt())
+            Log.d("test", "$widthData")
+            if(displayMetrics.widthPixels < widthData)
+            {
+                hobbyLayout.addView(linear)
+                widthData = 0
+            }
+
+            var layoutParams : LinearLayout.LayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            layoutParams.rightMargin = width
+            view.setLayoutParams(layoutParams)
+
+
+            view.setPadding(padding, 10 , padding, 10)
+            view.setBackgroundResource(R.drawable.more_rounded_corner_shape_button)
+            view.setTextColor(Color.BLACK)
+            view.setText("도도")
+            view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20f)
+
+            linear.addView(view)
+
+            //Toast.makeText(this, (test).toString(), Toast.LENGTH_SHORT).show()
+        }
+
+
+
 
         var intent = intent
         var userNickname = intent.getStringExtra("userNickname")
@@ -27,12 +89,10 @@ class PartnerActivity : PSAppCompatActivity() {
         text_partnernickname.text = userNickname
         text_partnerage.text = userCity + ", " + userAge
 
-        viewpager_partnerprofile.setClipToOutline(true)
 
+        //toolbarCenterBinding(toolbar_partner, userNickname!!, true)
 
-        toolbarCenterBinding(toolbar_partner, userNickname, true)
-
-        VolleyService.getProfileImageReq(userId, this, {success->
+        VolleyService.getProfileImageReq(userId!!, this, {success->
             profileImageList.clear()
             var array = success
             for(i in 0..array.length()-1) {
@@ -67,11 +127,20 @@ class PartnerActivity : PSAppCompatActivity() {
             VolleyService.getUserOptionReq(userId, this, { success->
                 var json = success
 
+                if(json.getString("user_introduce") != "null")
+                {
+                    text_partnerintroduce.text = json.getString("user_introduce")
+                    text_partnerintroduce.visibility = View.VISIBLE
+                    view29.visibility = View.VISIBLE
+                }
+
                 if(json.getString("user_height") != "null")
                 {
                     text_partnerheight.text = json.getString("user_height")
                     text_partnerheight.visibility = View.VISIBLE
                     text_partnerheight1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_bodytype") != "null")
@@ -79,6 +148,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerbodytype.text = json.getString("user_bodytype")
                     text_partnerbodytype.visibility = View.VISIBLE
                     text_partnerbodytype1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_bloodtype") != "null")
@@ -86,6 +157,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerbloodtype.text = json.getString("user_bloodtype")
                     text_partnerbloodtype.visibility = View.VISIBLE
                     text_partnerbloodtype1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_job") != "null")
@@ -93,6 +166,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerjob.text = json.getString("user_job")
                     text_partnerjob.visibility = View.VISIBLE
                     text_partnerjob1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_education") != "null")
@@ -100,6 +175,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnereducation.text = json.getString("user_education")
                     text_partnereducation.visibility = View.VISIBLE
                     text_partnereducation1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_holiday") != "null")
@@ -107,6 +184,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerholiday.text = json.getString("user_holiday")
                     text_partnerholiday.visibility = View.VISIBLE
                     text_partnerholiday1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_cigarette") != "null")
@@ -114,6 +193,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnercigarette.text = json.getString("user_cigarette")
                     text_partnercigarette.visibility = View.VISIBLE
                     text_partnercigarette1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_alcohol") != "null")
@@ -121,6 +202,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partneralcohol.text = json.getString("user_alcohol")
                     text_partneralcohol.visibility = View.VISIBLE
                     text_partneralcohol1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_religion") != "null")
@@ -128,6 +211,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerreligion.text = json.getString("user_religion")
                     text_partnerreligion.visibility = View.VISIBLE
                     text_partnerreligion1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_brother") != "null")
@@ -135,6 +220,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerbrother.text = json.getString("user_brother")
                     text_partnerbrother.visibility = View.VISIBLE
                     text_partnerbrother1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_country") != "null")
@@ -142,6 +229,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnercountry.text = json.getString("user_country")
                     text_partnercountry.visibility = View.VISIBLE
                     text_partnercountry1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_salary") != "null")
@@ -149,6 +238,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnersalary.text = json.getString("user_salary")
                     text_partnersalary.visibility = View.VISIBLE
                     text_partnersalary1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_asset") != "null")
@@ -156,6 +247,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerasset.text = json.getString("user_asset")
                     text_partnerasset.visibility = View.VISIBLE
                     text_partnerasset1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_marriagehistory") != "null")
@@ -163,6 +256,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnermarriagehistory.text = json.getString("user_marriagehistory")
                     text_partnermarriagehistory.visibility = View.VISIBLE
                     text_partnermarriagehistory1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_children") != "null")
@@ -170,6 +265,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerchildren.text = json.getString("user_children")
                     text_partnerchildren.visibility = View.VISIBLE
                     text_partnerchildren1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_marriageplan") != "null")
@@ -177,6 +274,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnermarriageplan.text = json.getString("user_marriageplan")
                     text_partnermarriageplan.visibility = View.VISIBLE
                     text_partnermarriageplan1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_childrenplan") != "null")
@@ -184,6 +283,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerchildrenplan.text = json.getString("user_childrenplan")
                     text_partnerchildrenplan.visibility = View.VISIBLE
                     text_partnerchildrenplan1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_parenting") != "null")
@@ -191,6 +292,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerparenting.text = json.getString("user_parenting")
                     text_partnerparenting.visibility = View.VISIBLE
                     text_partnerparenting1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_wishdate") != "null")
@@ -198,6 +301,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerwishdate.text = json.getString("user_wishdate")
                     text_partnerwishdate.visibility = View.VISIBLE
                     text_partnerwishdate1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_datecost") != "null")
@@ -205,6 +310,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerdatecost.text = json.getString("user_datecost")
                     text_partnerdatecost.visibility = View.VISIBLE
                     text_partnerdatecost1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_roommate") != "null")
@@ -212,6 +319,8 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerroommate.text = json.getString("user_roommate")
                     text_partnerroommate.visibility = View.VISIBLE
                     text_partnerroommate1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
                 if(json.getString("user_language") != "null")
@@ -219,9 +328,18 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerlanguage.text = json.getString("user_language")
                     text_partnerlanguage.visibility = View.VISIBLE
                     text_partnerlanguage1.visibility = View.VISIBLE
+                    textView30.visibility = View.VISIBLE
+                    view30.visibility = View.VISIBLE
                 }
 
             })
         })
+    }
+
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+
+
     }
 }

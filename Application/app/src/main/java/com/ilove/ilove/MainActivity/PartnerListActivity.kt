@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ilove.ilove.Adapter.PartnerListAdapter
@@ -24,9 +25,9 @@ class PartnerListActivity : PSAppCompatActivity() {
         setContentView(R.layout.activity_partner_list)
 
         var intent = intent
-        var listType:String = intent.getStringExtra("listType")
+        var listType = intent.getStringExtra("listType")
 
-        toolbarBinding(toolbar_partnerlist, listType, true)
+        toolbarBinding(toolbar_partnerlist, listType!!, true)
 
         when(listType) {
             "내가 좋아요를 보낸 이성" -> sendUserList("like")
@@ -42,6 +43,17 @@ class PartnerListActivity : PSAppCompatActivity() {
     }
 
     fun sendUserList(expressionType: String) {
+        when(expressionType) {
+            "like" -> {
+                var history = getText(R.string.likehistory)
+                text_history.setText(history)
+            }
+            "meet" -> {
+                var history = getText(R.string.meethistory)
+                text_history.setText(history)
+            }
+        }
+
         VolleyService.getSendUserReq(UserInfo.ID, expressionType, this, {success->
             partnerList.clear()
             var array = success
@@ -49,7 +61,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                 var json = array[i] as JSONObject
                 var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
                     json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"),json.getString("image"),
-                    json.getInt("like"), json.getInt("meet"))
+                    json.getString("user_recenttime"),json.getInt("like"), json.getInt("meet"))
                 partnerList.add(partner)
             }
             rv_partnerlist.setHasFixedSize(true)
@@ -59,6 +71,17 @@ class PartnerListActivity : PSAppCompatActivity() {
     }
 
     fun receiveUserList(expressionType: String) {
+        when(expressionType) {
+            "like" -> {
+                var history = getText(R.string.likehistory)
+                text_history.setText(history)
+            }
+            "meet" -> {
+                var history = getText(R.string.meethistory)
+                text_history.setText(history)
+            }
+        }
+
         VolleyService.getReceiveUserReq(UserInfo.ID, expressionType, this, {success->
             partnerList.clear()
             var array = success
@@ -66,7 +89,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                 var json = array[i] as JSONObject
                 var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
                     json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"), json.getString("image"),
-                    json.getInt("like"), json.getInt("meet"))
+                    json.getString("user_recenttime"),json.getInt("like"), json.getInt("meet"))
                 partnerList.add(partner)
             }
             rv_partnerlist.setHasFixedSize(true)
@@ -76,6 +99,17 @@ class PartnerListActivity : PSAppCompatActivity() {
     }
 
     fun eachUserList(expressionType: String) {
+        when(expressionType) {
+            "like" -> {
+                var history = getText(R.string.likehistory)
+                text_history.setText(history)
+            }
+            "meet" -> {
+                var history = getText(R.string.meethistory)
+                text_history.setText(history)
+            }
+        }
+
         VolleyService.getEach1UserReq(UserInfo.ID, expressionType, this, {success->
             partnerList.clear()
             var array = success
@@ -83,7 +117,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                 var json = array[i] as JSONObject
                 var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
                     json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"), json.getString("image"),
-                    json.getInt("like"), json.getInt("meet"))
+                    json.getString("user_recenttime"), json.getInt("like"), json.getInt("meet"))
                 partnerList.add(partner)
             }
             VolleyService.getEach2UserReq(UserInfo.ID, expressionType, this, {success->
@@ -92,7 +126,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                     var json = array[i] as JSONObject
                     var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
                         json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"), json.getString("image"),
-                        json.getInt("like"), json.getInt("meet"))
+                        json.getString("user_recenttime"), json.getInt("like"), json.getInt("meet"))
                     partnerList.add(partner)
                 }
                 rv_partnerlist.setHasFixedSize(true)
@@ -103,6 +137,8 @@ class PartnerListActivity : PSAppCompatActivity() {
     }
 
     fun visitUserList(visitType:String) {
+        var history = getText(R.string.viewhistory)
+        text_history.setText(history)
         VolleyService.getVisitUserReq(UserInfo.ID, visitType, this, {success->
             partnerList.clear()
             var array = success
@@ -110,7 +146,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                 var json = array[i] as JSONObject
                 var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
                     json.getString("user_birthday"), json.getString("user_city"), json.getString("visit_date"), json.getString("user_phone"), json.getString("image"),
-                    json.getInt("like"), json.getInt("meet"))
+                    json.getString("user_recenttime"),json.getInt("like"), json.getInt("meet"))
                 partnerList.add(partner)
             }
             rv_partnerlist.setHasFixedSize(true)
