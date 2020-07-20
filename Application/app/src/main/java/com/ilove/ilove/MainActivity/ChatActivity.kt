@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.util.Log
 import com.google.firebase.database.*
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Adapter.ChatAdapter
 import com.ilove.ilove.Class.UserInfo
+import com.ilove.ilove.Fragment.MessageFragment
 import com.ilove.ilove.Item.ChatItem
 import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Object.VolleyService
@@ -31,6 +31,8 @@ class ChatActivity : AppCompatActivity() {
     var ref : DatabaseReference? = null
     var query : Query? = null
 
+    var init=0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
@@ -38,6 +40,19 @@ class ChatActivity : AppCompatActivity() {
         var intent=intent
         room=intent.getSerializableExtra("room") as ChatRoomItem
         list_chat.adapter=chatAdapter
+
+        VolleyService.chatInitReq(room!!.roomId,this,{success ->
+            if(success!!.length()!=0) {
+                var array = success!!
+                for (i in 0..array.length() - 1) {
+                    var json=array[i] as JSONObject
+                    addChatItem(json)
+                }
+
+                list_chat.setSelection(list_chat.adapter.getCount() - 1);
+                init=1
+            }
+        })
 
         FirebaseMessaging.getInstance().subscribeToTopic(room!!.roomId!!)
             .addOnCompleteListener {
@@ -68,17 +83,18 @@ class ChatActivity : AppCompatActivity() {
             }
         })
 
+        /*
         VolleyService.chatInitReq(room!!.roomId,this,{success ->
             if(success!!.length()!=0) {
                 var array = success!!
                 for (i in 0..array.length() - 1) {
                     var json=array[i] as JSONObject
-                    addChatItem(json)
+                    //addChatItem(json)
                 }
 
                 list_chat.setSelection(list_chat.adapter.getCount() - 1);
             }
-        })
+        })*/
 
         btn_send.setOnClickListener {
 
@@ -87,7 +103,11 @@ class ChatActivity : AppCompatActivity() {
             val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
             val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
-            VolleyService.insertChatReq(room!!.roomId,UserInfo.ID,UserInfo.NICKNAME,edit_chat.text.toString(),currentDate,this, {success ->
+            var chatPartner=""
+            if(UserInfo.ID==room!!.maker) chatPartner=room!!.partner
+            else chatPartner=room!!.maker
+
+            VolleyService.insertChatReq(room!!.roomId,UserInfo.ID,UserInfo.NICKNAME,chatPartner,edit_chat.text.toString(),currentDate,this, {success ->
                 firebaseWrite(room!!.roomId,UserInfo.ID,UserInfo.NICKNAME,edit_chat.text.toString(),currentDate)
                 edit_chat.setText("")
                 list_chat.setSelection(chatAdapter.count - 1)
@@ -140,6 +160,12 @@ class ChatActivity : AppCompatActivity() {
     }
 
     fun chatConversation(snapshot: DataSnapshot) {
+        var msseageFragmentHandler = MessageFragment.handler
+        var msg=msseageFragmentHandler!!.obtainMessage()
+        msg.what=0
+        msseageFragmentHandler.sendMessage(msg)
+
+        if(init==0) return
         var i = snapshot.children.iterator()
         while (i.hasNext()) {
 

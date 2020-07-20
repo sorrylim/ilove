@@ -53,6 +53,7 @@ class StoryAdapter(val context: Context, val storyList:ArrayList<ImageItem.Story
             intent.putExtra("image", storyList.get(position).image)
 
             VolleyService.insertHistoryReq(UserInfo.ID, storyList.get(position).userId, "story", currentDate, context, { success ->
+                VolleyService.sendFCMReq(storyList.get(position).userId, "visitstory", context)
                 if(success == "success") {
                     context.startActivity(intent)
                 }

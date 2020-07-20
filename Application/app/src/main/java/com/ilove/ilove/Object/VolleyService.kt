@@ -526,19 +526,44 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
-    fun sendFCMReq(roomId: String, title: String, content: String, context: Context) {
+    fun sendFCMReq(userId: String, type: String, context:Context) {
 
-        var url = "${ip}/chat/fcm/send"
+        var url = "${ip}/chat/send/fcm"
 
         var json = JSONObject()
-        json.put("topic", roomId)
-        json.put("content", content)
+        json.put("user_id", userId)
+
+        var title=""
+        var content=""
+        if(type=="like") {
+            title = "${UserInfo.NICKNAME}님이 좋아요를 눌렀어요!"
+            content = "상대의 프로필을 확인해보세요"
+        }
+        else if(type=="meet") {
+            title = "${UserInfo.NICKNAME}님이 연락해요를 눌렀어요!"
+            content = "상대의 프로필을 확인해보세요"
+        }
+        else if(type=="visitprofile"){
+            title = "${UserInfo.NICKNAME}님이 프로필을 방문했어요!"
+            content = "상대의 프로필을 방문해보세요"
+        }
+        else if(type=="visitstory"){
+            title = "${UserInfo.NICKNAME}님이 스토리를 방문했어요!"
+            content = "상대의 스토리를 방문해보세요"
+        }
+        else if(type=="likestory"){
+            title = "${UserInfo.NICKNAME}님이 스토리를 좋아해요!"
+            content = "상대의 스토리를 방문해보세요"
+        }
         json.put("title",title)
+        json.put("content", content)
+        json.put("type", type)
 
         var request = object : JsonObjectRequest(Method.POST,
             url,
             json,
             Response.Listener {
+                Log.d("test",it.toString())
             },
             Response.ErrorListener {
             }) {
@@ -548,7 +573,7 @@ object VolleyService {
     }
 
     fun getMyChatRoom(userId: String, context: Context, success: (JSONArray) -> Unit) {
-        var url="${ip}/room/get/my/room"
+        var url="${ip}/chat/get/my/room"
 
         var json = JSONObject()
             .put("user_id",userId)
@@ -594,7 +619,7 @@ object VolleyService {
     }
 
     fun createRoomReq(userId: String, userNickname: String, context: Context, success: (JSONObject) -> Unit) {
-        var url="${ip}/room/create/room"
+        var url="${ip}/chat/create/room"
 
         var json=JSONObject()
             .put("room_maker", UserInfo.ID)
@@ -663,6 +688,7 @@ object VolleyService {
         roomId: String,
         userId: String,
         userNickname: String,
+        chatPartner: String,
         chatContent: String,
         currentDate: String?,
         context:Context,
@@ -677,6 +703,7 @@ object VolleyService {
             .put("chat_speaker_nickname",userNickname)
             .put("chat_content",chatContent)
             .put("chat_time",currentDate)
+            .put("chat_partner",chatPartner)
 
         val request=object : JsonObjectRequest(
             Method.POST,
@@ -691,5 +718,37 @@ object VolleyService {
         ){}
 
         Volley.newRequestQueue(context).add(request)
+    }
+
+    fun checkChatRoom(userId: String, partnerId: String, context: Context, success: (JSONObject?) -> Unit) {
+        val url = "${ip}/chat/check/room"
+
+        var json=JSONObject()
+            .put("user_id",userId)
+            .put("partner_id",partnerId)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+                if(it is com.android.volley.ParseError)
+                    success(null)
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun updateAlarm(
+        userId: String,
+        alarmType: String,
+        alarmState: Boolean,
+        success: (String) -> Unit
+    ) {
+
     }
 }
