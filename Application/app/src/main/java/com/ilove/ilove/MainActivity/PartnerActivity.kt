@@ -1,18 +1,14 @@
 package com.ilove.ilove.MainActivity
 
-import android.app.Activity
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.ilove.ilove.Adapter.PartnerProfileAdapter
 import com.ilove.ilove.Class.PSAppCompatActivity

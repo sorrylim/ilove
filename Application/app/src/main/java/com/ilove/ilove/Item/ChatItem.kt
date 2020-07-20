@@ -7,5 +7,5 @@ data class ChatItem (
     var chatContent : String?,
     var chatTime : String?,
     var isMyChat:Boolean?,
-    var unreadCount : Int?
+    var unreadCount : String?
 )

@@ -34,12 +34,12 @@ object SocketService {
     val onMsg: Emitter.Listener= Emitter.Listener {
         Log.d("test","onMsg")
 
-        var handler=ChatActivity.handler
+        /*var handler=ChatActivity.handler
         var msg=handler!!.obtainMessage()
 
         msg.what=0
         msg.obj=it[0]
-        handler.sendMessage(msg)
+        handler.sendMessage(msg)*/
     }
 
     fun emitMsg(json: JSONObject){

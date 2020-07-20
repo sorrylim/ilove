@@ -77,6 +77,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
                             json.getString("room_partner"),
                             roomTitle,
                             "",
+                            "",
                             ""
                         )
 
@@ -92,6 +93,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
                                 json.getString("room_maker"),
                                 json.getString("room_partner"),
                                 json.getString("room_title"),
+                                "",
                                 "",
                                 ""
                             )

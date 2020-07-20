@@ -2,6 +2,7 @@ package com.ilove.ilove.IntroActivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Switch
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.UserInfo
@@ -27,19 +28,19 @@ class AlarmSettingActivity : PSAppCompatActivity() {
         }
 
         switch_alarmcheckprofile.setOnCheckedChangeListener { compoundButton, b ->
-            updateAlarm(UserInfo.ID, "visit",b)
+            updateAlarm("visit",b)
         }
 
         switch_alarmlike.setOnCheckedChangeListener { compoundButton, b ->
-            updateAlarm(UserInfo.ID, "like",b)
+            updateAlarm("like",b)
         }
 
         switch_alarmmessage.setOnCheckedChangeListener { compoundButton, b ->
-            updateAlarm(UserInfo.ID,"chat",b)
+            updateAlarm("chat",b)
         }
 
         switch_alarmmeet.setOnCheckedChangeListener { compoundButton, b ->
-            updateAlarm(UserInfo.ID,"meet",b)
+            updateAlarm("meet",b)
         }
     }
 
@@ -49,9 +50,7 @@ class AlarmSettingActivity : PSAppCompatActivity() {
     }
 
 
-    fun updateAlarm(userId:String,alarmType:String,alarmState:Boolean){
-        VolleyService.updateAlarm(UserInfo.ID,"chat",alarmState,{success->
-
-        })
+    fun updateAlarm(alarmType:String,alarmState:Boolean){
+        VolleyService.updateAlarm(UserInfo.ID,alarmType,alarmState,this)
     }
 }

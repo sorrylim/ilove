@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.util.Log
 import com.google.firebase.database.*
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Adapter.ChatAdapter
@@ -21,17 +22,11 @@ import java.time.format.DateTimeFormatter
 
 class ChatActivity : AppCompatActivity() {
 
-    companion object{
-        var handler:Handler? = null
-    }
-
     var chatAdapter=ChatAdapter()
     var room : ChatRoomItem? = null
 
     var ref : DatabaseReference? = null
     var query : Query? = null
-
-    var init=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,19 +36,6 @@ class ChatActivity : AppCompatActivity() {
         room=intent.getSerializableExtra("room") as ChatRoomItem
         list_chat.adapter=chatAdapter
 
-        VolleyService.chatInitReq(room!!.roomId,this,{success ->
-            if(success!!.length()!=0) {
-                var array = success!!
-                for (i in 0..array.length() - 1) {
-                    var json=array[i] as JSONObject
-                    addChatItem(json)
-                }
-
-                list_chat.setSelection(list_chat.adapter.getCount() - 1);
-                init=1
-            }
-        })
-
         FirebaseMessaging.getInstance().subscribeToTopic(room!!.roomId!!)
             .addOnCompleteListener {
                 var msg = "${room!!.roomId} subscribe success"
@@ -61,7 +43,7 @@ class ChatActivity : AppCompatActivity() {
             }
 
         ref = FirebaseDatabase.getInstance().reference.child("chat").child(room!!.roomId)
-        query = ref!!.orderByChild("chat_time")
+        query = ref!!.orderByKey()
         query!!.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
@@ -72,10 +54,10 @@ class ChatActivity : AppCompatActivity() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                chatConversation(snapshot)
+                chatConversation(snapshot,"change")
             }
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                chatConversation(snapshot)
+                chatConversation(snapshot,"add")
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
@@ -95,45 +77,23 @@ class ChatActivity : AppCompatActivity() {
             else chatPartner=room!!.maker
 
             VolleyService.insertChatReq(room!!.roomId,UserInfo.ID,UserInfo.NICKNAME,chatPartner,edit_chat.text.toString(),currentDate,this, {success ->
-                firebaseWrite(room!!.roomId,UserInfo.ID,UserInfo.NICKNAME,edit_chat.text.toString(),currentDate)
+                writeFirebase(room!!.roomId,UserInfo.ID,UserInfo.NICKNAME,edit_chat.text.toString(),currentDate)
                 edit_chat.setText("")
                 list_chat.setSelection(chatAdapter.count - 1)
             })
         }
-
-        handler=object : Handler(){
-            override fun handleMessage(msg: Message) {
-                when(msg!!.what) {
-                    0 -> {
-                        var json=msg.obj as JSONObject
-                        addChatItem(json)
-                    }
-                }
-            }
-        }
     }
 
-    fun addChatItem(json : JSONObject){
-        chatAdapter.addItem(
-            ChatItem(
-                json.getString("room_id"),
-                json.getString("chat_speaker"),
-                json.getString("chat_speaker_nickname"),
-                json.getString("chat_content"),
-                json.getString("chat_time"),
-                null,
-                json.getInt("unread_count")
-            )
-        )
-        chatAdapter.notifyDataSetChanged()
+    private fun readFirebase(roomId: String, chatTime: String?) {
+
     }
 
-    fun firebaseWrite(roomId: String, chatSpeaker: String, chatSpeakerNickname: String, chatContent: String, chatTime: String){
+    fun writeFirebase(roomId: String, chatSpeaker: String, chatSpeakerNickname: String, chatContent: String, chatTime: String){
+
+        Log.d("test","WRITE")
 
         var map = HashMap<String, Any>()
         val key: String? = ref!!.push().key
-
-        ref!!.updateChildren(map)
 
         var root = ref!!.child(key!!)
         var objectMap = HashMap<String, Any>()
@@ -148,25 +108,72 @@ class ChatActivity : AppCompatActivity() {
         root.updateChildren(objectMap)
     }
 
-    fun chatConversation(snapshot: DataSnapshot) {
-        var msseageFragmentHandler = MessageFragment.handler
-        var msg=msseageFragmentHandler!!.obtainMessage()
-        msg.what=0
-        msseageFragmentHandler.sendMessage(msg)
+    fun chatConversation(snapshot: DataSnapshot,updateType : String) {
 
-        if(init==0) return
-        var i = snapshot.children.iterator()
-        while (i.hasNext()) {
+        if(updateType=="add") {
+            var msseageFragmentHandler = MessageFragment.handler
+            var msg = msseageFragmentHandler!!.obtainMessage()
+            msg.what = 0
+            msseageFragmentHandler.sendMessage(msg)
 
-            var chatContent = ((i.next() as DataSnapshot).getValue()) as String
-            var chatSpeaker = ((i.next() as DataSnapshot).getValue()) as String
-            var chatSpeakerNickname = ((i.next() as DataSnapshot).getValue()) as String
-            var chatTime = ((i.next() as DataSnapshot).getValue()) as String
-            var roomId = ((i.next() as DataSnapshot).getValue()) as String
-            var unreadCount=((i.next() as DataSnapshot).getValue()) as Int
+            var key=snapshot.key
+            var value=snapshot.value as HashMap<String,Any>
 
-            chatAdapter.addItem(ChatItem(roomId,chatSpeaker,chatSpeakerNickname,chatContent,chatTime,null,unreadCount))
+            if(UserInfo.ID!=value.get("chat_speaker").toString()){
+                val hashMap=HashMap<String,Any>()
+                hashMap.put("${key}/unread_count",0)
+                ref!!.updateChildren(hashMap)
+            }
+
+            var i = snapshot.children.iterator()
+            while (i.hasNext()) {
+
+                var chatContent = ((i.next() as DataSnapshot).getValue()) as String
+                var chatSpeaker = ((i.next() as DataSnapshot).getValue()) as String
+                var chatSpeakerNickname = ((i.next() as DataSnapshot).getValue()) as String
+                var chatTime = ((i.next() as DataSnapshot).getValue()) as String
+                var roomId = ((i.next() as DataSnapshot).getValue()) as String
+                var unreadCount = ((i.next() as DataSnapshot).getValue()) as Long
+
+                chatAdapter.addItem(
+                    ChatItem(
+                        roomId,
+                        chatSpeaker,
+                        chatSpeakerNickname,
+                        chatContent,
+                        chatTime,
+                        null,
+                        unreadCount.toString()
+                    )
+                )
+            }
+
+            chatAdapter.notifyDataSetChanged()
+
+
+            var lastChat=chatAdapter.getItem(chatAdapter.count-1) as ChatItem
+            if(UserInfo.ID!=lastChat.chatSpeaker) {
+                VolleyService.readChatReq(lastChat.roomId!!, lastChat.chatTime, this, { success ->
+
+                })
+            }
+
         }
-        chatAdapter.notifyDataSetChanged()
+        else if(updateType=="change"){
+
+            var i = snapshot.children.iterator()
+            while (i.hasNext()) {
+
+                var chatContent = ((i.next() as DataSnapshot).getValue()) as String
+                var chatSpeaker = ((i.next() as DataSnapshot).getValue()) as String
+                var chatSpeakerNickname = ((i.next() as DataSnapshot).getValue()) as String
+                var chatTime = ((i.next() as DataSnapshot).getValue()) as String
+                var roomId = ((i.next() as DataSnapshot).getValue()) as String
+                var unreadCount = ((i.next() as DataSnapshot).getValue()) as Long
+
+                chatAdapter.readChat(chatSpeaker,chatTime)
+            }
+            chatAdapter.notifyDataSetChanged()
+        }
     }
 }

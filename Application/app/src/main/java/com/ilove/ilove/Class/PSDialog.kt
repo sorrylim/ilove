@@ -216,6 +216,7 @@ class PSDialog(activity: Activity) {
                     json.getString("room_partner"),
                     json.getString("room_title"),
                     "",
+                    "",
                     ""
                 )
 

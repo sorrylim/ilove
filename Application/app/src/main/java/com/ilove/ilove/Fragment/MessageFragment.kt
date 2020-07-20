@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ilove.ilove.Adapter.ChatRoomAdapter
 import com.ilove.ilove.Class.UserInfo
-import com.ilove.ilove.Item.ChatItem
 import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
+import org.json.JSONArray
 import org.json.JSONObject
 
 class MessageFragment : Fragment() {
@@ -75,19 +75,36 @@ class MessageFragment : Fragment() {
             for(i in 0..array.length()-1){
                 var json=array[i] as JSONObject
 
-                chatRoomList.add(
-                    ChatRoomItem(
-                        json.getString("room_id"),
-                        json.getString("room_maker"),
-                        json.getString("room_partner"),
-                        json.getString("room_title"),
-                        json.getString("chat_content").split("|")[0],
-                        json.getString("chat_time")
-                    )
-                )
+                if(UserInfo.ID==json.getString(("room_maker"))) {
+                    VolleyService.getProfileImageReq(json.getString("room_partner"),activity!!,{success ->
+                        var imageJson=success[0] as JSONObject
+                        addChatRoom(json,imageJson.getString("image"))
+                    })
+                }
+                else{
+                    VolleyService.getProfileImageReq(json.getString("room_maker"),activity!!,{success ->
+                        var imageJson=success[0] as JSONObject
+                        addChatRoom(json,imageJson.getString("image"))
+                    })
+                }
             }
 
             chatRoomAdapter.sortByLastChat()
         })
+    }
+
+    fun addChatRoom(json: JSONObject, imageUrl: String){
+
+        chatRoomList.add(
+            ChatRoomItem(
+                json.getString("room_id"),
+                json.getString("room_maker"),
+                json.getString("room_partner"),
+                json.getString("room_title"),
+                json.getString("chat_content").split("|")[0],
+                json.getString("chat_time"),
+                imageUrl
+            )
+        )
     }
 }

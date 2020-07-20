@@ -2,18 +2,14 @@ package com.ilove.ilove.Object
 
 import android.content.Context
 import android.util.Log
-import android.graphics.Bitmap
-import com.android.volley.Request
-import com.android.volley.Request.Method.POST
 import com.android.volley.Response
-import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.ilove.ilove.Class.UserInfo
+import com.ilove.ilove.Fragment.MessageFragment
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.reflect.Method
 
 object VolleyService {
     val ip= "http://18.217.130.157:3000"
@@ -747,8 +743,49 @@ object VolleyService {
         userId: String,
         alarmType: String,
         alarmState: Boolean,
-        success: (String) -> Unit
+        context: Context
     ) {
 
+        var url = "${ip}/user/update/alarm"
+
+        var json=JSONObject()
+            .put("user_id",userId)
+            .put("alarm_type",alarmType)
+
+        if(alarmState) json.put("alarm_state",1)
+        else json.put("alarm_state",0)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun readChatReq(roomId: String, chatTime: String?, context: Context, success : (String) -> Unit) {
+        val url = "${ip}/chat/read/chat"
+
+        var json=JSONObject()
+            .put("room_id",roomId)
+            .put("chat_time",chatTime)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
     }
 }
