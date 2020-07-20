@@ -45,7 +45,8 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
         var distance = ""
 
         if(distanceInt < 100) {
-            distance = String.format("%.0f", distanceInt)
+            //distance = String.format("%.0f", distanceInt)
+            distance = "근처"
         }
         else if(100<= distanceInt && distanceInt < 1000) {
             distance = (distanceInt - (distanceInt%100)).toString()

@@ -83,19 +83,6 @@ class ChatActivity : AppCompatActivity() {
             }
         })
 
-        /*
-        VolleyService.chatInitReq(room!!.roomId,this,{success ->
-            if(success!!.length()!=0) {
-                var array = success!!
-                for (i in 0..array.length() - 1) {
-                    var json=array[i] as JSONObject
-                    //addChatItem(json)
-                }
-
-                list_chat.setSelection(list_chat.adapter.getCount() - 1);
-            }
-        })*/
-
         btn_send.setOnClickListener {
 
             if(edit_chat.text.toString()=="") return@setOnClickListener
@@ -130,7 +117,8 @@ class ChatActivity : AppCompatActivity() {
                 json.getString("chat_speaker_nickname"),
                 json.getString("chat_content"),
                 json.getString("chat_time"),
-                null
+                null,
+                json.getInt("unread_count")
             )
         )
         chatAdapter.notifyDataSetChanged()
@@ -151,6 +139,7 @@ class ChatActivity : AppCompatActivity() {
         objectMap.put("chat_speaker_nickname", chatSpeakerNickname)
         objectMap.put("chat_content", chatContent)
         objectMap.put("chat_time", chatTime)
+        objectMap.put("unread_count", 1)
 
         root.updateChildren(objectMap)
     }
@@ -165,8 +154,9 @@ class ChatActivity : AppCompatActivity() {
             var chatSpeakerNickname = ((i.next() as DataSnapshot).getValue()) as String
             var chatTime = ((i.next() as DataSnapshot).getValue()) as String
             var roomId = ((i.next() as DataSnapshot).getValue()) as String
+            var unreadCount=((i.next() as DataSnapshot).getValue()) as Int
 
-            chatAdapter.addItem(ChatItem(roomId,chatSpeaker,chatSpeakerNickname,chatContent,chatTime,null))
+            chatAdapter.addItem(ChatItem(roomId,chatSpeaker,chatSpeakerNickname,chatContent,chatTime,null,unreadCount))
         }
         chatAdapter.notifyDataSetChanged()
     }

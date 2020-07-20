@@ -43,4 +43,15 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_content"
             app:layout_constraintLeft_toRightOf="@id/text_content" />
 
+    <TextView
+            android:id="@+id/text_unread_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="test"
+            android:textSize="10dp"
+            android:textColor="#EEDD00"
+            app:layout_constraintBottom_toBottomOf="@+id/text_content"
+            app:layout_constraintLeft_toRightOf="@id/text_time" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

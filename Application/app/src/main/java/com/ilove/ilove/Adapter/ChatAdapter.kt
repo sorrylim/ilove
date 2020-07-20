@@ -51,7 +51,9 @@ class ChatAdapter : BaseAdapter() {
             textSpeaker!!.text = item.chatSpeakerNickname
             var textContent = view!!.findViewById(R.id.text_content) as TextView
             var textTime = view.findViewById(R.id.text_time) as TextView
+            var textUnreadCount = view.findViewById(R.id.text_unread_count) as TextView
 
+            textUnreadCount.text = item.unreadCount.toString()
             textContent.text = item.chatContent
             textTime.text = timeStr
         } else {
@@ -59,7 +61,9 @@ class ChatAdapter : BaseAdapter() {
 
             var textContent = view!!.findViewById(R.id.text_content) as TextView
             var textTime = view.findViewById(R.id.text_time) as TextView
+            var textUnreadCount = view.findViewById(R.id.text_unread_count) as TextView
 
+            textUnreadCount.text = item.unreadCount.toString()
             textContent.text = item.chatContent
             textTime.text = timeStr
         }
@@ -74,8 +78,6 @@ class ChatAdapter : BaseAdapter() {
             chatItem.isMyChat = true
         else
             chatItem.isMyChat = false
-
-        Log.d("test",chatItem.toString())
 
         chatList.add(chatItem)
     }
