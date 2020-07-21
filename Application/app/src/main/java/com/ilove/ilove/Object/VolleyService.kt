@@ -29,7 +29,7 @@ object VolleyService {
                 result.put("user", it)
                 if (userPassword != it.getString("user_password"))
                     result.put("code", 2)
-                else if (userPassword == it.getString("user_Password"))
+                else if (userPassword == it.getString("user_password"))
                     result.put("code", 3)
                 success(result)
             }
@@ -201,6 +201,28 @@ object VolleyService {
 
     fun getUserListReq(gender: String, userId:String, context: Context, success: (JSONArray?) -> Unit) {
         var url = "${ip}/user/get/list"
+        var json = JSONObject()
+        json.put("user_gender", gender)
+        json.put("user_id", userId)
+
+        var array = JSONArray()
+        array.put(json)
+
+        var request = object : JsonArrayRequest(
+            Method.POST,
+            url,
+            array,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+
+            }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun getUpProfileUserListReq(gender: String, userId:String, context: Context, success: (JSONArray?) -> Unit) {
+        var url = "${ip}/user/get/upprofile/list"
         var json = JSONObject()
         json.put("user_gender", gender)
         json.put("user_id", userId)

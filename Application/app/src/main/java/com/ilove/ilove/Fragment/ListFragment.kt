@@ -24,15 +24,19 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ListFragment : Fragment() {
+class ListFragment(titleText: TextView) : Fragment() {
+    var upProfileUserList = ArrayList<UserList>()
     var userList = ArrayList<UserList>()
     var rootView : View? = null
     var sortType : Int = 0
+    var titleText: TextView = titleText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        titleText.text = "아이러브팅"
+
         rootView = inflater.inflate(R.layout.fragment_list, container, false)
         var sortGps : TextView = rootView!!.findViewById(R.id.text_sortgps)
         var sortTime : TextView = rootView!!.findViewById(R.id.text_sorttime)
@@ -103,9 +107,39 @@ class ListFragment : Fragment() {
                         return 0
                     }
                 })
-                partnerListRV.setHasFixedSize(true)
-                partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                partnerListRV.adapter = UserListAdapter(activity!!, userList)
+
+                VolleyService.getUpProfileUserListReq("F", UserInfo.ID, activity!!, { success ->
+                    upProfileUserList.clear()
+                    var array = success
+                    for (i in 0..array!!.length() - 1) {
+                        var json = array[i] as JSONObject
+                        var location: List<String> = json.getString("user_recentgps").split(",")
+                        var partner = UserList(
+                            json.getString("user_id"),
+                            json.getString("user_nickname"),
+                            json.getString("user_birthday"),
+                            json.getString("user_city"),
+                            gpsTracker.getDistance(
+                                UserInfo.LATITUDE!!,
+                                UserInfo.LONGITUDE!!,
+                                location.get(0),
+                                location.get(1)
+                            ),
+                            json.getString("user_recenttime"),
+                            json.getString("user_previewintroduce"),
+                            json.getString("user_phone"),
+                            json.getString("image"),
+                            json.getInt("like"),
+                            json.getInt("meet")
+                        )
+                        upProfileUserList.add(partner)
+                    }
+
+                    upProfileUserList.addAll(userList)
+                    partnerListRV.setHasFixedSize(true)
+                    partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                    partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                })
             })
         }
         else if(UserInfo.GENDER == "F") {
@@ -133,9 +167,41 @@ class ListFragment : Fragment() {
                         return 0
                     }
                 })
-                partnerListRV.setHasFixedSize(true)
-                partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                partnerListRV.adapter = UserListAdapter(activity!!, userList)
+
+                VolleyService.getUpProfileUserListReq("M", UserInfo.ID, activity!!, { success ->
+                    upProfileUserList.clear()
+                    var array = success
+                    for (i in 0..array!!.length() - 1) {
+                        var json = array[i] as JSONObject
+                        var location: List<String> = json.getString("user_recentgps").split(",")
+                        var partner = UserList(
+                            json.getString("user_id"),
+                            json.getString("user_nickname"),
+                            json.getString("user_birthday"),
+                            json.getString("user_city"),
+                            gpsTracker.getDistance(
+                                UserInfo.LATITUDE!!,
+                                UserInfo.LONGITUDE!!,
+                                location.get(0),
+                                location.get(1)
+                            ),
+                            json.getString("user_recenttime"),
+                            json.getString("user_previewintroduce"),
+                            json.getString("user_phone"),
+                            json.getString("image"),
+                            json.getInt("like"),
+                            json.getInt("meet")
+                        )
+                        upProfileUserList.add(partner)
+                    }
+
+                    upProfileUserList.addAll(userList)
+                    partnerListRV.setHasFixedSize(true)
+                    partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                    partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                })
+
+
             })
         }
     }
@@ -170,9 +236,39 @@ class ListFragment : Fragment() {
                         return 0
                     }
                 })
-                partnerListRV.setHasFixedSize(true)
-                partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                partnerListRV.adapter = UserListAdapter(activity!!, userList)
+
+                VolleyService.getUpProfileUserListReq("F", UserInfo.ID, activity!!, { success ->
+                    upProfileUserList.clear()
+                    var array = success
+                    for (i in 0..array!!.length() - 1) {
+                        var json = array[i] as JSONObject
+                        var location: List<String> = json.getString("user_recentgps").split(",")
+                        var partner = UserList(
+                            json.getString("user_id"),
+                            json.getString("user_nickname"),
+                            json.getString("user_birthday"),
+                            json.getString("user_city"),
+                            gpsTracker.getDistance(
+                                UserInfo.LATITUDE!!,
+                                UserInfo.LONGITUDE!!,
+                                location.get(0),
+                                location.get(1)
+                            ),
+                            json.getString("user_recenttime"),
+                            json.getString("user_previewintroduce"),
+                            json.getString("user_phone"),
+                            json.getString("image"),
+                            json.getInt("like"),
+                            json.getInt("meet")
+                        )
+                        upProfileUserList.add(partner)
+                    }
+
+                    upProfileUserList.addAll(userList)
+                    partnerListRV.setHasFixedSize(true)
+                    partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                    partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                })
             })
         }
         else if(UserInfo.GENDER == "F") {
@@ -200,11 +296,40 @@ class ListFragment : Fragment() {
                         return 0
                     }
                 })
-                partnerListRV.setHasFixedSize(true)
-                partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                partnerListRV.adapter = UserListAdapter(activity!!, userList)
+
+                VolleyService.getUpProfileUserListReq("M", UserInfo.ID, activity!!, { success ->
+                    upProfileUserList.clear()
+                    var array = success
+                    for (i in 0..array!!.length() - 1) {
+                        var json = array[i] as JSONObject
+                        var location: List<String> = json.getString("user_recentgps").split(",")
+                        var partner = UserList(
+                            json.getString("user_id"),
+                            json.getString("user_nickname"),
+                            json.getString("user_birthday"),
+                            json.getString("user_city"),
+                            gpsTracker.getDistance(
+                                UserInfo.LATITUDE!!,
+                                UserInfo.LONGITUDE!!,
+                                location.get(0),
+                                location.get(1)
+                            ),
+                            json.getString("user_recenttime"),
+                            json.getString("user_previewintroduce"),
+                            json.getString("user_phone"),
+                            json.getString("image"),
+                            json.getInt("like"),
+                            json.getInt("meet")
+                        )
+                        upProfileUserList.add(partner)
+                    }
+
+                    upProfileUserList.addAll(userList)
+                    partnerListRV.setHasFixedSize(true)
+                    partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                    partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                })
             })
         }
     }
-
 }
