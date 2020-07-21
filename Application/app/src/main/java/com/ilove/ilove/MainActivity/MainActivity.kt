@@ -59,6 +59,7 @@ class MainActivity : PSAppCompatActivity() {
             .addOnCompleteListener {
                 Log.d("test","success subscribe to topic")
             }
+
         if(!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting()
         }
@@ -105,7 +106,7 @@ class MainActivity : PSAppCompatActivity() {
         bnv_main.setOnNavigationItemSelectedListener(navListener)
 
         if (savedInstanceState == null) {
-            channelFragment = ChannelFragment()
+            channelFragment = ChannelFragment(text_maintoolbar)
             supportFragmentManager.beginTransaction().add(R.id.frame_main, channelFragment!!).commit()
         }
     }
@@ -114,7 +115,7 @@ class MainActivity : PSAppCompatActivity() {
         when (it.itemId) {
             R.id.bnv_main_channel -> {
                 if(channelFragment == null) {
-                    channelFragment = ChannelFragment()
+                    channelFragment = ChannelFragment(text_maintoolbar)
                     supportFragmentManager.beginTransaction().add(R.id.frame_main, channelFragment!!).commit()
                 }
 
@@ -129,7 +130,7 @@ class MainActivity : PSAppCompatActivity() {
             }
             R.id.bnv_main_story -> {
                 if(storyFragment == null) {
-                    storyFragment = StoryFragment()
+                    storyFragment = StoryFragment(text_maintoolbar)
                     supportFragmentManager.beginTransaction().add(R.id.frame_main, storyFragment!!).commit()
                 }
 
@@ -143,7 +144,7 @@ class MainActivity : PSAppCompatActivity() {
             }
             R.id.bnv_main_list -> {
                 if(listFragment == null) {
-                    listFragment = ListFragment()
+                    listFragment = ListFragment(text_maintoolbar)
                     supportFragmentManager.beginTransaction().add(R.id.frame_main, listFragment!!).commit()
                 }
 
@@ -157,7 +158,7 @@ class MainActivity : PSAppCompatActivity() {
             }
             R.id.bnv_main_message -> {
                 if(messageFragment == null) {
-                    messageFragment = MessageFragment()
+                    messageFragment = MessageFragment(text_maintoolbar)
                     supportFragmentManager.beginTransaction().add(R.id.frame_main, messageFragment!!).commit()
                 }
                 if(channelFragment != null) supportFragmentManager.beginTransaction().hide(channelFragment!!).commit()
@@ -170,7 +171,7 @@ class MainActivity : PSAppCompatActivity() {
             }
             R.id.bnv_main_profile -> {
                 if(profileFragment == null) {
-                    profileFragment = ProfileFragment()
+                    profileFragment = ProfileFragment(text_maintoolbar)
                     supportFragmentManager.beginTransaction().add(R.id.frame_main, profileFragment!!).commit()
                 }
                 if(channelFragment != null) supportFragmentManager.beginTransaction().hide(channelFragment!!).commit()

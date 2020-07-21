@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.IntroActivity.EditProfileActivity
+import com.ilove.ilove.IntroActivity.InquireActivity
 import com.ilove.ilove.IntroActivity.ItemActivity
 import com.ilove.ilove.IntroActivity.SettingActivity
 import com.ilove.ilove.Object.VolleyService
@@ -19,19 +20,28 @@ import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.item_partnerlist.view.*
 import org.json.JSONObject
 
-class ProfileFragment : Fragment() {
+class ProfileFragment(titleText: TextView) : Fragment() {
+    var titleText : TextView = titleText
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        titleText.text = "마이페이지"
+
         val rootView = inflater.inflate(R.layout.fragment_profile, container, false)
 
         val settingBtn : TextView = rootView.findViewById(R.id.text_mypagesetting)
         val editProfileBtn: Button = rootView.findViewById(R.id.btn_editprofile)
         val itemManagement : TextView = rootView.findViewById(R.id.text_mypageitem)
+        val inquireBtn : TextView = rootView.findViewById(R.id.text_mypageinquire)
         var mainProfileImage : ImageView = rootView.findViewById(R.id.image_mypageprofile)
         var nickName: TextView = rootView.findViewById(R.id.text_mypagenickname)
         var mainProfile : String = ""
+
+        inquireBtn.setOnClickListener {
+            var intent = Intent(activity!!, InquireActivity::class.java)
+            startActivity(intent)
+        }
 
         VolleyService.getProfileImageReq(UserInfo.ID, activity!!, {success->
             var array = success

@@ -28,6 +28,8 @@ class PartnerListActivity : PSAppCompatActivity() {
         var intent = intent
         var listType = intent.getStringExtra("listType")
 
+        rv_partnerlist.setOverScrollMode(View.OVER_SCROLL_NEVER)
+
         toolbarBinding(toolbar_partnerlist, listType!!, true)
 
         when(listType) {

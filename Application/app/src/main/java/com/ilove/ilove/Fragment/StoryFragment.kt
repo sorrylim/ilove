@@ -23,13 +23,15 @@ import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import org.json.JSONObject
 
-class StoryFragment : Fragment() {
+class StoryFragment(titleText: TextView) : Fragment() {
     var storyList = ArrayList<ImageItem.StoryImage>()
+    var titleText : TextView = titleText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        titleText.text = "아이러브팅 스토리"
         val rootView = inflater.inflate(R.layout.fragment_story, container, false)
         val writeStoryBtn : Button = rootView.findViewById(R.id.btn_writestory)
         val storyRV : RecyclerView = rootView.findViewById(R.id.rv_storyview)
@@ -41,6 +43,7 @@ class StoryFragment : Fragment() {
         var myStoryBlock2 : TextView = rootView.findViewById(R.id.text_none)
 
         myStoryImage.setClipToOutline(true)
+        storyRV.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
 
 
