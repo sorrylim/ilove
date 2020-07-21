@@ -48,8 +48,12 @@ class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoom
             var timeStr = ""
             if (hour < 12)
                 timeStr = "오전 ${hour}:${min}"
-            else
-                timeStr = "오후 ${hour - 12}:${min}"
+            else {
+                if(hour!=12)
+                    timeStr = "오후 ${hour - 12}:${min}"
+                else
+                    timeStr = "오후 ${hour}:${min}"
+            }
             holder.itemView.text_last_chat_time.text = timeStr
 
             holder.itemView.text_last_chat.text = "${chatRoom.lastChat}"
@@ -58,6 +62,7 @@ class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoom
             holder.itemView.text_last_chat_time.text=""
             holder.itemView.text_last_chat.text=""
         }
+
         holder.view.setOnClickListener {
             var intent = Intent(context, ChatActivity::class.java)
             intent.putExtra("room", chatRoom)
@@ -65,8 +70,8 @@ class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoom
         }
 
         Glide.with(holder.itemView)
-            .load(chatRoom.imageUrl).apply(RequestOptions().fitCenter()).apply(
-                RequestOptions().override(640,640))
+            .load(chatRoom.imageUrl).apply(RequestOptions().fitCenter())
+            .apply(RequestOptions().override(640,640))
             .into(holder.itemView.image_chatroom)
         holder.itemView.image_chatroom.setClipToOutline(true)
 

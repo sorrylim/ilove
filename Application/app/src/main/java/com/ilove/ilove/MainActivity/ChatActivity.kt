@@ -2,8 +2,6 @@ package com.ilove.ilove.MainActivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.util.Log
 import com.google.firebase.database.*
 import com.google.firebase.messaging.FirebaseMessaging
@@ -28,13 +26,29 @@ class ChatActivity : AppCompatActivity() {
     var ref : DatabaseReference? = null
     var query : Query? = null
 
+    var chatPartnerImage : String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
         var intent=intent
         room=intent.getSerializableExtra("room") as ChatRoomItem
+        Log.d("test",room!!.toString())
         list_chat.adapter=chatAdapter
+
+        if(room!!.imageUrl==""){
+            var partnerId=""
+            if(UserInfo.ID==room!!.maker) partnerId = room!!.partner
+            else partnerId = room!!.maker
+
+            VolleyService.getProfileImageReq(partnerId,this,{success ->
+                var json = success[0] as JSONObject
+
+                chatPartnerImage=json.getString("image")
+            })
+        }
+        else chatPartnerImage = room!!.imageUrl
 
         FirebaseMessaging.getInstance().subscribeToTopic(room!!.roomId!!)
             .addOnCompleteListener {
@@ -84,10 +98,6 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
-    private fun readFirebase(roomId: String, chatTime: String?) {
-
-    }
-
     fun writeFirebase(roomId: String, chatSpeaker: String, chatSpeakerNickname: String, chatContent: String, chatTime: String){
 
         Log.d("test","WRITE")
@@ -111,11 +121,6 @@ class ChatActivity : AppCompatActivity() {
     fun chatConversation(snapshot: DataSnapshot,updateType : String) {
 
         if(updateType=="add") {
-            var msseageFragmentHandler = MessageFragment.handler
-            var msg = msseageFragmentHandler!!.obtainMessage()
-            msg.what = 0
-            msseageFragmentHandler.sendMessage(msg)
-
             var key=snapshot.key
             var value=snapshot.value as HashMap<String,Any>
 
@@ -135,6 +140,7 @@ class ChatActivity : AppCompatActivity() {
                 var roomId = ((i.next() as DataSnapshot).getValue()) as String
                 var unreadCount = ((i.next() as DataSnapshot).getValue()) as Long
 
+                while(chatPartnerImage==null){Log.d("test","이미지 수신 대기")}
                 chatAdapter.addItem(
                     ChatItem(
                         roomId,
@@ -143,7 +149,8 @@ class ChatActivity : AppCompatActivity() {
                         chatContent,
                         chatTime,
                         null,
-                        unreadCount.toString()
+                        unreadCount.toString(),
+                        chatPartnerImage
                     )
                 )
             }
@@ -157,7 +164,6 @@ class ChatActivity : AppCompatActivity() {
 
                 })
             }
-
         }
         else if(updateType=="change"){
 
