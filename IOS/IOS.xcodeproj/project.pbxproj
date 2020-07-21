@@ -29,6 +29,8 @@
 		548AD92824A1A772003E27FD /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AD92724A1A772003E27FD /* HttpService.swift */; };
 		548AD92E24A1CD40003E27FD /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AD92D24A1CD40003E27FD /* DataModel.swift */; };
 		5494D0A824BD9E4B00ED2C08 /* EachAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5494D0A724BD9E4B00ED2C08 /* EachAlert.swift */; };
+		54966CC524C6C29600131C43 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54966CC424C6C29600131C43 /* LocationManager.swift */; };
+		54966CC824C6DECB00131C43 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54966CC724C6DECB00131C43 /* ProfileView.swift */; };
 		5497A40D24A09A94005BBC1A /* AlarmSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5497A40C24A09A94005BBC1A /* AlarmSettingView.swift */; };
 		549E5B3724ADB29D00050E62 /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E5B3624ADB29D00050E62 /* MultilineTextField.swift */; };
 		549E5B3924ADB34F00050E62 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E5B3824ADB34F00050E62 /* ImagePicker.swift */; };
@@ -63,6 +65,8 @@
 		548AD92724A1A772003E27FD /* HttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
 		548AD92D24A1CD40003E27FD /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		5494D0A724BD9E4B00ED2C08 /* EachAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachAlert.swift; sourceTree = "<group>"; };
+		54966CC424C6C29600131C43 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		54966CC724C6DECB00131C43 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		5497A40C24A09A94005BBC1A /* AlarmSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingView.swift; sourceTree = "<group>"; };
 		549E5B3624ADB29D00050E62 /* MultilineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextField.swift; sourceTree = "<group>"; };
 		549E5B3824ADB34F00050E62 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -153,6 +157,8 @@
 		547E6201249C67A300D8B7C4 /* IOS */ = {
 			isa = PBXGroup;
 			children = (
+				54966CC624C6DE7900131C43 /* Common */,
+				54966CC324C6C28100131C43 /* Object */,
 				549E5B3524ADB27F00050E62 /* CustomUI */,
 				547E621D249C82A300D8B7C4 /* TabView */,
 				547E6209249C67A300D8B7C4 /* ContentView.swift */,
@@ -202,6 +208,22 @@
 				54BC272D24B4460500DAE862 /* StoryView.swift */,
 			);
 			path = Story;
+			sourceTree = "<group>";
+		};
+		54966CC324C6C28100131C43 /* Object */ = {
+			isa = PBXGroup;
+			children = (
+				54966CC424C6C29600131C43 /* LocationManager.swift */,
+			);
+			path = Object;
+			sourceTree = "<group>";
+		};
+		54966CC624C6DE7900131C43 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				54966CC724C6DECB00131C43 /* ProfileView.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		5497A40B24A09A7C005BBC1A /* SettingItem */ = {
@@ -347,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54B5EAD124C0002F00B80FDF /* UserInfo.swift in Sources */,
+				54966CC824C6DECB00131C43 /* ProfileView.swift in Sources */,
 				54BC272E24B4460500DAE862 /* StoryView.swift in Sources */,
 				547E6203249C67A300D8B7C4 /* AppDelegate.swift in Sources */,
 				547E6208249C67A300D8B7C4 /* IOS.xcdatamodeld in Sources */,
@@ -358,6 +381,7 @@
 				5451D1EC24A2F8610035EA91 /* PartnerView.swift in Sources */,
 				547E6228249CA27C00D8B7C4 /* WriteStoryView.swift in Sources */,
 				54745B9624A06E6400B32F25 /* MyPageView.swift in Sources */,
+				54966CC524C6C29600131C43 /* LocationManager.swift in Sources */,
 				5494D0A824BD9E4B00ED2C08 /* EachAlert.swift in Sources */,
 				549E5B3724ADB29D00050E62 /* MultilineTextField.swift in Sources */,
 				545D598F24A0A448000B8A5A /* VipGuideView.swift in Sources */,
