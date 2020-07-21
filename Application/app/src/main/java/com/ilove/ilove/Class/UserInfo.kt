@@ -4,7 +4,7 @@ import android.app.Application
 
 class UserInfo : Application() {
     companion object {
-        var ID: String = "ljs"
+        var ID: String = "kje"
         var PW: String = ""
         var NICKNAME: String = "임재성"
         var BIRTHDAY : String = ""

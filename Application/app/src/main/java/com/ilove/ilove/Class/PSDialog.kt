@@ -296,6 +296,28 @@ class PSDialog(activity: Activity) {
         }
     }
 
+    fun setUpProfile() {
+        dialog!!.setContentView(R.layout.dialog_purchasecheck)
+        var titleText : TextView = dialog!!.findViewById(R.id.text_dialogtitle)
+        var contentText : TextView = dialog!!.findViewById(R.id.text_dialogcontent)
+        var subContentText : TextView = dialog!!.findViewById(R.id.text_dialogsubcontent)
+        var acceptBtn : Button = dialog!!.findViewById(R.id.btn_dialogaccept)
+        var cancelBtn : Button = dialog!!.findViewById(R.id.btn_dialogcancel)
+
+        titleText.text = "프로필 올리기"
+        contentText.text = "프로필 올리기를 선택하셨습니다.\n진행하시겠습니까?"
+
+        subContentText.visibility = View.GONE
+
+        acceptBtn.setOnClickListener {
+            dialog!!.dismiss()
+        }
+
+        cancelBtn.setOnClickListener {
+            dialog!!.dismiss()
+        }
+    }
+
     class BottomSheetDialog(categoryText : TextView) : BottomSheetDialogFragment() {
         var categoryText = categoryText
 

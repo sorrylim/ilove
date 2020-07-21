@@ -26,7 +26,6 @@ class ProfileFragment(titleText: TextView) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        titleText.text = "마이페이지"
 
         val rootView = inflater.inflate(R.layout.fragment_profile, container, false)
 

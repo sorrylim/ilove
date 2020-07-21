@@ -1,25 +1,54 @@
 package com.ilove.ilove.IntroActivity
 
+import android.app.AlertDialog
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.LocationManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.MainActivity.MainActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class SplashActivity : AppCompatActivity() {
+    private val GPS_ENABLE_CODE = 2001
+    private val PERMISSIONS_REQUEST_CODE = 100
+
+    private val requiredPermission = arrayOf(
+        android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+
+    val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
+    val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        if(!checkLocationServicesStatus()) {
+            showDialogForLocationServiceSetting()
+        }
+        else {
+            checkRunTimePermission()
+        }
 
         //알림 채널 생성
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -44,7 +73,7 @@ class SplashActivity : AppCompatActivity() {
             }
         }
 
-        var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
+        /*var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
         UserInfo.ID = userPref.getString("ID", "")!!
         UserInfo.PW = userPref.getString("PW", "")!!
         if(UserInfo.ID != "") {
@@ -121,7 +150,123 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }, 2000)
+        }*/
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if(requestCode == PERMISSIONS_REQUEST_CODE && grantResults.size == requiredPermission.size) {
+            var checkResult = true
+
+            for (result in grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    checkResult = false
+                    showDialogForLocationServiceSetting()
+                    break
+                }
+            }
+
+            if(checkResult) {
+                var gpsTracker = GpsTracker(this)
+
+                UserInfo.LATITUDE = gpsTracker.getLatitude().toString()
+                UserInfo.LONGITUDE = gpsTracker.getLongitude().toString()
+
+                VolleyService.updateRecentGps(UserInfo.ID, UserInfo.LATITUDE.toString() + "," + UserInfo.LONGITUDE.toString() , currentDate,this, {success->
+                    if(success != "success") {
+                        Toast.makeText(this, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                    }
+                })
+                gpsTracker.stopUsingGPS()
+
+                var intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+
+            }
         }
+        else {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, requiredPermission.get(0)) || ActivityCompat.shouldShowRequestPermissionRationale(this, requiredPermission.get(1))) {
+                Toast.makeText(this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
+                finish();
+            }else {
+                Toast.makeText(this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    fun checkRunTimePermission() {
+        val hasFineLocationPermission = ContextCompat.checkSelfPermission(this@SplashActivity, android.Manifest.permission.ACCESS_FINE_LOCATION)
+        val hasCoarseLocationPermission = ContextCompat.checkSelfPermission(this@SplashActivity, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED && hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
+            var gpsTracker = GpsTracker(this)
+
+
+            UserInfo.LATITUDE = gpsTracker.getLatitude().toString()
+            UserInfo.LONGITUDE = gpsTracker.getLongitude().toString()
+
+            VolleyService.updateRecentGps(UserInfo.ID, UserInfo.LATITUDE.toString() + "," + UserInfo.LONGITUDE.toString() , currentDate,this, {success->
+                if(success != "success") {
+                    Toast.makeText(this, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                }
+            })
+            gpsTracker.stopUsingGPS()
+
+            var intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        } else {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this@SplashActivity, requiredPermission.get(0))) {
+                Toast.makeText(this@SplashActivity, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show()
+                ActivityCompat.requestPermissions(this@SplashActivity, requiredPermission, PERMISSIONS_REQUEST_CODE)
+            } else {
+                ActivityCompat.requestPermissions(this@SplashActivity, requiredPermission, PERMISSIONS_REQUEST_CODE)
+            }
+        }
+    }
+
+    private fun showDialogForLocationServiceSetting() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this@SplashActivity)
+        builder.setTitle("위치 서비스 비활성화")
+        builder.setMessage(
+            """
+                앱을 사용하기 위해서는 위치 서비스가 필요합니다.
+                위치 설정을 수정하시겠습니까?
+                """.trimIndent()
+        )
+        builder.setCancelable(true)
+        builder.setPositiveButton("설정", DialogInterface.OnClickListener { dialog, id ->
+            val callGPSSettingIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            startActivityForResult(callGPSSettingIntent, GPS_ENABLE_CODE)
+        })
+        builder.setNegativeButton("취소",
+            DialogInterface.OnClickListener { dialog, id ->
+                moveTaskToBack(true)
+                finishAndRemoveTask()
+                android.os.Process.killProcess(android.os.Process.myPid())})
+        builder.create().show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            GPS_ENABLE_CODE ->
+                //사용자가 GPS 활성 시켰는지 검사
+                if (checkLocationServicesStatus()) {
+                    if (checkLocationServicesStatus()) {
+                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음")
+                        checkRunTimePermission()
+                        return
+                    }
+                }
+        }
+    }
+
+    fun checkLocationServicesStatus() : Boolean {
+        var locationManager : LocationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER);
     }
 
 }

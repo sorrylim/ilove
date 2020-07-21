@@ -70,7 +70,7 @@ class ChatAdapter : BaseAdapter() {
                 .apply(RequestOptions().override(640,640))
                 .into(imageChatPartner)
 
-            if(chatList.count()>1) {
+            if(chatList.count()>1 && position > 0) {
                 var beforeItem = chatList[position - 1]
                 if(beforeItem.isMyChat!!) textSpeaker!!.text = item.chatSpeakerNickname
                 else {

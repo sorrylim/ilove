@@ -43,7 +43,7 @@ class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>) 
 
         holder.itemView.text_newusernicknameage.text = userList.get(position).userNickname + ", " + age.toString()
 
-        holder.itemView.text_newuserrecentdata.text = distance + ", " + gpsTracker.timeDiff(partnerDate.getTime())
+        holder.itemView.text_newuserrecentdata.text = distance + "km, " + gpsTracker.timeDiff(partnerDate.getTime())
         Glide.with(holder.itemView)
             .load(userList.get(position).userImage).apply(RequestOptions().fitCenter()).apply(RequestOptions().override(640,640))
             .into(holder.itemView.image_newuser)

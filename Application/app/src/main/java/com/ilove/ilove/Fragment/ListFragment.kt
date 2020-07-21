@@ -35,7 +35,6 @@ class ListFragment(titleText: TextView) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        titleText.text = "아이러브팅"
 
         rootView = inflater.inflate(R.layout.fragment_list, container, false)
         var sortGps : TextView = rootView!!.findViewById(R.id.text_sortgps)

@@ -31,7 +31,6 @@ class StoryFragment(titleText: TextView) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        titleText.text = "아이러브팅 스토리"
         val rootView = inflater.inflate(R.layout.fragment_story, container, false)
         val writeStoryBtn : Button = rootView.findViewById(R.id.btn_writestory)
         val storyRV : RecyclerView = rootView.findViewById(R.id.rv_storyview)

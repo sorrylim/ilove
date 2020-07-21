@@ -8,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ilove.ilove.Adapter.NewUserAdapter
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.NewUserList
 import com.ilove.ilove.MainActivity.PartnerListActivity
@@ -30,7 +32,7 @@ class ChannelFragment(titleText: TextView) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        titleText.text = "아이러브팅 채널"
+        var psDialog = PSDialog(activity!!)
 
         var rootView = inflater.inflate(R.layout.fragment_channel, container, false)
         var visitProfileCount = rootView.text_visitprofilecount
@@ -52,6 +54,14 @@ class ChannelFragment(titleText: TextView) : Fragment() {
         var newUserRV = rootView.rv_newmember
         var swipeLayout: SwipeRefreshLayout = rootView.layout_swipe
         var nestedScrollView : NestedScrollView = rootView.scroll_channel
+        var upProfileBtn : ConstraintLayout = rootView.findViewById(R.id.layout_upprofile)
+
+        upProfileBtn.setOnClickListener {
+            psDialog.setUpProfile()
+            psDialog.show()
+        }
+
+
 
         nestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
