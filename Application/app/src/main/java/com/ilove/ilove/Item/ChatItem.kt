@@ -7,5 +7,6 @@ data class ChatItem (
     var chatContent : String?,
     var chatTime : String?,
     var isMyChat:Boolean?,
-    var unreadCount : String?
+    var unreadCount : String?,
+    var chatPartnerImage : String?
 )
