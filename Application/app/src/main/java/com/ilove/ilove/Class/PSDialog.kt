@@ -5,10 +5,9 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -16,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Adapter.MessageCandyAdapter
 import com.ilove.ilove.Adapter.PersonalityAdapter
@@ -26,6 +27,7 @@ import com.ilove.ilove.Item.UserItem
 import com.ilove.ilove.MainActivity.ChatActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
+import kotlinx.android.synthetic.main.dialog_inquire.*
 
 class PSDialog(activity: Activity) {
 
@@ -291,6 +293,27 @@ class PSDialog(activity: Activity) {
 
         cancelText.setOnClickListener {
             dialog!!.dismiss()
+        }
+    }
+
+    class BottomSheetDialog(categoryText : TextView) : BottomSheetDialogFragment() {
+        var categoryText = categoryText
+
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            super.onCreateView(inflater, container, savedInstanceState)
+            return inflater.inflate(R.layout.dialog_inquire, container, false)
+        }
+
+        override fun onActivityCreated(savedInstanceState: Bundle?) {
+            super.onActivityCreated(savedInstanceState)
+            view?.findViewById<TextView>(R.id.text_inquireservice)?.setOnClickListener {
+                categoryText.text = text_inquireservice.text
+                dismiss()
+            }
         }
     }
 

@@ -14,7 +14,17 @@ module.exports = function () {
     },
     get_user_list: function(user_gender, callback) {
       pool.getConnection(function(err, con) {
-        var sql = `select user.user_id, user_nickname, user_birthday, user_city, user_recentgps, user_introduce, user_phone, image from user, image where user_gender='${user_gender}' and user.user_id=image.user_id and image.image_usage='mainprofile'`
+        var sql = `select user.user_id, user_nickname, user_birthday, user_city, user_recentgps, user_introduce, user_phone, image from user, image where user_gender='${user_gender}' and user.user_id=image.user_id and image.image_usage='mainprofile' and user.user_upprofile=0`
+        con.query(sql, function(err, result) {
+          con.release()
+          if(err) callback(err)
+          else callback(null, result)
+        })
+      })
+    },
+    get_upprofile_user_list: function(user_gender, callback) {
+      pool.getConnection(function(err, con) {
+        var sql = `select user.user_id, user_nickname, user_birthday, user_city, user_recentgps, user_introduce, user_phone, image from user, image where user_gender='${user_gender}' and user.user_id=image.user_id and image.image_usage='mainprofile' and user.user_upprofile=1`
         con.query(sql, function(err, result) {
           con.release()
           if(err) callback(err)

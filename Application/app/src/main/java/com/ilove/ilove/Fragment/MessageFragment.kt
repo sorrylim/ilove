@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ilove.ilove.Adapter.ChatRoomAdapter
@@ -18,12 +19,13 @@ import com.ilove.ilove.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class MessageFragment : Fragment() {
+class MessageFragment(titleText: TextView) : Fragment() {
 
     companion object{
         var handler: Handler? = null
     }
 
+    var titleText : TextView = titleText
     var chatRoomRV : RecyclerView? = null
     var chatRoomList = ArrayList<ChatRoomItem>()
     var chatRoomAdapter : ChatRoomAdapter? = null
@@ -32,6 +34,7 @@ class MessageFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        titleText.text = "아이러브팅 메세지"
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_message, container, false)
         chatRoomRV =rootView.findViewById<RecyclerView>(R.id.rv_chatroom)

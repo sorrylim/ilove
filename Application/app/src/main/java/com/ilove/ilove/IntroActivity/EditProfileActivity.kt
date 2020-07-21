@@ -11,10 +11,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.provider.MediaStore
+import android.util.DisplayMetrics
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.FileUploadUtils
@@ -52,10 +55,36 @@ class EditProfileActivity : PSAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
 
+
+        scroll_editprofile.setOverScrollMode(View.OVER_SCROLL_NEVER)
+
+        var displayMetrics: DisplayMetrics = DisplayMetrics()
+        this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics) // 화면의 가로길이를 구함
+        var width = displayMetrics.widthPixels / 3
+
         var imageMain : ImageView = findViewById(R.id.image_editmain)
         var imageSub1 : ImageView = findViewById(R.id.image_editsub1)
         var imageSub2 : ImageView = findViewById(R.id.image_editsub2)
         var imageSub3 : ImageView = findViewById(R.id.image_editsub3)
+
+        var layoutMain : ConstraintLayout = findViewById(R.id.layout_editmain)
+        var layoutSub1 : ConstraintLayout = findViewById(R.id.layout_editsub1)
+        var layoutSub2 : ConstraintLayout = findViewById(R.id.layout_editsub2)
+        var layoutSub3 : ConstraintLayout = findViewById(R.id.layout_editsub3)
+
+        layoutMain.getLayoutParams().width = width
+        layoutMain.getLayoutParams().height = width
+        layoutSub1.getLayoutParams().width = width
+        layoutSub1.getLayoutParams().height = width
+        layoutSub2.getLayoutParams().width = width
+        layoutSub2.getLayoutParams().height = width
+        layoutSub3.getLayoutParams().width = width
+        layoutSub3.getLayoutParams().height = width
+
+        layoutMain.requestLayout()
+        layoutSub1.requestLayout()
+        layoutSub2.requestLayout()
+        layoutSub3.requestLayout()
 
         imageMain.setClipToOutline(true)
         imageSub1.setClipToOutline(true)

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -21,14 +22,16 @@ import kotlinx.android.synthetic.main.fragment_channel.view.*
 import kotlinx.android.synthetic.main.fragment_channel.view.layout_sendlike
 import org.json.JSONObject
 
-class ChannelFragment : Fragment() {
+class ChannelFragment(titleText: TextView) : Fragment() {
 
     var newUserList = ArrayList<NewUserList>()
-
+    var titleText : TextView = titleText
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        titleText.text = "아이러브팅 채널"
+
         var rootView = inflater.inflate(R.layout.fragment_channel, container, false)
         var visitProfileCount = rootView.text_visitprofilecount
         var visitStoryCount = rootView.text_visitstorycount
