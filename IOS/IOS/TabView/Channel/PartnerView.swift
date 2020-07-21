@@ -26,27 +26,38 @@ struct PartnerView : View {
     
     var body: some View{
         ZStack{
-            List{
-                if title=="내 프로필을 확인한 사람" || title=="내 스토리를 확인한 사람"{
-                    ForEach(visitPartnerList, id: \.user_id){partner in
-                        VisitPartnerRow(partner: partner,view: self)
-                    }
+            VStack{
+                HStack{
+                    Text("방문 내역은")
+                        .font(.system(size: 15))
+                    Text("일주일")
+                        .font(.system(size: 15))
+                        .foregroundColor(Color.red)
+                    Text("동안 보관됩니다.")
+                        .font(.system(size: 15))
                 }
-                else {
-                    if title.contains("내가") || title.contains("서로"){
-                        ForEach(partnerList, id: \.user_id){partner in
-                            PartnerRow(partner: partner, view: self)
+                .padding(.top)
+                List{
+                    if title=="내 프로필을 확인한 사람" || title=="내 스토리를 확인한 사람"{
+                        ForEach(visitPartnerList, id: \.user_id){partner in
+                            VisitPartnerRow(partner: partner,view: self)
                         }
-                        .onDelete(perform : delete)
                     }
                     else {
-                        ForEach(partnerList, id: \.user_id){partner in
-                            PartnerRow(partner: partner, view: self)
+                        if title.contains("내가") || title.contains("서로"){
+                            ForEach(partnerList, id: \.user_id){partner in
+                                PartnerRow(partner: partner, view: self)
+                            }
+                            .onDelete(perform : delete)
+                        }
+                        else {
+                            ForEach(partnerList, id: \.user_id){partner in
+                                PartnerRow(partner: partner, view: self)
+                            }
                         }
                     }
                 }
             }
-            
             if alertVisible {
                 GeometryReader{_ in
                     EachAlert(userId: self.alertUserId, userNickname: self.alertUserNickname, userAge: self.alertUserAge, userRecentTime: self.alertUserRecentTime,uiImage: self.alertUiImage, showing: self.$alertVisible)
@@ -152,25 +163,25 @@ struct PartnerRow : View{
     @State var uiImage=UIImage()
     
     @State var age=0
-    
+    @State var time=""
+    @State var expressionDate=""
     var body: some View {
         VStack{
-            Text(partner.expression_date)
+            Text(expressionDate)
                 .font(.system(size:10))
             HStack(spacing: 20){
-                
-                
                 Image(uiImage: self.uiImage)
                     .resizable()
                     .frame(width: 70, height: 70)
                     .cornerRadius(10)
                 
                 VStack(alignment: .leading){
-                    Text(partner.user_nickname)
-                        .font(.system(size:20,weight:.bold))
+                    Spacer()
+                    Text("\(partner.user_nickname), \(self.age)")
+                        .font(.system(size:20))
                     Spacer()
                     HStack(spacing: 10){
-                        Text("\(self.age), \(partner.user_recenttime)")
+                        Text("\(self.time)")
                             .font(.system(size:15))
                         Spacer()
                         meetImage
@@ -217,6 +228,7 @@ struct PartnerRow : View{
                                 }
                         }
                     }
+                    Spacer()
                 }
             }
             .padding(10)
@@ -240,12 +252,32 @@ struct PartnerRow : View{
                 self.meetImage=Image("call_n_icon")
             }
             
-            let now = Date()
+            self.expressionDate=String(self.partner.expression_date.split(separator: " ")[0])
+            
+            var now = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let date=dateFormatter.string(from: now)
             
             self.age=(Int(date.split(separator: "-")[0]).unsafelyUnwrapped-Int(self.partner.user_birthday.split(separator: "-")[0]).unsafelyUnwrapped+1)
+            
+            var partnerRecentTime = dateFormatter.date(from : self.partner.user_recenttime)?.addingTimeInterval(3600 * 9)
+            now=now.addingTimeInterval(3600 * 9)
+            
+            var timeInterval = Int(now.timeIntervalSince(partnerRecentTime!))
+            
+            if timeInterval >= 86400 {
+                self.time="\(timeInterval/86400)일 전"
+            }
+            else if timeInterval >= 3600 {
+                self.time="\(timeInterval/3600)시간 전"
+            }
+            else if timeInterval >= 60{
+                self.time="\(timeInterval/60)분 전"
+            }
+            else {
+                self.time="\(timeInterval)초 전"
+            }
         }
     }
 }
@@ -260,10 +292,12 @@ struct VisitPartnerRow : View{
     @State var uiImage = UIImage()
     
     @State var age=0
+    @State var time=""
+    @State var visitDate=""
     
     var body: some View {
         VStack{
-            Text(partner.visit_date)
+            Text(visitDate)
                 .font(.system(size:10))
             HStack(spacing: 20){
                 
@@ -273,11 +307,12 @@ struct VisitPartnerRow : View{
                     .cornerRadius(10)
                 
                 VStack(alignment: .leading){
-                    Text(partner.user_nickname)
-                        .font(.system(size:20,weight:.bold))
+                    Spacer()
+                    Text("\(partner.user_nickname), \(self.age)")
+                        .font(.system(size:20))
                     Spacer()
                     HStack(spacing:10){
-                        Text("\(self.age), \(partner.user_recenttime)")
+                        Text("\(self.time)")
                             .font(.system(size:15))
                         Spacer()
                         meetImage
@@ -324,9 +359,8 @@ struct VisitPartnerRow : View{
                                 }
                         }
                     }
+                    Spacer()
                 }
-                
-                
             }
             .padding(10)
         }
@@ -349,12 +383,32 @@ struct VisitPartnerRow : View{
                 self.meetImage=Image("call_n_icon")
             }
             
-            let now = Date()
+            self.visitDate=String(self.partner.visit_date.split(separator: " ")[0])
+            
+            var now = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let date=dateFormatter.string(from: now)
             
             self.age=(Int(date.split(separator: "-")[0]).unsafelyUnwrapped-Int(self.partner.user_birthday.split(separator: "-")[0]).unsafelyUnwrapped+1)
+            
+            var partnerRecentTime = dateFormatter.date(from : self.partner.user_recenttime)?.addingTimeInterval(3600 * 9)
+            now=now.addingTimeInterval(3600 * 9)
+            
+            var timeInterval = Int(now.timeIntervalSince(partnerRecentTime!))
+            
+            if timeInterval >= 86400 {
+                self.time="\(timeInterval/86400)일 전"
+            }
+            else if timeInterval >= 3600 {
+                self.time="\(timeInterval/3600)시간 전"
+            }
+            else if timeInterval >= 60{
+                self.time="\(timeInterval/60)분 전"
+            }
+            else {
+                self.time="\(timeInterval)초 전"
+            }
         }
     }
 }

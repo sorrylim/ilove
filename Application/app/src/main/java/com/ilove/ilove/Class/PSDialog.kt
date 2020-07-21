@@ -144,6 +144,14 @@ class PSDialog(activity: Activity) {
                         }
                     })
                 }
+                else if(userOption=="user_gender"){
+                    if(userOptionData=="여자"){
+                        userOptionData="F"
+                    }
+                    else userOptionData="M"
+                    //VolleyService만 추가해주면 됌
+
+                }
                 else {
                     VolleyService.updateUserOptionReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
                         if(success == "success") {

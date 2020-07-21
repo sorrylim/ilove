@@ -32,6 +32,7 @@ class StoryActivity : PSAppCompatActivity() {
 
         image.setClipToOutline(true)
 
+
         var intent = intent
         var imgUrl = intent.getStringExtra("image")
         var imageId = intent.getIntExtra("image_id", 0)

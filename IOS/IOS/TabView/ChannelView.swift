@@ -7,11 +7,11 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 import class Kingfisher.KingfisherManager
 
 struct ChannelView : View{
-    
     
     @State var showModal = false
     
@@ -38,13 +38,11 @@ struct ChannelView : View{
                     Spacer()
                 }
                 
-                VStack(spacing: 10){
+                VStack(spacing: 15){
                     if newUserList.count > 0 {
                         HStack{
-                            
                             NewUserCell(newUser: newUserList[0])
                             if newUserList.count > 1 {
-                                
                                 NewUserCell(newUser: newUserList[1])
                             }
                             else {
@@ -52,23 +50,18 @@ struct ChannelView : View{
                                 Text("")
                                     .frame(width:160,height:160)
                             }
-                            
                         }
                     }
                     if newUserList.count > 2 {
                         HStack{
-                            Spacer()
                             NewUserCell(newUser: newUserList[2])
                             if newUserList.count > 3 {
-                                Spacer()
                                 NewUserCell(newUser: newUserList[3])
                             }
                             else {
-                                Spacer()
                                 Text("")
                                     .frame(width:160,height:160)
                             }
-                            Spacer()
                         }
                     }
                 }
@@ -109,23 +102,6 @@ struct ChannelView : View{
                 }
                 .padding()
                 .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.orange,lineWidth: 2))
-                Spacer(minLength: 30)
-            }
-            
-            Group{
-                HStack{
-                    Image("icon")
-                        .resizable()
-                        .frame(width:60,height:60)
-                    VStack(alignment: .leading){
-                        Text("내 프로필 상단으로 올리기")
-                            .font(.system(size:20))
-                        Text("많은 이성들에게 내 프로필을 보여주세요")
-                            .font(.system(size:15))
-                            .foregroundColor(Color.gray)
-                    }
-                    Spacer()
-                }
                 Spacer(minLength: 30)
             }
             
@@ -219,6 +195,23 @@ struct ChannelView : View{
                 Spacer(minLength: 30)
             }
             
+            Group{
+                HStack{
+                    Image("icon")
+                        .resizable()
+                        .frame(width:60,height:60)
+                    VStack(alignment: .leading){
+                        Text("내 프로필 상단으로 올리기")
+                            .font(.system(size:20))
+                        Text("많은 이성들에게 내 프로필을 보여주세요")
+                            .font(.system(size:15))
+                            .foregroundColor(Color.gray)
+                    }
+                    Spacer()
+                }
+                Spacer(minLength: 30)
+            }
+            
         }
         .padding()
         .navigationBarTitle("채널",displayMode: .inline)
@@ -256,12 +249,15 @@ struct ChannelView_Previews: PreviewProvider {
 
 struct NewUserCell: View {
     
+    @ObservedObject private var locationManager = LocationManager()
+    
     @State var newUser : NewUserModel
     
     @State var uiImage = UIImage()
     //@State var storyVisible=false
     @State var age = 0
-    
+    @State var dist = ""
+    @State var time = ""
     var body: some View {
         ZStack{
             Image(uiImage: self.uiImage)
@@ -278,7 +274,7 @@ struct NewUserCell: View {
                     Spacer()
                 }
                 HStack{
-                    Text("\(newUser.user_recentgps),\(newUser.user_recenttime)")
+                    Text("\(dist),\(time)")
                         .foregroundColor(Color.white)
                         .font(.system(size: 10, weight: .bold))
                     Spacer()
@@ -290,16 +286,53 @@ struct NewUserCell: View {
                     self.uiImage=image!
                 })
                 
-                let now = Date()
+                let coordinate = self.locationManager.location != nil
+                    ? self.locationManager.location!.coordinate
+                    : CLLocationCoordinate2D()
+                
+                var userLocation=CLLocation(latitude: (self.newUser.user_recentgps.split(separator: ",")[0] as NSString).doubleValue
+                    , longitude: (self.newUser.user_recentgps.split(separator: ",")[1] as NSString).doubleValue)
+                
+                var mylocation=CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                
+                var distMeter = mylocation.distance(from: userLocation)
+                var distKm=distMeter/1000
+                
+                if distKm>=10 {
+                    self.dist="\(Int(distKm))km"
+                }
+                else {
+                    self.dist=String(format: "%.1f", distKm)+"km"
+                }
+                
+                var now = Date()
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                dateFormatter.locale = Locale(identifier: "ko")
                 let date=dateFormatter.string(from: now)
                 
                 self.age=(Int(date.split(separator: "-")[0]).unsafelyUnwrapped-Int(self.newUser.user_birthday.split(separator: "-")[0]).unsafelyUnwrapped+1)
+                
+                var newUserRecentTime = dateFormatter.date(from : self.newUser.user_recenttime)?.addingTimeInterval(3600 * 9)
+                now=now.addingTimeInterval(3600 * 9)
+                
+                var timeInterval = Int(now.timeIntervalSince(newUserRecentTime!))
+                
+                if timeInterval >= 86400 {
+                    self.time="\(timeInterval/86400)일 전"
+                }
+                else if timeInterval >= 3600 {
+                    self.time="\(timeInterval/3600)시간 전"
+                }
+                else if timeInterval >= 60{
+                    self.time="\(timeInterval/60)분 전"
+                }
+                else {
+                    self.time="\(timeInterval)초 전"
+                }
             }
         }
+        
     }
-    
-    
 }
 

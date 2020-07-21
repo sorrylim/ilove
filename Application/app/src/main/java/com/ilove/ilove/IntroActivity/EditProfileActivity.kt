@@ -30,6 +30,68 @@ import com.ilove.ilove.R
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import kotlinx.android.synthetic.main.activity_edit_profile.image_editmain
+import kotlinx.android.synthetic.main.activity_edit_profile.image_editsub1
+import kotlinx.android.synthetic.main.activity_edit_profile.image_editsub2
+import kotlinx.android.synthetic.main.activity_edit_profile.image_editsub3
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editalcohol
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editasset
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editbloodtype
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editbody
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editbrother
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editchildren
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editchildrenplan
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editcigarette
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editcity
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editcountry
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editdatecost
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editeducation
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editfavoriteperson
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editheight
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editholiday
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editinterest
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editintroduce
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editjob
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editlanguage
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editmarriagehistory
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editmarriageplan
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editparenting
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editpersonality
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editpreviewintroduce
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editreligion
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editroommate
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editsalary
+import kotlinx.android.synthetic.main.activity_edit_profile.layout_editwishdate
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editalcohol
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editasset
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editbloodtype
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editbody
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editbrother
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editchildren
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editchildrenplan
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editcigarette
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editcity
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editcountry
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editdatecost
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editeducation
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editfavoriteperson
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editheight
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editholiday
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editinterest
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editintroduce
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editjob
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editlanguage
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editmarriagehistory
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editmarriageplan
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editparenting
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editpersonality
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editpreviewintroduce
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editreligion
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editroommate
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editsalary
+import kotlinx.android.synthetic.main.activity_edit_profile.text_editwishdate
+import kotlinx.android.synthetic.main.activity_edit_profile.toolbar_editprofile
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.FileNotFoundException
@@ -53,7 +115,13 @@ class EditProfileActivity : PSAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_profile)
+        if(UserInfo.AUTHORITY=="normal") {
+            setContentView(R.layout.activity_edit_profile)
+        }
+        else if(UserInfo.AUTHORITY=="manager"){
+            setContentView(R.layout.activity_edit_profile_staff)
+        }
+
 
 
         scroll_editprofile.setOverScrollMode(View.OVER_SCROLL_NEVER)
@@ -143,6 +211,12 @@ class EditProfileActivity : PSAppCompatActivity() {
         VolleyService.getUserOptionReq(UserInfo.ID, this, {success->
             var json = success
 
+            if(json.getString("user_gender") != "null")
+            {
+                text_gender.text = json.getString("user_gender")
+                text_gender.setTextColor(Color.parseColor("#FFA500"))
+                text_gender.setTypeface(text_editheight.getTypeface(), Typeface.BOLD)
+            }
             if(json.getString("user_introduce") != "null")
             {
                 text_editintroduce.text = json.getString("user_introduce")
@@ -373,7 +447,12 @@ class EditProfileActivity : PSAppCompatActivity() {
             psDialog.setIntroduce(text_editintroduce)
             psDialog.show()
         }
-
+        layout_gender.setOnClickListener {
+            userOptionList.clear()
+            gender()
+            psDialog.setUserOption("성별", "user_gender", userOptionList, text_gender)
+            psDialog.show()
+        }
 
         layout_editheight.setOnClickListener {
             userOptionList.clear()
@@ -599,7 +678,9 @@ class EditProfileActivity : PSAppCompatActivity() {
             userOptionList.add(UserItem.UserOption(i.toString()+"cm"))
         }
     }
-
+    fun gender() {
+        userOptionList = arrayListOf(UserItem.UserOption("여자"), UserItem.UserOption("남자"))
+    }
     fun bodyType() {
         userOptionList = arrayListOf(UserItem.UserOption("마른"), UserItem.UserOption("슬림탄탄"), UserItem.UserOption("보통"), UserItem.UserOption("글래머"), UserItem.UserOption("근육질"), UserItem.UserOption("통통한"), UserItem.UserOption("뚱뚱한"), UserItem.UserOption("기타"))
     }
