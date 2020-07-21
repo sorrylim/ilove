@@ -20,13 +20,9 @@ import org.json.JSONObject
 
 class MessageFragment : Fragment() {
 
-    companion object{
-        var handler: Handler? = null
-    }
-
-    var chatRoomRV : RecyclerView? = null
+    var chatRoomRV: RecyclerView? = null
     var chatRoomList = ArrayList<ChatRoomItem>()
-    var chatRoomAdapter : ChatRoomAdapter? = null
+    var chatRoomAdapter: ChatRoomAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,27 +30,16 @@ class MessageFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_message, container, false)
-        chatRoomRV =rootView.findViewById<RecyclerView>(R.id.rv_chatroom)
+        chatRoomRV = rootView.findViewById<RecyclerView>(R.id.rv_chatroom)
         chatRoomAdapter = ChatRoomAdapter(activity!!, chatRoomList!!)
-
-        handler=object : Handler(){
-            override fun handleMessage(msg: Message) {
-
-                when(msg.what){
-                    0 -> {
-                        refreshList(chatRoomRV!!,chatRoomList,chatRoomAdapter!!)
-                    }
-                }
-            }
-        }
 
         return rootView
     }
 
     override fun onResume() {
         super.onResume()
-
-        refreshList(chatRoomRV!!,chatRoomList,chatRoomAdapter!!)
+        Log.d("test","resume refreshList")
+        refreshList(chatRoomRV!!, chatRoomList, chatRoomAdapter!!)
     }
 
     private fun refreshList(
@@ -62,38 +47,38 @@ class MessageFragment : Fragment() {
         chatRoomList: java.util.ArrayList<ChatRoomItem>,
         chatRoomAdapter: ChatRoomAdapter
     ) {
-        VolleyService.getMyChatRoom(UserInfo.ID,activity!!,{success ->
 
-            chatRoomRV.setHasFixedSize(true)
-            chatRoomRV.layoutManager = LinearLayoutManager(activity!!, RecyclerView.VERTICAL, false)
-            chatRoomRV.adapter = chatRoomAdapter
+        chatRoomAdapter.clear()
 
-            chatRoomAdapter.clear()
-
+        VolleyService.getMyChatRoom(UserInfo.ID, activity!!, { success ->
             var array = success
 
-            for(i in 0..array.length()-1){
-                var json=array[i] as JSONObject
+            for (i in 0..array.length() - 1) {
+                var json = array[i] as JSONObject
 
-                if(UserInfo.ID==json.getString(("room_maker"))) {
-                    VolleyService.getProfileImageReq(json.getString("room_partner"),activity!!,{success ->
-                        var imageJson=success[0] as JSONObject
-                        addChatRoom(json,imageJson.getString("image"))
+                var partnerId = ""
+
+                if (UserInfo.ID == json.getString("room_maker")) partnerId =
+                    json.getString("room_partner")
+                else partnerId = json.getString("room_maker")
+
+                VolleyService.getProfileImageReq(
+                    partnerId,
+                    activity!!,
+                    { success ->
+                        var imageJson = success[0] as JSONObject
+                        addChatRoom(json, imageJson.getString("image"))
+                        chatRoomAdapter.sortByLastChat()
+                        chatRoomRV.setHasFixedSize(true)
+                        chatRoomRV.layoutManager =
+                            LinearLayoutManager(activity!!, RecyclerView.VERTICAL, false)
+                        chatRoomRV.adapter = chatRoomAdapter
                     })
-                }
-                else{
-                    VolleyService.getProfileImageReq(json.getString("room_maker"),activity!!,{success ->
-                        var imageJson=success[0] as JSONObject
-                        addChatRoom(json,imageJson.getString("image"))
-                    })
-                }
             }
-
-            chatRoomAdapter.sortByLastChat()
         })
     }
 
-    fun addChatRoom(json: JSONObject, imageUrl: String){
+    fun addChatRoom(json: JSONObject, imageUrl: String) {
 
         chatRoomList.add(
             ChatRoomItem(

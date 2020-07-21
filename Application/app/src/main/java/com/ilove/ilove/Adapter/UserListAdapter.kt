@@ -3,6 +3,7 @@ package com.ilove.ilove.Adapter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,6 +51,7 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
         Glide.with(holder.itemView)
             .load(userList.get(position).userImage)
             .into(holder.itemView.image_userlistprofile)
+
         holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + " " + age + " " + userList.get(position).userCity
         holder.itemView.text_userlistrecent.text =  userList.get(position).recentGps + "km" + ", " + gpsTracker.timeDiff(partnerDate.getTime())
         holder.itemView.text_userlistintroduce.text = userList.get(position).userIntroduce
