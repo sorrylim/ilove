@@ -29,76 +29,15 @@ import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import kotlinx.android.synthetic.main.activity_edit_profile.*
-import kotlinx.android.synthetic.main.activity_edit_profile.image_editmain
-import kotlinx.android.synthetic.main.activity_edit_profile.image_editsub1
-import kotlinx.android.synthetic.main.activity_edit_profile.image_editsub2
-import kotlinx.android.synthetic.main.activity_edit_profile.image_editsub3
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editalcohol
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editasset
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editbloodtype
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editbody
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editbrother
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editchildren
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editchildrenplan
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editcigarette
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editcity
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editcountry
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editdatecost
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editeducation
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editfavoriteperson
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editheight
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editholiday
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editinterest
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editintroduce
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editjob
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editlanguage
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editmarriagehistory
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editmarriageplan
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editparenting
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editpersonality
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editpreviewintroduce
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editreligion
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editroommate
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editsalary
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editwishdate
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editalcohol
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editasset
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editbloodtype
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editbody
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editbrother
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editchildren
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editchildrenplan
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editcigarette
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editcity
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editcountry
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editdatecost
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editeducation
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editfavoriteperson
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editheight
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editholiday
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editinterest
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editintroduce
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editjob
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editlanguage
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editmarriagehistory
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editmarriageplan
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editparenting
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editpersonality
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editpreviewintroduce
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editreligion
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editroommate
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editsalary
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editwishdate
-import kotlinx.android.synthetic.main.activity_edit_profile.toolbar_editprofile
 import kotlinx.android.synthetic.main.activity_edit_profile_staff.*
+
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.FileNotFoundException
 import java.io.IOException
 
 
-class EditProfileActivity : PSAppCompatActivity() {
+class ManagerEditProfileActivity : PSAppCompatActivity() {
 
     companion object {
         var handler:Handler? = null
@@ -116,10 +55,10 @@ class EditProfileActivity : PSAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_profile_staff)
 
-        setContentView(R.layout.activity_edit_profile)
-        scroll_editprofile.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
+        scroll_staff_editprofile.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
         var displayMetrics: DisplayMetrics = DisplayMetrics()
         this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics) // 화면의 가로길이를 구함
@@ -643,8 +582,8 @@ class EditProfileActivity : PSAppCompatActivity() {
         for(i in 0..array.length()-1) {
             var json = array[i] as JSONObject
             Glide.with(this)
-                .load(json.getString("image")).apply(RequestOptions().override(640, 640))
-                .into(profileImageList.get(i))
+                    .load(json.getString("image")).apply(RequestOptions().override(640, 640))
+                    .into(profileImageList.get(i))
             profileImageIdList.add(json.getInt("image_id"))
         }
     }
@@ -673,16 +612,16 @@ class EditProfileActivity : PSAppCompatActivity() {
 
     fun regidence() {
         userOptionList = arrayListOf(UserItem.UserOption("서울"), UserItem.UserOption("경기"), UserItem.UserOption("인천"), UserItem.UserOption("대전"), UserItem.UserOption("대구"), UserItem.UserOption("부산"), UserItem.UserOption("울산"), UserItem.UserOption("광주"), UserItem.UserOption("강원"), UserItem.UserOption("세종"), UserItem.UserOption("충북"),
-            UserItem.UserOption("충남"), UserItem.UserOption("경북"), UserItem.UserOption("전남"), UserItem.UserOption("제주"), UserItem.UserOption("해외"))
+                UserItem.UserOption("충남"), UserItem.UserOption("경북"), UserItem.UserOption("전남"), UserItem.UserOption("제주"), UserItem.UserOption("해외"))
     }
 
     fun job() {
         userOptionList = arrayListOf(UserItem.UserOption("회사원"), UserItem.UserOption("사무직"), UserItem.UserOption("대기업"), UserItem.UserOption("외국계 컨설팅관련"), UserItem.UserOption("크리에이터"), UserItem.UserOption("IT관련업"), UserItem.UserOption("대기업 무역관련"), UserItem.UserOption("의사"),
-            UserItem.UserOption("변호사"), UserItem.UserOption("공인회계사"), UserItem.UserOption("사장, 임원"), UserItem.UserOption("외국계 금융관련"), UserItem.UserOption("공무원"), UserItem.UserOption("학생"), UserItem.UserOption("승무원"), UserItem.UserOption("교수, 선생님"), UserItem.UserOption("패션업"),
-            UserItem.UserOption("연예인, 모델"), UserItem.UserOption("광고"), UserItem.UserOption("방송, 신문사"), UserItem.UserOption("WEB관련"), UserItem.UserOption("아나운서"), UserItem.UserOption("나레이터 모델"), UserItem.UserOption("안내원"), UserItem.UserOption("비서"), UserItem.UserOption("간호사"), UserItem.UserOption("보육사"),
-            UserItem.UserOption("자영업"), UserItem.UserOption("파일럿"), UserItem.UserOption("중소기업"), UserItem.UserOption("금융업"), UserItem.UserOption("컨설팅업"), UserItem.UserOption("조리사, 영양사"), UserItem.UserOption("교육관련"), UserItem.UserOption("식품관련"), UserItem.UserOption("제약관련"), UserItem.UserOption("보험"), UserItem.UserOption("부동산"),
-            UserItem.UserOption("건설업"), UserItem.UserOption("통신"), UserItem.UserOption("유통"), UserItem.UserOption("서비스업"), UserItem.UserOption("미용관련"), UserItem.UserOption("연예게 관련"), UserItem.UserOption("여행관련"), UserItem.UserOption("결혼관련업"), UserItem.UserOption("복지관련"), UserItem.UserOption("약사"),
-            UserItem.UserOption("스포츠선수"), UserItem.UserOption("기타"))
+                UserItem.UserOption("변호사"), UserItem.UserOption("공인회계사"), UserItem.UserOption("사장, 임원"), UserItem.UserOption("외국계 금융관련"), UserItem.UserOption("공무원"), UserItem.UserOption("학생"), UserItem.UserOption("승무원"), UserItem.UserOption("교수, 선생님"), UserItem.UserOption("패션업"),
+                UserItem.UserOption("연예인, 모델"), UserItem.UserOption("광고"), UserItem.UserOption("방송, 신문사"), UserItem.UserOption("WEB관련"), UserItem.UserOption("아나운서"), UserItem.UserOption("나레이터 모델"), UserItem.UserOption("안내원"), UserItem.UserOption("비서"), UserItem.UserOption("간호사"), UserItem.UserOption("보육사"),
+                UserItem.UserOption("자영업"), UserItem.UserOption("파일럿"), UserItem.UserOption("중소기업"), UserItem.UserOption("금융업"), UserItem.UserOption("컨설팅업"), UserItem.UserOption("조리사, 영양사"), UserItem.UserOption("교육관련"), UserItem.UserOption("식품관련"), UserItem.UserOption("제약관련"), UserItem.UserOption("보험"), UserItem.UserOption("부동산"),
+                UserItem.UserOption("건설업"), UserItem.UserOption("통신"), UserItem.UserOption("유통"), UserItem.UserOption("서비스업"), UserItem.UserOption("미용관련"), UserItem.UserOption("연예게 관련"), UserItem.UserOption("여행관련"), UserItem.UserOption("결혼관련업"), UserItem.UserOption("복지관련"), UserItem.UserOption("약사"),
+                UserItem.UserOption("스포츠선수"), UserItem.UserOption("기타"))
     }
 
     fun education() {

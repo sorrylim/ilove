@@ -45,4 +45,5 @@
         app:layout_constraintEnd_toEndOf="@+id/edit_loginid"
         app:layout_constraintStart_toStartOf="@+id/edit_loginid"
         app:layout_constraintTop_toBottomOf="@+id/edit_loginpw" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
