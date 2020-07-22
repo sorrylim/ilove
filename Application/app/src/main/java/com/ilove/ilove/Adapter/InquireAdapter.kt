@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
@@ -20,9 +21,12 @@ class InquireAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
     override fun createFragment(position: Int): Fragment {
         return when(position) {
             0 -> InquireFragment(fa)
-            else -> InquireListFragment()
+            else -> {
+                InquireListFragment()
+            }
         }
     }
+
 
     override fun getItemCount(): Int {
         return 2
