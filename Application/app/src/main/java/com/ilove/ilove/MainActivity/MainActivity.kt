@@ -50,7 +50,7 @@ class MainActivity : PSAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        Log.d("ttt",UserInfo.ID)
         FirebaseMessaging.getInstance().subscribeToTopic(UserInfo.ID)
             .addOnCompleteListener {
                 Log.d("test","success subscribe to topic")

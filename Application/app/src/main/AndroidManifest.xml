@@ -20,6 +20,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".IntroActivity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".IntroActivity.InquireActivity" />
         <activity android:name=".IntroActivity.ChargeCandyActivity" />
@@ -32,11 +37,7 @@
             android:resource="@color/colorAccent" />
 
         <activity android:name=".IntroActivity.SplashActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".IntroActivity.CropperActivity" />
         <activity android:name=".MainActivity.MainActivity">
@@ -52,6 +53,7 @@
         <activity android:name=".IntroActivity.AlarmSettingActivity" />
         <activity android:name=".IntroActivity.SettingActivity" />
         <activity android:name=".MainActivity.ChatActivity" />
+        <activity android:name=".IntroActivity.ManagerEditProfileActivity"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
