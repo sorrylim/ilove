@@ -42,15 +42,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-
-        if(!checkLocationServicesStatus()) {
-            showDialogForLocationServiceSetting()
-        }
-        else {
-            checkRunTimePermission()
-        }
-
-        //알림 채널 생성
+//알림 채널 생성
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             var fcmPref=this.getSharedPreferences("FCM", Context.MODE_PRIVATE)
             if(fcmPref.getString("id","")==""){
@@ -72,6 +64,14 @@ class SplashActivity : AppCompatActivity() {
                 notificationManager.createNotificationChannel(notificationChannel)
             }
         }
+        if(!checkLocationServicesStatus()) {
+            showDialogForLocationServiceSetting()
+        }
+        else {
+            checkRunTimePermission()
+        }
+
+
 
         /*var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
         UserInfo.ID = userPref.getString("ID", "")!!

@@ -28,12 +28,16 @@ import com.ilove.ilove.MainActivity.ChatActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.dialog_inquire.*
+import java.text.SimpleDateFormat
 
 class PSDialog(activity: Activity) {
 
 
     var context : Activity? = null
     var dialog : Dialog? = null
+
+    var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    var curDate = simpleDateFormat.format(System.currentTimeMillis())
 
     companion object {
         var userOptionData : String = ""
@@ -318,7 +322,11 @@ class PSDialog(activity: Activity) {
         subContentText.visibility = View.GONE
 
         acceptBtn.setOnClickListener {
-            dialog!!.dismiss()
+            VolleyService.updateUpProfileReq(UserInfo.ID, curDate, context!!, {success->
+                if(success=="success") {
+                    dialog!!.dismiss()
+                }
+            })
         }
 
         cancelBtn.setOnClickListener {

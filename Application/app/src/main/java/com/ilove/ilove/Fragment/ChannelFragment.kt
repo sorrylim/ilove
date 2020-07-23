@@ -61,8 +61,6 @@ class ChannelFragment(titleText: TextView) : Fragment() {
             psDialog.show()
         }
 
-
-
         nestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
         swipeLayout.setOnRefreshListener {

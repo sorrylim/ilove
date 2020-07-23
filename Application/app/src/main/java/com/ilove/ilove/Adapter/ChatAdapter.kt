@@ -1,6 +1,8 @@
 package com.ilove.ilove.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +36,7 @@ class ChatAdapter : BaseAdapter() {
         return chatList.get(position)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view = convertView
         val context: Context? = parent?.context
@@ -59,16 +62,19 @@ class ChatAdapter : BaseAdapter() {
         if (!item.isMyChat!!) {
             view = inflater.inflate(R.layout.item_chat, parent, false)
 
-            var textSpeaker = view!!.findViewById(R.id.text_speaker) as TextView
             var textContent = view!!.findViewById(R.id.text_content) as TextView
             var textTime = view.findViewById(R.id.text_time) as TextView
-            var textUnreadCount = view.findViewById(R.id.text_unread_count) as TextView
+
+            var textSpeaker = view!!.findViewById(R.id.text_speaker) as TextView
             var imageChatPartner = view.findViewById(R.id.image_chatpartner) as ImageView
             Glide.with(view)
                 .load(item.chatPartnerImage)
                 .apply(RequestOptions().circleCrop())
                 .apply(RequestOptions().override(640,640))
                 .into(imageChatPartner)
+
+            textContent.text = item.chatContent
+            textTime.text = timeStr
 
             if(chatList.count()>1 && position > 0) {
                 var beforeItem = chatList[position - 1]
@@ -87,10 +93,6 @@ class ChatAdapter : BaseAdapter() {
 
             }
 
-            if(item.unreadCount!!.toInt()>0) textUnreadCount.text = item.unreadCount
-            else textUnreadCount.text = ""
-            textContent.text = item.chatContent
-            textTime.text = timeStr
         } else {
             view = inflater.inflate(R.layout.item_my_chat, parent, false)
 
@@ -100,6 +102,17 @@ class ChatAdapter : BaseAdapter() {
 
             if(item.unreadCount!!.toInt()>0) textUnreadCount.text = item.unreadCount
             else textUnreadCount.text = ""
+            textContent.text = item.chatContent
+            textTime.text = timeStr
+
+            if(item.unreadCount!!.toInt()>0) {
+                textUnreadCount.text = item.unreadCount
+                textUnreadCount.setTextColor(Color.rgb(255,200,0))
+            }
+            else {
+                textUnreadCount.text = "읽음"
+                textUnreadCount.setTextColor(R.color.colorMdGrey_500)
+            }
             textContent.text = item.chatContent
             textTime.text = timeStr
         }

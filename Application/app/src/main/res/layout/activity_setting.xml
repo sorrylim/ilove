@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <TextView
-        android:id="@+id/text_settingaccount"
+        android:id="@+id/text_settinglogout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
@@ -55,7 +55,7 @@
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="계정"
+        android:text="로그아웃"
         android:textColor="@color/colorMdGrey_900"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +72,7 @@
         android:textColor="@color/colorMdGrey_900"
         android:textSize="15dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_settingaccount" />
+        app:layout_constraintTop_toBottomOf="@+id/text_settinglogout" />
 
     <TextView
         android:id="@+id/text_settingversioninfo"

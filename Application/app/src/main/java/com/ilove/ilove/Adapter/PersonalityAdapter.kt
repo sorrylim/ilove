@@ -45,7 +45,7 @@ class PersonalityAdapter(val context: Context, val userOptionList:ArrayList<User
 
             for(i in 0..userOptionList.size-1) {
                 if(userOptionList.get(i).isSelected == true) {
-                    PSDialog.userOptionData += userOptionList.get(i).title + " "
+                    PSDialog.userOptionData += userOptionList.get(i).title + ","
                 }
             }
         }

@@ -857,4 +857,25 @@ object VolleyService {
 
         Volley.newRequestQueue(context).add(request)
     }
+
+    fun updateUpProfileReq(userId : String, upProfileDate: String, context: Context, success : (String) -> Unit) {
+        val url = "${ip}/user/upprofile"
+
+        var json=JSONObject()
+            .put("user_id", userId)
+            .put("upprofile_date", upProfileDate)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
 }

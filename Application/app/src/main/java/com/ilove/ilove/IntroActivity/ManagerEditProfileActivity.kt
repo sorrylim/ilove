@@ -142,6 +142,17 @@ class ManagerEditProfileActivity : PSAppCompatActivity() {
             }
         }
 
+        if(UserInfo.GENDER!=""){
+            var gender:String?=null
+            if(UserInfo.GENDER!="F"){
+                gender="여성"
+            }else{
+                gender="남성"
+            }
+            text_editheight.text =gender
+            text_editheight.setTextColor(Color.parseColor("#FFA500"))
+            text_editheight.setTypeface(text_editheight.getTypeface(), Typeface.BOLD)
+        }
         VolleyService.getUserOptionReq(UserInfo.ID, this, {success->
             var json = success
 

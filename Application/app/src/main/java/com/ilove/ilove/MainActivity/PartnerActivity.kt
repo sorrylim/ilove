@@ -43,10 +43,10 @@ class PartnerActivity : PSAppCompatActivity() {
         this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics)
         width = displayMetrics.widthPixels
         dm = getResources().getDisplayMetrics()
-        topPadding = Math.round(5 * dm!!.density)
-        padding = Math.round(15 * dm!!.density)
-        margin = Math.round(10 * dm!!.density)
-        layoutMargin = Math.round(5 * dm!!.density)
+        topPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5f, dm!!).toInt()
+        padding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15f, dm!!).toInt()
+        margin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, dm!!).toInt()
+        layoutMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5f, dm!!).toInt()
 
         image_partnerbackpress.bringToFront()
 
@@ -313,7 +313,7 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerhobby.visibility = View.VISIBLE
                     layout_hobby.visibility = View.VISIBLE
 
-                    var hobby : List<String> = json.getString("user_interest").split(" ")
+                    var hobby : List<String> = json.getString("user_interest").split(",")
                     setLayout(layout_hobby, hobby)
                 }
 
@@ -322,7 +322,7 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerpersonality.visibility = View.VISIBLE
                     layout_personality.visibility = View.VISIBLE
 
-                    var personality : List<String> = json.getString("user_personality").split(" ")
+                    var personality : List<String> = json.getString("user_personality").split(",")
                     setLayout(layout_personality, personality)
                 }
 
@@ -331,7 +331,7 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerfavoriteperson.visibility = View.VISIBLE
                     layout_favoriteperson.visibility = View.VISIBLE
 
-                    var favoriteperson : List<String> = json.getString("user_favoriteperson").split(" ")
+                    var favoriteperson : List<String> = json.getString("user_favoriteperson").split(",")
                     setLayout(layout_favoriteperson, favoriteperson)
                 }
 
@@ -364,7 +364,7 @@ class PartnerActivity : PSAppCompatActivity() {
             textViewList.add(view)
         }
 
-        var test = width - Math.round(20*dm!!.density)
+        var test = width - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20f, dm!!).toInt()
 
         if(test < widthData) {
             for(i in 0..widthData/test) {
@@ -389,7 +389,7 @@ class PartnerActivity : PSAppCompatActivity() {
             textViewList.get(i).measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             filledWidth += (textViewList.get(i).measuredWidth + margin)
 
-            if(linearCount < linearList.size && filledWidth < width) {
+            if(linearCount < linearList.size && filledWidth < test) {
                 linearList.get(linearCount).addView(textViewList.get(i))
             }
             else {
