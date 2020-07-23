@@ -115,14 +115,14 @@ class EditProfileActivity : PSAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(UserInfo.AUTHORITY=="normal") {
+        /*if(UserInfo.AUTHORITY=="normal") {
             setContentView(R.layout.activity_edit_profile)
         }
         else if(UserInfo.AUTHORITY=="manager"){
             setContentView(R.layout.activity_edit_profile_staff)
         }
-
-
+*/
+        setContentView(R.layout.activity_edit_profile)
 
         scroll_editprofile.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
@@ -211,12 +211,14 @@ class EditProfileActivity : PSAppCompatActivity() {
         VolleyService.getUserOptionReq(UserInfo.ID, this, {success->
             var json = success
 
+/*
             if(json.getString("user_gender") != "null")
             {
                 text_gender.text = json.getString("user_gender")
                 text_gender.setTextColor(Color.parseColor("#FFA500"))
                 text_gender.setTypeface(text_editheight.getTypeface(), Typeface.BOLD)
             }
+*/
             if(json.getString("user_introduce") != "null")
             {
                 text_editintroduce.text = json.getString("user_introduce")
@@ -447,12 +449,12 @@ class EditProfileActivity : PSAppCompatActivity() {
             psDialog.setIntroduce(text_editintroduce)
             psDialog.show()
         }
-        layout_gender.setOnClickListener {
+        /*layout_gender.setOnClickListener {
             userOptionList.clear()
             gender()
             psDialog.setUserOption("성별", "user_gender", userOptionList, text_gender)
             psDialog.show()
-        }
+        }*/
 
         layout_editheight.setOnClickListener {
             userOptionList.clear()
