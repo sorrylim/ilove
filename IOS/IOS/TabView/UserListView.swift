@@ -31,7 +31,7 @@ struct UserListView : View{
                 }
                 .navigationBarTitle("리스트",displayMode: .inline)
                 .onAppear(){
-                    HttpService.shared.getUserListReq(gender: "F", userId: "ksh") { (userModelArray) -> Void in
+                    HttpService.shared.getUserListReq(gender: UserInfo.shared.GENDER, userId: UserInfo.shared.ID) { (userModelArray) -> Void in
                         self.userList=userModelArray
                     }
                 }
@@ -108,7 +108,7 @@ struct UserRow : View{
                     .onTapGesture {
                         if self.user.meet==1 {
                             print(self.user)
-                            HttpService.shared.deleteExpressionReq(userId: "ksh", partnerId: self.user.user_id, expressionType: "meet") { (resultModel) -> Void in
+                            HttpService.shared.deleteExpressionReq(userId: UserInfo.shared.ID, partnerId: self.user.user_id, expressionType: "meet") { (resultModel) -> Void in
                                 if resultModel.result=="success" {
                                     self.meetImage=Image("call_n_icon")
                                 }
@@ -121,7 +121,7 @@ struct UserRow : View{
                             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                             let date=dateFormatter.string(from: now)
                             
-                            HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.user.user_id, expressionType: "meet", expressionDate: date) { (resultModel) -> Void in
+                            HttpService.shared.insertExpressionReq(userId: UserInfo.shared.ID, partnerId: self.user.user_id, expressionType: "meet", expressionDate: date) { (resultModel) -> Void in
                                 if resultModel.result=="success" {
                                     self.meetImage=Image("call_icon")
                                 }
@@ -146,7 +146,7 @@ struct UserRow : View{
                     .onTapGesture {
                         if self.user.like==1 {
                             print(self.user)
-                            HttpService.shared.deleteExpressionReq(userId: "ksh", partnerId: self.user.user_id, expressionType: "like") { (resultModel) -> Void in
+                            HttpService.shared.deleteExpressionReq(userId: UserInfo.shared.ID, partnerId: self.user.user_id, expressionType: "like") { (resultModel) -> Void in
                                 if resultModel.result=="success" {
                                     self.likeImage=Image(systemName: "heart")
                                 }
@@ -159,7 +159,7 @@ struct UserRow : View{
                             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                             let date=dateFormatter.string(from: now)
                             
-                            HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.user.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
+                            HttpService.shared.insertExpressionReq(userId: UserInfo.shared.ID, partnerId: self.user.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
                                 if resultModel.result=="success" {
                                     self.likeImage=Image(systemName: "heart.fill")
                                 }

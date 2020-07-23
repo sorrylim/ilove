@@ -84,7 +84,7 @@ struct StoryListView : View {
             WriteStoryView(showing: self.$writeVisible)
         }
         .onAppear(){
-            HttpService.shared.getStoryImageReq(userId: "ksh"){ (storyModelArray) -> Void in
+            HttpService.shared.getStoryImageReq(userId: UserInfo.shared.ID){ (storyModelArray) -> Void in
                 self.storyList=storyModelArray
                 
                 self.total=storyModelArray.count
@@ -94,7 +94,7 @@ struct StoryListView : View {
                 }
             }
             
-            HttpService.shared.getMyStoryImage(userId: "ksh") { (myStoryImageModel) -> Void in
+            HttpService.shared.getMyStoryImage(userId: UserInfo.shared.ID) { (myStoryImageModel) -> Void in
                 KingfisherManager.shared.retrieveImage(with: URL(string: myStoryImageModel.image)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
                     self.myStoryImage=image!
                 })

@@ -9,7 +9,7 @@ class UserInfo : Application() {
         var NICKNAME: String = "임재성"
         var BIRTHDAY : String = ""
         var GENDER: String = "M"
-        var AUTHORITY: String = "manager"
+        var AUTHORITY: String = ""
         var BLOCKING: Int = 0
         var PHONE: String = ""
         var ALARMLIKE: Int = 0

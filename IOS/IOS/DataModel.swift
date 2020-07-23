@@ -108,3 +108,14 @@ struct ChatRoomModel : Codable {
     var chat_content : String
     var chat_time : String
 }
+
+struct ProfileImageModel : Codable {
+    var image_id : Int
+    var user_id : String
+    var image : String?
+    var image_usage : String
+    var image_content : String?
+    var viewcount : Int
+    var image_date : String
+    var likecount : Int
+}

@@ -218,17 +218,17 @@ struct ChannelView : View{
         .onAppear{
             ContentView.rootView?.setTitle(title: "채널")
             
-            HttpService.shared.getNewUserReq(userGender: "F", callback: { (newUserModelArray) -> Void in
+            HttpService.shared.getNewUserReq(userGender: UserInfo.shared.GENDER, callback: { (newUserModelArray) -> Void in
                 self.newUserList=newUserModelArray
             })
             
             
-            HttpService.shared.getViewCountReq(userId: "ksh",callback: { (data) -> Void in
+            HttpService.shared.getViewCountReq(userId: UserInfo.shared.ID,callback: { (data) -> Void in
                 self.profileCount=data.profile
                 self.storyCount=data.story
             })
             
-            HttpService.shared.getExpressionCountReq(userId: "ksh", callback: { (data) -> Void in
+            HttpService.shared.getExpressionCountReq(userId: UserInfo.shared.ID, callback: { (data) -> Void in
                 self.sendLikeCount=data.send_like
                 self.receiveLikeCount=data.receive_like
                 self.eachLikeCount=data.each_like
@@ -250,6 +250,8 @@ struct ChannelView_Previews: PreviewProvider {
 struct NewUserCell: View {
     
     @ObservedObject private var locationManager = LocationManager()
+    
+    @State var profileVisible = false
     
     @State var newUser : NewUserModel
     
@@ -332,7 +334,12 @@ struct NewUserCell: View {
                 }
             }
         }
-        
+        .sheet(isPresented: $profileVisible){
+            ProfileView(userId:self.newUser.user_id)
+        }
+        .onTapGesture {
+            self.profileVisible=true
+        }
     }
 }
 

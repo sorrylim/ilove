@@ -48,6 +48,36 @@ public class HttpService:ObservableObject{
             
         }.resume()
     }
+    
+    func getProfileImageReq(userId : String, callback: @escaping ([ProfileImageModel]) -> Void){
+        guard let url=URL(string: "\(ip)/image/get/profile") else {
+            return
+        }
+        
+        let data = [
+            [
+                "user_id" : userId
+            ]
+        ]
+        
+        let body=try! JSONSerialization.data(withJSONObject: data)
+        
+        var request=URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else {
+                return
+            }
+            
+            let decoded = try! JSONDecoder().decode([ProfileImageModel].self, from: data)
+            
+            callback(decoded)
+        }.resume()
+        
+    }
     //------------------------------Common------------------------------//
     
     

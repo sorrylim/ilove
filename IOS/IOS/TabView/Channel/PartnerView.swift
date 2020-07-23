@@ -69,47 +69,47 @@ struct PartnerView : View {
             switch self.title {
             case "내 프로필을 확인한 사람":
                 self.type="profile"
-                HttpService.shared.getVisitUserReq(userId: "ksh", visitType: "profile") { (partnerModelArray) -> Void in
+                HttpService.shared.getVisitUserReq(userId: UserInfo.shared.ID, visitType: "profile") { (partnerModelArray) -> Void in
                     self.visitPartnerList=partnerModelArray
                 }
             case "내 스토리를 확인한 사람":
                 self.type="story"
-                HttpService.shared.getVisitUserReq(userId: "ksh", visitType: "story") { ( partnerModelArray) -> Void in
+                HttpService.shared.getVisitUserReq(userId: UserInfo.shared.ID, visitType: "story") { ( partnerModelArray) -> Void in
                     self.visitPartnerList=partnerModelArray
                 }
             case "내가 좋아요를 보낸 이성":
                 self.type="like"
-                HttpService.shared.getPartnerReq(userId: "ksh", expressionType: "like", sendType:"send") { (partnerModelArray) -> Void in
+                HttpService.shared.getPartnerReq(userId: UserInfo.shared.ID, expressionType: "like", sendType:"send") { (partnerModelArray) -> Void in
                     self.partnerList=partnerModelArray
                 }
             case "나에게 좋아요를 보낸 이성":
                 self.type="like"
-                HttpService.shared.getPartnerReq(userId: "ksh", expressionType: "like", sendType:"receive") { (partnerModelArray) -> Void in
+                HttpService.shared.getPartnerReq(userId: UserInfo.shared.ID, expressionType: "like", sendType:"receive") { (partnerModelArray) -> Void in
                     self.partnerList=partnerModelArray
                 }
             case "서로 좋아요가 연결된 이성":
                 self.type="like"
-                HttpService.shared.getPartnerReq(userId: "ksh", expressionType: "like", sendType: "each1") { (partnerModelArray) -> Void in
+                HttpService.shared.getPartnerReq(userId: UserInfo.shared.ID, expressionType: "like", sendType: "each1") { (partnerModelArray) -> Void in
                     self.partnerList=partnerModelArray
-                    HttpService.shared.getPartnerReq(userId: "ksh", expressionType: "like", sendType: "each2") { (partnerModelArray2) -> Void in
+                    HttpService.shared.getPartnerReq(userId: UserInfo.shared.ID, expressionType: "like", sendType: "each2") { (partnerModelArray2) -> Void in
                         self.partnerList+=partnerModelArray2
                     }
                 }
             case "내가 만나고 싶은 그대":
                 self.type="meet"
-                HttpService.shared.getPartnerReq(userId: "ksh", expressionType: "meet", sendType:"send") { (partnerModelArray) -> Void in
+                HttpService.shared.getPartnerReq(userId: UserInfo.shared.ID, expressionType: "meet", sendType:"send") { (partnerModelArray) -> Void in
                     self.partnerList=partnerModelArray
                 }
             case "나를 만나고 싶어하는 그대":
                 self.type="meet"
-                HttpService.shared.getPartnerReq(userId: "ksh", expressionType: "meet", sendType:"receive") { (partnerModelArray) -> Void in
+                HttpService.shared.getPartnerReq(userId: UserInfo.shared.ID, expressionType: "meet", sendType:"receive") { (partnerModelArray) -> Void in
                     self.partnerList=partnerModelArray
                 }
             case "서로 연락처를 주고받은 그대":
                 self.type="meet"
-                HttpService.shared.getPartnerReq(userId: "ksh", expressionType: "meet", sendType: "each1") { (partnerModelArray) -> Void in
+                HttpService.shared.getPartnerReq(userId: UserInfo.shared.ID, expressionType: "meet", sendType: "each1") { (partnerModelArray) -> Void in
                     self.partnerList=partnerModelArray
-                    HttpService.shared.getPartnerReq(userId: "ksh", expressionType: "meet", sendType: "each2") { (partnerModelArray2) -> Void in
+                    HttpService.shared.getPartnerReq(userId: UserInfo.shared.ID, expressionType: "meet", sendType: "each2") { (partnerModelArray2) -> Void in
                         self.partnerList+=partnerModelArray2
                     }
                 }
@@ -135,14 +135,14 @@ struct PartnerView : View {
         }
         if let first = offsets.first {
             if self.title == "내가 좋아요를 보낸 이성" || self.title == "서로 좋아요가 연결된 이성"{
-                HttpService.shared.deleteExpressionReq(userId: "ksh", partnerId: partnerList[first].user_id, expressionType: "like") { (resultModel) -> Void in
+                HttpService.shared.deleteExpressionReq(userId: UserInfo.shared.ID, partnerId: partnerList[first].user_id, expressionType: "like") { (resultModel) -> Void in
                     if resultModel.result=="success" {
                         self.partnerList.remove(at: first)
                     }
                 }
             }
             else {
-                HttpService.shared.deleteExpressionReq(userId: "ksh", partnerId: partnerList[first].user_id, expressionType: "meet") { (resultModel) -> Void in
+                HttpService.shared.deleteExpressionReq(userId: UserInfo.shared.ID, partnerId: partnerList[first].user_id, expressionType: "meet") { (resultModel) -> Void in
                     if resultModel.result=="success" {
                         self.partnerList.remove(at: first)
                     }
@@ -194,7 +194,7 @@ struct PartnerRow : View{
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     let date=dateFormatter.string(from: now)
                                     
-                                    HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.partner.user_id, expressionType: "meet", expressionDate: date) { (resultModel) -> Void in
+                                    HttpService.shared.insertExpressionReq(userId: UserInfo.shared.ID, partnerId: self.partner.user_id, expressionType: "meet", expressionDate: date) { (resultModel) -> Void in
                                         if resultModel.result=="success" {
                                             self.meetImage=Image("call_icon")
                                         }
@@ -215,7 +215,7 @@ struct PartnerRow : View{
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     let date=dateFormatter.string(from: now)
                                     
-                                    HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.partner.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
+                                    HttpService.shared.insertExpressionReq(userId: UserInfo.shared.ID, partnerId: self.partner.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
                                         if resultModel.result=="success" {
                                             self.likeImage=Image(systemName: "heart.fill")
                                         }
@@ -325,7 +325,7 @@ struct VisitPartnerRow : View{
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     let date=dateFormatter.string(from: now)
                                     
-                                    HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.partner.user_id, expressionType: "meet", expressionDate: date) { (resultModel) -> Void in
+                                    HttpService.shared.insertExpressionReq(userId: UserInfo.shared.ID, partnerId: self.partner.user_id, expressionType: "meet", expressionDate: date) { (resultModel) -> Void in
                                         if resultModel.result=="success" {
                                             self.meetImage=Image("call_icon")
                                         }
@@ -346,7 +346,7 @@ struct VisitPartnerRow : View{
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     let date=dateFormatter.string(from: now)
                                     
-                                    HttpService.shared.insertExpressionReq(userId: "ksh", partnerId: self.partner.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
+                                    HttpService.shared.insertExpressionReq(userId: UserInfo.shared.ID, partnerId: self.partner.user_id, expressionType: "like", expressionDate: date) { (resultModel) -> Void in
                                         if resultModel.result=="success" {
                                             self.likeImage=Image(systemName: "heart.fill")
                                         }

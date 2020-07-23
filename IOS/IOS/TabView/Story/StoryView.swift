@@ -53,7 +53,7 @@ struct StoryView : View{
                     .foregroundColor(.red)
                     .onTapGesture {
                         if self.storyUser.like==1 {
-                            HttpService.shared.deleteStoryExpressionReq(userId: "ksh", imageId: self.story.image_id) { (resultModel) -> Void in
+                            HttpService.shared.deleteStoryExpressionReq(userId: UserInfo.shared.ID, imageId: self.story.image_id) { (resultModel) -> Void in
                                 if resultModel.result=="success" {
                                     self.likeImage=Image(systemName: "heart")
                                 }
@@ -67,7 +67,7 @@ struct StoryView : View{
                             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                             let date=dateFormatter.string(from: now)
                             
-                            HttpService.shared.insertStoryExpressionReq(userId: "ksh", imageId: self.story.image_id, expressionDate: date) { (resultModel) -> Void in
+                            HttpService.shared.insertStoryExpressionReq(userId: UserInfo.shared.ID, imageId: self.story.image_id, expressionDate: date) { (resultModel) -> Void in
                                 if resultModel.result=="success" {
                                     self.likeImage=Image(systemName: "heart.fill")
                                 }
@@ -93,7 +93,7 @@ struct StoryView : View{
                 self.uiImage=image!
             })
             
-            HttpService.shared.getStoryUserReq(userId: "ksh", imageId: self.story.image_id){ (storyUserModel) -> Void in
+            HttpService.shared.getStoryUserReq(userId: UserInfo.shared.ID, imageId: self.story.image_id){ (storyUserModel) -> Void in
                 self.storyUser=storyUserModel
                 if self.storyUser.like==1 {
                     print("1")
@@ -109,7 +109,7 @@ struct StoryView : View{
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 let date=dateFormatter.string(from: now)
                 
-                HttpService.shared.insertHistoryReq(userId: "ksh", partnerId: self.story.user_id, visitType: "story", visitDate: date){ (resultModel) -> Void in
+                HttpService.shared.insertHistoryReq(userId: UserInfo.shared.ID, partnerId: self.story.user_id, visitType: "story", visitDate: date){ (resultModel) -> Void in
                     
                 }
                 

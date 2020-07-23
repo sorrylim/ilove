@@ -11,11 +11,11 @@ import Foundation
 public class UserInfo : ObservableObject{
     static let shared=UserInfo()
     
-    var ID: String = ""
+    var ID: String = "ksh"
     var PW: String = ""
-    var NICKNAME: String = ""
+    var NICKNAME: String = "김세현"
     var BIRTHDAY : String = ""
-    var GENDER: String = ""
+    var GENDER: String = "M"
     var AUTHORITY: String = ""
     var BLOCKING: Int = 0
     var PHONE: String = ""
