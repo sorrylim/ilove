@@ -77,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
                             .apply()
 
                         Handler().postDelayed({
-                            var intent: Intent = Intent(this, MainActivity::class.java)
+                            var intent: Intent = Intent(this, SplashActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)  //액티비티 전환시 애니메이션을 무시
                             startActivity(intent)
                             finish()

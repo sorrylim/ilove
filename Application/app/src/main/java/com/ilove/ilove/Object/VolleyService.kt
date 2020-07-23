@@ -810,4 +810,51 @@ object VolleyService {
 
         Volley.newRequestQueue(context).add(request)
     }
+
+    fun sendInquireReq(userId: String, sendDate: String, inquireTitle: String, inquireContent: String, inquireType: String, context: Context, success : (String) -> Unit) {
+        val url = "${ip}/inquire/send"
+
+        var json=JSONObject()
+            .put("user_id",userId)
+            .put("send_date", sendDate)
+            .put("inquire_title", inquireTitle)
+            .put("inquire_content", inquireContent)
+            .put("inquire_type", inquireType)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun getInquireListReq(userId: String, context: Context, success : (JSONArray) -> Unit) {
+        val url = "${ip}/inquire/get"
+
+        var json=JSONObject()
+            .put("user_id", userId)
+
+        var array = JSONArray()
+            .put(json)
+
+        val request=object : JsonArrayRequest(
+            Method.POST,
+            url,
+            array,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
 }
