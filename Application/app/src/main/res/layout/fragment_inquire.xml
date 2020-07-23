@@ -67,15 +67,16 @@
         android:ems="10"
         android:gravity="left"
         android:hint="내용을 기재해주세요."
+        android:textSize="14dp"
         android:paddingLeft="10dp"
         android:paddingTop="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/btn_sendinquire"
         app:layout_constraintEnd_toEndOf="@+id/layout_inquirecategory"
         app:layout_constraintStart_toStartOf="@+id/layout_inquirecategory"
         app:layout_constraintTop_toBottomOf="@+id/layout_inquirecategory" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_sendinquire"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"

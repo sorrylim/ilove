@@ -28,12 +28,16 @@ import com.ilove.ilove.MainActivity.ChatActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.dialog_inquire.*
+import java.text.SimpleDateFormat
 
 class PSDialog(activity: Activity) {
 
 
     var context : Activity? = null
     var dialog : Dialog? = null
+
+    var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    var curDate = simpleDateFormat.format(System.currentTimeMillis())
 
     companion object {
         var userOptionData : String = ""
@@ -300,6 +304,32 @@ class PSDialog(activity: Activity) {
         }
 
         cancelText.setOnClickListener {
+            dialog!!.dismiss()
+        }
+    }
+
+    fun setUpProfile() {
+        dialog!!.setContentView(R.layout.dialog_purchasecheck)
+        var titleText : TextView = dialog!!.findViewById(R.id.text_dialogtitle)
+        var contentText : TextView = dialog!!.findViewById(R.id.text_dialogcontent)
+        var subContentText : TextView = dialog!!.findViewById(R.id.text_dialogsubcontent)
+        var acceptBtn : Button = dialog!!.findViewById(R.id.btn_dialogaccept)
+        var cancelBtn : Button = dialog!!.findViewById(R.id.btn_dialogcancel)
+
+        titleText.text = "프로필 올리기"
+        contentText.text = "프로필 올리기를 선택하셨습니다.\n진행하시겠습니까?"
+
+        subContentText.visibility = View.GONE
+
+        acceptBtn.setOnClickListener {
+            VolleyService.updateUpProfileReq(UserInfo.ID, curDate, context!!, {success->
+                if(success=="success") {
+                    dialog!!.dismiss()
+                }
+            })
+        }
+
+        cancelBtn.setOnClickListener {
             dialog!!.dismiss()
         }
     }

@@ -111,20 +111,15 @@ class EditProfileActivity : PSAppCompatActivity() {
     var profileImageList = ArrayList<ImageView>()
     var profileImageIdList : ArrayList<Int?> = arrayListOf(null, null, null, null)
     var editImageId : Int? = null
-
+    var layout:Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        if(UserInfo.AUTHORITY=="normal") {
-            setContentView(R.layout.activity_edit_profile)
-        }
-        else if(UserInfo.AUTHORITY=="manager"){
-            setContentView(R.layout.activity_edit_profile_staff)
-        }
-
-
-
+        
+        setContentView(R.layout.activity_edit_profile)
         scroll_editprofile.setOverScrollMode(View.OVER_SCROLL_NEVER)
+
 
         var displayMetrics: DisplayMetrics = DisplayMetrics()
         this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics) // 화면의 가로길이를 구함
@@ -211,12 +206,6 @@ class EditProfileActivity : PSAppCompatActivity() {
         VolleyService.getUserOptionReq(UserInfo.ID, this, {success->
             var json = success
 
-            if(json.getString("user_gender") != "null")
-            {
-                text_gender.text = json.getString("user_gender")
-                text_gender.setTextColor(Color.parseColor("#FFA500"))
-                text_gender.setTypeface(text_editheight.getTypeface(), Typeface.BOLD)
-            }
             if(json.getString("user_introduce") != "null")
             {
                 text_editintroduce.text = json.getString("user_introduce")
@@ -447,12 +436,6 @@ class EditProfileActivity : PSAppCompatActivity() {
             psDialog.setIntroduce(text_editintroduce)
             psDialog.show()
         }
-        layout_gender.setOnClickListener {
-            userOptionList.clear()
-            gender()
-            psDialog.setUserOption("성별", "user_gender", userOptionList, text_gender)
-            psDialog.show()
-        }
 
         layout_editheight.setOnClickListener {
             userOptionList.clear()
@@ -678,9 +661,7 @@ class EditProfileActivity : PSAppCompatActivity() {
             userOptionList.add(UserItem.UserOption(i.toString()+"cm"))
         }
     }
-    fun gender() {
-        userOptionList = arrayListOf(UserItem.UserOption("여자"), UserItem.UserOption("남자"))
-    }
+
     fun bodyType() {
         userOptionList = arrayListOf(UserItem.UserOption("마른"), UserItem.UserOption("슬림탄탄"), UserItem.UserOption("보통"), UserItem.UserOption("글래머"), UserItem.UserOption("근육질"), UserItem.UserOption("통통한"), UserItem.UserOption("뚱뚱한"), UserItem.UserOption("기타"))
     }

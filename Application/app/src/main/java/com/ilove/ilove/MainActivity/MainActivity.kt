@@ -41,31 +41,21 @@ class MainActivity : PSAppCompatActivity() {
     var messageFragment : Fragment? = null
     var profileFragment : Fragment? = null
 
-    private val GPS_ENABLE_CODE = 2001
-    private val PERMISSIONS_REQUEST_CODE = 100
+
 
     val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
     val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
-    private val requiredPermission = arrayOf(
-        android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        Log.d("test",UserInfo.ID)
         FirebaseMessaging.getInstance().subscribeToTopic(UserInfo.ID)
             .addOnCompleteListener {
                 Log.d("test","success subscribe to topic")
             }
 
-        if(!checkLocationServicesStatus()) {
-            showDialogForLocationServiceSetting()
-        }
-        else {
-            checkRunTimePermission()
-        }
 
         btn_candy.setOnClickListener {
             var intent = Intent(this, ChargeCandyActivity::class.java)
@@ -86,6 +76,7 @@ class MainActivity : PSAppCompatActivity() {
         Toast.makeText(this, timeDiff(partnerDate.getTime()), Toast.LENGTH_LONG).show()
 
         Toast.makeText(this, gpsTracker.getDistance(35.8446984, 128.5479911, 35.8539492, 128.5790978), Toast.LENGTH_SHORT).show()*/
+
 
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
@@ -186,114 +177,7 @@ class MainActivity : PSAppCompatActivity() {
         false
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if(requestCode == PERMISSIONS_REQUEST_CODE && grantResults.size == requiredPermission.size) {
-            var checkResult = true
-
-            for (result in grantResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    checkResult = false
-                    showDialogForLocationServiceSetting()
-                    break
-                }
-            }
-
-            if(checkResult) {
-                var gpsTracker = GpsTracker(this)
-
-                UserInfo.LATITUDE = gpsTracker.getLatitude().toString()
-                UserInfo.LONGITUDE = gpsTracker.getLongitude().toString()
-
-                VolleyService.updateRecentGps(UserInfo.ID, UserInfo.LATITUDE.toString() + "," + UserInfo.LONGITUDE.toString() , currentDate,this, {success->
-                    if(success != "success") {
-                        Toast.makeText(this, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
-                    }
-                })
-                gpsTracker.stopUsingGPS()
-
-            }
-        }
-        else {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, requiredPermission.get(0)) || ActivityCompat.shouldShowRequestPermissionRationale(this, requiredPermission.get(1))) {
-                Toast.makeText(this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
-                finish();
-            }else {
-                Toast.makeText(this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    fun checkRunTimePermission() {
-        val hasFineLocationPermission = ContextCompat.checkSelfPermission(this@MainActivity, android.Manifest.permission.ACCESS_FINE_LOCATION)
-        val hasCoarseLocationPermission = ContextCompat.checkSelfPermission(this@MainActivity, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED && hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
-            var gpsTracker = GpsTracker(this)
-
-
-            UserInfo.LATITUDE = gpsTracker.getLatitude().toString()
-            UserInfo.LONGITUDE = gpsTracker.getLongitude().toString()
-
-            VolleyService.updateRecentGps(UserInfo.ID, UserInfo.LATITUDE.toString() + "," + UserInfo.LONGITUDE.toString() , currentDate,this, {success->
-                if(success != "success") {
-                    Toast.makeText(this, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
-                }
-            })
-            gpsTracker.stopUsingGPS()
-        } else {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this@MainActivity, requiredPermission.get(0))) {
-                Toast.makeText(this@MainActivity, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show()
-                ActivityCompat.requestPermissions(this@MainActivity, requiredPermission, PERMISSIONS_REQUEST_CODE)
-            } else {
-                ActivityCompat.requestPermissions(this@MainActivity, requiredPermission, PERMISSIONS_REQUEST_CODE)
-            }
-        }
-    }
-
-    private fun showDialogForLocationServiceSetting() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
-        builder.setTitle("위치 서비스 비활성화")
-        builder.setMessage(
-            """
-                앱을 사용하기 위해서는 위치 서비스가 필요합니다.
-                위치 설정을 수정하시겠습니까?
-                """.trimIndent()
-        )
-        builder.setCancelable(true)
-        builder.setPositiveButton("설정", DialogInterface.OnClickListener { dialog, id ->
-            val callGPSSettingIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-            startActivityForResult(callGPSSettingIntent, GPS_ENABLE_CODE)
-        })
-        builder.setNegativeButton("취소",
-            DialogInterface.OnClickListener { dialog, id ->
-                moveTaskToBack(true)
-                finishAndRemoveTask()
-                android.os.Process.killProcess(android.os.Process.myPid())})
-        builder.create().show()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            GPS_ENABLE_CODE ->
-                //사용자가 GPS 활성 시켰는지 검사
-                if (checkLocationServicesStatus()) {
-                    if (checkLocationServicesStatus()) {
-                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음")
-                        checkRunTimePermission()
-                        return
-                    }
-                }
-        }
-    }
-
-    fun checkLocationServicesStatus() : Boolean {
-        var locationManager : LocationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    }
 
 
 

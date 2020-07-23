@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:textColor="@color/colorMdGrey_900"
             android:textSize="20dp"
-            android:text="아이러브"
+            android:text="아이러브팅"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

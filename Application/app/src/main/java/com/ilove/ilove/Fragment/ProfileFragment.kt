@@ -11,10 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.ilove.ilove.Class.UserInfo
-import com.ilove.ilove.IntroActivity.EditProfileActivity
-import com.ilove.ilove.IntroActivity.InquireActivity
-import com.ilove.ilove.IntroActivity.ItemActivity
-import com.ilove.ilove.IntroActivity.SettingActivity
+import com.ilove.ilove.IntroActivity.*
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.item_partnerlist.view.*
@@ -26,7 +23,6 @@ class ProfileFragment(titleText: TextView) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        titleText.text = "마이페이지"
 
         val rootView = inflater.inflate(R.layout.fragment_profile, container, false)
 
@@ -62,8 +58,15 @@ class ProfileFragment(titleText: TextView) : Fragment() {
         nickName.text = UserInfo.NICKNAME
 
         editProfileBtn.setOnClickListener {
-            var intent = Intent(activity, EditProfileActivity::class.java)
-            startActivity(intent)
+            if(UserInfo.AUTHORITY=="normal") {
+                 var intent = Intent(activity, EditProfileActivity::class.java)
+                startActivity(intent)
+            }
+            else if(UserInfo.AUTHORITY=="manager"){
+                 var intent = Intent(activity, ManagerEditProfileActivity::class.java)
+                startActivity(intent)
+            }
+
         }
 
         settingBtn.setOnClickListener {

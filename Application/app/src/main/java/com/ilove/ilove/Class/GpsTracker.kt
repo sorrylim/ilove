@@ -31,7 +31,7 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
     }
 
 
-    fun getDistance(userLatitude: String, userLongitude: String, partnerLatitude: String, partnerLongitude: String) : String {
+    fun getDistance(userLatitude: String, userLongitude: String, partnerLatitude: String, partnerLongitude: String) : ArrayList<String> {
         var locationA : Location = Location("pointA")
         var locationB : Location = Location("pointB")
 
@@ -44,22 +44,31 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
         var distanceInt = locationA.distanceTo(locationB)
         var distance = ""
 
+        var distanceForm = ArrayList<String>()
+
         if(distanceInt < 100) {
-            //distance = String.format("%.0f", distanceInt)
-            distance = "근처"
+            distanceForm.clear()
+            distanceForm.add(String.format("%.0f", distanceInt))
+            distanceForm.add("m")
         }
         else if(100<= distanceInt && distanceInt < 1000) {
-            distance = (distanceInt - (distanceInt%100)).toString()
+            distanceForm.clear()
+            distanceForm.add((distanceInt - (distanceInt%100)).toString())
+            distanceForm.add("m")
         }
         else if(1000<=distanceInt && distanceInt < 10000) {
             distanceInt /= 1000
-            distance = String.format("%.1f", distanceInt)
+            distanceForm.clear()
+            distanceForm.add(String.format("%.1f", distanceInt))
+            distanceForm.add("km")
         }
         else if(10000<=distanceInt) {
-            distance = String.format("%.0f", (distanceInt - distanceInt%1000))
+            distanceForm.clear()
+            distanceForm.add(String.format("%.0f", (distanceInt - distanceInt%1000)))
+            distanceForm.add("km")
         }
 
-        return distance
+        return distanceForm
     }
 
     fun getGps() : Location? {
@@ -158,10 +167,10 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
 
     enum class TimeValue(val value: Int,val maximum : Int, val msg : String) {
         SEC(60,60,"분"),
-        MIN(60,60,"시간"),
-        HOUR(24,24,"일"),
-        DAY(30,30,"달"),
-        MONTH(12,12,"년")
+        MIN(60,24,"시간"),
+        HOUR(24,30,"일"),
+        DAY(30,12,"달"),
+        MONTH(12,Int.MAX_VALUE,"년")
     }
 
     fun timeDiff(time : Long):String{

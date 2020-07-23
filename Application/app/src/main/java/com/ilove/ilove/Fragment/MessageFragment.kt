@@ -34,7 +34,6 @@ class MessageFragment(titleText: TextView) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        titleText.text = "아이러브팅 메세지"
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_message, container, false)
         chatRoomRV = rootView.findViewById<RecyclerView>(R.id.rv_chatroom)
