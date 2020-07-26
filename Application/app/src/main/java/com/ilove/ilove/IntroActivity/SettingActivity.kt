@@ -18,6 +18,10 @@ class SettingActivity : PSAppCompatActivity() {
             var intent = Intent(this, AlarmSettingActivity::class.java)
             startActivity(intent)
         }
+        text_settinglogout.setOnClickListener {
+            var intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
 
 

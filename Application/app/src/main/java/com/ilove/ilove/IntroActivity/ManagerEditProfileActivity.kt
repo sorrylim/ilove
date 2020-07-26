@@ -142,20 +142,22 @@ class ManagerEditProfileActivity : PSAppCompatActivity() {
             }
         }
 
-        if(UserInfo.GENDER!=""){
-            var gender:String?=null
-            if(UserInfo.GENDER!="F"){
-                gender="여성"
-            }else{
-                gender="남성"
-            }
-            text_editheight.text =gender
-            text_editheight.setTextColor(Color.parseColor("#FFA500"))
-            text_editheight.setTypeface(text_editheight.getTypeface(), Typeface.BOLD)
-        }
+
         VolleyService.getUserOptionReq(UserInfo.ID, this, {success->
             var json = success
 
+
+            if(json.getString("user_gender") != "null")
+            {
+                var gender:String?=null
+                if(json.getString("user_gender")=="M"){
+                    gender="남성"
+                }
+                else gender="여성"
+                text_editgender.text = gender
+                text_editgender.setTextColor(Color.parseColor("#FFA500"))
+                text_editgender.setTypeface(text_editheight.getTypeface(), Typeface.BOLD)
+            }
 
             if(json.getString("user_introduce") != "null")
             {
@@ -377,6 +379,13 @@ class ManagerEditProfileActivity : PSAppCompatActivity() {
         })
 
         var psDialog = PSDialog(this)
+
+        layout_gender.setOnClickListener {
+            userOptionList.clear()
+            gender()
+            psDialog.setUserOption("성별", "user_gender",userOptionList, text_editgender)
+            psDialog.show()
+        }
 
         layout_editpreviewintroduce.setOnClickListener {
             psDialog.setPreviewIntroduce(text_editpreviewintroduce)
@@ -611,6 +620,10 @@ class ManagerEditProfileActivity : PSAppCompatActivity() {
         for(i in 130..200) {
             userOptionList.add(UserItem.UserOption(i.toString()+"cm"))
         }
+    }
+
+    fun gender() {
+        userOptionList = arrayListOf(UserItem.UserOption("여성"), UserItem.UserOption("남성"))
     }
 
     fun bodyType() {

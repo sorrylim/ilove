@@ -149,11 +149,30 @@ class PSDialog(activity: Activity) {
                     })
                 }
                 else if(userOption=="user_gender"){
-                    if(userOptionData=="여자"){
+                    if(userOptionData=="여성"){
                         userOptionData="F"
                     }
-                    else userOptionData="M"
-                    //VolleyService만 추가해주면 됌
+                    else if(userOptionData=="남성") {
+                        userOptionData="M"
+                    }
+                    VolleyService.updateUserCityReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
+                        if(success == "success") {
+                            var gender:String?=null
+                            if(userOptionData=="F"){
+                                gender="여성"
+                            }
+                            else{
+                                gender="남성"
+                            }
+
+                            userOptionText.text = gender
+                            userOptionText.setTextColor(Color.parseColor("#FF8C00"))
+                            dismiss()
+                        }
+                        else {
+                            Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                        }
+                    })
 
                 }
                 else {
