@@ -18,6 +18,11 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        text_signup.setOnClickListener {
+            var intent: Intent = Intent(this, SignupActivity::class.java)
+            startActivity(intent)
+        }
+
         btn_login.setOnClickListener {
             VolleyService.loginReq(edit_loginid.text.toString(), edit_loginpw.text.toString(), this, {success->
                 Log.d("test", success.getInt("code").toString())

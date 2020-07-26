@@ -21,4 +21,5 @@
     <color name="colorMdOrange_400">#FFA726</color>
     <color name="colorMdGreen_600">#43a047</color>
 
+    <color name="view__primary_line">@color/colorMdGrey_200</color>
 </resources>
