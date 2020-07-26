@@ -39,6 +39,16 @@ class MessageFragment(titleText: TextView) : Fragment() {
         chatRoomRV = rootView.findViewById<RecyclerView>(R.id.rv_chatroom)
         chatRoomAdapter = ChatRoomAdapter(activity!!, chatRoomList!!)
 
+        handler = object : Handler() {
+            override fun handleMessage(msg: Message) {
+                when(msg.what){
+                    0 -> {
+                        refreshList(chatRoomRV!!, chatRoomList, chatRoomAdapter!!)
+                    }
+                }
+            }
+        }
+
         return rootView
     }
 

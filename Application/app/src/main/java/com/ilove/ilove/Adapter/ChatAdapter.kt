@@ -1,6 +1,7 @@
 package com.ilove.ilove.Adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
@@ -15,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.marginLeft
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ChatItem
 import com.ilove.ilove.R
@@ -22,7 +24,7 @@ import kotlinx.android.synthetic.main.item_partnerlist.view.*
 import kotlin.collections.ArrayList
 
 
-class ChatAdapter : BaseAdapter() {
+class ChatAdapter(private val activity : Activity) : BaseAdapter() {
     private var chatList = ArrayList<ChatItem>()
     override fun getCount(): Int {
         return chatList.size
@@ -60,39 +62,55 @@ class ChatAdapter : BaseAdapter() {
         }
 
         if (!item.isMyChat!!) {
-            view = inflater.inflate(R.layout.item_chat, parent, false)
-
-            var textContent = view!!.findViewById(R.id.text_content) as TextView
-            var textTime = view.findViewById(R.id.text_time) as TextView
-
-            var textSpeaker = view!!.findViewById(R.id.text_speaker) as TextView
-            var imageChatPartner = view.findViewById(R.id.image_chatpartner) as ImageView
-            Glide.with(view)
-                .load(item.chatPartnerImage)
-                .apply(RequestOptions().circleCrop())
-                .apply(RequestOptions().override(640,640))
-                .into(imageChatPartner)
-
-            textContent.text = item.chatContent
-            textTime.text = timeStr
-
-            if(chatList.count()>1 && position > 0) {
-                var beforeItem = chatList[position - 1]
-                if(beforeItem.isMyChat!!) textSpeaker!!.text = item.chatSpeakerNickname
-                else {
-                    textSpeaker.visibility=View.GONE
-                    imageChatPartner.visibility=View.GONE
-
-                    var constraintSet=ConstraintSet()
-                    //constraintSet.clone(context,R.id.layout_chat)
-                    constraintSet.clone(view.findViewById<ConstraintLayout>(R.id.layout_chat))
-                    //constraintSet.setMargin(view.findViewById(R.id.text_content),ConstraintSet.TOP,8)
-                    constraintSet.connect(R.id.text_content,ConstraintSet.TOP,R.id.layout_chat,ConstraintSet.TOP,12)
-                    constraintSet.applyTo(view.findViewById(R.id.layout_chat))
+            if(UserInfo.MESSAGETICKET == 0){
+                view = inflater.inflate(R.layout.item_unable_chat, parent, false)
+                var layoutChat = view.findViewById<ConstraintLayout>(R.id.layout_buy)
+                var psDialog = PSDialog(activity)
+                layoutChat.setOnClickListener {
+                    psDialog.setMessageTicketDialog()
+                    psDialog.show()
                 }
-
             }
+            else {
+                view = inflater.inflate(R.layout.item_chat, parent, false)
 
+                var textContent = view!!.findViewById(R.id.text_content) as TextView
+                var textTime = view.findViewById(R.id.text_time) as TextView
+
+                var textSpeaker = view!!.findViewById(R.id.text_speaker) as TextView
+                var imageChatPartner = view.findViewById(R.id.image_chatpartner) as ImageView
+                Glide.with(view)
+                    .load(item.chatPartnerImage)
+                    .apply(RequestOptions().circleCrop())
+                    .apply(RequestOptions().override(640, 640))
+                    .into(imageChatPartner)
+
+                textContent.text = item.chatContent
+                textTime.text = timeStr
+
+                if (chatList.count() > 1 && position > 0) {
+                    var beforeItem = chatList[position - 1]
+                    if (beforeItem.isMyChat!!) textSpeaker!!.text = item.chatSpeakerNickname
+                    else {
+                        textSpeaker.visibility = View.GONE
+                        imageChatPartner.visibility = View.GONE
+
+                        var constraintSet = ConstraintSet()
+                        //constraintSet.clone(context,R.id.layout_chat)
+                        constraintSet.clone(view.findViewById<ConstraintLayout>(R.id.layout_chat))
+                        //constraintSet.setMargin(view.findViewById(R.id.text_content),ConstraintSet.TOP,8)
+                        constraintSet.connect(
+                            R.id.text_content,
+                            ConstraintSet.TOP,
+                            R.id.layout_chat,
+                            ConstraintSet.TOP,
+                            12
+                        )
+                        constraintSet.applyTo(view.findViewById(R.id.layout_chat))
+                    }
+
+                }
+            }
         } else {
             view = inflater.inflate(R.layout.item_my_chat, parent, false)
 
