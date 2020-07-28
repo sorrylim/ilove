@@ -10,6 +10,7 @@
         android:fontWeight="400"
         app:font="@font/nanumbarunpenr"
         app:fontStyle="normal"
+        
         app:fontWeight="500" />
 
     <!--bold-->
