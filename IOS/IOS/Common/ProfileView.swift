@@ -14,32 +14,18 @@ struct ProfileView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State var imageList : [UIImage] = []
-    @State var userId : String
     @State var isInit : Bool = false
-    
+    @State var userId : String
     @State var page : Int = 0
     
     var body: some View {
         VStack{
             ZStack{
-                if isInit==true {
-                    GeometryReader{g in
-                        Pager(userId: self.userId , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width, page: self.$page, imageList: self.imageList)
-                    }
+                GeometryReader{g in
+                    Pager(userId: self.userId , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width, page: self.$page, imageList: self.imageList)
                 }
             }
             .frame(width : UIScreen.main.bounds.width, height : UIScreen.main.bounds.width)
-        }
-        .onAppear(){
-            HttpService.shared.getProfileImageReq(userId: self.userId) { profileImageModelArray in
-                for i in 0..<profileImageModelArray.count {
-                    KingfisherManager.shared.retrieveImage(with: URL(string: profileImageModelArray[i].image!)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
-                        self.imageList.append(image!)
-                    })
-                }
-                while self.imageList.count != profileImageModelArray.count {}
-                self.isInit=true
-            }
         }
     }
 }
@@ -48,6 +34,8 @@ struct ProfileView: View {
 struct ProfileImageList : View {
     
     @State var imageList : [UIImage] = []
+    @State var userId : String
+    @State var isInit : Bool = false
     
     var body : some View {
         HStack{
@@ -59,7 +47,13 @@ struct ProfileImageList : View {
             }
         }
         .onAppear(){
-            
+            HttpService.shared.getProfileImageReq(userId: self.userId) { profileImageModelArray in
+                for i in 0..<profileImageModelArray.count {
+                    KingfisherManager.shared.retrieveImage(with: URL(string: profileImageModelArray[i].image!)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                        self.imageList.append(image!)
+                    })
+                }
+            }
         }
     }
 }

@@ -31,7 +31,7 @@ struct Pager : UIViewRepresentable{
         view.showsVerticalScrollIndicator = false
         view.showsHorizontalScrollIndicator = false
         
-        let view1 = UIHostingController(rootView: ProfileImageList())
+        let view1 = UIHostingController(rootView: ProfileImageList(userId: userId))
         view1.view.frame = CGRect(x: 0,y: 0, width: total,height: self.height)
         view1.view.backgroundColor = .clear
         
