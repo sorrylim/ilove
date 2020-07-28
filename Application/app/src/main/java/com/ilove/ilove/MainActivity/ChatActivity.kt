@@ -252,7 +252,7 @@ class ChatActivity : AppCompatActivity() {
             }
             R.id.getout->{
                 VolleyService.deleteReq("chatroom","room_id='"+roomId+"'",this,{success->
-                    finish()
+                    onBackPressed()
                 })
             }
         }
@@ -262,6 +262,9 @@ class ChatActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawers()
+        }
+        else{
+            super.onBackPressed()
         }
     }
 }
