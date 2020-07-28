@@ -48,7 +48,9 @@ class ChatActivity : AppCompatActivity() {
         setSupportActionBar(toolbar_chat)
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayShowTitleEnabled(true)
+        supportActionBar?.setTitle("asdf")
+
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
         navigation_view!!.setNavigationItemSelectedListener(navListener)
 
