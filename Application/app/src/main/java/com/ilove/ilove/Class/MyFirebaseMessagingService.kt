@@ -21,12 +21,20 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
     override fun onMessageReceived(p0: RemoteMessage) {
-        if(p0.notification!=null){
-            if(!isAppOnForeground(applicationContext)) {
 
-                sendNotification(p0.to, p0.notification?.title!!, p0.notification?.body)
+        if(p0.notification!=null){
+
+            if(p0.notification?.title!! == "refresh" && p0.notification?.body!! == "refresh"){
+                var handler=MessageFragment.handler
+                var msg=handler!!.obtainMessage()
+                msg.what=0
+                handler.sendMessage(msg)
             }
-            else{
+            else {
+                if (!isAppOnForeground(applicationContext)) {
+                    sendNotification(p0.to, p0.notification?.title!!, p0.notification?.body)
+                } else {
+                }
             }
         }
     }

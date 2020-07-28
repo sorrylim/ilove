@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter
 
 class ChatActivity : AppCompatActivity() {
 
-    var chatAdapter=ChatAdapter()
+    var chatAdapter=ChatAdapter(this)
     var room : ChatRoomItem? = null
 
     var ref : DatabaseReference? = null
@@ -34,7 +34,6 @@ class ChatActivity : AppCompatActivity() {
 
         var intent=intent
         room=intent.getSerializableExtra("room") as ChatRoomItem
-        Log.d("test",room!!.toString())
         list_chat.adapter=chatAdapter
 
         if(room!!.imageUrl==""){
@@ -56,29 +55,6 @@ class ChatActivity : AppCompatActivity() {
                 if (!it.isSuccessful) msg = "${room!!.roomId} subscribe fail"
             }
 
-        ref = FirebaseDatabase.getInstance().reference.child("chat").child(room!!.roomId)
-        query = ref!!.orderByKey()
-        query!!.addChildEventListener(object : ChildEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                chatConversation(snapshot,"change")
-            }
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                chatConversation(snapshot,"add")
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                TODO("Not yet implemented")
-            }
-        })
-
         btn_send.setOnClickListener {
 
             if(edit_chat.text.toString()=="") return@setOnClickListener
@@ -96,6 +72,41 @@ class ChatActivity : AppCompatActivity() {
                 list_chat.setSelection(chatAdapter.count - 1)
             })
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        ref = FirebaseDatabase.getInstance().reference.child("chat").child(room!!.roomId)
+        query = ref!!.orderByKey()
+
+        query!!.addChildEventListener(object : ChildEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                if(ref != null) chatConversation(snapshot,"change")
+            }
+
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                if(ref != null) chatConversation(snapshot,"add")
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        finish()
+        ref=null
+        query=null
     }
 
     fun writeFirebase(roomId: String, chatSpeaker: String, chatSpeakerNickname: String, chatContent: String, chatTime: String){
@@ -156,10 +167,10 @@ class ChatActivity : AppCompatActivity() {
             }
 
             chatAdapter.notifyDataSetChanged()
+            list_chat.setSelection(chatAdapter.count - 1)
 
-
-            var lastChat=chatAdapter.getItem(chatAdapter.count-1) as ChatItem
-            if(UserInfo.ID!=lastChat.chatSpeaker) {
+            var lastChat = chatAdapter.getItem(chatAdapter.count - 1) as ChatItem
+            if (UserInfo.ID != lastChat.chatSpeaker) {
                 VolleyService.readChatReq(lastChat.roomId!!, lastChat.chatTime, this, { success ->
 
                 })
@@ -181,5 +192,6 @@ class ChatActivity : AppCompatActivity() {
             }
             chatAdapter.notifyDataSetChanged()
         }
+
     }
 }
