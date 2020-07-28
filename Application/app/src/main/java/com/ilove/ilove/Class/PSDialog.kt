@@ -417,7 +417,7 @@ class PSDialog(activity: Activity) {
     }
 
     fun setUpProfile() {
-        dialog!!.setContentView(R.layout.dialog_purchasecheck)
+        dialog!!.setContentView(R.layout.dialog_profileup)
         var titleText : TextView = dialog!!.findViewById(R.id.text_dialogtitle)
         var contentText : TextView = dialog!!.findViewById(R.id.text_dialogcontent)
         var subContentText : TextView = dialog!!.findViewById(R.id.text_dialogsubcontent)
@@ -425,7 +425,7 @@ class PSDialog(activity: Activity) {
         var cancelBtn : Button = dialog!!.findViewById(R.id.btn_dialogcancel)
 
         titleText.text = "프로필 올리기"
-        contentText.text = "프로필 올리기를 선택하셨습니다.\n진행하시겠습니까?"
+        contentText.text = "프로필 상단 올리기를 선택하셨습니다.\n(리스트에 1시간 노출)"
 
         subContentText.visibility = View.GONE
 
