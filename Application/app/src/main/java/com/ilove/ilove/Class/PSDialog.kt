@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Response
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -74,15 +75,19 @@ class PSDialog(activity: Activity) {
         var updatePreviewIntroduce : ImageView = dialogView.findViewById(R.id.image_updatepreviewintroduce)
 
         updatePreviewIntroduce.setOnClickListener {
-            VolleyService.updateIntroduce(UserInfo.ID, "user_previewintroduce", previewIntroduce.text.toString(), context!!, {success->
-                if(success == "success") {
-                    dismiss()
-                    introduceText.text = previewIntroduce.text.toString()
-                }
-                else {
-                    Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
-                }
-            } )
+            if(previewIntroduce.text.length < 5) {
+            Toast.makeText(context,"5자 이상 입력해주세요",Toast.LENGTH_SHORT).show()
+            }
+            else {
+                VolleyService.updateIntroduce(UserInfo.ID, "user_previewintroduce", previewIntroduce.text.toString(), context!!, { success ->
+                    if (success == "success") {
+                        dismiss()
+                        introduceText.text = previewIntroduce.text.toString()
+                    } else {
+                        Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
         }
 
     }
@@ -99,8 +104,9 @@ class PSDialog(activity: Activity) {
         var updateIntroduce : ImageView = dialogView.findViewById(R.id.image_updateintroduce)
 
         updateIntroduce.setOnClickListener {
-            if(introduce.text.length < 50) {
+            if(introduce.text.length < 30) {
                 lengthCheck.visibility = View.VISIBLE
+                Toast.makeText(context,"30자 이상 입력해주세요",Toast.LENGTH_SHORT).show()
             }
             else {
                 VolleyService.updateIntroduce(UserInfo.ID, "user_introduce", introduce.text.toString(), context!!, {success->
@@ -195,6 +201,94 @@ class PSDialog(activity: Activity) {
                     })
                 }
             }
+        }
+
+
+        if(userOption == "user_personality" || userOption == "user_favoriteperson" || userOption == "user_interest") {
+            userOptionRV.setHasFixedSize(true)
+            userOptionRV.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            userOptionRV.adapter = PersonalityAdapter(context!!, userOptionList)
+        }
+        else {
+            userOptionRV.setHasFixedSize(true)
+            userOptionRV.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            userOptionRV.adapter = UserOptionAdapter(context!!, userOptionList)
+        }
+
+    }
+
+    fun setUserOption_signup(title : String, userOption:String, userOptionList: ArrayList<UserItem.UserOption>,UserId:String) {
+        dialog = Dialog(context!!, R.style.popCasterDlgTheme)
+        val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_useroption, null)
+        var titleText : TextView = dialogView.findViewById(R.id.text_useroptiontitle)
+        var userOptionRV: RecyclerView = dialogView.findViewById(R.id.rv_useroption)
+        var updateBtn: ImageView = dialogView.findViewById(R.id.image_updateoption)
+
+        userOptionData = ""
+
+        titleText.text = title
+
+        dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
+        dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
+
+        updateBtn.setOnClickListener {
+            if(userOptionData == "") {
+                Toast.makeText(context, title+"을 선택해주세요", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                if(userOption == "user_city") {
+                    VolleyService.updateUserCityReq(UserId, userOption, userOptionData!!, context!!, {success->
+                        if(success == "success") {
+                            dismiss()
+                        }
+                        else {
+                            Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                }
+                else if(userOption=="user_gender"){
+                    if(userOptionData=="여성"){
+                        userOptionData="F"
+                    }
+                    else if(userOptionData=="남성") {
+                        userOptionData="M"
+                    }
+                    VolleyService.updateUserCityReq(UserId, userOption, userOptionData!!, context!!, {success->
+                        if(success == "success") {
+                            var gender:String?=null
+                            if(userOptionData=="F"){
+                                gender="여성"
+                            }
+                            else{
+                                gender="남성"
+                            }
+
+                            dismiss()
+                        }
+                        else {
+                            Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+
+                }
+                else {
+                    VolleyService.updateUserOptionReq(UserId, userOption, userOptionData!!, context!!, {success->
+                        if(success == "success") {
+                            if(userOptionData.length > 8) {
+
+                                dismiss()
+                            }
+                            else {
+                                dismiss()
+                            }
+                        }
+                        else {
+                            Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                }
+            }
+
         }
 
 
@@ -328,7 +422,7 @@ class PSDialog(activity: Activity) {
     }
 
     fun setUpProfile() {
-        dialog!!.setContentView(R.layout.dialog_purchasecheck)
+        dialog!!.setContentView(R.layout.dialog_profileup)
         var titleText : TextView = dialog!!.findViewById(R.id.text_dialogtitle)
         var contentText : TextView = dialog!!.findViewById(R.id.text_dialogcontent)
         var subContentText : TextView = dialog!!.findViewById(R.id.text_dialogsubcontent)
@@ -336,7 +430,7 @@ class PSDialog(activity: Activity) {
         var cancelBtn : Button = dialog!!.findViewById(R.id.btn_dialogcancel)
 
         titleText.text = "프로필 올리기"
-        contentText.text = "프로필 올리기를 선택하셨습니다.\n(리스트에서 1시간 노출)"
+        contentText.text = "프로필 상단 올리기를 선택하셨습니다.\n(리스트에 1시간 노출)"
 
         subContentText.visibility = View.GONE
 

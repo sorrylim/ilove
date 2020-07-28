@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_check" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_pw_check" />
 
     <TextView
         android:id="@+id/text_check_id"
@@ -99,7 +99,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_nickname" />
 
     <EditText
-        android:id="@+id/edit_check"
+        android:id="@+id/edit_pw_check"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -129,7 +129,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_review" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_pw" />
 
     <EditText
         android:id="@+id/edit_nickname"
@@ -213,7 +213,7 @@
         app:titleTextColor="@color/colorMdWhite_1000" />
 
     <EditText
-        android:id="@+id/edit_review"
+        android:id="@+id/edit_pw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

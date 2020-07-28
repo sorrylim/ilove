@@ -14,6 +14,68 @@ import org.json.JSONObject
 object VolleyService {
     val ip= "http://18.217.130.157:3000"
 
+    fun insertReq(table:String, col:String,values:String,  context: Context, success:(Int)->Unit) {
+        var url = "${ip}/user/db/add"
+        var json = JSONObject()
+        json.put("table", table)
+        json.put("values", values)
+        json.put("col",col)
+
+
+        var request = object : JsonObjectRequest(
+                Method.POST,
+                url,
+                json,
+                Response.Listener {
+                    success(1)
+                },
+                Response.ErrorListener {
+                    success(0)
+                }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun updateReq(table:String, values:String,cond:String,  context: Context, success:(JSONObject)->Unit) {
+        var url = "${ip}/user/db/update"
+        var json = JSONObject()
+        json.put("table", table)
+        json.put("values", values)
+        json.put("cond", cond)
+
+
+        var request = object : JsonObjectRequest(
+                Method.POST,
+                url,
+                json,
+                Response.Listener {
+                    success(it)
+                },
+                Response.ErrorListener {
+
+                }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun deleteReq(table:String, cond:String,  context: Context, success:(JSONObject)->Unit) {
+        var url = "${ip}/user/db/delete"
+        var json = JSONObject()
+        json.put("table", table)
+        json.put("cond", cond)
+
+        var request = object : JsonObjectRequest(
+                Method.POST,
+                url,
+                json,
+                Response.Listener {
+                    success(it)
+                },
+                Response.ErrorListener {
+
+                }) {}
+        Volley.newRequestQueue(context).add(request)
+    }
+
+
     fun loginReq(userId: String, userPassword: String, context: Context, success: (JSONObject) -> Unit) {
         val url = "${ip}/user/login"
 

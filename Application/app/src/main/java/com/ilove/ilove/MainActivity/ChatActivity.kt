@@ -1,22 +1,34 @@
 package com.ilove.ilove.MainActivity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.ClipData
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.lifecycle.ReportFragment
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Adapter.ChatAdapter
 import com.ilove.ilove.Class.UserInfo
-import com.ilove.ilove.Fragment.MessageFragment
+import com.ilove.ilove.IntroActivity.InquireActivity
 import com.ilove.ilove.Item.ChatItem
 import com.ilove.ilove.Item.ChatRoomItem
+import com.ilove.ilove.MainActivity.VipActivity
 import com.ilove.ilove.Object.VolleyService
-import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.activity_chat_drawerlayout.*
 import org.json.JSONObject
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import com.ilove.ilove.R
 
 class ChatActivity : AppCompatActivity() {
 
@@ -28,18 +40,31 @@ class ChatActivity : AppCompatActivity() {
 
     var chatPartnerImage : String? = null
 
+    var roomId:String?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat)
+        setContentView(R.layout.activity_chat_drawerlayout)
+        setSupportActionBar(toolbar_chat)
+        supportActionBar?.setDisplayShowCustomEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(true)
+        supportActionBar?.setTitle("asdf")
+
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
+        navigation_view!!.setNavigationItemSelectedListener(navListener)
 
         var intent=intent
         room=intent.getSerializableExtra("room") as ChatRoomItem
         list_chat.adapter=chatAdapter
 
+        roomId=room!!.roomId
+
         if(room!!.imageUrl==""){
             var partnerId=""
             if(UserInfo.ID==room!!.maker) partnerId = room!!.partner
             else partnerId = room!!.maker
+
 
             VolleyService.getProfileImageReq(partnerId,this,{success ->
                 var json = success[0] as JSONObject
@@ -48,6 +73,7 @@ class ChatActivity : AppCompatActivity() {
             })
         }
         else chatPartnerImage = room!!.imageUrl
+
 
         FirebaseMessaging.getInstance().subscribeToTopic(room!!.roomId!!)
             .addOnCompleteListener {
@@ -72,6 +98,7 @@ class ChatActivity : AppCompatActivity() {
                 list_chat.setSelection(chatAdapter.count - 1)
             })
         }
+
     }
 
     override fun onResume() {
@@ -193,5 +220,51 @@ class ChatActivity : AppCompatActivity() {
             chatAdapter.notifyDataSetChanged()
         }
 
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        var inflater = getMenuInflater()
+        inflater.inflate(R.menu.menu_empty, menu)
+        menu!!.add(0, 0, 0, "메뉴").setIcon(R.drawable.outline_list_24)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item!!.itemId) {
+           0-> { // 메뉴 버튼
+                drawerLayout.openDrawer(GravityCompat.END)
+            }
+            android.R.id.home -> {
+                onBackPressed()
+            }
+        }
+        return false
+    }
+    private val navListener = NavigationView.OnNavigationItemSelectedListener {
+        when(it.itemId){
+            R.id.report->{
+                var intent = Intent(this, InquireActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.getout->{
+                VolleyService.deleteReq("chatroom","room_id='"+roomId+"'",this,{success->
+                    onBackPressed()
+                })
+            }
+        }
+        false
+    }
+
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+            drawerLayout.closeDrawers()
+        }
+        else{
+            super.onBackPressed()
+        }
     }
 }
