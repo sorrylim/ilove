@@ -75,15 +75,19 @@ class PSDialog(activity: Activity) {
         var updatePreviewIntroduce : ImageView = dialogView.findViewById(R.id.image_updatepreviewintroduce)
 
         updatePreviewIntroduce.setOnClickListener {
-            VolleyService.updateIntroduce(UserInfo.ID, "user_previewintroduce", previewIntroduce.text.toString(), context!!, {success->
-                if(success == "success") {
-                    dismiss()
-                    introduceText.text = previewIntroduce.text.toString()
-                }
-                else {
-                    Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
-                }
-            } )
+            if(previewIntroduce.text.length < 5) {
+            Toast.makeText(context,"5자 이상 입력해주세요",Toast.LENGTH_SHORT).show()
+            }
+            else {
+                VolleyService.updateIntroduce(UserInfo.ID, "user_previewintroduce", previewIntroduce.text.toString(), context!!, { success ->
+                    if (success == "success") {
+                        dismiss()
+                        introduceText.text = previewIntroduce.text.toString()
+                    } else {
+                        Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
         }
 
     }
@@ -100,8 +104,9 @@ class PSDialog(activity: Activity) {
         var updateIntroduce : ImageView = dialogView.findViewById(R.id.image_updateintroduce)
 
         updateIntroduce.setOnClickListener {
-            if(introduce.text.length < 50) {
+            if(introduce.text.length < 30) {
                 lengthCheck.visibility = View.VISIBLE
+                Toast.makeText(context,"30자 이상 입력해주세요",Toast.LENGTH_SHORT).show()
             }
             else {
                 VolleyService.updateIntroduce(UserInfo.ID, "user_introduce", introduce.text.toString(), context!!, {success->

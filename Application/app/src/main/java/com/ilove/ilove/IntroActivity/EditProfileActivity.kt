@@ -55,7 +55,6 @@ import kotlinx.android.synthetic.main.activity_edit_profile.layout_editjob
 import kotlinx.android.synthetic.main.activity_edit_profile.layout_editlanguage
 import kotlinx.android.synthetic.main.activity_edit_profile.layout_editmarriagehistory
 import kotlinx.android.synthetic.main.activity_edit_profile.layout_editmarriageplan
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editparenting
 import kotlinx.android.synthetic.main.activity_edit_profile.layout_editpersonality
 import kotlinx.android.synthetic.main.activity_edit_profile.layout_editpreviewintroduce
 import kotlinx.android.synthetic.main.activity_edit_profile.layout_editreligion
@@ -83,7 +82,6 @@ import kotlinx.android.synthetic.main.activity_edit_profile.text_editjob
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editlanguage
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editmarriagehistory
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editmarriageplan
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editparenting
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editpersonality
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editpreviewintroduce
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editreligion
@@ -563,12 +561,12 @@ class EditProfileActivity : PSAppCompatActivity() {
             psDialog.show()
         }
 
-        layout_editparenting.setOnClickListener {
-            userOptionList.clear()
-            parenting()
-            psDialog.setUserOption("가사, 육아", "user_parenting", userOptionList, text_editparenting)
-            psDialog.show()
-        }
+//        layout_editparenting.setOnClickListener {
+//            userOptionList.clear()
+//            parenting()
+//            psDialog.setUserOption("가사, 육아", "user_parenting", userOptionList, text_editparenting)
+//            psDialog.show()
+//        }
 
         layout_editwishdate.setOnClickListener {
             userOptionList.clear()
@@ -721,7 +719,7 @@ class EditProfileActivity : PSAppCompatActivity() {
     }
 
     fun marriagehistory() {
-        userOptionList = arrayListOf(UserItem.UserOption("없어요"), UserItem.UserOption("이혼 했어요"), UserItem.UserOption("사별 했어요"))
+        userOptionList = arrayListOf(UserItem.UserOption("미혼"), UserItem.UserOption("이혼 했어요"), UserItem.UserOption("사별 했어요"))
     }
 
     fun children() {
@@ -729,7 +727,7 @@ class EditProfileActivity : PSAppCompatActivity() {
     }
 
     fun marriageplan() {
-        userOptionList = arrayListOf(UserItem.UserOption("바로 하고 싶어요"), UserItem.UserOption("좋은 사람 있으면 하고 싶어요"), UserItem.UserOption("상대방에게 맞춰주고 싶어요"), UserItem.UserOption("모르겠어요"))
+        userOptionList = arrayListOf(UserItem.UserOption("바로 하고 싶어요"), UserItem.UserOption("좋은 사람 있으면 하고 싶어요"), UserItem.UserOption("상대방에게 맞춰주고 싶어요"), UserItem.UserOption("모르겠어요"),UserItem.UserOption("자유롭게 살고싶어요."),UserItem.UserOption("연애만 하고싶어요."))
     }
 
     fun childrenplan() {
@@ -741,15 +739,15 @@ class EditProfileActivity : PSAppCompatActivity() {
     }
 
     fun wishdate() {
-        userOptionList = arrayListOf(UserItem.UserOption("일단 만나보고 싶어요"), UserItem.UserOption("마음이 맞으면 만나보고 싶어요"), UserItem.UserOption("아이러브에서 충분히 얘기해보고 만나고 싶어요"), UserItem.UserOption("모르겠어요"))
+        userOptionList = arrayListOf(UserItem.UserOption("일단 만나보고 싶어요"), UserItem.UserOption("마음이 맞으면 만나보고 싶어요"), UserItem.UserOption("아이러브팅에서 충분히 얘기해보고 만나고 싶어요"), UserItem.UserOption("모르겠어요"))
     }
 
     fun costdate() {
-        userOptionList = arrayListOf(UserItem.UserOption("남자가 전부 냈으면 좋겠어요"), UserItem.UserOption("남자가 많이 냈으면 좋겠어요"), UserItem.UserOption("더치페이 하고싶어요"), UserItem.UserOption("돈이 많은쪽이 냈으면 좋겠어요"), UserItem.UserOption("상대방과 의논하고 싶어요"), UserItem.UserOption("모르겠어요"))
+        userOptionList = arrayListOf(UserItem.UserOption("상대가 전부 냈으면 좋겠어요"), UserItem.UserOption("제가 많이 냈으면 좋겠어요"), UserItem.UserOption("더치페이 하고싶어요"), UserItem.UserOption("돈이 많은쪽이 냈으면 좋겠어요"), UserItem.UserOption("상대방과 의논하고 싶어요"), UserItem.UserOption("모르겠어요"))
     }
 
     fun roommate() {
-        userOptionList = arrayListOf(UserItem.UserOption("자취해요"), UserItem.UserOption("친구랑 같이 살아요"), UserItem.UserOption("애완동물이랑 같이 살아요"), UserItem.UserOption("가족이랑 살아요"), UserItem.UserOption("기타"))
+        userOptionList = arrayListOf(UserItem.UserOption("혼자 살아요"), UserItem.UserOption("친구랑 같이 살아요"), UserItem.UserOption("애완동물이랑 같이 살아요"), UserItem.UserOption("가족이랑 살아요"), UserItem.UserOption("기타"))
     }
 
     fun language() {
