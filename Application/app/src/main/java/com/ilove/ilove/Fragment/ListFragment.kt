@@ -44,8 +44,9 @@ class ListFragment(titleText: TextView) : Fragment() {
         var userListRV : RecyclerView = rootView!!.findViewById(R.id.rv_userlist)
         var swipeLayout : SwipeRefreshLayout = rootView!!.findViewById(R.id.layout_swipe)
 
-        val typefaceb = Typeface.createFromAsset(context!!.assets, "nanumbarunpenb.ttf")
-        val typefacer = Typeface.createFromAsset(context!!.assets, "nanumbarunpenr.ttf")
+        //글꼴변경
+        //val typefaceb = Typeface.createFromAsset(context?.assets, "nanumbarunpenb.ttf")
+        //val typefacer = Typeface.createFromAsset(context?.assets, "nanumbarunpenr.ttf")
 
         swipeLayout.setOnRefreshListener {
             if(sortType == 0) {
@@ -67,8 +68,10 @@ class ListFragment(titleText: TextView) : Fragment() {
             sortType = 0
             sortGps()
             sortGps.setTextColor(Color.parseColor("#212121"))
-            sortGps.setTypeface(typefaceb)
-            sortTime.setTypeface(typefacer)
+            sortTime.setTypeface(null,Typeface.NORMAL)
+            sortGps.setTypeface(null,Typeface.BOLD)
+           // sortGps!!.setTypeface(typefaceb)
+            //sortTime.setTypeface(typefacer)
             sortTime.setTextColor(Color.parseColor("#616161"))
         }
 
@@ -76,8 +79,10 @@ class ListFragment(titleText: TextView) : Fragment() {
             sortType = 1
             sortTime()
             sortTime.setTextColor(Color.parseColor("#212121"))
-            sortTime.setTypeface(typefaceb)
-            sortGps.setTypeface(typefacer)
+            sortTime.setTypeface(null,Typeface.BOLD)
+            sortGps.setTypeface(null,Typeface.NORMAL)
+//            sortTime.setTypeface(typefaceb)
+//            sortGps.setTypeface(typefacer)
             sortGps.setTextColor(Color.parseColor("#616161"))
         }
 
