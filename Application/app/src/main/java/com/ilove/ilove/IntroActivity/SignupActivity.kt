@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.Spanned
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Toast
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.PSDialog
@@ -57,6 +58,7 @@ class SignupActivity: PSAppCompatActivity() {
     //사용자가 뒤로가기 키 눌렀을때
     override fun onBackPressed() {
         super.onBackPressed()
+
         if(idTemp != "") {
             VolleyService.deleteReq("user","User_id='"+idTemp+"'", this, { success->
             })
@@ -473,6 +475,7 @@ class SignupActivity: PSAppCompatActivity() {
         psDialog.setUserOption_signup("내가 좋아하는 사람", "user_favoriteperson", userOptionList,idTemp)
         psDialog.show()
         psDialog.dialog!!.setOnDismissListener {
+            idTemp=""
             var intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }

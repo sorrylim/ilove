@@ -63,7 +63,7 @@ object VolleyService {
         json.put("cond", cond)
 
         var request = object : JsonObjectRequest(
-                Method.DELETE,
+                Method.POST,
                 url,
                 json,
                 Response.Listener {
