@@ -26,7 +26,7 @@ class PersonalityAdapter(val context: Context, val userOptionList:ArrayList<User
         holder.itemView.text_useroption.text = userOptionList.get(position).title
 
         if(userOptionList.get(position).isSelected == true) {
-            holder.itemView.text_useroption.setTextColor(Color.parseColor("#212121"))
+            holder.itemView.text_useroption.setTextColor(Color.parseColor("#FF8C00"))
         }
         else {
             holder.itemView.text_useroption.setTextColor(Color.parseColor("#9E9E9E"))
@@ -37,7 +37,7 @@ class PersonalityAdapter(val context: Context, val userOptionList:ArrayList<User
             userOptionList.get(position).isSelected = !userOptionList.get(position).isSelected
 
             if(userOptionList.get(position).isSelected == true) {
-                holder.itemView.text_useroption.setTextColor(Color.parseColor("#212121"))
+                holder.itemView.text_useroption.setTextColor(Color.parseColor("#FF8C00"))
             }
             else {
                 holder.itemView.text_useroption.setTextColor(Color.parseColor("#9E9E9E"))

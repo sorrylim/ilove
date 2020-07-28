@@ -28,7 +28,7 @@ class UserOptionAdapter(val context: Context, val userOptionList:ArrayList<UserI
         holder.itemView.text_useroption.text = userOptionList.get(position).title
 
         if(userOptionList.get(position).isSelected == true) {
-            holder.itemView.text_useroption.setTextColor(Color.parseColor("#212121"))
+            holder.itemView.text_useroption.setTextColor(Color.parseColor("#FF8C00"))
             PSDialog.userOptionData = holder.itemView.text_useroption.text.toString()
         }
         else {
@@ -41,7 +41,7 @@ class UserOptionAdapter(val context: Context, val userOptionList:ArrayList<UserI
                 tempPosition = position
 
                 if(userOptionList.get(position).isSelected == true) {
-                    holder.itemView.text_useroption.setTextColor(Color.parseColor("#212121"))
+                    holder.itemView.text_useroption.setTextColor(Color.parseColor("#FF8C00"))
                     PSDialog.userOptionData = holder.itemView.text_useroption.text.toString()
                 }
                 else {
@@ -56,7 +56,7 @@ class UserOptionAdapter(val context: Context, val userOptionList:ArrayList<UserI
 
 
                 if(userOptionList.get(position).isSelected == true) {
-                    holder.itemView.text_useroption.setTextColor(Color.parseColor("#212121"))
+                    holder.itemView.text_useroption.setTextColor(Color.parseColor("#FF8C00"))
                     PSDialog.userOptionData = holder.itemView.text_useroption.text.toString()
                 }
                 else {

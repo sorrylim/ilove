@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_call"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/image_userlistprofile"
-        app:layout_constraintTop_toBottomOf="@+id/text_userlistpurpose" />
+        app:layout_constraintTop_toBottomOf="@+id/text_userlistinfo" />
 
     <com.like.LikeButton
         android:id="@+id/btn_userlike"

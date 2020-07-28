@@ -5,7 +5,13 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -132,8 +138,6 @@ class PSDialog(activity: Activity) {
 
         userOptionData = ""
 
-        titleText.text = title
-
         dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
         dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
 
@@ -205,11 +209,34 @@ class PSDialog(activity: Activity) {
 
 
         if(userOption == "user_personality" || userOption == "user_favoriteperson" || userOption == "user_interest") {
+
+            when(userOption) {
+                "user_personality" -> {
+                    var ssb : SpannableStringBuilder = SpannableStringBuilder(title+"을 알려주세요.(2개 이상 선택)")
+                    ssb.setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    titleText.text = ssb
+                }
+                "user_favoriteperson" -> {
+                    var ssb : SpannableStringBuilder = SpannableStringBuilder(title+"을 알려주세요.(2개 이상 선택)")
+                    ssb.setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    titleText.text = ssb
+                }
+                "user_interest" -> {
+                    var ssb : SpannableStringBuilder = SpannableStringBuilder(title+"을 알려주세요.(중복선택가능)")
+                    ssb.setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    titleText.text = ssb
+                }
+            }
+
             userOptionRV.setHasFixedSize(true)
             userOptionRV.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             userOptionRV.adapter = PersonalityAdapter(context!!, userOptionList)
         }
         else {
+            var ssb : SpannableStringBuilder = SpannableStringBuilder(title+"을 알려주세요.")
+            ssb.setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            titleText.text = ssb
+
             userOptionRV.setHasFixedSize(true)
             userOptionRV.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             userOptionRV.adapter = UserOptionAdapter(context!!, userOptionList)
@@ -226,7 +253,6 @@ class PSDialog(activity: Activity) {
 
         userOptionData = ""
 
-        titleText.text = title
 
         dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
         dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
@@ -292,12 +318,37 @@ class PSDialog(activity: Activity) {
         }
 
 
+
         if(userOption == "user_personality" || userOption == "user_favoriteperson" || userOption == "user_interest") {
+
+            when(userOption) {
+                "user_personality" -> {
+                    var ssb : SpannableStringBuilder = SpannableStringBuilder(title+"을 알려주세요.(2개 이상 선택)")
+                    ssb.setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    titleText.text = ssb
+                }
+                "user_favoriteperson" -> {
+                    var ssb : SpannableStringBuilder = SpannableStringBuilder(title+"을 알려주세요.(2개 이상 선택)")
+                    ssb.setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    titleText.text = ssb
+                }
+                "user_interest" -> {
+                    var ssb : SpannableStringBuilder = SpannableStringBuilder(title+"을 알려주세요.(중복선택가능)")
+                    ssb.setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    titleText.text = ssb
+                }
+            }
+
             userOptionRV.setHasFixedSize(true)
             userOptionRV.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             userOptionRV.adapter = PersonalityAdapter(context!!, userOptionList)
         }
         else {
+
+            var ssb : SpannableStringBuilder = SpannableStringBuilder(title+"을 알려주세요.")
+            ssb.setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            titleText.text = ssb
+
             userOptionRV.setHasFixedSize(true)
             userOptionRV.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             userOptionRV.adapter = UserOptionAdapter(context!!, userOptionList)
