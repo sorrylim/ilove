@@ -45,6 +45,8 @@ class StoryAdapter(val context: Context, val storyList:ArrayList<ImageItem.Story
         holder.itemView.getLayoutParams().height = width
         holder.itemView.requestLayout()
 
+        holder.itemView.image_storylist.setClipToOutline(true)
+
         holder.itemView.setOnClickListener {
             val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
             val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))

@@ -105,7 +105,7 @@
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:background="@color/colorMdWhite_1000"
-                android:text="구매"
+                android:text="확인"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_dialogcancel"

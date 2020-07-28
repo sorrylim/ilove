@@ -38,7 +38,7 @@
             android:background="@drawable/rounded_corner_shape_button"
             android:text="스토리 작성하기"
             android:textColor="@color/colorMdWhite_1000"
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/image_mystoryimage"
             app:layout_constraintEnd_toEndOf="parent"

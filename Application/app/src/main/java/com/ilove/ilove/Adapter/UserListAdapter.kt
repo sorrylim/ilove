@@ -58,6 +58,14 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
         holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + " " + age + " " + userList.get(position).userCity
         holder.itemView.text_userlistrecent.text =  distance.get(0) + distance.get(1) + ", " + gpsTracker.timeDiff(partnerDate.getTime())
         holder.itemView.text_userlistintroduce.text = userList.get(position).userIntroduce
+
+        if(userList.get(position).userPurpose == "" || userList.get(position).userPurpose == "null") {
+            holder.itemView.text_userlistpurpose.visibility = View.GONE
+        }
+        else {
+            holder.itemView.text_userlistpurpose.text = userList.get(position).userPurpose
+        }
+
         holder.itemView.image_userlistprofile.setClipToOutline(true)
 
         if(userList.get(position).like == 1) {

@@ -336,7 +336,7 @@ class PSDialog(activity: Activity) {
         var cancelBtn : Button = dialog!!.findViewById(R.id.btn_dialogcancel)
 
         titleText.text = "프로필 올리기"
-        contentText.text = "프로필 올리기를 선택하셨습니다.\n진행하시겠습니까?"
+        contentText.text = "프로필 올리기를 선택하셨습니다.\n(리스트에서 1시간 노출)"
 
         subContentText.visibility = View.GONE
 
