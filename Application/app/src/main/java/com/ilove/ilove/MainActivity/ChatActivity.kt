@@ -256,4 +256,10 @@ class ChatActivity : AppCompatActivity() {
         }
         false
     }
+
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+            drawerLayout.closeDrawers()
+        }
+    }
 }

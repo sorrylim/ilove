@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.widget.Toast
+import androidx.core.view.GravityCompat
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.MainActivity.MainActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
+import kotlinx.android.synthetic.main.activity_chat_drawerlayout.*
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -92,4 +94,9 @@ class LoginActivity : AppCompatActivity() {
             })
         }
     }
-}
+    override fun onBackPressed() {
+        this.moveTaskToBack(true)
+        this.finishAndRemoveTask()
+        android.os.Process.killProcess(android.os.Process.myPid())
+        }
+    }
