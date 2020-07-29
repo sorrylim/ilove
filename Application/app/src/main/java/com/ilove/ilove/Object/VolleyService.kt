@@ -940,4 +940,24 @@ object VolleyService {
 
         Volley.newRequestQueue(context).add(request)
     }
+
+    fun getProfileReq(userId : String, context: Context, success: (JSONObject) -> Unit){
+        val url = "${ip}/user/get/profile"
+
+        var json=JSONObject()
+            .put("user_id", userId)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
 }
