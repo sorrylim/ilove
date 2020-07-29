@@ -1,17 +1,23 @@
 package com.ilove.ilove.MainActivity
 
 import android.content.ClipData
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ReportFragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
 import com.google.firebase.messaging.FirebaseMessaging
@@ -29,6 +35,10 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import com.ilove.ilove.R
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.zip.Inflater
+import kotlin.collections.HashMap
 
 class ChatActivity : AppCompatActivity() {
 
@@ -49,13 +59,15 @@ class ChatActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(true)
-        supportActionBar?.setTitle("asdf")
+
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
         navigation_view!!.setNavigationItemSelectedListener(navListener)
 
         var intent=intent
         room=intent.getSerializableExtra("room") as ChatRoomItem
+        if(UserInfo.ID == room!!.maker) supportActionBar?.setTitle(room!!.roomTitle.split("&")[1])
+        else supportActionBar?.setTitle(room!!.roomTitle.split("&")[0])
         list_chat.adapter=chatAdapter
 
         roomId=room!!.roomId
@@ -74,6 +86,34 @@ class ChatActivity : AppCompatActivity() {
         }
         else chatPartnerImage = room!!.imageUrl
 
+        var view=findViewById<ConstraintLayout>(R.id.layout_partner)
+
+        Glide.with(view)
+            .load(chatPartnerImage)
+            .apply(RequestOptions().circleCrop())
+            .apply(RequestOptions().override(640, 640))
+            .into(image_chatpartner)
+
+        if(UserInfo.ID == room!!.maker){
+            VolleyService.getProfileReq(room!!.partner,this){
+                text_nickname.text=it.getString("user_nickname")
+                var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                var curDate = simpleDateFormat.format(System.currentTimeMillis())
+                var age = curDate.substring(0, 4).toInt() - it.getString("user_birthday").substring(0, 4).toInt() + 1
+                text_age_city.text="${age},${it.getString("user_city")}"
+                text_introduce.text=it.getString("user_previewintroduce")
+            }
+        }
+        else{
+            VolleyService.getProfileReq(room!!.maker,this){
+                text_nickname.text=it.getString("user_nickname")
+                var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                var curDate = simpleDateFormat.format(System.currentTimeMillis())
+                var age = curDate.substring(0, 4).toInt() - it.getString("user_birthday").substring(0, 4).toInt() + 1
+                text_age_city.text="${age},${it.getString("user_city")}"
+                text_introduce.text=it.getString("user_previewintroduce")
+            }
+        }
 
         FirebaseMessaging.getInstance().subscribeToTopic(room!!.roomId!!)
             .addOnCompleteListener {
