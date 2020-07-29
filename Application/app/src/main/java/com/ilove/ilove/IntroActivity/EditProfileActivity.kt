@@ -16,6 +16,7 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
@@ -128,11 +129,13 @@ class EditProfileActivity : PSAppCompatActivity() {
         var imageSub2 : ImageView = findViewById(R.id.image_editsub2)
         var imageSub3 : ImageView = findViewById(R.id.image_editsub3)
 
+        var layoutSubImage : LinearLayout = findViewById(R.id.layout_subimage)
         var layoutMain : ConstraintLayout = findViewById(R.id.layout_editmain)
         var layoutSub1 : ConstraintLayout = findViewById(R.id.layout_editsub1)
         var layoutSub2 : ConstraintLayout = findViewById(R.id.layout_editsub2)
         var layoutSub3 : ConstraintLayout = findViewById(R.id.layout_editsub3)
 
+        layoutSubImage.getLayoutParams().height = width
         layoutMain.getLayoutParams().width = width
         layoutMain.getLayoutParams().height = width
         layoutSub1.getLayoutParams().width = width
