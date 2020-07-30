@@ -10,6 +10,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.IBinder
 import android.util.Log
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 
 
@@ -109,6 +110,7 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
                         }
                     }
                 }
+                else {Toast.makeText(this,"네트워크 상태를 확인해주세요",Toast.LENGTH_SHORT).show()}
                 if (isGPSEnabled) {
                     if (location == null) {
                         locationManager!!.requestLocationUpdates(

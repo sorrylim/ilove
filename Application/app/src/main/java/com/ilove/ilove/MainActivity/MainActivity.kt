@@ -22,6 +22,7 @@ import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Fragment.*
 import com.ilove.ilove.IntroActivity.ChargeCandyActivity
+import com.ilove.ilove.IntroActivity.LoginActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -50,11 +51,16 @@ class MainActivity : PSAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.d("test",UserInfo.ID)
-        FirebaseMessaging.getInstance().subscribeToTopic(UserInfo.ID)
-            .addOnCompleteListener {
-                Log.d("test","success subscribe to topic")
-            }
+        if(UserInfo.ID==""){
+            var intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+        else {
+            FirebaseMessaging.getInstance().subscribeToTopic(UserInfo.ID)
+                    .addOnCompleteListener {
+                        Log.d("test", "success subscribe to topic")
+                    }
+        }
 
 
         btn_candy.setOnClickListener {

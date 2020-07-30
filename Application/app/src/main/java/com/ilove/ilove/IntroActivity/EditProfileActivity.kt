@@ -112,6 +112,8 @@ class EditProfileActivity : PSAppCompatActivity() {
     var editImageId : Int? = null
     var layout:Int? = null
 
+    var mainprofile:Int?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -164,12 +166,16 @@ class EditProfileActivity : PSAppCompatActivity() {
         refreshProfileImage()
 
         image_editmain.setOnClickListener{
-            editImageId = profileImageIdList.get(0)
+            mainprofile=1
+            if(profileImageIdList.size!=0) {
+                editImageId = profileImageIdList.get(0)
+            }
             photoFromGallery()
         }
 
         image_editsub1.setOnClickListener {
             editImageId = null
+            mainprofile=0
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 else -> {
@@ -181,6 +187,7 @@ class EditProfileActivity : PSAppCompatActivity() {
 
         image_editsub2.setOnClickListener {
             editImageId = null
+            mainprofile=0
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 2 -> photoFromGallery()
@@ -193,6 +200,7 @@ class EditProfileActivity : PSAppCompatActivity() {
 
         image_editsub3.setOnClickListener {
             editImageId = null
+            mainprofile=0
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 2 -> photoFromGallery()
@@ -802,6 +810,9 @@ class EditProfileActivity : PSAppCompatActivity() {
                     if(editImageId != null) {
                         FileUploadUtils.uploadProfileImage(imagePath!!, "", "update", editImageId!!)
                     } else {
+                        if(mainprofile==1){
+                            FileUploadUtils.uploadProfileImage(imagePath!!, "mainprofile", "insert", null)
+                        }
                         FileUploadUtils.uploadProfileImage(imagePath!!, "profile", "insert", null)
                     }
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -848,6 +859,8 @@ class EditProfileActivity : PSAppCompatActivity() {
         intent.setType("image/*")
         startActivityForResult(intent, PICK_FROM_ALBUM)
     }
+
+
 
 
 }

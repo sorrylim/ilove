@@ -48,7 +48,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Downloads/export 3.png" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/icon (2).png" />
                                                 <entry key="opacityPercent" value="80" />
                                               </map>
                                             </option>
@@ -82,10 +82,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/export 3.png" />
-                                      <entry key="outputName" value="logo_icon" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/icon (2).png" />
+                                      <entry key="outputName" value="call_n_icon" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="0105ff" />
+                                      <entry key="themeColor" value="000000" />
                                     </map>
                                   </option>
                                 </PersistentState>
