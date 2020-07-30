@@ -19,6 +19,7 @@ import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_signup.*
 import org.json.JSONObject
+import java.time.LocalDate
 import java.util.regex.Pattern
 
 class SignupActivity: PSAppCompatActivity() {
@@ -180,10 +181,11 @@ class SignupActivity: PSAppCompatActivity() {
                 var pw = edit_pw_check.text.toString()
                 var nickname=edit_nickname.text.toString()
                 var birth = edit_birth.text.toString()
+                var user_signdate =LocalDate.now()
 
                 var table = "user"
                 var cond = "user_id='${id}'"
-                var values="user_password='${pw}',user_nickname='${nickname}',user_birthday='${birth}',user_authority='normal'"
+                var values="user_password='${pw}',user_nickname='${nickname}',user_birthday='${birth}',user_authority='normal',user_signdate='${user_signdate}'"
 
 
                 VolleyService.updateReq(table,values,cond,this,{success->
