@@ -146,6 +146,31 @@ class ChannelFragment(titleText: TextView) : Fragment() {
 
         VolleyService.getExpressionCountReq(UserInfo.ID, activity!!, {success->
             var json = success
+
+            if(json.getInt("send_like") > 0) {
+                sendLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+            }
+
+            if(json.getInt("receive_like") > 0) {
+                receiveLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+            }
+
+            if(json.getInt("each_like") > 0) {
+                eachLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+            }
+
+            if(json.getInt("send_meet") > 0) {
+                sendMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+            }
+
+            if(json.getInt("receive_meet") > 0) {
+                receiveMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+            }
+
+            if(json.getInt("each_meet") > 0) {
+                eachMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+            }
+
             sendLikeCount.text = json!!.getInt("send_like").toString() + "명"
             receiveLikeCount.text = json!!.getInt("receive_like").toString() + "명"
             eachLikeCount.text = json!!.getInt("each_like").toString() + "명"
@@ -155,6 +180,15 @@ class ChannelFragment(titleText: TextView) : Fragment() {
 
             VolleyService.getCountViewReq(UserInfo.ID, activity!!, {success->
                 var json = success
+
+                if(json.getInt("profile") > 0) {
+                    visitProfileBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+
+                if(json.getInt("story") > 0) {
+                    visitStoryBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+
                 visitProfileCount.text = json!!.getInt("profile").toString() + "명"
                 visitStoryCount.text = json!!.getInt("story").toString() + "명"
             })
