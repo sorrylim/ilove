@@ -48,7 +48,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$PROJECT_DIR$/src/main/res/drawable-hdpi/call_icon.png" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/export 3.png" />
                                                 <entry key="opacityPercent" value="80" />
                                               </map>
                                             </option>
@@ -81,10 +81,11 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/src/main/res/drawable-hdpi/call_icon.png" />
-                                      <entry key="outputName" value="ham_icon" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/export 3.png" />
+                                      <entry key="outputName" value="logo_icon" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="000000" />
+                                      <entry key="themeColor" value="0105ff" />
                                     </map>
                                   </option>
                                 </PersistentState>
