@@ -112,7 +112,7 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
-    fun getExpressionCountReq(userId:String, context: Context, success: (JSONObject?) -> Unit) {
+    fun getExpressionCountReq(userId:String, context: Context, success: (JSONObject) -> Unit) {
         var url = "${ip}/expression/get/count"
 
         var json = JSONObject()
@@ -132,7 +132,7 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
-    fun getCountViewReq(userId:String, context: Context, success:(JSONObject?) -> Unit) {
+    fun getCountViewReq(userId:String, context: Context, success:(JSONObject) -> Unit) {
         var url = "${ip}/expression/get/count/view"
         var json = JSONObject()
         json.put("user_id", userId)

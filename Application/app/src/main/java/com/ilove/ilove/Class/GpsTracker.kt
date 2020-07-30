@@ -71,6 +71,21 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
         return distanceForm
     }
 
+    fun getSortDistance(userLatitude: String, userLongitude: String, partnerLatitude: String, partnerLongitude: String) : String {
+        var locationA : Location = Location("pointA")
+        var locationB : Location = Location("pointB")
+
+        locationA.setLatitude(userLatitude.toDouble())
+        locationA.setLongitude(userLongitude.toDouble())
+
+        locationB.setLatitude(partnerLatitude.toDouble())
+        locationB.setLongitude(partnerLongitude.toDouble())
+
+        var distanceInt = locationA.distanceTo(locationB)
+
+        return distanceInt.toString()
+    }
+
     fun getGps() : Location? {
         try {
             locationManager =
