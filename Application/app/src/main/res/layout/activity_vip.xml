@@ -52,7 +52,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textView23"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView22"
-                app:srcCompat="@drawable/message_candy" />
+                app:srcCompat="@drawable/message_icon" />
 
             <TextView
                 android:id="@+id/textView22"
@@ -90,7 +90,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textView25"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView24"
-                app:srcCompat="@drawable/profile" />
+                app:srcCompat="@drawable/mypage_icon" />
 
             <TextView
                 android:id="@+id/textView24"
@@ -128,7 +128,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textView27"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView26"
-                app:srcCompat="@drawable/heart_candy" />
+                app:srcCompat="@drawable/bigheart_on" />
 
             <TextView
                 android:id="@+id/textView26"
@@ -159,14 +159,15 @@
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_marginStart="30dp"
                 android:scaleType="fitXY"
+                android:tint="#FF8C00"
                 app:layout_constraintBottom_toBottomOf="@+id/textView29"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView28"
-                app:srcCompat="@drawable/meet" />
+                app:srcCompat="@drawable/call_icon" />
 
             <TextView
                 android:id="@+id/textView28"

@@ -225,7 +225,7 @@ class ChatActivity : AppCompatActivity() {
 
         var inflater = getMenuInflater()
         inflater.inflate(R.menu.menu_empty, menu)
-        menu!!.add(0, 0, 0, "메뉴").setIcon(R.drawable.outline_list_24)
+        menu!!.add(0, 0, 0, "메뉴").setIcon(R.drawable.ham_icon)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
 
         return super.onCreateOptionsMenu(menu)
