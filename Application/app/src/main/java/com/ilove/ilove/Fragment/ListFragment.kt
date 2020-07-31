@@ -213,7 +213,6 @@ class ListFragment(titleText: TextView) : Fragment() {
                 userList.clear()
                 var array = success
                 for(i in 0..array!!.length()-1) {
-                    var location : List<String> = userList.get(i).recentGps.split(",")
                     var json = array[i] as JSONObject
 
                     var partner = UserList(json.getString("user_id"), json.getString("user_nickname"),
