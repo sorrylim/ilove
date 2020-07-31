@@ -63,7 +63,7 @@ object VolleyService {
         json.put("cond", cond)
 
         var request = object : JsonObjectRequest(
-                Method.DELETE,
+                Method.POST,
                 url,
                 json,
                 Response.Listener {
@@ -112,7 +112,7 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
-    fun getExpressionCountReq(userId:String, context: Context, success: (JSONObject?) -> Unit) {
+    fun getExpressionCountReq(userId:String, context: Context, success: (JSONObject) -> Unit) {
         var url = "${ip}/expression/get/count"
 
         var json = JSONObject()
@@ -132,7 +132,7 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
-    fun getCountViewReq(userId:String, context: Context, success:(JSONObject?) -> Unit) {
+    fun getCountViewReq(userId:String, context: Context, success:(JSONObject) -> Unit) {
         var url = "${ip}/expression/get/count/view"
         var json = JSONObject()
         json.put("user_id", userId)
@@ -933,6 +933,26 @@ object VolleyService {
             json,
             Response.Listener {
                 success(it.getString("result"))
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun getProfileReq(userId : String, context: Context, success: (JSONObject) -> Unit){
+        val url = "${ip}/user/get/profile"
+
+        var json=JSONObject()
+            .put("user_id", userId)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it)
             },
             Response.ErrorListener {
             }

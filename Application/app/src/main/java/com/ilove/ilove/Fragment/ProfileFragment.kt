@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.IntroActivity.*
@@ -33,6 +34,7 @@ class ProfileFragment(titleText: TextView) : Fragment() {
         var mainProfileImage : ImageView = rootView.findViewById(R.id.image_mypageprofile)
         var nickName: TextView = rootView.findViewById(R.id.text_mypagenickname)
         var mainProfile : String = ""
+
 
         inquireBtn.setOnClickListener {
             var intent = Intent(activity!!, InquireActivity::class.java)

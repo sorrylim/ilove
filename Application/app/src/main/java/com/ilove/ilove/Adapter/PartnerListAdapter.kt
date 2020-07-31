@@ -158,7 +158,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
         holder.itemView.image_partnerlistprofile.setClipToOutline(true)
         dateHistory = partnerList.get(position).dateHistory.substring(0, 10)
 
-        holder.itemView.setOnClickListener {
+        holder.itemView.image_partnerlistprofile.setOnClickListener {
             var intent = Intent(context, PartnerActivity::class.java)
             intent.putExtra("userNickname", partnerList.get(position).userNickname)
             intent.putExtra("userId", partnerList.get(position).userId)

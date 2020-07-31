@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.Spanned
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Toast
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.PSDialog
@@ -18,6 +19,7 @@ import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_signup.*
 import org.json.JSONObject
+import java.time.LocalDate
 import java.util.regex.Pattern
 
 class SignupActivity: PSAppCompatActivity() {
@@ -57,6 +59,7 @@ class SignupActivity: PSAppCompatActivity() {
     //사용자가 뒤로가기 키 눌렀을때
     override fun onBackPressed() {
         super.onBackPressed()
+
         if(idTemp != "") {
             VolleyService.deleteReq("user","User_id='"+idTemp+"'", this, { success->
             })
@@ -178,10 +181,11 @@ class SignupActivity: PSAppCompatActivity() {
                 var pw = edit_pw_check.text.toString()
                 var nickname=edit_nickname.text.toString()
                 var birth = edit_birth.text.toString()
+                var user_signdate =LocalDate.now()
 
                 var table = "user"
                 var cond = "user_id='${id}'"
-                var values="user_password='${pw}',user_nickname='${nickname}',user_birthday='${birth}',user_authority='normal'"
+                var values="user_password='${pw}',user_nickname='${nickname}',user_birthday='${birth}',user_authority='normal',user_signdate='${user_signdate}'"
 
 
                 VolleyService.updateReq(table,values,cond,this,{success->
@@ -359,7 +363,7 @@ class SignupActivity: PSAppCompatActivity() {
 
     fun marriagehistory(psDialog:PSDialog) {
         userOptionList.clear()
-        userOptionList = arrayListOf(UserItem.UserOption("없어요"), UserItem.UserOption("이혼 했어요"), UserItem.UserOption("사별 했어요"))
+        userOptionList = arrayListOf(UserItem.UserOption("미혼"), UserItem.UserOption("이혼 했어요"), UserItem.UserOption("사별 했어요"))
         psDialog.setUserOption_signup("혼인이력", "user_marriagehistory", userOptionList,idTemp)
         psDialog.show()
         psDialog.dialog!!.setOnDismissListener {
@@ -379,7 +383,7 @@ class SignupActivity: PSAppCompatActivity() {
 
     fun marriageplan(psDialog:PSDialog) {
         userOptionList.clear()
-        userOptionList = arrayListOf(UserItem.UserOption("바로 하고 싶어요"), UserItem.UserOption("좋은 사람 있으면 하고 싶어요"), UserItem.UserOption("상대방에게 맞춰주고 싶어요"), UserItem.UserOption("모르겠어요"))
+        userOptionList = arrayListOf(UserItem.UserOption("바로 하고 싶어요"), UserItem.UserOption("좋은 사람 있으면 하고 싶어요"), UserItem.UserOption("상대방에게 맞춰주고 싶어요"), UserItem.UserOption("모르겠어요"),UserItem.UserOption("자유롭게 살고싶어요."),UserItem.UserOption("연애만 하고싶어요."))
         psDialog.setUserOption_signup("결혼계획", "user_marriageplan", userOptionList,idTemp)
         psDialog.show()
         psDialog.dialog!!.setOnDismissListener {
@@ -393,7 +397,7 @@ class SignupActivity: PSAppCompatActivity() {
         psDialog.setUserOption_signup("자녀계획", "user_childrenplan", userOptionList,idTemp)
         psDialog.show()
         psDialog.dialog!!.setOnDismissListener {
-            parenting(psDialog)
+            wishdate(psDialog)
         }
     }
 
@@ -409,7 +413,7 @@ class SignupActivity: PSAppCompatActivity() {
 
     fun wishdate(psDialog:PSDialog) {
         userOptionList.clear()
-        userOptionList = arrayListOf(UserItem.UserOption("일단 만나보고 싶어요"), UserItem.UserOption("마음이 맞으면 만나보고 싶어요"), UserItem.UserOption("아이러브에서 충분히 얘기해보고 만나고 싶어요"), UserItem.UserOption("모르겠어요"))
+        userOptionList = arrayListOf(UserItem.UserOption("일단 만나보고 싶어요"), UserItem.UserOption("마음이 맞으면 만나보고 싶어요"), UserItem.UserOption("아이러브팅에서 충분히 얘기해보고 만나고 싶어요"), UserItem.UserOption("모르겠어요"))
         psDialog.setUserOption_signup("데이트 희망사항", "user_wishdate", userOptionList,idTemp)
         psDialog.show()
         psDialog.dialog!!.setOnDismissListener {
@@ -473,6 +477,7 @@ class SignupActivity: PSAppCompatActivity() {
         psDialog.setUserOption_signup("내가 좋아하는 사람", "user_favoriteperson", userOptionList,idTemp)
         psDialog.show()
         psDialog.dialog!!.setOnDismissListener {
+            idTemp=""
             var intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }

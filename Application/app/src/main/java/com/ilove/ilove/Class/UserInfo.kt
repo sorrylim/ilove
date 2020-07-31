@@ -4,12 +4,12 @@ import android.app.Application
 
 class UserInfo : Application() {
     companion object {
-        var ID: String = "hyeha"
+        var ID: String = ""
         var PW: String = ""
-        var NICKNAME: String = "최혜지"
+        var NICKNAME: String = ""
         var BIRTHDAY : String = ""
-        var GENDER: String = "F"
-        var AUTHORITY: String = "normal"
+        var GENDER: String = ""
+        var AUTHORITY: String = ""
         var BLOCKING: Int = 0
         var PHONE: String = ""
         var ALARMLIKE: Int = 0

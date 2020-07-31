@@ -155,7 +155,7 @@ router.post('/get/option', function (req, res, next) {
 })
 
 
-router.delete('/db/delete', function (req, res) {
+router.post('/db/delete', function (req, res) {
 
   var table = req.body.table
   var cond = req.body.cond

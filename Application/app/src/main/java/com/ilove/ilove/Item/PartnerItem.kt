@@ -36,6 +36,7 @@ data class UserList(
     val userIntroduce: String,
     val userPhone: String,
     val userImage: String,
+    val userPurpose: String,
     val like: Int,
     val meet: Int
 )

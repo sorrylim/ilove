@@ -31,6 +31,8 @@ class ListFragment(titleText: TextView) : Fragment() {
     var sortType : Int = 0
     var titleText: TextView = titleText
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +43,10 @@ class ListFragment(titleText: TextView) : Fragment() {
         var sortTime : TextView = rootView!!.findViewById(R.id.text_sorttime)
         var userListRV : RecyclerView = rootView!!.findViewById(R.id.rv_userlist)
         var swipeLayout : SwipeRefreshLayout = rootView!!.findViewById(R.id.layout_swipe)
+
+        //글꼴변경
+        //val typefaceb = Typeface.createFromAsset(context?.assets, "nanumbarunpenb.ttf")
+        //val typefacer = Typeface.createFromAsset(context?.assets, "nanumbarunpenr.ttf")
 
         swipeLayout.setOnRefreshListener {
             if(sortType == 0) {
@@ -62,8 +68,10 @@ class ListFragment(titleText: TextView) : Fragment() {
             sortType = 0
             sortGps()
             sortGps.setTextColor(Color.parseColor("#212121"))
-            sortGps.setTypeface(null, Typeface.BOLD)
-            sortTime.setTypeface(null, Typeface.NORMAL)
+            sortTime.setTypeface(null,Typeface.NORMAL)
+            sortGps.setTypeface(null,Typeface.BOLD)
+           // sortGps!!.setTypeface(typefaceb)
+            //sortTime.setTypeface(typefacer)
             sortTime.setTextColor(Color.parseColor("#616161"))
         }
 
@@ -71,8 +79,10 @@ class ListFragment(titleText: TextView) : Fragment() {
             sortType = 1
             sortTime()
             sortTime.setTextColor(Color.parseColor("#212121"))
-            sortTime.setTypeface(null, Typeface.BOLD)
-            sortGps.setTypeface(null, Typeface.NORMAL)
+            sortTime.setTypeface(null,Typeface.BOLD)
+            sortGps.setTypeface(null,Typeface.NORMAL)
+//            sortTime.setTypeface(typefaceb)
+//            sortGps.setTypeface(typefacer)
             sortGps.setTextColor(Color.parseColor("#616161"))
         }
 
@@ -88,10 +98,10 @@ class ListFragment(titleText: TextView) : Fragment() {
                 var array = success
                 for(i in 0..array!!.length()-1) {
                     var json = array[i] as JSONObject
-
+                    var location : List<String> = json.getString("user_recentgps").split(",")
                     var partner = UserList(json.getString("user_id"), json.getString("user_nickname"),
-                        json.getString("user_birthday"), json.getString("user_city"), json.getString("user_recentgps"), json.getString("user_recenttime"),
-                        json.getString("user_previewintroduce"), json.getString("user_phone"), json.getString("image"), json.getInt("like"), json.getInt("meet"))
+                        json.getString("user_birthday"), json.getString("user_city"), gpsTracker.getSortDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1)), json.getString("user_recenttime"),
+                        json.getString("user_previewintroduce"), json.getString("user_phone"), json.getString("image"), json.getString("user_purpose"),json.getInt("like"), json.getInt("meet"))
                     userList.add(partner)
                 }
 
@@ -112,16 +122,18 @@ class ListFragment(titleText: TextView) : Fragment() {
                     var array = success
                     for (i in 0..array!!.length() - 1) {
                         var json = array[i] as JSONObject
+                        var location : List<String> = json.getString("user_recentgps").split(",")
                         var partner = UserList(
                             json.getString("user_id"),
                             json.getString("user_nickname"),
                             json.getString("user_birthday"),
                             json.getString("user_city"),
-                            json.getString("user_recentgps"),
+                            gpsTracker.getSortDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1)),
                             json.getString("user_recenttime"),
                             json.getString("user_previewintroduce"),
                             json.getString("user_phone"),
                             json.getString("image"),
+                            json.getString("user_purpose"),
                             json.getInt("like"),
                             json.getInt("meet")
                         )
@@ -141,9 +153,10 @@ class ListFragment(titleText: TextView) : Fragment() {
                 var array = success
                 for(i in 0..array!!.length()-1) {
                     var json = array[i] as JSONObject
+                    var location : List<String> = json.getString("user_recentgps").split(",")
                     var partner = UserList(json.getString("user_id"), json.getString("user_nickname"),
-                        json.getString("user_birthday"), json.getString("user_city"), json.getString("user_recentgps"), json.getString("user_recenttime"),
-                        json.getString("user_previewintroduce"), json.getString("user_phone"), json.getString("image"),
+                        json.getString("user_birthday"), json.getString("user_city"), gpsTracker.getSortDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1)), json.getString("user_recenttime"),
+                        json.getString("user_previewintroduce"), json.getString("user_phone"), json.getString("image"),json.getString("user_purpose"),
                         json.getInt("like"), json.getInt("meet"))
                     userList.add(partner)
                 }
@@ -171,11 +184,12 @@ class ListFragment(titleText: TextView) : Fragment() {
                             json.getString("user_nickname"),
                             json.getString("user_birthday"),
                             json.getString("user_city"),
-                            json.getString("user_recentgps"),
+                            gpsTracker.getSortDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1)),
                             json.getString("user_recenttime"),
                             json.getString("user_previewintroduce"),
                             json.getString("user_phone"),
                             json.getString("image"),
+                            json.getString("user_purpose"),
                             json.getInt("like"),
                             json.getInt("meet")
                         )
@@ -202,10 +216,10 @@ class ListFragment(titleText: TextView) : Fragment() {
                 var array = success
                 for(i in 0..array!!.length()-1) {
                     var json = array[i] as JSONObject
-
+                    var location : List<String> = json.getString("user_recentgps").split(",")
                     var partner = UserList(json.getString("user_id"), json.getString("user_nickname"),
-                        json.getString("user_birthday"), json.getString("user_city"),json.getString("user_recentgps") , json.getString("user_recenttime"),
-                        json.getString("user_previewintroduce"), json.getString("user_phone"), json.getString("image"), json.getInt("like"), json.getInt("meet"))
+                        json.getString("user_birthday"), json.getString("user_city"), gpsTracker.getSortDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1)), json.getString("user_recenttime"),
+                        json.getString("user_previewintroduce"), json.getString("user_phone"), json.getString("image"), json.getString("user_purpose"),json.getInt("like"), json.getInt("meet"))
                     userList.add(partner)
                 }
 
@@ -226,16 +240,18 @@ class ListFragment(titleText: TextView) : Fragment() {
                     var array = success
                     for (i in 0..array!!.length() - 1) {
                         var json = array[i] as JSONObject
+                        var location : List<String> = json.getString("user_recentgps").split(",")
                         var partner = UserList(
                             json.getString("user_id"),
                             json.getString("user_nickname"),
                             json.getString("user_birthday"),
                             json.getString("user_city"),
-                            json.getString("user_recentgps"),
+                            gpsTracker.getSortDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1)),
                             json.getString("user_recenttime"),
                             json.getString("user_previewintroduce"),
                             json.getString("user_phone"),
                             json.getString("image"),
+                            json.getString("user_purpose"),
                             json.getInt("like"),
                             json.getInt("meet")
                         )
@@ -255,9 +271,10 @@ class ListFragment(titleText: TextView) : Fragment() {
                 var array = success
                 for(i in 0..array!!.length()-1) {
                     var json = array[i] as JSONObject
+                    var location : List<String> = json.getString("user_recentgps").split(",")
                     var partner = UserList(json.getString("user_id"), json.getString("user_nickname"),
-                        json.getString("user_birthday"), json.getString("user_city"), json.getString("user_recentgps"), json.getString("user_recenttime"),
-                        json.getString("user_previewintroduce"), json.getString("user_phone"), json.getString("image"),
+                        json.getString("user_birthday"), json.getString("user_city"), gpsTracker.getSortDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1)), json.getString("user_recenttime"),
+                        json.getString("user_previewintroduce"), json.getString("user_phone"), json.getString("image"),json.getString("user_purpose"),
                         json.getInt("like"), json.getInt("meet"))
                     userList.add(partner)
                 }
@@ -285,11 +302,12 @@ class ListFragment(titleText: TextView) : Fragment() {
                             json.getString("user_nickname"),
                             json.getString("user_birthday"),
                             json.getString("user_city"),
-                            json.getString("user_recentgps"),
+                            gpsTracker.getSortDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1)),
                             json.getString("user_recenttime"),
                             json.getString("user_previewintroduce"),
                             json.getString("user_phone"),
                             json.getString("image"),
+                            json.getString("user_purpose"),
                             json.getInt("like"),
                             json.getInt("meet")
                         )

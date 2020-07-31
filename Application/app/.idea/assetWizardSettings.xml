@@ -24,8 +24,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="/private/var/folders/pp/593y6zx104185k0ccj4qkhv40000gn/T/baseline_person_outline_24.xml" />
-                                                <entry key="opacityPercent" value="60" />
+                                                <entry key="imagePath" value="/private/var/folders/pp/593y6zx104185k0ccj4qkhv40000gn/T/baseline_format_align_justify_24.xml" />
+                                                <entry key="opacityPercent" value="80" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -36,7 +36,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/person_outline/baseline_person_outline_24.xml" />
+                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/format_align_justify/baseline_format_align_justify_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -48,7 +48,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Downloads/call_icon.png" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/icon (2).png" />
                                                 <entry key="opacityPercent" value="80" />
                                               </map>
                                             </option>
@@ -82,7 +82,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/call_icon.png" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/icon (2).png" />
                                       <entry key="outputName" value="call_n_icon" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="000000" />
