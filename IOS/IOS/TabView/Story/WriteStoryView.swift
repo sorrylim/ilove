@@ -97,7 +97,7 @@ struct WriteStoryView : View{
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let date=dateFormatter.string(from: now)
             
-            HttpService.shared.insertStoryReq(userId: "ksh",imageUrl: imageUrl!,imageUsage: "story",imageContent: content,imageDate: date,uiImage: inputImage!)
+            HttpService.shared.insertStoryReq(userId: UserInfo.shared.ID,imageUrl: imageUrl!,imageUsage: "story",imageContent: content,imageDate: date,uiImage: inputImage!)
         }
     }
 }

@@ -33,8 +33,8 @@ struct ChannelView : View{
             //아이러브 신규 이성
             Group{
                 HStack{
-                    Text("아이러브 신규 이성")
-                        .font(.system(size: 20))
+                    Text("새로 가입한 친구!")
+                        .font(.system(size: 18))
                     Spacer()
                 }
                 
@@ -72,9 +72,8 @@ struct ChannelView : View{
             //내 프로필 확인한 사람 & 내 스토리를 확인한 사람
             Group{
                 HStack{
-                    Text("향기를 남기고 간 그대는")
-                        .font(.system(size: 20))
-                    Spacer()
+                    Text("심쿵한 그대")
+                        .font(.system(size: 18))
                 }
                 Spacer(minLength: 10)
                 VStack(spacing: 20){
@@ -99,19 +98,7 @@ struct ChannelView : View{
                                 .foregroundColor(Color.black)
                         }
                     }
-                }
-                .padding()
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.orange,lineWidth: 2))
-                Spacer(minLength: 30)
-            }
-            
-            Group{
-                HStack{
-                    Text("아이러브 좋아요")
-                        .font(.system(size: 20))
-                    Spacer()
-                }
-                VStack(spacing: 20){
+                    
                     NavigationLink(destination: PartnerView(title: "내가 좋아요를 보낸 이성")){
                         HStack{
                             Text("내가 좋아요를 보낸 이성")
@@ -146,15 +133,16 @@ struct ChannelView : View{
                     }
                 }
                 .padding()
+                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.orange,lineWidth: 2))
                 Spacer(minLength: 30)
             }
             
             Group{
                 HStack{
-                    Text("우리 만나봐요!")
-                        .font(.system(size: 20))
-                    Spacer()
+                    Text("심쿵 미팅")
+                        .font(.system(size: 18))
                 }
+                Spacer(minLength: 10)
                 VStack(spacing: 20){
                     
                     NavigationLink(destination: PartnerView(title : "내가 만나고 싶은 그대")){
@@ -192,8 +180,10 @@ struct ChannelView : View{
                     }
                 }
                 .padding()
+                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.orange,lineWidth: 2))
                 Spacer(minLength: 30)
             }
+            
             
             Group{
                 HStack{
@@ -202,13 +192,15 @@ struct ChannelView : View{
                         .frame(width:60,height:60)
                     VStack(alignment: .leading){
                         Text("내 프로필 상단으로 올리기")
-                            .font(.system(size:20))
-                        Text("많은 이성들에게 내 프로필을 보여주세요")
-                            .font(.system(size:15))
+                            .font(.system(size:18))
+                        Text("1시간 동안 유지됩니다.")
+                            .font(.system(size:12))
                             .foregroundColor(Color.gray)
                     }
                     Spacer()
                 }
+                .padding(.leading,20)
+                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.orange,lineWidth: 2))
                 Spacer(minLength: 30)
             }
             
@@ -218,17 +210,24 @@ struct ChannelView : View{
         .onAppear{
             ContentView.rootView?.setTitle(title: "채널")
             
-            HttpService.shared.getNewUserReq(userGender: "F", callback: { (newUserModelArray) -> Void in
-                self.newUserList=newUserModelArray
-            })
+            if UserInfo.shared.GENDER == "M" {
+                HttpService.shared.getNewUserReq(userGender: "F", callback: { (newUserModelArray) -> Void in
+                    self.newUserList=newUserModelArray
+                })
+            }
+            else {
+                HttpService.shared.getNewUserReq(userGender: "M", callback: { (newUserModelArray) -> Void in
+                    self.newUserList=newUserModelArray
+                })
+            }
             
             
-            HttpService.shared.getViewCountReq(userId: "ksh",callback: { (data) -> Void in
+            HttpService.shared.getViewCountReq(userId: UserInfo.shared.ID,callback: { (data) -> Void in
                 self.profileCount=data.profile
                 self.storyCount=data.story
             })
             
-            HttpService.shared.getExpressionCountReq(userId: "ksh", callback: { (data) -> Void in
+            HttpService.shared.getExpressionCountReq(userId: UserInfo.shared.ID, callback: { (data) -> Void in
                 self.sendLikeCount=data.send_like
                 self.receiveLikeCount=data.receive_like
                 self.eachLikeCount=data.each_like
@@ -251,10 +250,11 @@ struct NewUserCell: View {
     
     @ObservedObject private var locationManager = LocationManager()
     
+    @State var profileVisible = false
+    
     @State var newUser : NewUserModel
     
     @State var uiImage = UIImage()
-    //@State var storyVisible=false
     @State var age = 0
     @State var dist = ""
     @State var time = ""
@@ -332,7 +332,12 @@ struct NewUserCell: View {
                 }
             }
         }
-        
+        .sheet(isPresented: $profileVisible){
+            ProfileView(userId:self.newUser.user_id,userNickname:self.newUser.user_nickname,userCity:self.newUser.user_city,userAge:self.age)
+        }
+        .onTapGesture {
+            self.profileVisible=true
+        }
     }
 }
 
