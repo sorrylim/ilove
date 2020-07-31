@@ -88,7 +88,9 @@ struct MyPageView : View{
                 
             }
             .padding()
-            .navigationBarTitle("내 페이지",displayMode: .inline)
+            .onAppear(){
+                ContentView.rootView?.setTitle(title: "내 페이지")
+        }
         //}
     }
 }

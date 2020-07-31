@@ -12,7 +12,9 @@ struct ChatListView : View{
     var body: some View{
         VStack{
             Text("대화방")
-            .navigationBarTitle("대화방",displayMode: .inline)
+        }
+        .onAppear(){
+            ContentView.rootView?.setTitle(title: "대화방")
         }
     }
 }

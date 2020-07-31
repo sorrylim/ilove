@@ -78,6 +78,33 @@ public class HttpService:ObservableObject{
         }.resume()
         
     }
+    
+    func getUserOptionReq(userId : String, callback: @escaping (UserOptionModel) -> Void){
+        guard let url=URL(string: "\(ip)/user/get/option") else {
+            return
+        }
+        
+        let data = [
+            "user_id" : userId
+        ]
+        
+        let body=try! JSONSerialization.data(withJSONObject: data)
+        
+        var request=URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else {
+                return
+            }
+            
+            let decoded = try! JSONDecoder().decode(UserOptionModel.self, from: data)
+            
+            callback(decoded)
+        }.resume()
+    }
     //------------------------------Common------------------------------//
     
     
@@ -257,6 +284,35 @@ public class HttpService:ObservableObject{
         }.resume()
     }
     
+    func getUpProfileUserListReq(gender: String, userId: String, callback: @escaping ([UserModel]) -> Void){
+        guard let url=URL(string: "\(ip)/user/get/upprofile/list") else {
+            return
+        }
+        
+        let data=[
+            [
+                "user_gender" : gender,
+                "user_id" : userId
+            ]
+        ]
+        
+        let body=try! JSONSerialization.data(withJSONObject: data)
+        
+        var request=URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            guard let data = data else {
+                return
+            }
+            
+            let decoded = try! JSONDecoder().decode([UserModel].self, from: data)
+            callback(decoded)
+        }.resume()
+    }
+    
     func deleteExpressionReq(userId: String, partnerId: String, expressionType: String, callback: @escaping (ResultModel) -> Void){
         guard let url=URL(string: "\(ip)/expression/delete") else {
             return
@@ -313,6 +369,7 @@ public class HttpService:ObservableObject{
             callback(decoded)
         }.resume()
     }
+    
     //------------------------------List------------------------------//
     
     

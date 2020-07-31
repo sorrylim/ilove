@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		540DA57C24BED4DD009434E4 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540DA57B24BED4DD009434E4 /* ChatView.swift */; };
-		5446588A24C925DF00E59FA3 /* Pager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5446588924C925DF00E59FA3 /* Pager.swift */; };
+		5446588A24C925DF00E59FA3 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5446588924C925DF00E59FA3 /* PagingView.swift */; };
 		5446588C24C9555500E59FA3 /* SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5446588B24C9555500E59FA3 /* SwipeGesture.swift */; };
 		5451D1EC24A2F8610035EA91 /* PartnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5451D1EB24A2F8610035EA91 /* PartnerView.swift */; };
+		5457057E24CFF2FA00B9D1EF /* DynamicHeightHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5457057D24CFF2FA00B9D1EF /* DynamicHeightHStack.swift */; };
 		545D598F24A0A448000B8A5A /* VipGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545D598E24A0A448000B8A5A /* VipGuideView.swift */; };
 		54745B9624A06E6400B32F25 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54745B9524A06E6400B32F25 /* MyPageView.swift */; };
 		54745B9924A071FC00B32F25 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54745B9824A071FC00B32F25 /* SettingView.swift */; };
@@ -44,9 +45,10 @@
 
 /* Begin PBXFileReference section */
 		540DA57B24BED4DD009434E4 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
-		5446588924C925DF00E59FA3 /* Pager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pager.swift; sourceTree = "<group>"; };
+		5446588924C925DF00E59FA3 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
 		5446588B24C9555500E59FA3 /* SwipeGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGesture.swift; sourceTree = "<group>"; };
 		5451D1EB24A2F8610035EA91 /* PartnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerView.swift; sourceTree = "<group>"; };
+		5457057D24CFF2FA00B9D1EF /* DynamicHeightHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightHStack.swift; sourceTree = "<group>"; };
 		545D598E24A0A448000B8A5A /* VipGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VipGuideView.swift; sourceTree = "<group>"; };
 		54745B9524A06E6400B32F25 /* MyPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		54745B9824A071FC00B32F25 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -244,8 +246,9 @@
 				549E5B3624ADB29D00050E62 /* MultilineTextField.swift */,
 				549E5B3824ADB34F00050E62 /* ImagePicker.swift */,
 				5494D0A724BD9E4B00ED2C08 /* EachAlert.swift */,
-				5446588924C925DF00E59FA3 /* Pager.swift */,
+				5446588924C925DF00E59FA3 /* PagingView.swift */,
 				5446588B24C9555500E59FA3 /* SwipeGesture.swift */,
+				5457057D24CFF2FA00B9D1EF /* DynamicHeightHStack.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -384,11 +387,12 @@
 				540DA57C24BED4DD009434E4 /* ChatView.swift in Sources */,
 				549E5B3B24ADB39300050E62 /* ExtensionClass.swift in Sources */,
 				547E622B249CAFFA00D8B7C4 /* EditProfileView.swift in Sources */,
+				5457057E24CFF2FA00B9D1EF /* DynamicHeightHStack.swift in Sources */,
 				547E6225249C88E300D8B7C4 /* ChannelView.swift in Sources */,
 				5451D1EC24A2F8610035EA91 /* PartnerView.swift in Sources */,
 				547E6228249CA27C00D8B7C4 /* WriteStoryView.swift in Sources */,
 				54745B9624A06E6400B32F25 /* MyPageView.swift in Sources */,
-				5446588A24C925DF00E59FA3 /* Pager.swift in Sources */,
+				5446588A24C925DF00E59FA3 /* PagingView.swift in Sources */,
 				54966CC524C6C29600131C43 /* LocationManager.swift in Sources */,
 				5494D0A824BD9E4B00ED2C08 /* EachAlert.swift in Sources */,
 				549E5B3724ADB29D00050E62 /* MultilineTextField.swift in Sources */,

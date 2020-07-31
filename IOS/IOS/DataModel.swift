@@ -68,7 +68,7 @@ struct UserModel : Codable {
     var user_id : String
     var user_nickname : String
     var user_birthday : String
-    //var user_city : String
+    var user_city : String
     var user_recentgps : String
     var user_recenttime : String
     var user_previewintroduce : String?
@@ -118,4 +118,38 @@ struct ProfileImageModel : Codable {
     var viewcount : Int
     var image_date : String
     var likecount : Int
+}
+
+struct UserOptionModel : Codable{
+    var user_id : String
+    var user_height : String?
+    var user_bodytype : String?
+    var user_bloodtype : String?
+    var user_residence : String?
+    var user_job : String?
+    var user_education : String?
+    var user_holiday : String?
+    var user_cigarette : String?
+    var user_alcohol : String?
+    var user_religion : String?
+    var user_brother : String?
+    var user_country : String?
+    var user_salary : String?
+    var user_asset : String?
+    var user_marriagehistory : String?
+    var user_children : String?
+    var user_marriageplan : String?
+    var user_childrenplan : String?
+    var user_parenting : String?
+    var user_wishdate : String?
+    var user_datecost : String?
+    var user_roommate : String?
+    var user_language : String?
+    var user_interest : String?
+    var user_personality : String?
+    var user_favoriteperson : String?
+    var user_city : String?
+    var user_introduce : String?
+    var user_previewintroduce : String?
+    var user_gender : String?
 }
