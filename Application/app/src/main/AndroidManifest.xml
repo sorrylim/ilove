@@ -40,7 +40,6 @@
         </activity>
         <activity android:name=".IntroActivity.CropperActivity" />
         <activity android:name=".MainActivity.MainActivity">
-
         </activity>
         <activity android:name=".IntroActivity.EditProfileActivity" />
         <activity android:name=".MainActivity.StoryActivity" />

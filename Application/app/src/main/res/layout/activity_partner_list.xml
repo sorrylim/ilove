@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity.PartnerListActivity">
 
+    <TextView
+        android:id="@+id/text_nohistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="내역이 없습니다."
+        android:textSize="30dp"
+        android:visibility="gone"
+        android:textColor="@color/colorMdGrey_700"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_partnerlist"
         android:layout_width="0dp"

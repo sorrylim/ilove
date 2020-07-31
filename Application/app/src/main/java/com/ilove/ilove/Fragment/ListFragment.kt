@@ -1,5 +1,6 @@
 package com.ilove.ilove.Fragment
 
+import android.content.res.AssetManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Paint
@@ -61,17 +62,20 @@ class ListFragment(titleText: TextView) : Fragment() {
 
         userListRV.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
+
+        var typeBold = Typeface.createFromAsset(context?.assets, "nanumbarunpenb.ttf")
+        var typeNormal = Typeface.createFromAsset(context?.assets, "nanumbarunpenr.ttf")
+
         sortGps()
-        sortGps.setTypeface(null, Typeface.BOLD)
+        sortGps.setTypeface(typeBold)
+        sortGps.setTextColor(Color.parseColor("#212121"))
 
         sortGps.setOnClickListener {
             sortType = 0
             sortGps()
             sortGps.setTextColor(Color.parseColor("#212121"))
-            sortTime.setTypeface(null,Typeface.NORMAL)
-            sortGps.setTypeface(null,Typeface.BOLD)
-           // sortGps!!.setTypeface(typefaceb)
-            //sortTime.setTypeface(typefacer)
+            sortTime.setTypeface(typeNormal)
+            sortGps.setTypeface(typeBold)
             sortTime.setTextColor(Color.parseColor("#616161"))
         }
 
@@ -79,10 +83,8 @@ class ListFragment(titleText: TextView) : Fragment() {
             sortType = 1
             sortTime()
             sortTime.setTextColor(Color.parseColor("#212121"))
-            sortTime.setTypeface(null,Typeface.BOLD)
-            sortGps.setTypeface(null,Typeface.NORMAL)
-//            sortTime.setTypeface(typefaceb)
-//            sortGps.setTypeface(typefacer)
+            sortTime.setTypeface(typeBold)
+            sortGps.setTypeface(typeNormal)
             sortGps.setTextColor(Color.parseColor("#616161"))
         }
 

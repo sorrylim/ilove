@@ -65,16 +65,21 @@ class PartnerListActivity : PSAppCompatActivity() {
         VolleyService.getSendUserReq(UserInfo.ID, expressionType, this, {success->
             partnerList.clear()
             var array = success
-            for(i in 0..array!!.length()-1) {
-                var json = array[i] as JSONObject
-                var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
-                    json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"),json.getString("image"),
-                    json.getString("user_recenttime"),json.getInt("like"), json.getInt("meet"))
-                partnerList.add(partner)
+            if(array!!.length() == 0) {
+                text_nohistory.visibility = View.VISIBLE
             }
-            rv_partnerlist.setHasFixedSize(true)
-            rv_partnerlist.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-            rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "send")
+            else {
+                for(i in 0..array!!.length()-1) {
+                    var json = array[i] as JSONObject
+                    var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
+                        json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"),json.getString("image"),
+                        json.getString("user_recenttime"),json.getInt("like"), json.getInt("meet"))
+                    partnerList.add(partner)
+                }
+                rv_partnerlist.setHasFixedSize(true)
+                rv_partnerlist.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+                rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "send")
+            }
         })
     }
 
@@ -93,16 +98,31 @@ class PartnerListActivity : PSAppCompatActivity() {
         VolleyService.getReceiveUserReq(UserInfo.ID, expressionType, this, {success->
             partnerList.clear()
             var array = success
-            for(i in 0..array!!.length()-1) {
-                var json = array[i] as JSONObject
-                var partner = Partner(json.getString("user_id"), json.getString("user_nickname"),
-                    json.getString("user_birthday"), json.getString("user_city"), json.getString("expression_date"), json.getString("user_phone"), json.getString("image"),
-                    json.getString("user_recenttime"),json.getInt("like"), json.getInt("meet"))
-                partnerList.add(partner)
+            if(array!!.length() == 0) {
+                text_nohistory.visibility = View.VISIBLE
             }
-            rv_partnerlist.setHasFixedSize(true)
-            rv_partnerlist.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-            rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "receive")
+            else {
+                for (i in 0..array!!.length() - 1) {
+                    var json = array[i] as JSONObject
+                    var partner = Partner(
+                        json.getString("user_id"),
+                        json.getString("user_nickname"),
+                        json.getString("user_birthday"),
+                        json.getString("user_city"),
+                        json.getString("expression_date"),
+                        json.getString("user_phone"),
+                        json.getString("image"),
+                        json.getString("user_recenttime"),
+                        json.getInt("like"),
+                        json.getInt("meet")
+                    )
+                    partnerList.add(partner)
+                }
+                rv_partnerlist.setHasFixedSize(true)
+                rv_partnerlist.layoutManager =
+                    LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+                rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "receive")
+            }
         })
     }
 
@@ -141,6 +161,10 @@ class PartnerListActivity : PSAppCompatActivity() {
                 rv_partnerlist.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
                 rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "each"+expressionType)
             })
+
+            if(partnerList.size == 0) {
+                text_nohistory.visibility = View.VISIBLE
+            }
         })
     }
 
@@ -160,6 +184,10 @@ class PartnerListActivity : PSAppCompatActivity() {
             rv_partnerlist.setHasFixedSize(true)
             rv_partnerlist.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "visit")
+
+            if(partnerList.size == 0) {
+                text_nohistory.visibility = View.VISIBLE
+            }
         })
     }
 }
