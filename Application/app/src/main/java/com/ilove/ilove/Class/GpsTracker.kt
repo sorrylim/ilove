@@ -10,6 +10,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.IBinder
 import android.util.Log
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 
 
@@ -71,6 +72,21 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
         return distanceForm
     }
 
+    fun getSortDistance(userLatitude: String, userLongitude: String, partnerLatitude: String, partnerLongitude: String) : String {
+        var locationA : Location = Location("pointA")
+        var locationB : Location = Location("pointB")
+
+        locationA.setLatitude(userLatitude.toDouble())
+        locationA.setLongitude(userLongitude.toDouble())
+
+        locationB.setLatitude(partnerLatitude.toDouble())
+        locationB.setLongitude(partnerLongitude.toDouble())
+
+        var distanceInt = locationA.distanceTo(locationB)
+
+        return distanceInt.toString()
+    }
+
     fun getGps() : Location? {
         try {
             locationManager =
@@ -109,6 +125,7 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
                         }
                     }
                 }
+                else {Toast.makeText(this,"네트워크 상태를 확인해주세요",Toast.LENGTH_SHORT).show()}
                 if (isGPSEnabled) {
                     if (location == null) {
                         locationManager!!.requestLocationUpdates(

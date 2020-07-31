@@ -13,11 +13,13 @@ import android.os.Message
 import android.provider.MediaStore
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -25,6 +27,7 @@ import com.ilove.ilove.Class.FileUploadUtils
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
+import com.ilove.ilove.Fragment.ProfileFragment
 import com.ilove.ilove.Item.UserItem
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
@@ -91,13 +94,14 @@ import kotlinx.android.synthetic.main.activity_edit_profile.text_editsalary
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editwishdate
 import kotlinx.android.synthetic.main.activity_edit_profile.toolbar_editprofile
 import kotlinx.android.synthetic.main.activity_edit_profile_staff.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.FileNotFoundException
 import java.io.IOException
 
 
-class EditProfileActivity : PSAppCompatActivity() {
+class EditProfileActivity : AppCompatActivity() {
 
     companion object {
         var handler:Handler? = null
@@ -111,6 +115,8 @@ class EditProfileActivity : PSAppCompatActivity() {
     var profileImageIdList : ArrayList<Int?> = arrayListOf(null, null, null, null)
     var editImageId : Int? = null
     var layout:Int? = null
+
+    var mainprofile:Int?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -160,16 +166,27 @@ class EditProfileActivity : PSAppCompatActivity() {
         profileImageList.add(imageSub2)
         profileImageList.add(imageSub3)
 
-        toolbarBinding(toolbar_editprofile, "프로필 편집", true)
+
+        setSupportActionBar(toolbar_editprofile)
+        supportActionBar?.setDisplayShowCustomEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
+        supportActionBar?.setTitle("프로필 편집")
+
         refreshProfileImage()
 
         image_editmain.setOnClickListener{
-            editImageId = profileImageIdList.get(0)
+            mainprofile=1
+            if(profileImageIdList.size!=0) {
+                editImageId = profileImageIdList.get(0)
+            }
             photoFromGallery()
         }
 
         image_editsub1.setOnClickListener {
             editImageId = null
+            mainprofile=0
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 else -> {
@@ -181,6 +198,7 @@ class EditProfileActivity : PSAppCompatActivity() {
 
         image_editsub2.setOnClickListener {
             editImageId = null
+            mainprofile=0
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 2 -> photoFromGallery()
@@ -193,6 +211,7 @@ class EditProfileActivity : PSAppCompatActivity() {
 
         image_editsub3.setOnClickListener {
             editImageId = null
+            mainprofile=0
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 2 -> photoFromGallery()
@@ -802,6 +821,9 @@ class EditProfileActivity : PSAppCompatActivity() {
                     if(editImageId != null) {
                         FileUploadUtils.uploadProfileImage(imagePath!!, "", "update", editImageId!!)
                     } else {
+                        if(mainprofile==1){
+                            FileUploadUtils.uploadProfileImage(imagePath!!, "mainprofile", "insert", null)
+                        }
                         FileUploadUtils.uploadProfileImage(imagePath!!, "profile", "insert", null)
                     }
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -847,6 +869,29 @@ class EditProfileActivity : PSAppCompatActivity() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.setType("image/*")
         startActivityForResult(intent, PICK_FROM_ALBUM)
+    }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        if (item != null) {
+//            when (item.itemId) {
+//                android.R.id.home -> {
+//                    var intent = Intent(this, ProfileFragment::class.java)
+//                    startActivity(intent)
+//                }
+//
+//            }
+//        }
+//        return false
+//    }
+      if (item != null) {
+            when (item.itemId) {
+                android.R.id.home -> {
+                   onBackPressed()
+                }
+
+            }
+        }
+        return false
     }
 
 

@@ -52,6 +52,11 @@ class ChatActivity : AppCompatActivity() {
 
     var roomId:String?=null
 
+    var userCity:String?=null
+    var userNickname:String?=null
+    var userId:String?=null
+    var userAge:String?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_drawerlayout)
@@ -96,21 +101,29 @@ class ChatActivity : AppCompatActivity() {
 
         if(UserInfo.ID == room!!.maker){
             VolleyService.getProfileReq(room!!.partner,this){
-                text_nickname.text=it.getString("user_nickname")
+                userId=room!!.partner
+                userNickname=it.getString("user_nickname")
+                text_nickname.text=userNickname
                 var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 var curDate = simpleDateFormat.format(System.currentTimeMillis())
                 var age = curDate.substring(0, 4).toInt() - it.getString("user_birthday").substring(0, 4).toInt() + 1
-                text_age_city.text="${age},${it.getString("user_city")}"
+                userCity=it.getString("user_city")
+                userAge="${age}"
+                text_age_city.text=userAge+','+userCity
                 text_introduce.text=it.getString("user_previewintroduce")
             }
         }
         else{
             VolleyService.getProfileReq(room!!.maker,this){
-                text_nickname.text=it.getString("user_nickname")
+                userId=room!!.maker
+                userNickname=it.getString("user_nickname")
+                text_nickname.text=userNickname
                 var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 var curDate = simpleDateFormat.format(System.currentTimeMillis())
                 var age = curDate.substring(0, 4).toInt() - it.getString("user_birthday").substring(0, 4).toInt() + 1
-                text_age_city.text="${age},${it.getString("user_city")}"
+                userCity=it.getString("user_city")
+                userAge="${age}"
+                text_age_city.text=userAge+','+userCity
                 text_introduce.text=it.getString("user_previewintroduce")
             }
         }
@@ -120,6 +133,16 @@ class ChatActivity : AppCompatActivity() {
                 var msg = "${room!!.roomId} subscribe success"
                 if (!it.isSuccessful) msg = "${room!!.roomId} subscribe fail"
             }
+
+        image_chatpartner.setOnClickListener {
+            var intent = Intent(this, PartnerActivity::class.java)
+            intent.putExtra("userNickname",userNickname)
+            intent.putExtra("userId",userId)
+            intent.putExtra("userAge",userAge)
+            intent.putExtra("userCity",userCity)
+
+            startActivity(intent)
+        }
 
         btn_send.setOnClickListener {
 
@@ -265,7 +288,7 @@ class ChatActivity : AppCompatActivity() {
 
         var inflater = getMenuInflater()
         inflater.inflate(R.menu.menu_empty, menu)
-        menu!!.add(0, 0, 0, "메뉴").setIcon(R.drawable.outline_list_24)
+        menu!!.add(0, 0, 0, "메뉴").setIcon(R.drawable.ham_icon)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
 
         return super.onCreateOptionsMenu(menu)
