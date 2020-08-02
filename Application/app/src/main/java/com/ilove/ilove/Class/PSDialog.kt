@@ -498,6 +498,32 @@ class PSDialog(activity: Activity) {
         }
     }
 
+    fun setUpdateCandy(candyCount: Int, updateType: String) {
+        dialog!!.setContentView(R.layout.dialog_profileup)
+        var titleText : TextView = dialog!!.findViewById(R.id.text_dialogtitle)
+        var contentText : TextView = dialog!!.findViewById(R.id.text_dialogcontent)
+        var subContentText : TextView = dialog!!.findViewById(R.id.text_dialogsubcontent)
+        var acceptBtn : Button = dialog!!.findViewById(R.id.btn_dialogaccept)
+        var cancelBtn : Button = dialog!!.findViewById(R.id.btn_dialogcancel)
+
+        titleText.text = "상품구매"
+        contentText.text = "사탕 ${candyCount}개를 선택하셨습니다.\n구매하시겠습니까?"
+
+        subContentText.visibility = View.GONE
+
+        acceptBtn.setOnClickListener {
+            VolleyService.updateCandyReq(UserInfo.ID, candyCount, updateType, context!!, {success->
+                if(success=="success") {
+                    dialog!!.dismiss()
+                }
+            })
+        }
+
+        cancelBtn.setOnClickListener {
+            dialog!!.dismiss()
+        }
+    }
+
     class BottomSheetDialog(categoryText : TextView) : BottomSheetDialogFragment() {
         var categoryText = categoryText
 

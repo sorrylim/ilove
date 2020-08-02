@@ -62,6 +62,26 @@ module.exports = function () {
         })
       })
     },
+    decrease_candy : function(user_id, candy_count, callback) {
+      pool.getConnection(function(err, con) {
+        var sql = `update user set user_candycount = user_candycount - ${candy_count} where user_id='${user_id}'`
+        con.query(sql, function(err, result) {
+          con.release()
+          if(err) callback(err)
+          else callback(null, result)
+        })
+      })
+    },
+    increase_candy : function(user_id, candy_count, callback) {
+      pool.getConnection(function(err, con) {
+        var sql = `update user set user_candycount = user_candycount + ${candy_count} where user_id='${user_id}'`
+        con.query(sql, function(err, result) {
+          con.release()
+          if(err) callback(err)
+          else callback(null, result)
+        })
+      })
+    },
     pool: pool
   }
 }

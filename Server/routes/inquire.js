@@ -1,27 +1,28 @@
 var express = require('express');
 var router = express.Router();
-var db_payment=require('../public/SQL/payment_sql')()
+var db_inquire=require('../public/SQL/inquire_sql')()
 
-router.post('/', function(req, res, next) {
-    var orderId=req.body.order_id
-    var registerId=req.body.register_id
-    var userId=req.body.user_id
-    var registerPrice=req.body.register_price
-    var paymentDate=req.body.payment_date
-    var type=req.body.type
-    var registerTitle=req.body.register_title
+router.post('/send', function(req, res, next) {
+    var user_id = req.body.user_id
+    var send_date = req.body.send_date
+    var inquire_title = req.body.inquire_title
+    var inquire_content = req.body.inquire_content
+    var inquire_type = req.body.inquire_type
 
-    db_payment.insert_payment(orderId,registerId,userId,registerPrice,paymentDate,type,registerTitle)
+    db_inquire.send_inquire(user_id, send_date, inquire_title, inquire_content, inquire_type, function(err, result) {
+        if(err) console.log(err)
+        else {
+            var object = new Object()
+            object.result = "success"
+            res.send(object)
+        }
+    })
+})
 
-    var object=new Object()
-    object.result="success"
-    res.send(object)
-});
-router.post('/search', function (req, res, next) {
-    var search = req.body.search
-    console.log(search)
-  
-    db_payment.search_payment(search, function (err, result) {
+router.post('/get', function (req, res, next) {
+    var user_id = req.body[0].user_id
+    
+    db_inquire.get_inquire(user_id, function (err, result) {
       if (err) console.log(err)
       else res.send(result)
     })

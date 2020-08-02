@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.android.volley.toolbox.Volley
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.iid.FirebaseInstanceId
@@ -51,6 +52,16 @@ class MainActivity : PSAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        var str = "http://18.217.130.157:3000/photo.jpg"
+
+        var list : List<String> = str.split("/")
+        for(i in 0..list.size-1) {
+            Log.d("test", list.get(i))
+        }
+
+        Log.d("test", "list size : ${list.size} list0: ${list.get(0)} list1: ${list.get(1)} list2: ${list.get(2)} list3 : ${list.get(3)}")
+
         if(UserInfo.ID==""){
             var intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)

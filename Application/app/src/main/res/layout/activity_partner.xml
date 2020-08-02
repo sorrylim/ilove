@@ -660,8 +660,8 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="20dp"
                             android:text="취미"
-                            android:textColor="@color/colorMdGrey_700"
-                            android:textSize="20dp"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/view30" />

@@ -13,7 +13,7 @@ class UserItem {
     )
 
     data class Candy(
-        val candyCount: String,
+        val candyCount: Int,
         val candyAmount : String,
         var isSelected: Boolean = false
     )

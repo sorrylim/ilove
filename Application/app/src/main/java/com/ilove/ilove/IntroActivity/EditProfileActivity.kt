@@ -113,7 +113,9 @@ class EditProfileActivity : AppCompatActivity() {
     var userOptionList = ArrayList<UserItem.UserOption>()
     var profileImageList = ArrayList<ImageView>()
     var profileImageIdList : ArrayList<Int?> = arrayListOf(null, null, null, null)
+    var profileImagePath = ArrayList<String>()
     var editImageId : Int? = null
+    var editImagePath : String? = null
     var layout:Int? = null
 
     var mainprofile:Int?=null
@@ -177,14 +179,19 @@ class EditProfileActivity : AppCompatActivity() {
         refreshProfileImage()
 
         image_editmain.setOnClickListener{
+            editImageId= null
+            editImagePath = null
             mainprofile=1
             if(profileImageIdList.size!=0) {
                 editImageId = profileImageIdList.get(0)
+                var list : List<String> = profileImagePath.get(0).split("/")
+                editImagePath = list.get(3)
             }
             photoFromGallery()
         }
 
         image_editsub1.setOnClickListener {
+            editImagePath = null
             editImageId = null
             mainprofile=0
             when(profileImageIdList.size) {
@@ -192,11 +199,14 @@ class EditProfileActivity : AppCompatActivity() {
                 else -> {
                     dialogPhotoType()
                     editImageId = profileImageIdList.get(1)
+                    var list : List<String> = profileImagePath.get(1).split("/")
+                    editImagePath = list.get(3)
                 }
             }
         }
 
         image_editsub2.setOnClickListener {
+            editImagePath = null
             editImageId = null
             mainprofile=0
             when(profileImageIdList.size) {
@@ -205,11 +215,14 @@ class EditProfileActivity : AppCompatActivity() {
                 else -> {
                     dialogPhotoType()
                     editImageId = profileImageIdList.get(2)
+                    var list : List<String> = profileImagePath.get(2).split("/")
+                    editImagePath = list.get(3)
                 }
             }
         }
 
         image_editsub3.setOnClickListener {
+            editImagePath = null
             editImageId = null
             mainprofile=0
             when(profileImageIdList.size) {
@@ -219,6 +232,8 @@ class EditProfileActivity : AppCompatActivity() {
                 else -> {
                     dialogPhotoType()
                     editImageId = profileImageIdList.get(3)
+                    var list : List<String> = profileImagePath.get(3).split("/")
+                    editImagePath = list.get(3)
                 }
             }
         }
@@ -659,11 +674,13 @@ class EditProfileActivity : AppCompatActivity() {
 
     fun setProfileImage(array: JSONArray) {
         profileImageIdList.clear()
+        profileImagePath.clear()
         for(i in 0..array.length()-1) {
             var json = array[i] as JSONObject
             Glide.with(this)
                 .load(json.getString("image")).apply(RequestOptions().override(640, 640))
                 .into(profileImageList.get(i))
+            profileImagePath.add(json.getString("image"))
             profileImageIdList.add(json.getInt("image_id"))
         }
     }
@@ -819,17 +836,21 @@ class EditProfileActivity : AppCompatActivity() {
                     var imagePath = resultUri.getPath()
 
                     if(editImageId != null) {
-                        FileUploadUtils.uploadProfileImage(imagePath!!, "", "update", editImageId!!)
+                        FileUploadUtils.uploadProfileImage(imagePath!!, "", "update", editImageId!!, editImagePath!!)
                     } else {
                         if(mainprofile==1){
-                            FileUploadUtils.uploadProfileImage(imagePath!!, "mainprofile", "insert", null)
+                            FileUploadUtils.uploadProfileImage(imagePath!!, "mainprofile", "insert", null, "")
                         }
-                        FileUploadUtils.uploadProfileImage(imagePath!!, "profile", "insert", null)
+                        FileUploadUtils.uploadProfileImage(imagePath!!, "profile", "insert", null, "")
                     }
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     val error = result.error
                     editImageId = null
+                    editImagePath = null
                 }
+
+                editImageId = null
+                editImagePath = null
             }
 
         }
@@ -852,9 +873,10 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         deletePhotoBtn.setOnClickListener {
-            VolleyService.deleteImageReq(editImageId!!, this, {success->
+            VolleyService.deleteImageReq(editImageId!!, editImagePath!!, this, {success->
                 if(success == "success") {
                     editImageId = null
+                    editImagePath = null
                     refreshProfileImage()
                 }
             })

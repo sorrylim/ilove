@@ -6,93 +6,105 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.StoryFragment">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_storyheader"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_story"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/image_mystoryimage"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:adjustViewBounds="true"
-            android:background="@drawable/rectangle_img"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btn_writestory"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/rounded_corner_shape_button"
-            android:text="스토리 작성하기"
-            android:textColor="@color/colorMdWhite_1000"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/image_mystoryimage"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_mystoryimage"
-            app:layout_constraintTop_toTopOf="@+id/image_mystoryimage" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_storyview"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_storyheader" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="자신만의 일상스토리로 멋내 보세요"
-            android:textColor="@color/colorMdGrey_700"
-            android:textSize="10dp"
-            app:layout_constraintEnd_toEndOf="@+id/btn_writestory"
-            app:layout_constraintStart_toStartOf="@+id/btn_writestory"
-            app:layout_constraintTop_toBottomOf="@+id/btn_writestory" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_storyheader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/img_none2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/plus_icon"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="@+id/image_mystoryimage"
-            app:layout_constraintStart_toStartOf="@+id/image_mystoryimage"
-            app:layout_constraintTop_toTopOf="@+id/image_mystoryimage" />
+                <ImageView
+                    android:id="@+id/image_mystoryimage"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/rectangle_img"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_none"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="최근 스토리가 없습니다."
-            android:textSize="10dp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/image_mystoryimage"
-            app:layout_constraintEnd_toEndOf="@+id/image_mystoryimage"
-            app:layout_constraintStart_toStartOf="@+id/image_mystoryimage"
-            app:layout_constraintTop_toBottomOf="@+id/img_none2"
-            app:layout_constraintVertical_bias="0.0" />
+                <Button
+                    android:id="@+id/btn_writestory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/rounded_corner_shape_button"
+                    android:text="스토리 작성하기"
+                    android:textColor="@color/colorMdWhite_1000"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_mystoryimage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_mystoryimage"
+                    app:layout_constraintTop_toTopOf="@+id/image_mystoryimage" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="자신만의 일상스토리로 멋내 보세요"
+                    android:textColor="@color/colorMdGrey_700"
+                    android:textSize="10dp"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_writestory"
+                    app:layout_constraintStart_toStartOf="@+id/btn_writestory"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_writestory" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_storyview"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_storyheader" />
+                <ImageView
+                    android:id="@+id/img_none2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:src="@drawable/plus_icon"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="@+id/image_mystoryimage"
+                    app:layout_constraintStart_toStartOf="@+id/image_mystoryimage"
+                    app:layout_constraintTop_toTopOf="@+id/image_mystoryimage" />
+
+                <TextView
+                    android:id="@+id/text_none"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="최근 스토리가 없습니다."
+                    android:textSize="10dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_mystoryimage"
+                    app:layout_constraintEnd_toEndOf="@+id/image_mystoryimage"
+                    app:layout_constraintStart_toStartOf="@+id/image_mystoryimage"
+                    app:layout_constraintTop_toBottomOf="@+id/img_none2"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

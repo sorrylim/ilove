@@ -30,7 +30,7 @@ class ChargeCandyActivity : PSAppCompatActivity() {
         text_maintoolbar.setText(ssb)
 
         var candyCount : ArrayList<UserItem.Candy> = arrayListOf(
-            UserItem.Candy("10", "추후결정"),  UserItem.Candy("20", "추후결정"), UserItem.Candy("40", "추후결정"), UserItem.Candy("50", "추후결정"), UserItem.Candy("100", "추후결정"),UserItem.Candy("200", "추후결정"), UserItem.Candy("400", "추후결정"))
+            UserItem.Candy(10, "추후결정"),  UserItem.Candy(20, "추후결정"), UserItem.Candy(20, "추후결정"), UserItem.Candy(50, "추후결정"), UserItem.Candy(100, "추후결정"),UserItem.Candy(200, "추후결정"), UserItem.Candy(400, "추후결정"))
 
         rv_chargecandy.setHasFixedSize(true)
         rv_chargecandy.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
