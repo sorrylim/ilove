@@ -149,7 +149,7 @@ class PSDialog(activity: Activity) {
 
         updateBtn.setOnClickListener {
             if(userOptionData == "") {
-                Toast.makeText(context, title+"을 선택해주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, title+"을(를) 선택해주세요", Toast.LENGTH_SHORT).show()
             }
             else {
                 if(userOption == "user_city") {
@@ -672,6 +672,15 @@ class PSDialog(activity: Activity) {
                 })
             }
         }
+    }
+
+    fun setLoadingDialog() {
+
+        dialog!!.window!!.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+        dialog!!.setContentView(R.layout.dialog_loading)
+        var loadingImage : ImageView = dialog!!.findViewById(R.id.image_loading)
+
+        Glide.with(context!!).asGif().load(R.raw.loading).into(loadingImage)
     }
 
 

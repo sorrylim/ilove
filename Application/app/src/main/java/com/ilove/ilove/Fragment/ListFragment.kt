@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ilove.ilove.Adapter.UserListAdapter
 import com.ilove.ilove.Class.GpsTracker
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.UserList
 import com.ilove.ilove.Object.VolleyService
@@ -94,10 +95,13 @@ class ListFragment(titleText: TextView) : Fragment() {
     }
 
     fun sortTime() {
+        var psDialog = PSDialog(activity!!)
+        psDialog.setLoadingDialog()
         var gpsTracker = GpsTracker(activity!!)
         val partnerListRV : RecyclerView = rootView!!.findViewById(R.id.rv_userlist)
         if(UserInfo.GENDER == "M") {
             VolleyService.getUserListReq("F", UserInfo.ID, activity!!, {success->
+                psDialog.show()
                 userList.clear()
                 var array = success
                 for(i in 0..array!!.length()-1) {
@@ -148,17 +152,20 @@ class ListFragment(titleText: TextView) : Fragment() {
 
                     if(upProfileUserList.size == 0) {
                         nothingText!!.visibility = View.VISIBLE
+                        psDialog.dismiss()
                     }
                     else {
                         partnerListRV.setHasFixedSize(true)
                         partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
                         partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                        psDialog.dismiss()
                     }
                 })
             })
         }
         else if(UserInfo.GENDER == "F") {
             VolleyService.getUserListReq("M", UserInfo.ID, activity!!, {success->
+                psDialog.show()
                 userList.clear()
                 var array = success
                 for(i in 0..array!!.length()-1) {
@@ -209,24 +216,27 @@ class ListFragment(titleText: TextView) : Fragment() {
                     upProfileUserList.addAll(userList)
                     if(upProfileUserList.size == 0) {
                         nothingText!!.visibility = View.VISIBLE
+                        psDialog.dismiss()
                     }
                     else {
                         partnerListRV.setHasFixedSize(true)
                         partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
                         partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                        psDialog.dismiss()
                     }
                 })
-
-
             })
         }
     }
 
     fun sortGps() {
+        var psDialog = PSDialog(activity!!)
+        psDialog.setLoadingDialog()
         var gpsTracker = GpsTracker(activity!!)
         val partnerListRV : RecyclerView = rootView!!.findViewById(R.id.rv_userlist)
         if(UserInfo.GENDER == "M") {
             VolleyService.getUserListReq("F", UserInfo.ID, activity!!, {success->
+                psDialog.show()
                 userList.clear()
                 var array = success
                 for(i in 0..array!!.length()-1) {
@@ -276,17 +286,20 @@ class ListFragment(titleText: TextView) : Fragment() {
                     upProfileUserList.addAll(userList)
                     if(upProfileUserList.size == 0) {
                         nothingText!!.visibility = View.VISIBLE
+                        psDialog.dismiss()
                     }
                     else {
                         partnerListRV.setHasFixedSize(true)
                         partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
                         partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                        psDialog.dismiss()
                     }
                 })
             })
         }
         else if(UserInfo.GENDER == "F") {
             VolleyService.getUserListReq("M", UserInfo.ID, activity!!, {success->
+                psDialog.show()
                 userList.clear()
                 var array = success
                 for(i in 0..array!!.length()-1) {
@@ -337,11 +350,13 @@ class ListFragment(titleText: TextView) : Fragment() {
                     upProfileUserList.addAll(userList)
                     if(upProfileUserList.size == 0) {
                         nothingText!!.visibility = View.VISIBLE
+                        psDialog.dismiss()
                     }
                     else {
                         partnerListRV.setHasFixedSize(true)
                         partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
                         partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                        psDialog.dismiss()
                     }
                 })
             })

@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSAppCompatActivity
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
@@ -28,6 +29,7 @@ class StoryActivity : PSAppCompatActivity() {
 
         var image : ImageView = findViewById(R.id.image_storyimage)
         var gpsTracker = GpsTracker(this)
+        var psDialog = PSDialog(this)
 
 
         image.setClipToOutline(true)
@@ -44,6 +46,8 @@ class StoryActivity : PSAppCompatActivity() {
         var curDate = simpleDateFormat.format(System.currentTimeMillis())
 
         VolleyService.getStoryUserReq(UserInfo.ID, imageId, this, {success->
+            psDialog.setLoadingDialog()
+            psDialog.show()
             var gpsTracker = GpsTracker(this)
             var partnerDate : Date = simpleDateFormat.parse(success.getString("user_recenttime"))
 
@@ -84,6 +88,7 @@ class StoryActivity : PSAppCompatActivity() {
 
                     startActivity(intent)
                 }
+                psDialog.dismiss()
             })
         })
 

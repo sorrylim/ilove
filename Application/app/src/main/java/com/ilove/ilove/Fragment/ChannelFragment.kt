@@ -24,15 +24,16 @@ import kotlinx.android.synthetic.main.fragment_channel.view.*
 import kotlinx.android.synthetic.main.fragment_channel.view.layout_sendlike
 import org.json.JSONObject
 
-class ChannelFragment(titleText: TextView) : Fragment() {
+class ChannelFragment : Fragment() {
 
     var newUserList = ArrayList<NewUserList>()
-    var titleText : TextView = titleText
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         var psDialog = PSDialog(activity!!)
+        psDialog.setLoadingDialog()
+
 
         var rootView = inflater.inflate(R.layout.fragment_channel, container, false)
         var visitProfileCount = rootView.text_visitprofilecount
@@ -65,6 +66,8 @@ class ChannelFragment(titleText: TextView) : Fragment() {
 
         swipeLayout.setOnRefreshListener {
             VolleyService.getExpressionCountReq(UserInfo.ID, activity!!, {success->
+                psDialog.setLoadingDialog()
+                psDialog.show()
                 var json = success
                 sendLikeCount.text = json!!.getInt("send_like").toString() + "명"
                 receiveLikeCount.text = json!!.getInt("receive_like").toString() + "명"
@@ -91,6 +94,7 @@ class ChannelFragment(titleText: TextView) : Fragment() {
                             newUserRV.setHasFixedSize(true)
                             newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
                             newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
+                            psDialog.dismiss()
                         })
                     }
                     else {
@@ -106,6 +110,7 @@ class ChannelFragment(titleText: TextView) : Fragment() {
                             newUserRV.setHasFixedSize(true)
                             newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
                             newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
+                            psDialog.dismiss()
                         })
                     }
                 })
@@ -115,6 +120,8 @@ class ChannelFragment(titleText: TextView) : Fragment() {
 
         if(UserInfo.GENDER == "M") {
             VolleyService.getNewUserListReq("F", activity!!, {success->
+                psDialog.setLoadingDialog()
+                psDialog.show()
                 newUserList.clear()
                 var array = success
                 for(i in 0..array.length()-1)
@@ -126,10 +133,13 @@ class ChannelFragment(titleText: TextView) : Fragment() {
                 newUserRV.setHasFixedSize(true)
                 newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
                 newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
+                psDialog.dismiss()
             })
         }
         else {
             VolleyService.getNewUserListReq("M", activity!!, {success->
+                psDialog.setLoadingDialog()
+                psDialog.show()
                 newUserList.clear()
                 var array = success
                 for(i in 0..array.length()-1)
@@ -141,6 +151,7 @@ class ChannelFragment(titleText: TextView) : Fragment() {
                 newUserRV.setHasFixedSize(true)
                 newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
                 newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
+                psDialog.dismiss()
             })
         }
 

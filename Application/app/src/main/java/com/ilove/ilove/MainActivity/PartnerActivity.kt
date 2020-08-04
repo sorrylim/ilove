@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.ilove.ilove.Adapter.PartnerProfileAdapter
 import com.ilove.ilove.Class.PSAppCompatActivity
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_partner.*
@@ -38,6 +39,7 @@ class PartnerActivity : PSAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_partner)
 
+        var psDialog = PSDialog(this)
 
         var displayMetrics: DisplayMetrics = DisplayMetrics()
         this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics)
@@ -69,6 +71,8 @@ class PartnerActivity : PSAppCompatActivity() {
         //toolbarCenterBinding(toolbar_partner, userNickname!!, true)
 
         VolleyService.getProfileImageReq(userId!!, this, {success->
+            psDialog.setLoadingDialog()
+            psDialog.show()
             profileImageList.clear()
             var array = success
             for(i in 0..array.length()-1) {
@@ -335,6 +339,7 @@ class PartnerActivity : PSAppCompatActivity() {
                     setLayout(layout_favoriteperson, favoriteperson)
                 }
 
+                psDialog.dismiss()
             })
         })
     }

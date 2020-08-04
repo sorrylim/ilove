@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.ilove.ilove.Adapter.StoryAdapter
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ImageItem
 import com.ilove.ilove.MainActivity.StoryActivity
@@ -27,6 +28,7 @@ import org.json.JSONObject
 class StoryFragment(titleText: TextView) : Fragment() {
     var storyList = ArrayList<ImageItem.StoryImage>()
     var titleText : TextView = titleText
+    var gender = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,14 +42,23 @@ class StoryFragment(titleText: TextView) : Fragment() {
         var myStoryImagePath : String? = null
         var swipeLayout : SwipeRefreshLayout = rootView.findViewById(R.id.swipe_story)
 
+        var psDialog = PSDialog(activity!!)
+
         var myStoryBlock1 : ImageView = rootView.findViewById(R.id.img_none2)
         var myStoryBlock2 : TextView = rootView.findViewById(R.id.text_none)
+
+        if(UserInfo.GENDER == "M") {
+            gender = "F"
+        }
+        else {
+            gender ="M"
+        }
 
         myStoryImage.setClipToOutline(true)
         storyRV.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
         swipeLayout.setOnRefreshListener {
-            VolleyService.getStoryImageReq(UserInfo.ID, "story", activity!!, { success->
+            VolleyService.getStoryImageReq(UserInfo.ID, "story", gender, activity!!, { success->
                 storyList.clear()
 
                 var array = success
@@ -95,7 +106,9 @@ class StoryFragment(titleText: TextView) : Fragment() {
             startActivity(intent)
         }
 
-        VolleyService.getStoryImageReq(UserInfo.ID, "story", activity!!, { success->
+        VolleyService.getStoryImageReq(UserInfo.ID, "story", gender, activity!!, { success->
+            psDialog.setLoadingDialog()
+            psDialog.show()
             storyList.clear()
 
             var array = success
@@ -107,10 +120,6 @@ class StoryFragment(titleText: TextView) : Fragment() {
 
                 storyList.add(story)
             }
-
-            storyRV.setHasFixedSize(true)
-            storyRV.layoutManager = GridLayoutManager(activity!!, 3)
-            storyRV.adapter = StoryAdapter(activity!!, storyList)
 
             VolleyService.getMyStoryImageReq(UserInfo.ID, activity!!, {success->
                 var json = success
@@ -128,7 +137,15 @@ class StoryFragment(titleText: TextView) : Fragment() {
                     myStoryBlock1.visibility = View.INVISIBLE
                     myStoryBlock2.visibility = View.INVISIBLE
                 }
+
+                psDialog.dismiss()
             })
+
+            storyRV.setHasFixedSize(true)
+            storyRV.layoutManager = GridLayoutManager(activity!!, 3)
+            storyRV.adapter = StoryAdapter(activity!!, storyList)
+            psDialog.dismiss()
+
         })
 
         return rootView

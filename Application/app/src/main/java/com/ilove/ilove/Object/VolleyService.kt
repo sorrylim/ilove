@@ -436,11 +436,12 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
-    fun getStoryImageReq(userId:String, imageUsage:String, context: Context, success:(JSONArray)->Unit) {
+    fun getStoryImageReq(userId:String, imageUsage:String, userGender: String, context: Context, success:(JSONArray)->Unit) {
         var url = "${ip}/image/get/story"
         var json = JSONObject()
         json.put("user_id", userId)
         json.put("image_usage", imageUsage)
+        json.put("user_gender", userGender)
 
         var array = JSONArray()
         array.put(json)

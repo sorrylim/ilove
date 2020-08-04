@@ -564,13 +564,13 @@
 
                         <TextView
                             android:id="@+id/text_partnerwishdate"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="첫 데이트까지 희망사항"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
                             android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerwishdate1"
+                            android:gravity="center"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerwishdate1"
                             app:layout_constraintTop_toTopOf="@+id/text_partnerwishdate1" />
@@ -742,7 +742,7 @@
                             android:id="@+id/view30"
                             android:layout_width="0dp"
                             android:layout_height="1dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="30dp"
                             android:background="@color/colorMdGrey_300"
                             android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="parent"

@@ -112,7 +112,7 @@ class MainActivity : PSAppCompatActivity() {
         bnv_main.setOnNavigationItemSelectedListener(navListener)
 
         if (savedInstanceState == null) {
-            channelFragment = ChannelFragment(text_maintoolbar)
+            channelFragment = ChannelFragment()
             supportFragmentManager.beginTransaction().add(R.id.frame_main, channelFragment!!).commit()
         }
     }
@@ -121,7 +121,7 @@ class MainActivity : PSAppCompatActivity() {
         when (it.itemId) {
             R.id.bnv_main_channel -> {
                 if(channelFragment == null) {
-                    channelFragment = ChannelFragment(text_maintoolbar)
+                    channelFragment = ChannelFragment()
                     supportFragmentManager.beginTransaction().add(R.id.frame_main, channelFragment!!).commit()
                 }
 
