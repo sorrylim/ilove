@@ -12,9 +12,16 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textSize="20dp"
+        android:background="?attr/selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="이용문의" />
+
+    <View
+        android:id="@+id/view34"
+        android:layout_width="match_parent"
+        android:background="@color/colorMdGrey_500"
+        android:layout_height="1dp" />
 
     <TextView
         android:id="@+id/text_inquirepurchase"
@@ -22,19 +29,10 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textSize="20dp"
+        android:background="?attr/selectableItemBackground"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="결제문의" />
 
-    <TextView
-        android:id="@+id/textView72"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:textSize="20dp"
-        android:paddingBottom="10dp"
-        android:layout_gravity="bottom"
-        android:gravity="center"
-        android:text="테스트" />
 </LinearLayout>

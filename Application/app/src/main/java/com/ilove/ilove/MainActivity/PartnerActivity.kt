@@ -1,5 +1,6 @@
 package com.ilove.ilove.MainActivity
 
+import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -9,15 +10,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.ilove.ilove.Adapter.PartnerProfileAdapter
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.PSDialog
+import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_partner.*
 import kotlinx.android.synthetic.main.fragment_channel.*
 import org.json.JSONObject
+import java.text.SimpleDateFormat
 
 class PartnerActivity : PSAppCompatActivity() {
 
@@ -34,10 +39,15 @@ class PartnerActivity : PSAppCompatActivity() {
     var padding = 0
     var margin = 0
     var layoutMargin = 0
+    var like = 0
+    var meet = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_partner)
+
+        var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        var curDate = simpleDateFormat.format(System.currentTimeMillis())
 
         var psDialog = PSDialog(this)
 
@@ -61,14 +71,78 @@ class PartnerActivity : PSAppCompatActivity() {
         var userId = intent.getStringExtra("userId")
         var userAge = intent.getStringExtra("userAge")
         var userCity = intent.getStringExtra("userCity")
+        var userPhone = intent.getStringExtra("userPhone")
 
         text_partnernickname.text = userNickname
         text_partnerage.text = userCity + ", " + userAge
 
         scroll_partner.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
+        fab_like.setOnClickListener {
+            if(like == 0) {
+                VolleyService.insertExpressionReq(UserInfo.ID, userId!!, "like", curDate, this, {success->
+                    VolleyService.sendFCMReq(userId,"like", this)
+                    when(success) {
+                        "success" -> {
+                            fab_like.setImageResource(R.drawable.bigheart_on)
+                            like = 1
+                        }
+                        "eachsuccess" -> {
+                            fab_like.setImageResource(R.drawable.bigheart_on)
+                            var dialog = PSDialog(this)
+                            dialog.setEachExpressionLikeDialog(userId, userNickname!!, userAge + ", " + userCity, profileImageList.get(0))
+                            like = 1
+                            dialog.show()
+                        }
+                        else -> Toast.makeText(this , "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+            else if(like == 1) {
+                VolleyService.deleteExpressionReq(UserInfo.ID, userId!!, "like", this, {success->
+                    if(success=="success") {
+                        fab_like.setImageResource(R.drawable.bigheart_off)
+                        like = 0
+                    }
+                    else {
+                        Toast.makeText(this, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+        }
 
-        //toolbarCenterBinding(toolbar_partner, userNickname!!, true)
+        fab_call.setOnClickListener {
+            if(meet == 0) {
+                VolleyService.insertExpressionReq(UserInfo.ID, userId!!, "meet", curDate, this, {success->
+                    VolleyService.sendFCMReq(userId,"meet", this)
+                    when(success) {
+                        "success" -> {
+                            fab_call.setImageResource(R.drawable.call_icon)
+                            meet = 1
+                        }
+                        "eachsuccess" -> {
+                            fab_call.setImageResource(R.drawable.call_icon)
+                            var dialog = PSDialog(this)
+                            dialog.setEachExpressionMeetDialog(userNickname!!, userAge + ", " + userCity, userPhone!!, profileImageList.get(0))
+                            meet = 1
+                            dialog.show()
+                        }
+                        else -> Toast.makeText(this , "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+            else if(meet == 1) {
+                VolleyService.deleteExpressionReq(UserInfo.ID, userId!!, "meet", this, {success->
+                    if(success=="success") {
+                        fab_call.setImageResource(R.drawable.call_n_icon)
+                        meet = 0
+                    }
+                    else {
+                        Toast.makeText(this, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+        }
 
         VolleyService.getProfileImageReq(userId!!, this, {success->
             psDialog.setLoadingDialog()
@@ -339,7 +413,21 @@ class PartnerActivity : PSAppCompatActivity() {
                     setLayout(layout_favoriteperson, favoriteperson)
                 }
 
-                psDialog.dismiss()
+                VolleyService.getPartnerExpressionReq(UserInfo.ID, userId, this, { success->
+                    var json = success
+
+                        if(json.getInt("like") == 1) {
+                            fab_like.setImageResource(R.drawable.bigheart_on)
+                            like = 1
+                        }
+
+                        if(json.getInt("meet") == 1) {
+                            fab_call.setImageResource(R.drawable.call_icon)
+                            meet = 1
+                        }
+
+                    psDialog.dismiss()
+                })
             })
         })
     }

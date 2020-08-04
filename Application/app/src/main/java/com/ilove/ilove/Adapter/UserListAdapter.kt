@@ -103,9 +103,9 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
                     when(success) {
                         "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
                         "eachsuccess" -> {
-                            likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_off, null))
+                            likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
                             var dialog = PSDialog(context as Activity)
-                            dialog.setEachExpressionLikeDialog(userList.get(position).userId,userList.get(position).userNickname, userList.get(position).userAge + ", " + userList.get(position).userCity, userList.get(position).userImage)
+                            dialog.setEachExpressionLikeDialog(userList.get(position).userId,userList.get(position).userNickname, age.toString() + ", " + userList.get(position).userCity, userList.get(position).userImage)
                             dialog.show()
                         }
                         else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
@@ -133,7 +133,7 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
                         "eachsuccess" -> {
                             likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_icon, null))
                             var dialog = PSDialog(context as Activity)
-                            dialog.setEachExpressionMeetDialog(userList.get(position).userNickname, userList.get(position).userAge + ", " + userList.get(position).userCity, userList.get(position).userPhone, userList.get(position).userImage)
+                            dialog.setEachExpressionMeetDialog(userList.get(position).userNickname, age.toString() + ", " + userList.get(position).userCity, userList.get(position).userPhone, userList.get(position).userImage)
                             dialog.show()
                         }
                         else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
@@ -158,6 +158,7 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
             intent.putExtra("userId", userList.get(position).userId)
             intent.putExtra("userAge", age.toString())
             intent.putExtra("userCity", userList.get(position).userCity)
+            intent.putExtra("userPhone", userList.get(position).userPhone)
 
             val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
             val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))

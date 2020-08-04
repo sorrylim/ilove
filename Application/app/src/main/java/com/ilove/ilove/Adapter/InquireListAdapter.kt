@@ -45,20 +45,32 @@ class InquireListAdapter(val context: Context, val inquireList:ArrayList<Inquire
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if(inquireList.get(position).inquireType == "qna" && inquireList.get(position).check == 0) {
-            holder.itemView.text_inquiretitle.text = "[문의] " + inquireList.get(position).inquireTitle
+        when(inquireList.get(position).inquireType) {
+            "qna" -> {
+                holder.itemView.text_inquiretitle.text = "[문의] " + inquireList.get(position).inquireTitle
+            }
+            "report" -> {
+                holder.itemView.text_inquiretitle.text = "[신고] " + inquireList.get(position).inquireTitle
+            }
         }
-        else if(inquireList.get(position).inquireType == "qna" && inquireList.get(position).check == 1) {
-            holder.itemView.text_inquiretitle.text = "[문의답변] " + inquireList.get(position).inquireTitle
-        }
-        else if(inquireList.get(position).inquireType == "report" && inquireList.get(position).check == 0) {
-            holder.itemView.text_inquiretitle.text = "[신고] " + inquireList.get(position).inquireTitle
-        }
-        else if(inquireList.get(position).inquireType == "report" && inquireList.get(position).check == 1) {
-            holder.itemView.text_inquiretitle.text = "[신고] " + inquireList.get(position).inquireTitle
+
+        when(inquireList.get(position).check) {
+            0 -> {
+                holder.itemView.text_inquirecheck.text ="답변대기"
+            }
+            1 -> {
+                holder.itemView.text_inquirecheck.text ="답변완료"
+                holder.itemView.text_inquirecheck.setTextColor(Color.RED)
+            }
         }
 
         holder.itemView.text_inquiredate.text = inquireList.get(position).date
+
+        holder.itemView.setOnClickListener {
+            var psDialog = PSDialog(context as Activity)
+            psDialog.setInquireClickDialog(inquireList.get(position).inquireTitle, inquireList.get(position).inquireContent, inquireList.get(position).inquireAnswer, inquireList.get(position).date, inquireList.get(position).answerDate)
+            psDialog.show()
+        }
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view){

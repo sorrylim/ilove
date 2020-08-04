@@ -22,6 +22,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class StoryActivity : PSAppCompatActivity() {
+    var userPhone = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_story)
@@ -51,6 +53,7 @@ class StoryActivity : PSAppCompatActivity() {
             var gpsTracker = GpsTracker(this)
             var partnerDate : Date = simpleDateFormat.parse(success.getString("user_recenttime"))
 
+            userPhone = success.getString("user_phone")
             age = (curDate.substring(0, 4).toInt() - success.getString("user_birthday").substring(0, 4).toInt() + 1).toString()
             userNickname = success.getString("user_nickname")
             text_storynickname.text = userNickname + ", " + age
@@ -85,6 +88,7 @@ class StoryActivity : PSAppCompatActivity() {
                     intent.putExtra("userId", userId)
                     intent.putExtra("userImage", json.getString("image"))
                     intent.putExtra("userAge", age)
+                    intent.putExtra("userPhone", userPhone!!)
 
                     startActivity(intent)
                 }

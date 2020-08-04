@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Adapter.StoryAdapter
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
@@ -127,7 +128,7 @@ class StoryFragment(titleText: TextView) : Fragment() {
                 myStoryImagePath = json.getString("image")
 
                 if(myStoryImageId != null) {
-                    Glide.with(activity!!).load(myStoryImagePath).into(myStoryImage)
+                    Glide.with(activity!!).load(myStoryImagePath).apply(RequestOptions().override(300, 300)).into(myStoryImage)
                     myStoryImage.setOnClickListener {
                         var intent = Intent(activity!!, StoryActivity::class.java)
                         intent.putExtra("image", myStoryImagePath)

@@ -164,6 +164,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
             intent.putExtra("userId", partnerList.get(position).userId)
             intent.putExtra("userAge", age.toString())
             intent.putExtra("userCity", partnerList.get(position).userCity)
+            intent.putExtra("userPhone", partnerList.get(position).userPhone)
 
 
 

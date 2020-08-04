@@ -1053,6 +1053,27 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
+    fun getPartnerExpressionReq(userId : String, partnerId: String, context: Context, success : (JSONObject) -> Unit) {
+        val url = "${ip}/expression/get/partner"
+
+        var json=JSONObject()
+            .put("user_id", userId)
+            .put("partner_id", partnerId)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
 
 
 

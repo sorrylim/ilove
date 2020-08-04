@@ -2,6 +2,7 @@ package com.ilove.ilove.Fragment
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -32,8 +33,6 @@ class ChannelFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var psDialog = PSDialog(activity!!)
-        psDialog.setLoadingDialog()
-
 
         var rootView = inflater.inflate(R.layout.fragment_channel, container, false)
         var visitProfileCount = rootView.text_visitprofilecount
@@ -69,6 +68,49 @@ class ChannelFragment : Fragment() {
                 psDialog.setLoadingDialog()
                 psDialog.show()
                 var json = success
+
+                if(json.getInt("send_like") > 0) {
+                    sendLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+                else {
+                    sendLikeBtn.setBackgroundResource(0)
+                }
+
+                if(json.getInt("receive_like") > 0) {
+                    receiveLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+                else {
+                    receiveLikeBtn.setBackgroundResource(0)
+                }
+
+                if(json.getInt("each_like") > 0) {
+                    eachLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+                else {
+                    eachLikeBtn.setBackgroundResource(0)
+                }
+
+                if(json.getInt("send_meet") > 0) {
+                    sendMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+                else {
+                    sendMeetBtn.setBackgroundResource(0)
+                }
+
+                if(json.getInt("receive_meet") > 0) {
+                    receiveMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+                else {
+                    receiveMeetBtn.setBackgroundResource(0)
+                }
+
+                if(json.getInt("each_meet") > 0) {
+                    eachMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+                else {
+                    eachMeetBtn.setBackgroundResource(0)
+                }
+
                 sendLikeCount.text = json!!.getInt("send_like").toString() + "명"
                 receiveLikeCount.text = json!!.getInt("receive_like").toString() + "명"
                 eachLikeCount.text = json!!.getInt("each_like").toString() + "명"
@@ -120,8 +162,9 @@ class ChannelFragment : Fragment() {
 
         if(UserInfo.GENDER == "M") {
             VolleyService.getNewUserListReq("F", activity!!, {success->
-                psDialog.setLoadingDialog()
-                psDialog.show()
+                var loadingDialog = PSDialog(activity!!)
+                loadingDialog.setLoadingDialog()
+                loadingDialog.show()
                 newUserList.clear()
                 var array = success
                 for(i in 0..array.length()-1)
@@ -133,13 +176,14 @@ class ChannelFragment : Fragment() {
                 newUserRV.setHasFixedSize(true)
                 newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
                 newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
-                psDialog.dismiss()
+                loadingDialog.dismiss()
             })
         }
         else {
             VolleyService.getNewUserListReq("M", activity!!, {success->
-                psDialog.setLoadingDialog()
-                psDialog.show()
+                var loadingDialog = PSDialog(activity!!)
+                loadingDialog.setLoadingDialog()
+                loadingDialog.show()
                 newUserList.clear()
                 var array = success
                 for(i in 0..array.length()-1)
@@ -151,7 +195,7 @@ class ChannelFragment : Fragment() {
                 newUserRV.setHasFixedSize(true)
                 newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
                 newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
-                psDialog.dismiss()
+                loadingDialog.dismiss()
             })
         }
 
@@ -161,25 +205,43 @@ class ChannelFragment : Fragment() {
             if(json.getInt("send_like") > 0) {
                 sendLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
             }
+            else {
+                sendLikeBtn.setBackgroundResource(0)
+            }
 
             if(json.getInt("receive_like") > 0) {
                 receiveLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+            }
+            else {
+                receiveLikeBtn.setBackgroundResource(0)
             }
 
             if(json.getInt("each_like") > 0) {
                 eachLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
             }
+            else {
+                eachLikeBtn.setBackgroundResource(0)
+            }
 
             if(json.getInt("send_meet") > 0) {
                 sendMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+            }
+            else {
+                sendMeetBtn.setBackgroundResource(0)
             }
 
             if(json.getInt("receive_meet") > 0) {
                 receiveMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
             }
+            else {
+                receiveMeetBtn.setBackgroundResource(0)
+            }
 
             if(json.getInt("each_meet") > 0) {
                 eachMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+            }
+            else {
+                eachMeetBtn.setBackgroundResource(0)
             }
 
             sendLikeCount.text = json!!.getInt("send_like").toString() + "명"

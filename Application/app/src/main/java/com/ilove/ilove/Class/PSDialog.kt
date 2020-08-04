@@ -40,6 +40,7 @@ import com.ilove.ilove.MainActivity.ChatActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.dialog_inquire.*
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import kotlin.random.Random
 
@@ -543,6 +544,11 @@ class PSDialog(activity: Activity) {
 
         override fun onActivityCreated(savedInstanceState: Bundle?) {
             super.onActivityCreated(savedInstanceState)
+            view?.findViewById<TextView>(R.id.text_inquirepurchase)?.setOnClickListener {
+                categoryText.text = text_inquirepurchase.text
+                dismiss()
+            }
+
             view?.findViewById<TextView>(R.id.text_inquireservice)?.setOnClickListener {
                 categoryText.text = text_inquireservice.text
                 dismiss()
@@ -675,12 +681,35 @@ class PSDialog(activity: Activity) {
     }
 
     fun setLoadingDialog() {
-
         dialog!!.window!!.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
         dialog!!.setContentView(R.layout.dialog_loading)
         var loadingImage : ImageView = dialog!!.findViewById(R.id.image_loading)
 
         Glide.with(context!!).asGif().load(R.raw.loading).into(loadingImage)
+    }
+
+    fun setInquireClickDialog(title: String, content: String, answer: String, date:String, answerDate: String) {
+        dialog = Dialog(context!!, R.style.popCasterDlgTheme)
+        val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_inquireclick, null)
+        val titleText : TextView = dialogView.findViewById(R.id.text_inquireclicktitle)
+        val contentText : TextView = dialogView.findViewById(R.id.text_inquireclickcontent)
+        val answerText : TextView = dialogView.findViewById(R.id.text_inquireclickanswer)
+        val cancelBtn : ImageView = dialogView.findViewById(R.id.image_inquireclickcancel)
+        val dateText : TextView = dialogView.findViewById(R.id.text_inquireclickdate)
+        val answerDateText: TextView = dialogView.findViewById(R.id.text_inquireclickanswerdate)
+
+        dateText.text = date
+        answerDateText.text = answerDate
+        titleText.text = title
+        contentText.text = content
+        answerText.text = answer
+
+        dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
+        dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
+
+        cancelBtn.setOnClickListener {
+            dismiss()
+        }
     }
 
 

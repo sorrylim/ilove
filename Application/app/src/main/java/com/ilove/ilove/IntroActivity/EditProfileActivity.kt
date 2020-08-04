@@ -682,7 +682,7 @@ class EditProfileActivity : AppCompatActivity() {
         for(i in 0..array.length()-1) {
             var json = array[i] as JSONObject
             Glide.with(this)
-                .load(json.getString("image")).apply(RequestOptions().override(640, 640))
+                .load(json.getString("image")).apply(RequestOptions().override(300, 300))
                 .into(profileImageList.get(i))
             profileImagePath.add(json.getString("image"))
             profileImageIdList.add(json.getInt("image_id"))
