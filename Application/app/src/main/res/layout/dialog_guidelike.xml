@@ -20,11 +20,11 @@
 
     <TextView
         android:id="@+id/textView21"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="30dp"
         android:gravity="center"
         android:text="@string/guidelike"
         android:textColor="@color/colorMdGrey_900"
@@ -41,15 +41,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView21"
-        app:srcCompat="@drawable/default_image" />
+        app:srcCompat="@drawable/bigheart_on" />
 
     <TextView
         android:id="@+id/textView34"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
         android:gravity="center"
         android:text="@string/guidelikecontent"
         android:textColor="@color/colorMdGrey_900"
@@ -59,17 +57,17 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_guidelike"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="70dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/more_rounded_corner_shape_button"
         android:text="네! 알겠어요"
         android:textColor="@color/colorMdWhite_1000"
-        android:textSize="15dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

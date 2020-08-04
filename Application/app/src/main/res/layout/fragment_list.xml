@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.ListFragment">
 
+    <TextView
+        android:id="@+id/text_listnothing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="조회가능한 이성회원이 없습니다."
+        android:textColor="@color/colorMdGrey_700"
+        android:textSize="25dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/layout_swipe"
         android:layout_width="0dp"

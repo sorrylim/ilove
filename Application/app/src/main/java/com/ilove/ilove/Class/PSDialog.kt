@@ -268,7 +268,7 @@ class PSDialog(activity: Activity) {
                 Toast.makeText(context, title+"을 선택해주세요", Toast.LENGTH_SHORT).show()
             }
             else {
-                if(userOption == "user_city") {
+                if(userOption == "user_city" || userOption == "user_purpose") {
                     VolleyService.updateUserCityReq(UserId, userOption, userOptionData!!, context!!, {success->
                         if(success == "success") {
                             dismiss()
@@ -307,7 +307,6 @@ class PSDialog(activity: Activity) {
                     VolleyService.updateUserOptionReq(UserId, userOption, userOptionData!!, context!!, {success->
                         if(success == "success") {
                             if(userOptionData.length > 8) {
-
                                 dismiss()
                             }
                             else {
@@ -658,7 +657,21 @@ class PSDialog(activity: Activity) {
                 Toast.makeText(context!!, "인증번호가 틀립니다.", Toast.LENGTH_SHORT).show()
             }
         }
+    }
 
+    fun setGuideLike() {
+        dialog!!.setContentView(R.layout.dialog_guidelike)
+        var acceptBtn : Button = dialog!!.findViewById(R.id.btn_guidelike)
+
+        acceptBtn.setOnClickListener {
+            dialog!!.setContentView(R.layout.dialog_guidemeet)
+            var acceptBtn : Button = dialog!!.findViewById(R.id.btn_guidemeet)
+            acceptBtn.setOnClickListener {
+                dismiss()
+                VolleyService.updateReq("user", "user_guide=0", "user_id='${UserInfo.ID}'", context!!, {success->
+                })
+            }
+        }
     }
 
 

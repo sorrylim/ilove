@@ -31,6 +31,7 @@ class ListFragment(titleText: TextView) : Fragment() {
     var rootView : View? = null
     var sortType : Int = 0
     var titleText: TextView = titleText
+    var nothingText : TextView? = null
 
 
 
@@ -44,6 +45,7 @@ class ListFragment(titleText: TextView) : Fragment() {
         var sortTime : TextView = rootView!!.findViewById(R.id.text_sorttime)
         var userListRV : RecyclerView = rootView!!.findViewById(R.id.rv_userlist)
         var swipeLayout : SwipeRefreshLayout = rootView!!.findViewById(R.id.layout_swipe)
+        nothingText = rootView!!.findViewById(R.id.text_listnothing)
 
         //글꼴변경
         //val typefaceb = Typeface.createFromAsset(context?.assets, "nanumbarunpenb.ttf")
@@ -143,9 +145,15 @@ class ListFragment(titleText: TextView) : Fragment() {
                     }
 
                     upProfileUserList.addAll(userList)
-                    partnerListRV.setHasFixedSize(true)
-                    partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                    partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+
+                    if(upProfileUserList.size == 0) {
+                        nothingText!!.visibility = View.VISIBLE
+                    }
+                    else {
+                        partnerListRV.setHasFixedSize(true)
+                        partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                        partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                    }
                 })
             })
         }
@@ -199,9 +207,14 @@ class ListFragment(titleText: TextView) : Fragment() {
                     }
 
                     upProfileUserList.addAll(userList)
-                    partnerListRV.setHasFixedSize(true)
-                    partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                    partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                    if(upProfileUserList.size == 0) {
+                        nothingText!!.visibility = View.VISIBLE
+                    }
+                    else {
+                        partnerListRV.setHasFixedSize(true)
+                        partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                        partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                    }
                 })
 
 
@@ -261,9 +274,14 @@ class ListFragment(titleText: TextView) : Fragment() {
                     }
 
                     upProfileUserList.addAll(userList)
-                    partnerListRV.setHasFixedSize(true)
-                    partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                    partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                    if(upProfileUserList.size == 0) {
+                        nothingText!!.visibility = View.VISIBLE
+                    }
+                    else {
+                        partnerListRV.setHasFixedSize(true)
+                        partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                        partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                    }
                 })
             })
         }
@@ -317,9 +335,14 @@ class ListFragment(titleText: TextView) : Fragment() {
                     }
 
                     upProfileUserList.addAll(userList)
-                    partnerListRV.setHasFixedSize(true)
-                    partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                    partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                    if(upProfileUserList.size == 0) {
+                        nothingText!!.visibility = View.VISIBLE
+                    }
+                    else {
+                        partnerListRV.setHasFixedSize(true)
+                        partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                        partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                    }
                 })
             })
         }

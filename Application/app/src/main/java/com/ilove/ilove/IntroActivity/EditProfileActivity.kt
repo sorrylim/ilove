@@ -244,11 +244,15 @@ class EditProfileActivity : AppCompatActivity() {
             if(json.getString("user_introduce") != "null")
             {
                 text_editintroduce.text = json.getString("user_introduce")
+                text_editintroduce.setTextColor(Color.parseColor("#FFA500"))
+                text_editintroduce.setTypeface(text_editintroduce.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_previewintroduce") != "null")
             {
                 text_editpreviewintroduce.text = json.getString("user_previewintroduce")
+                text_editpreviewintroduce.setTextColor(Color.parseColor("#FFA500"))
+                text_editpreviewintroduce.setTypeface(text_editpreviewintroduce.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_height") != "null")
@@ -691,6 +695,10 @@ class EditProfileActivity : AppCompatActivity() {
             profileImageInit()
             setProfileImage(array)
         })
+    }
+
+    fun purpose() {
+        userOptionList = arrayListOf(UserItem.UserOption("결혼"), UserItem.UserOption("재혼"), UserItem.UserOption("연애"))
     }
 
     fun height() {

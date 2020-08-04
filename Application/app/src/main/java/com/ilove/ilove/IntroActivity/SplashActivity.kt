@@ -42,7 +42,6 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-//알림 채널 생성
 
 
 
@@ -112,6 +111,7 @@ class SplashActivity : AppCompatActivity() {
                         UserInfo.LIKECOUNT=user.getInt("user_likecount")
                         UserInfo.MESSAGETICKET=user.getInt("user_messageticket")
                         UserInfo.VIP = user.getInt("user_vip")
+                        UserInfo.GUIDE = user.getInt("user_guide")
 
 
                         var pref=this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
@@ -132,6 +132,7 @@ class SplashActivity : AppCompatActivity() {
                             .putInt("LIKECOUNT", UserInfo.LIKECOUNT)
                             .putInt("MESSAGETICKET", UserInfo.MESSAGETICKET)
                             .putInt("VIP", UserInfo.VIP)
+                            .putInt("GUIDE", UserInfo.GUIDE)
                             .apply()
 
                         /*Handler().postDelayed({

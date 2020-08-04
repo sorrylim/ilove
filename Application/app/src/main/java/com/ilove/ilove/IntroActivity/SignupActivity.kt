@@ -171,11 +171,13 @@ class SignupActivity: PSAppCompatActivity() {
                     var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
                     var editor = userPref.edit()
                     editor.putString("ID", phone).apply()
-
                     UserInfo.ID = phone!!
+
+                    VolleyService.insertReq("useroption", "user_id", "'${phone!!}'", this, {success->
+                        var psDialog=PSDialog(this)
+                        purpose(psDialog)
+                    })
                 })
-                var psDialog=PSDialog(this)
-                gender(psDialog)
             }
         }
     }
@@ -189,6 +191,16 @@ class SignupActivity: PSAppCompatActivity() {
             height(psDialog)
         }
 
+    }
+
+    fun purpose(psDialog: PSDialog) {
+        userOptionList.clear()
+        userOptionList = arrayListOf(UserItem.UserOption("결혼"), UserItem.UserOption("재혼"), UserItem.UserOption("연애"))
+        psDialog.setUserOption_signup("이용목적", "user_purpose", userOptionList, phone!!)
+        psDialog.show()
+        psDialog.dialog!!.setOnDismissListener {
+            gender(psDialog)
+        }
     }
 
     fun height(psDialog:PSDialog) {
@@ -208,7 +220,7 @@ class SignupActivity: PSAppCompatActivity() {
     fun bodyType(psDialog:PSDialog) {
         userOptionList.clear()
         userOptionList = arrayListOf(UserItem.UserOption("마른"), UserItem.UserOption("슬림탄탄"), UserItem.UserOption("보통"), UserItem.UserOption("글래머"), UserItem.UserOption("근육질"), UserItem.UserOption("통통한"), UserItem.UserOption("뚱뚱한"), UserItem.UserOption("기타"))
-        psDialog.setUserOption_signup("체형", "user_height", userOptionList, phone!!)
+        psDialog.setUserOption_signup("체형", "user_bodytype", userOptionList, phone!!)
         psDialog.show()
         psDialog.dialog!!.setOnDismissListener {
             bloodType(psDialog)
@@ -457,9 +469,6 @@ class SignupActivity: PSAppCompatActivity() {
         psDialog.setUserOption_signup("내가 좋아하는 사람", "user_favoriteperson", userOptionList,phone!!)
         psDialog.show()
         psDialog.dialog!!.setOnDismissListener {
-            var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
-            var editor = userPref.edit()
-            editor.putString("ID", phone).apply()
             var intent = Intent(this, SplashActivity::class.java)
             startActivity(intent)
         }

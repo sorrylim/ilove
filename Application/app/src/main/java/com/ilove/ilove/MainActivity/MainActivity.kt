@@ -20,6 +20,7 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSAppCompatActivity
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Fragment.*
 import com.ilove.ilove.IntroActivity.ChargeCandyActivity
@@ -53,14 +54,11 @@ class MainActivity : PSAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var str = "http://18.217.130.157:3000/photo.jpg"
-
-        var list : List<String> = str.split("/")
-        for(i in 0..list.size-1) {
-            Log.d("test", list.get(i))
+        if(UserInfo.GUIDE == 1) {
+            var psDialog = PSDialog(this)
+            psDialog.setGuideLike()
+            psDialog.show()
         }
-
-        Log.d("test", "list size : ${list.size} list0: ${list.get(0)} list1: ${list.get(1)} list2: ${list.get(2)} list3 : ${list.get(3)}")
 
         if(UserInfo.ID==""){
             var intent = Intent(this, LoginActivity::class.java)
