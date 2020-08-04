@@ -25,11 +25,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btn_sendSMS.setOnClickListener {
-            VolleyService.sendSMSReq(this, {success->
-
-            })
-        }
 
         btn_login.setOnClickListener {
             VolleyService.loginReq(edit_loginid.text.toString(), edit_loginpw.text.toString(), this, {success->

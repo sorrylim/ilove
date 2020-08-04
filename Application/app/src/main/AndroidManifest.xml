@@ -19,8 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".IntroActivity.LoginActivity">
+        <activity android:name=".IntroActivity.StartActivity">
         </activity>
+        <activity android:name=".IntroActivity.LoginActivity"></activity>
         <activity android:name=".IntroActivity.InquireActivity" />
         <activity android:name=".IntroActivity.ChargeCandyActivity" />
 
@@ -31,7 +32,7 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
-        <activity android:name=".IntroActivity.SplashActivity" >
+        <activity android:name=".IntroActivity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,8 +40,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".IntroActivity.CropperActivity" />
-        <activity android:name=".MainActivity.MainActivity">
-        </activity>
+        <activity android:name=".MainActivity.MainActivity"></activity>
         <activity android:name=".IntroActivity.EditProfileActivity" />
         <activity android:name=".MainActivity.StoryActivity" />
         <activity android:name=".MainActivity.WriteStoryActivity" />
@@ -50,9 +50,10 @@
         <activity android:name=".IntroActivity.ItemActivity" />
         <activity android:name=".IntroActivity.AlarmSettingActivity" />
         <activity android:name=".IntroActivity.SettingActivity" />
-        <activity android:name=".IntroActivity.SignupActivity"/>
+        <activity android:name=".IntroActivity.SignupActivity" >
+        </activity>
         <activity android:name=".MainActivity.ChatActivity" />
-        <activity android:name=".IntroActivity.ManagerEditProfileActivity"/>
+        <activity android:name=".IntroActivity.ManagerEditProfileActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />

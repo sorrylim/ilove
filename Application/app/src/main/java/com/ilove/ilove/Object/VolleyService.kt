@@ -965,7 +965,7 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
-    fun sendSMSReq(context: Context, success: (JSONObject) -> Unit) {
+    fun sendSMSReq(phone:String, certifyyNum: Int, context: Context, success: (JSONObject) -> Unit) {
         var url = "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:256675021402:ilove/messages"
         val timestamp = System.currentTimeMillis().toString()
 
@@ -998,13 +998,13 @@ object VolleyService {
 
         var array = JSONArray()
         var json1 = JSONObject()
-        json1.put("to", "01041545154")
+        json1.put("to", phone)
         array.put(json1)
 
         var json = JSONObject()
         json.put("type", "SMS")
         json.put("from", "01073253757")
-        json.put("content", "내가해냈다 쉬발")
+        json.put("content", "[아이러브팅] 인증번호 ${certifyyNum} 를 입력해주세요.")
         json.put("messages", array)
 
         var request = object : JsonObjectRequest(

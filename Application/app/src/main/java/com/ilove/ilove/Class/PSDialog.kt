@@ -7,11 +7,15 @@ import android.graphics.drawable.ColorDrawable
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableStringBuilder
+import android.text.TextWatcher
+import android.text.method.ScrollingMovementMethod
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -29,6 +33,7 @@ import com.ilove.ilove.Adapter.MessageCandyAdapter
 import com.ilove.ilove.Adapter.PersonalityAdapter
 import com.ilove.ilove.Adapter.UserOptionAdapter
 import com.ilove.ilove.IntroActivity.ChargeCandyActivity
+import com.ilove.ilove.IntroActivity.SignupActivity
 import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Item.UserItem
 import com.ilove.ilove.MainActivity.ChatActivity
@@ -36,6 +41,7 @@ import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.dialog_inquire.*
 import java.text.SimpleDateFormat
+import kotlin.random.Random
 
 class PSDialog(activity: Activity) {
 
@@ -543,6 +549,116 @@ class PSDialog(activity: Activity) {
                 dismiss()
             }
         }
+    }
+
+    fun setPermissionDialog() {
+        dialog!!.setContentView(R.layout.dialog_permission)
+        var displayMetrics: DisplayMetrics = DisplayMetrics()
+        (context as Activity).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics) // 화면의 가로길이를 구함
+        var width = displayMetrics.widthPixels * 0.8
+
+
+        val checkBtn : Button = dialog!!.findViewById(R.id.btn_permissioncheck)
+        val permissionLayout : ConstraintLayout = dialog!!.findViewById(R.id.layout_permission)
+
+        permissionLayout.getLayoutParams().width = width.toInt()
+
+        checkBtn.setOnClickListener {
+            dismiss()
+            val psDialog = PSDialog(context!!)
+            psDialog.setPernsonalInfo()
+            psDialog.show()
+        }
+    }
+
+    fun setPernsonalInfo() {
+        var displayMetrics: DisplayMetrics = DisplayMetrics()
+        (context as Activity).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics) // 화면의 가로길이를 구함
+        var width = displayMetrics.widthPixels * 0.8
+        var height = displayMetrics.heightPixels * 0.8
+
+        dialog!!.setContentView(R.layout.dialog_personalinfo)
+        val agreeBtn : Button = dialog!!.findViewById(R.id.btn_personalinfo)
+        val personalText : TextView = dialog!!.findViewById(R.id.textView80)
+        var personalLayout : ConstraintLayout = dialog!!.findViewById(R.id.layout_personalinfo)
+
+        personalLayout.getLayoutParams().width = width.toInt()
+        personalLayout.getLayoutParams().height = height.toInt()
+        personalLayout.requestLayout()
+
+        personalText.movementMethod = ScrollingMovementMethod.getInstance()
+
+        agreeBtn.setOnClickListener {
+            dismiss()
+            val psDialog = PSDialog(context!!)
+            psDialog.setCertification1()
+            psDialog.show()
+        }
+    }
+
+    fun setCertification1() {
+        dialog = Dialog(context!!, R.style.popCasterDlgTheme)
+        val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_certification1, null)
+        val phoneEdit : EditText = dialogView.findViewById(R.id.edit_phone)
+        val sendBtn : TextView = dialogView.findViewById(R.id.text_certificationphone)
+
+        phoneEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if(phoneEdit.length() == 11) {
+                    sendBtn.setTextColor(Color.parseColor("#212121"))
+                    sendBtn.isClickable = true
+                }
+                else {
+                    sendBtn.setTextColor(Color.parseColor("#9E9E9E"))
+                    sendBtn.isClickable = false
+                }
+            }
+        })
+
+        dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
+        dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
+
+        sendBtn.setOnClickListener {
+            var random = Random
+            var certifyNum = random.nextInt(100000, 999999)
+            var phone = phoneEdit.text.toString()
+
+            VolleyService.sendSMSReq(phone, certifyNum, context!!, {success-> })
+
+            dismiss()
+            val psDialog = PSDialog(context!!)
+            psDialog.setCertification2(phone, certifyNum)
+            psDialog.show()
+        }
+    }
+
+    fun setCertification2(phone:String, certifyNum: Int) {
+        dialog = Dialog(context!!, R.style.popCasterDlgTheme)
+        val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_certification2, null)
+        val certifyEdit : EditText = dialogView.findViewById(R.id.edit_certifynum)
+        val certifyBtn : TextView = dialogView.findViewById(R.id.text_certification)
+
+        dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
+        dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
+
+        certifyBtn.setOnClickListener {
+            if(certifyEdit.text.toString() == certifyNum.toString()) {
+                var intent = Intent(context!!, SignupActivity::class.java)
+                intent.putExtra("phone", phone)
+                context!!.startActivity(intent)
+                dismiss()
+            }
+            else {
+                Toast.makeText(context!!, "인증번호가 틀립니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
 

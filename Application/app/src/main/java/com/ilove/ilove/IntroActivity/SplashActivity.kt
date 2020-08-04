@@ -43,46 +43,19 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 //알림 채널 생성
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            var fcmPref=this.getSharedPreferences("FCM", Context.MODE_PRIVATE)
-            if(fcmPref.getString("id","")==""){
-                val notificationManager =
-                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                val notificationChannel = NotificationChannel(
-                    "fcm_ilove",
-                    "fcm_ilove",
-                    NotificationManager.IMPORTANCE_DEFAULT
-                )
-                notificationChannel.description = "ilove fcm channel"
-                notificationChannel.enableLights(true)
-                notificationChannel.lightColor = Color.GREEN
-                notificationChannel.enableVibration(true)
-                notificationChannel.vibrationPattern = longArrayOf(100, 200, 100, 200)
-                notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
-                notificationChannel.setShowBadge(true)
-                notificationChannel.enableVibration(true)
-                notificationManager.createNotificationChannel(notificationChannel)
-            }
-        }
-        if(!checkLocationServicesStatus()) {
-            showDialogForLocationServiceSetting()
-        }
-        else {
-            checkRunTimePermission()
-        }
 
 
 
-        /*var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
+
+        var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
         UserInfo.ID = userPref.getString("ID", "")!!
-        UserInfo.PW = userPref.getString("PW", "")!!
         if(UserInfo.ID != "") {
-            VolleyService.loginReq(UserInfo.ID, UserInfo.PW, this, { success->
+            VolleyService.loginReq(UserInfo.ID, "", this, { success->
                 when(success.getInt("code")) {
                     0 -> {
                         //통신 실패
                         Handler().postDelayed({
-                            //var intent: Intent = Intent(this,LoginActivity::class.java)
+                            var intent: Intent = Intent(this, StartActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)  //액티비티 전환시 애니메이션을 무시
                             startActivity(intent)
                             finish()
@@ -90,22 +63,51 @@ class SplashActivity : AppCompatActivity() {
                         Toast.makeText(this, "서버와의 통신에 실패했습니다.", Toast.LENGTH_SHORT).show()
                     }
                     3 -> {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            var fcmPref=this.getSharedPreferences("FCM", Context.MODE_PRIVATE)
+                            if(fcmPref.getString("id","")==""){
+                                val notificationManager =
+                                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                                val notificationChannel = NotificationChannel(
+                                    "fcm_ilove",
+                                    "fcm_ilove",
+                                    NotificationManager.IMPORTANCE_DEFAULT
+                                )
+                                notificationChannel.description = "ilove fcm channel"
+                                notificationChannel.enableLights(true)
+                                notificationChannel.lightColor = Color.GREEN
+                                notificationChannel.enableVibration(true)
+                                notificationChannel.vibrationPattern = longArrayOf(100, 200, 100, 200)
+                                notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+                                notificationChannel.setShowBadge(true)
+                                notificationChannel.enableVibration(true)
+                                notificationManager.createNotificationChannel(notificationChannel)
+                            }
+                        }
+
+
+                        if(!checkLocationServicesStatus()) {
+                            showDialogForLocationServiceSetting()
+                        }
+                        else {
+                            checkRunTimePermission()
+                        }
+
                         //로그인 성공
                         //프리퍼런스 저장
                         var user = success.getJSONObject("user")
                         UserInfo.ID=user.getString("user_id")
-                        UserInfo.PW=user.getString("user_pw")
                         UserInfo.NICKNAME=user.getString("user_nickname")
                         UserInfo.BIRTHDAY=user.getString("user_birthday")
                         UserInfo.GENDER=user.getString("user_gender")
                         UserInfo.AUTHORITY=user.getString("user_authority")
                         UserInfo.PHONE=user.getString("user_phone")
                         UserInfo.BLOCKING=user.getInt("user_blocking")
-                        UserInfo.ALARMLIKE=user.getInt("user_alarmlike")
-                        UserInfo.ALARMMEET=user.getInt("user_alarmmeet")
-                        UserInfo.ALARMCHECKPROFILE=user.getInt("user_alarmcheckprofile")
-                        UserInfo.ALARMUPDATEPROFILE=user.getInt("user_alarmupdateprofile")
-                        UserInfo.ALARMMESSAGE=user.getInt("user_alarmmessage")
+                        UserInfo.ALARMLIKE=user.getInt("alarm_like")
+                        UserInfo.ALARMMEET=user.getInt("alarm_meet")
+                        UserInfo.ALARMCHECKPROFILE=user.getInt("alarm_checkprofile")
+                        UserInfo.ALARMUPDATEPROFILE=user.getInt("alarm_updateprofile")
+                        UserInfo.ALARMMESSAGE=user.getInt("alarm_message")
                         UserInfo.CANDYCOUNT=user.getInt("user_candycount")
                         UserInfo.LIKECOUNT=user.getInt("user_likecount")
                         UserInfo.MESSAGETICKET=user.getInt("user_messageticket")
@@ -115,7 +117,6 @@ class SplashActivity : AppCompatActivity() {
                         var pref=this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
                         var editor=pref.edit()
                         editor.putString("ID",UserInfo.ID)
-                            .putString("PW",UserInfo.PW)
                             .putString("NICKNAME",UserInfo.NICKNAME)
                             .putString("BIRTHDAY",UserInfo.BIRTHDAY)
                             .putString("PHONE",UserInfo.PHONE)
@@ -133,24 +134,24 @@ class SplashActivity : AppCompatActivity() {
                             .putInt("VIP", UserInfo.VIP)
                             .apply()
 
-                        Handler().postDelayed({
+                        /*Handler().postDelayed({
                             var intent: Intent = Intent(this, MainActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)  //액티비티 전환시 애니메이션을 무시
                             startActivity(intent)
                             finish()
-                        },2000)
+                        },2000)*/
                     }
                 }
             })
         }
         else {
             Handler().postDelayed({
-                //var intent= Intent(this, LoginActivity::class.java)
+                var intent= Intent(this, StartActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)  //액티비티 전환시 애니메이션을 무시
                 startActivity(intent)
                 finish()
             }, 2000)
-        }*/
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -216,7 +217,6 @@ class SplashActivity : AppCompatActivity() {
             startActivity(intent)
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this@SplashActivity, requiredPermission.get(0))) {
-                Toast.makeText(this@SplashActivity, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show()
                 ActivityCompat.requestPermissions(this@SplashActivity, requiredPermission, PERMISSIONS_REQUEST_CODE)
             } else {
                 ActivityCompat.requestPermissions(this@SplashActivity, requiredPermission, PERMISSIONS_REQUEST_CODE)
