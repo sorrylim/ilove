@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		540DA57C24BED4DD009434E4 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540DA57B24BED4DD009434E4 /* ChatView.swift */; };
+		5436A47924D86066006C0753 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5436A47824D86066006C0753 /* GoogleService-Info.plist */; };
+		5436A47B24DA6BAA006C0753 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5436A47A24DA6BAA006C0753 /* BlurView.swift */; };
+		5436A47E24DA8C2E006C0753 /* EditPreviewIntroduceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5436A47D24DA8C2E006C0753 /* EditPreviewIntroduceView.swift */; };
+		5436A48024DAA436006C0753 /* EditIntroduceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5436A47F24DAA436006C0753 /* EditIntroduceView.swift */; };
 		5446588A24C925DF00E59FA3 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5446588924C925DF00E59FA3 /* PagingView.swift */; };
 		5446588C24C9555500E59FA3 /* SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5446588B24C9555500E59FA3 /* SwipeGesture.swift */; };
 		5451D1EC24A2F8610035EA91 /* PartnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5451D1EB24A2F8610035EA91 /* PartnerView.swift */; };
@@ -45,6 +49,10 @@
 
 /* Begin PBXFileReference section */
 		540DA57B24BED4DD009434E4 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		5436A47824D86066006C0753 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5436A47A24DA6BAA006C0753 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		5436A47D24DA8C2E006C0753 /* EditPreviewIntroduceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPreviewIntroduceView.swift; sourceTree = "<group>"; };
+		5436A47F24DAA436006C0753 /* EditIntroduceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroduceView.swift; sourceTree = "<group>"; };
 		5446588924C925DF00E59FA3 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
 		5446588B24C9555500E59FA3 /* SwipeGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGesture.swift; sourceTree = "<group>"; };
 		5451D1EB24A2F8610035EA91 /* PartnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerView.swift; sourceTree = "<group>"; };
@@ -114,6 +122,15 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
+		5436A47C24DA8C13006C0753 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				5436A47D24DA8C2E006C0753 /* EditPreviewIntroduceView.swift */,
+				5436A47F24DAA436006C0753 /* EditIntroduceView.swift */,
+			);
+			path = EditProfile;
+			sourceTree = "<group>";
+		};
 		5451D1EA24A2F8480035EA91 /* Channel */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +150,7 @@
 		54745B9724A0702A00B32F25 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				5436A47C24DA8C13006C0753 /* EditProfile */,
 				545D598D24A0A438000B8A5A /* ItemManage */,
 				5497A40B24A09A7C005BBC1A /* SettingItem */,
 				547E622A249CAFFA00D8B7C4 /* EditProfileView.swift */,
@@ -169,6 +187,7 @@
 				547E621D249C82A300D8B7C4 /* TabView */,
 				547E6209249C67A300D8B7C4 /* ContentView.swift */,
 				548AD92724A1A772003E27FD /* HttpService.swift */,
+				5436A47824D86066006C0753 /* GoogleService-Info.plist */,
 				54B5EAD024C0002F00B80FDF /* UserInfo.swift */,
 				548AD92D24A1CD40003E27FD /* DataModel.swift */,
 				549E5B3A24ADB39300050E62 /* ExtensionClass.swift */,
@@ -249,6 +268,7 @@
 				5446588924C925DF00E59FA3 /* PagingView.swift */,
 				5446588B24C9555500E59FA3 /* SwipeGesture.swift */,
 				5457057D24CFF2FA00B9D1EF /* DynamicHeightHStack.swift */,
+				5436A47A24DA6BAA006C0753 /* BlurView.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -323,6 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				547E6212249C67A400D8B7C4 /* LaunchScreen.storyboard in Resources */,
+				5436A47924D86066006C0753 /* GoogleService-Info.plist in Resources */,
 				547E620F249C67A400D8B7C4 /* Preview Assets.xcassets in Resources */,
 				547E620C249C67A400D8B7C4 /* Assets.xcassets in Resources */,
 			);
@@ -386,6 +407,7 @@
 				5446588C24C9555500E59FA3 /* SwipeGesture.swift in Sources */,
 				540DA57C24BED4DD009434E4 /* ChatView.swift in Sources */,
 				549E5B3B24ADB39300050E62 /* ExtensionClass.swift in Sources */,
+				5436A47E24DA8C2E006C0753 /* EditPreviewIntroduceView.swift in Sources */,
 				547E622B249CAFFA00D8B7C4 /* EditProfileView.swift in Sources */,
 				5457057E24CFF2FA00B9D1EF /* DynamicHeightHStack.swift in Sources */,
 				547E6225249C88E300D8B7C4 /* ChannelView.swift in Sources */,
@@ -393,6 +415,7 @@
 				547E6228249CA27C00D8B7C4 /* WriteStoryView.swift in Sources */,
 				54745B9624A06E6400B32F25 /* MyPageView.swift in Sources */,
 				5446588A24C925DF00E59FA3 /* PagingView.swift in Sources */,
+				5436A47B24DA6BAA006C0753 /* BlurView.swift in Sources */,
 				54966CC524C6C29600131C43 /* LocationManager.swift in Sources */,
 				5494D0A824BD9E4B00ED2C08 /* EachAlert.swift in Sources */,
 				549E5B3724ADB29D00050E62 /* MultilineTextField.swift in Sources */,
@@ -400,6 +423,7 @@
 				54745B9B24A0724900B32F25 /* ItemManageView.swift in Sources */,
 				547E621F249C82B400D8B7C4 /* StoryListView.swift in Sources */,
 				547E620A249C67A300D8B7C4 /* ContentView.swift in Sources */,
+				5436A48024DAA436006C0753 /* EditIntroduceView.swift in Sources */,
 				548AD92824A1A772003E27FD /* HttpService.swift in Sources */,
 				54745B9924A071FC00B32F25 /* SettingView.swift in Sources */,
 				547E6221249C82CC00D8B7C4 /* ChatListView.swift in Sources */,

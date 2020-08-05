@@ -26,63 +26,72 @@ struct UserListView : View{
     @State var textSortTime = Text("접속시간순")
     
     var body : some View{
-        VStack{
-            HStack{
-                Spacer()
-                textSortDist
-                    .font(.system(size: 13))
-                    .foregroundColor(Color.black)
-                    .onTapGesture {
-                        self.sortByDist()
+        ZStack{
+            VStack{
+                HStack{
+                    Spacer()
+                    textSortDist
+                        .font(.system(size: 13))
+                        .foregroundColor(Color.black)
+                        .onTapGesture {
+                            self.sortByDist()
+                    }
+                    Text("|")
+                    textSortTime
+                        .font(.system(size: 13))
+                        .foregroundColor(Color.gray)
+                        .onTapGesture {
+                            self.sortByTime()
+                    }
                 }
-                Text("|")
-                textSortTime
-                    .font(.system(size: 13))
-                    .foregroundColor(Color.gray)
-                    .onTapGesture {
-                        self.sortByTime()
+                .padding(.top,10)
+                
+                if self.upUserList.count > 0 {
+                    List{
+                        ForEach(upUserList, id: \.user_id){user in
+                            UserRow(user: user, view: self)
+                        }
+                    }
+                    .frame(height: CGFloat(self.upUserList.count * 80))
+                    .moveDisabled(true)
+                    .onAppear(){
+                        UITableView.appearance().separatorStyle = .none
+                    }
                 }
-            }
-            .padding(.top,10)
-            
-            if self.upUserList.count > 0 {
                 List{
-                    ForEach(upUserList, id: \.user_id){user in
+                    ForEach(userList, id: \.user_id){user in
                         UserRow(user: user, view: self)
                     }
                 }
-                .frame(height: CGFloat(self.upUserList.count * 80))
-                .moveDisabled(true)
-            }
-            List{
-                ForEach(userList, id: \.user_id){user in
-                    UserRow(user: user, view: self)
-                }
-            }
-            .navigationBarTitle("리스트",displayMode: .inline)
-            .onAppear(){
-                ContentView.rootView?.setTitle(title: "리스트")
-                
-                if UserInfo.shared.GENDER == "M"{
-                    HttpService.shared.getUpProfileUserListReq(gender: "F", userId: UserInfo.shared.ID) { (userModelArray) -> Void in
-                        self.upUserList=userModelArray
+                    .onAppear(){
+                        UITableView.appearance().separatorStyle = .none
                     }
-                    HttpService.shared.getUserListReq(gender: "F", userId: UserInfo.shared.ID) { (userModelArray) -> Void in
-                        self.userList=userModelArray
-                        self.sortByDist()
-                    }
-                }
-                else {
-                    HttpService.shared.getUpProfileUserListReq(gender: "M", userId: UserInfo.shared.ID) { (userModelArray) -> Void in
-                        self.upUserList=userModelArray
-                        print(self.upUserList)
-                    }
+                .navigationBarTitle("리스트",displayMode: .inline)
+                .onAppear(){
+                    ContentView.rootView?.setTitle(title: "리스트")
                     
-                    HttpService.shared.getUserListReq(gender: "M", userId: UserInfo.shared.ID) { (userModelArray) -> Void in
-                        self.userList=userModelArray
-                        self.sortByDist()
+                    if UserInfo.shared.GENDER == "M"{
+                        HttpService.shared.getUpProfileUserListReq(gender: "F", userId: UserInfo.shared.ID) { (userModelArray) -> Void in
+                            self.upUserList=userModelArray
+                        }
+                        HttpService.shared.getUserListReq(gender: "F", userId: UserInfo.shared.ID) { (userModelArray) -> Void in
+                            self.userList=userModelArray
+                            self.sortByDist()
+                        }
+                    }
+                    else {
+                        HttpService.shared.getUpProfileUserListReq(gender: "M", userId: UserInfo.shared.ID) { (userModelArray) -> Void in
+                            self.upUserList=userModelArray
+                            print(self.upUserList)
+                        }
+                        
+                        HttpService.shared.getUserListReq(gender: "M", userId: UserInfo.shared.ID) { (userModelArray) -> Void in
+                            self.userList=userModelArray
+                            self.sortByDist()
+                        }
                     }
                 }
+                
             }
             if alertVisible {
                 GeometryReader{_ in

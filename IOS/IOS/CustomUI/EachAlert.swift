@@ -15,15 +15,13 @@ struct EachAlert: View {
     var userAge:Int
     var userRecentTime:String
     var uiImage:UIImage
+    
     @Binding var showing:Bool
-    
-    
     
     var body: some View {
         VStack(spacing:10){
             Text("좋아요가 연결되었어요!\n대화를 시작해보세요")
                 .font(.system(size:20))
-                
             
             Image(uiImage: uiImage)
                 .resizable()
@@ -35,7 +33,8 @@ struct EachAlert: View {
             Text("\(userAge), \(userRecentTime)")
                 .font(.system(size:10))
             
-            NavigationLink(destination: ChatView(room: ChatRoomModel(room_id: "", room_maker: UserInfo.shared.ID, room_partner: userId, room_title: userNickname, chat_content: "", chat_time: ""))){
+            NavigationLink(destination: ChatView(roomImage: self.uiImage, userId: userId, userNickname: userNickname,isNew: true))
+            {
                 Text("대화시작하기")
                     .font(.system(size: 15))
                     .foregroundColor(Color.white)
@@ -57,5 +56,9 @@ struct EachAlert: View {
         .background(Color.white)
         .cornerRadius(20)
         .animation(.spring())
+        .onDisappear(){
+            self.showing=false
+            print(self.showing)
+        }
     }
 }

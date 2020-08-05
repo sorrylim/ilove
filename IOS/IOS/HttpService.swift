@@ -17,6 +17,34 @@ public class HttpService:ObservableObject{
     var ip="http://18.217.130.157:3000"
     
     //------------------------------Common------------------------------//
+    func deleteReq(table: String, cond: String, callback: @escaping () -> Void){
+        guard let url=URL(string: "\(ip)/user/db/delete") else{
+            return
+        }
+        
+        let data=[
+                "table": table,
+                "cond": cond
+        ]
+        
+        
+        let body=try! JSONSerialization.data(withJSONObject: data)
+        
+        var request=URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else {
+                return
+            }
+
+            callback()
+            
+        }.resume()
+    }
+    
     func insertHistoryReq(userId: String, partnerId: String, visitType: String, visitDate: String, callback: @escaping (ResultModel) -> Void){
         guard let url=URL(string: "\(ip)/expression/insert/history") else{
             return
@@ -401,7 +429,7 @@ public class HttpService:ObservableObject{
         }.resume()
     }
     
-    func getStoryImageReq(userId: String, callback: @escaping ([StoryModel]) -> Void){
+    func getStoryImageReq(userId: String,gender: String, callback: @escaping ([StoryModel]) -> Void){
         guard let url=URL(string: "\(ip)/image/get/story") else {
             return
         }
@@ -409,7 +437,8 @@ public class HttpService:ObservableObject{
         let data=[
             [
                 "user_id" : userId,
-                "image_usage" : "story"
+                "image_usage" : "story",
+                "user_gender" : gender
             ]
         ]
         
@@ -573,16 +602,18 @@ public class HttpService:ObservableObject{
     }
     //------------------------------Story------------------------------//
     
+    
+    
     //------------------------------Chat------------------------------//
     func createRoomReq(userId: String, userNickname: String, callback:@escaping (ChatRoomModel) -> Void){
-        guard let url = URL(string: "\(ip)/image/insert/expression") else{
+        guard let url = URL(string: "\(ip)/chat/create/room") else{
             return
         }
         
         let data=[
-            "room_maker" : "ksh",
+            "room_maker" : UserInfo.shared.ID,
             "room_partner" : userId,
-            "room_partner_title" : "ksh&\(userNickname)}"
+            "room_title" : "\(UserInfo.shared.NICKNAME)&\(userNickname)"
         ]
         
         let body = try! JSONSerialization.data(withJSONObject: data)
@@ -601,6 +632,147 @@ public class HttpService:ObservableObject{
             callback(decoded)
         }.resume()
     }
+    
+    func getMyRoomReq(userId: String, callback:@escaping ([ChatRoomModel]) -> Void){
+        guard let url = URL(string: "\(ip)/chat/get/my/room") else{
+            return
+        }
+        
+        let data=[
+            [
+                "user_id" : userId
+            ]
+        ]
+        
+        let body = try! JSONSerialization.data(withJSONObject: data)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            guard let data = data else{
+                return
+            }
+            
+            let decoded = try! JSONDecoder().decode([ChatRoomModel].self, from: data)
+            callback(decoded)
+        }.resume()
+    }
+    
+    func getProfileReq(userId: String, callback:@escaping (ProfileModel) -> Void){
+        guard let url = URL(string: "\(ip)/user/get/profile") else{
+            return
+        }
+        
+        let data = [
+            "user_id" : userId
+        ]
+        
+        let body = try! JSONSerialization.data(withJSONObject: data)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            guard let data = data else{
+                return
+            }
+            
+            let decoded = try! JSONDecoder().decode(ProfileModel.self, from: data)
+            callback(decoded)
+        }.resume()
+    }
+    
+    func readChatReq(roomId : String, chatTime : String){
+        guard let url = URL(string: "\(ip)/chat/read/chat") else{
+            return
+        }
+        
+        let data = [
+            "room_id" : roomId,
+            "chat_time" : chatTime
+        ]
+        
+        let body = try! JSONSerialization.data(withJSONObject: data)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            guard let data = data else{
+                return
+            }
+        }.resume()
+    }
+    
+    func insertChatReq(roomId: String,userId: String,userNickname: String,chatPartner: String, chatContent: String, currentDate: String,callback:@escaping (ResultModel) -> Void) {
+        guard let url = URL(string: "\(ip)/chat/insert/chat") else{
+            return
+        }
+        
+        let data = [
+            "room_id" : roomId,
+            "chat_speaker" : userId,
+            "chat_speaker_nickname" : userNickname,
+            "chat_content" : chatContent,
+            "chat_time" : currentDate,
+            "chat_partner" : chatPartner
+        ]
+        
+        let body = try! JSONSerialization.data(withJSONObject: data)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            guard let data = data else{
+                return
+            }
+            
+            let decoded = try! JSONDecoder().decode(ResultModel.self, from: data)
+            callback(decoded)
+        }.resume()
+    }
     //------------------------------Chat------------------------------//
+    
+    
+    
+    //------------------------------Profile------------------------------//
+    func updateIntroduce(userId: String, introduceType: String, introduce: String, callback: @escaping () -> Void) {
+        guard let url = URL(string: "\(ip)/user/update/introduce") else{
+            return
+        }
+        
+        let data = [
+            "user_id" : userId,
+            "introduce_type" : introduceType,
+            "introduce_data" : introduce
+        ]
+        
+        let body = try! JSONSerialization.data(withJSONObject: data)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            guard let data = data else{
+                return
+            }
+            
+            callback()
+        }.resume()
+    }
+    //------------------------------Profile------------------------------//
+
 }
 

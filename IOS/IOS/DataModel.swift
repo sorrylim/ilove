@@ -88,7 +88,7 @@ struct StoryUserModel : Codable {
     var user_id: String
     var user_nickname: String
     var user_birthday: String
-    var user_recentgps: String
+    var user_recenttime: String
     var image_content: String
     var likecount: Int
     var viewcount: Int
@@ -104,9 +104,18 @@ struct ChatRoomModel : Codable {
     var room_id : String
     var room_maker : String
     var room_partner : String
-    var room_title : String
+    var room_title : String?
+    var chat_content : String?
+    var chat_time : String?
+}
+
+struct ChatModel : Codable, Hashable {
+    var room_id : String
+    var chat_speaker : String
+    var chat_speaker_nickname : String
     var chat_content : String
     var chat_time : String
+    var unread_count : Int
 }
 
 struct ProfileImageModel : Codable {
@@ -152,4 +161,11 @@ struct UserOptionModel : Codable{
     var user_introduce : String?
     var user_previewintroduce : String?
     var user_gender : String?
+}
+
+struct ProfileModel : Codable{
+    var user_nickname : String
+    var user_birthday : String
+    var user_city : String
+    var user_previewintroduce : String?
 }

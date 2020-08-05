@@ -133,7 +133,7 @@ struct ChannelView : View{
                     }
                 }
                 .padding()
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.orange,lineWidth: 2))
+                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 255/255, green: 160/255, blue: 0),lineWidth: 2))
                 Spacer(minLength: 30)
             }
             
@@ -180,7 +180,7 @@ struct ChannelView : View{
                     }
                 }
                 .padding()
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.orange,lineWidth: 2))
+                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 255/255, green: 160/255, blue: 0),lineWidth: 2))
                 Spacer(minLength: 30)
             }
             
@@ -200,7 +200,7 @@ struct ChannelView : View{
                     Spacer()
                 }
                 .padding(.leading,20)
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.orange,lineWidth: 2))
+                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 255/255, green: 160/255, blue: 0),lineWidth: 2))
                 Spacer(minLength: 30)
             }
             
@@ -264,6 +264,7 @@ struct NewUserCell: View {
                 .resizable()
                 .frame(width: 160,height: 160)
                 .cornerRadius(10)
+                
             
             VStack(spacing:10){
                 Spacer()

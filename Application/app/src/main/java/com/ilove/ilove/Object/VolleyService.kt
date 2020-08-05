@@ -657,7 +657,7 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
-    fun getMyChatRoom(userId: String, context: Context, success: (JSONArray) -> Unit) {
+    fun getMyRoomReq(userId: String, context: Context, success: (JSONArray) -> Unit) {
         var url="${ip}/chat/get/my/room"
 
         var json = JSONObject()
