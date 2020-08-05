@@ -65,17 +65,11 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
                     if(success!=null){
                         var json=success as JSONObject
 
-                        var roomTitleArray=json.getString("room_title").split("&")
-
-                        var roomTitle=""
-                        if(UserInfo.NICKNAME==roomTitleArray[0]) roomTitle=roomTitleArray[1]
-                        else roomTitle=roomTitleArray[0]
-
                         var room=ChatRoomItem(
                             json.getString("room_id"),
                             json.getString("room_maker"),
                             json.getString("room_partner"),
-                            roomTitle,
+                            json.getString("room_title"),
                             "",
                             "",
                             ""

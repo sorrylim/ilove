@@ -415,6 +415,7 @@ class PSDialog(activity: Activity) {
                 var intent = Intent(context, ChatActivity::class.java)
 
                 intent.putExtra("room",room)
+
                 ContextCompat.startActivity(context!!, intent, null)
                 dismiss()
             })
