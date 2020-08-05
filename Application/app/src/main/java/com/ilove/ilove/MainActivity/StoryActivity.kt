@@ -30,7 +30,6 @@ class StoryActivity : PSAppCompatActivity() {
         toolbarBinding(toolbar_story, "", true)
 
         var image : ImageView = findViewById(R.id.image_storyimage)
-        var gpsTracker = GpsTracker(this)
         var psDialog = PSDialog(this)
 
 
@@ -69,7 +68,7 @@ class StoryActivity : PSAppCompatActivity() {
             text_storyviewcount.text = success.getInt("viewcount").toString()
             text_storylikecount.text = success.getInt("likecount").toString()
             userId = success.getString("user_id")
-            Glide.with(this).load(imgUrl).apply(RequestOptions().centerCrop()).into(image_storyimage)
+            Glide.with(this).load(imgUrl).apply(RequestOptions().centerCrop()).apply(RequestOptions().override(300, 300)).into(image_storyimage)
 
             if(success.getInt("like") == 1) {
                 btn_storylike.setLiked(true)

@@ -27,7 +27,6 @@ import java.text.SimpleDateFormat
 class PartnerActivity : PSAppCompatActivity() {
 
     var profileImageList = ArrayList<String>()
-    var currentLayout: LinearLayout? = null
     var widthData : Int = 0
     var width : Int = 0
     var textViewList = ArrayList<TextView>()
@@ -41,6 +40,8 @@ class PartnerActivity : PSAppCompatActivity() {
     var layoutMargin = 0
     var like = 0
     var meet = 0
+    var userCity = ""
+    var userPhone = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,11 +71,8 @@ class PartnerActivity : PSAppCompatActivity() {
         var userNickname = intent.getStringExtra("userNickname")
         var userId = intent.getStringExtra("userId")
         var userAge = intent.getStringExtra("userAge")
-        var userCity = intent.getStringExtra("userCity")
-        var userPhone = intent.getStringExtra("userPhone")
 
         text_partnernickname.text = userNickname
-        text_partnerage.text = userCity + ", " + userAge
 
         scroll_partner.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
@@ -187,6 +185,14 @@ class PartnerActivity : PSAppCompatActivity() {
                     text_partnerintroduce.visibility = View.VISIBLE
                     view29.visibility = View.VISIBLE
                 }
+
+                if(json.getString("user_city") != "null")
+                {
+                    userCity = json.getString("user_city")
+                    text_partnerage.text = userCity + ", " + userAge
+                }
+
+                userPhone = json.getString("user_phone")
 
                 if(json.getString("user_height") != "null")
                 {
