@@ -45,7 +45,7 @@ class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>) 
 
         holder.itemView.text_newuserrecentdata.text = distance.get(0)+ distance.get(1) + ", " + gpsTracker.timeDiff(partnerDate.getTime())
         Glide.with(holder.itemView)
-            .load(userList.get(position).userImage).apply(RequestOptions().fitCenter()).apply(RequestOptions().override(640,640))
+            .load(userList.get(position).userImage).apply(RequestOptions().fitCenter()).apply(RequestOptions().override(300,300))
             .into(holder.itemView.image_newuser)
         holder.itemView.image_newuser.setClipToOutline(true)
 

@@ -19,6 +19,7 @@ import com.ilove.ilove.Adapter.StoryAdapter
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ImageItem
+import com.ilove.ilove.Item.UserList
 import com.ilove.ilove.MainActivity.StoryActivity
 import com.ilove.ilove.MainActivity.WriteStoryActivity
 import com.ilove.ilove.Object.ImageManager
@@ -67,14 +68,30 @@ class StoryFragment(titleText: TextView) : Fragment() {
                 for(i in 0..array.length()-1) {
                     var json = array[i] as JSONObject
 
-                    var story = ImageItem.StoryImage(json.getInt("image_id"), json.getString("user_id"), json.getString("image"))
+                    var story = ImageItem.StoryImage(json.getInt("image_id"), json.getString("user_id"), json.getString("image"), json.getString("user_phone"))
 
                     storyList.add(story)
                 }
 
-                storyRV.setHasFixedSize(true)
-                storyRV.layoutManager = GridLayoutManager(activity!!, 3)
-                storyRV.adapter = StoryAdapter(activity!!, storyList)
+                var iter = storyList.iterator()
+                if(UserInfo.BLOCKING == 1) {
+                    while(iter.hasNext()){
+                        var storyList = iter.next() as ImageItem.StoryImage
+
+                        if(UserInfo.BLOCKINGNUMBER.contains(storyList.userPhone)){
+                            iter.remove()
+                        }
+                    }
+                }
+
+                if(storyList.size == 0) {
+
+                }
+                else {
+                    storyRV.setHasFixedSize(true)
+                    storyRV.layoutManager = GridLayoutManager(activity!!, 3)
+                    storyRV.adapter = StoryAdapter(activity!!, storyList)
+                }
 
                 VolleyService.getMyStoryImageReq(UserInfo.ID, activity!!, {success->
                     var json = success
@@ -117,7 +134,7 @@ class StoryFragment(titleText: TextView) : Fragment() {
             for(i in 0..array.length()-1) {
                 var json = array[i] as JSONObject
 
-                var story = ImageItem.StoryImage(json.getInt("image_id"), json.getString("user_id"), json.getString("image"))
+                var story = ImageItem.StoryImage(json.getInt("image_id"), json.getString("user_id"), json.getString("image"), json.getString("user_phone"))
 
                 storyList.add(story)
             }
@@ -142,9 +159,25 @@ class StoryFragment(titleText: TextView) : Fragment() {
                 psDialog.dismiss()
             })
 
-            storyRV.setHasFixedSize(true)
-            storyRV.layoutManager = GridLayoutManager(activity!!, 3)
-            storyRV.adapter = StoryAdapter(activity!!, storyList)
+            var iter = storyList.iterator()
+            if(UserInfo.BLOCKING == 1) {
+                while(iter.hasNext()){
+                    var storyList = iter.next() as ImageItem.StoryImage
+
+                    if(UserInfo.BLOCKINGNUMBER.contains(storyList.userPhone)){
+                        iter.remove()
+                    }
+                }
+            }
+
+            if(storyList.size == 0) {
+
+            }
+            else {
+                storyRV.setHasFixedSize(true)
+                storyRV.layoutManager = GridLayoutManager(activity!!, 3)
+                storyRV.adapter = StoryAdapter(activity!!, storyList)
+            }
             psDialog.dismiss()
 
         })

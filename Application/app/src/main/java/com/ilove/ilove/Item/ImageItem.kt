@@ -6,6 +6,7 @@ class ImageItem {
     data class StoryImage(
         val imageId: Int,
         val userId: String,
-        val image: String?
+        val image: String?,
+        val userPhone: String
     )
 }

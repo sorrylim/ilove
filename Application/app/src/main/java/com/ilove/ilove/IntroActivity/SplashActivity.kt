@@ -112,6 +112,7 @@ class SplashActivity : AppCompatActivity() {
                         UserInfo.MESSAGETICKET=user.getInt("user_messageticket")
                         UserInfo.VIP = user.getInt("user_vip")
                         UserInfo.GUIDE = user.getInt("user_guide")
+                        UserInfo.BLOCKINGNUMBER = user.getString("user_blockingnumber")
 
 
                         var pref=this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
@@ -133,6 +134,7 @@ class SplashActivity : AppCompatActivity() {
                             .putInt("MESSAGETICKET", UserInfo.MESSAGETICKET)
                             .putInt("VIP", UserInfo.VIP)
                             .putInt("GUIDE", UserInfo.GUIDE)
+                            .putString("BLOCKINGNUMBER", UserInfo.BLOCKINGNUMBER)
                             .apply()
 
                         /*Handler().postDelayed({

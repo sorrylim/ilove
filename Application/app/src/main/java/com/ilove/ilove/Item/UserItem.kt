@@ -17,4 +17,8 @@ class UserItem {
         val candyAmount : String,
         var isSelected: Boolean = false
     )
+
+    data class Contact(
+        val phone : String
+    )
 }
