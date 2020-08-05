@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct EditPreviewIntroduceView: View {
+struct EditIntroduceView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -18,34 +18,28 @@ struct EditPreviewIntroduceView: View {
     @State var content = ""
     
     var body: some View {
-        VStack{
+        VStack(spacing: 30){
             HStack{
                 Spacer()
-                Text("한줄소개")
+                Text("자기소개(30자 이상)")
                     .font(.system(size: 15))
                 Spacer()
                 Image("baseline_rightarrow_grey_24")
                     .onTapGesture {
-                        if self.content.count<5 {
+                        if self.content.count<30 {
                             self.alertVisible=true
                         }
                         else{
-                            HttpService.shared.updateIntroduce(userId: UserInfo.shared.ID, introduceType: "user_previewintroduce", introduce: self.content){
-                                self.userOption!.user_previewintroduce=self.content
+                            HttpService.shared.updateIntroduce(userId: UserInfo.shared.ID, introduceType: "user_introduce", introduce: self.content){
+                                self.userOption!.user_introduce=self.content
                                 self.presentationMode.wrappedValue.dismiss()
                                 
                             }
                         }
                 }
             }
-            Spacer()
             VStack{
-                Text("한줄로 자신을 표현해주세요!")
-                    .font(.system(size: 20))
-                Text("(5자 이상)")
-                    .font(.system(size: 15))
-                    .foregroundColor(.gray)
-                TextField("이곳에 한줄소개를 입력해주세요.", text: $content)
+                MultilineTextField(text: "자신을 소개해보세요!", content: $content)
                     .multilineTextAlignment(.center)
                     
             }
@@ -54,7 +48,7 @@ struct EditPreviewIntroduceView: View {
         .padding(.vertical,10)
         .padding(.horizontal,20)
         .alert(isPresented: $alertVisible){
-            Alert(title: Text("5자 이상 입력해주세요."))
+            Alert(title: Text("30자 이상 입력해주세요."))
         }
     }
 }

@@ -112,13 +112,18 @@ struct StoryListView : View {
                 StoryView(story: self.selectedStory!)
             }
         }
-        /*.sheet(isPresented: $storyVisible){
-            StoryView(story: self.selectedStory!)
-        }*/
         .onAppear(){
             ContentView.rootView?.setTitle(title: "스토리")
             
-            HttpService.shared.getStoryImageReq(userId: UserInfo.shared.ID){ (storyModelArray) -> Void in
+            var gender = ""
+            if UserInfo.shared.GENDER == "M" {
+                gender = "F"
+            }
+            else {
+                gender = "M"
+            }
+            
+            HttpService.shared.getStoryImageReq(userId: UserInfo.shared.ID,gender: gender){ (storyModelArray) -> Void in
                 self.storyList=storyModelArray
                 
                 self.total=storyModelArray.count

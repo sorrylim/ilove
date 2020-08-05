@@ -104,6 +104,8 @@ struct MyPageView : View{
                 ContentView.rootView?.setTitle(title: "내 페이지")
                 
                 HttpService.shared.getProfileImageReq(userId: UserInfo.shared.ID){ profileImageModelArray -> Void in
+                    self.profileImageList.removeAll()
+                    
                     profileImageModelArray.forEach { (profileImageModel) in
                         KingfisherManager.shared.retrieveImage(with: URL(string: profileImageModel.image!)!, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
                             self.profileImageList.append(image!)

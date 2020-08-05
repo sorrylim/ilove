@@ -264,6 +264,7 @@ struct NewUserCell: View {
                 .resizable()
                 .frame(width: 160,height: 160)
                 .cornerRadius(10)
+                
             
             VStack(spacing:10){
                 Spacer()

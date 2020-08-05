@@ -81,79 +81,33 @@ struct ProfileView: View {
                     .padding(.leading, 20)
                     .padding(.bottom, 20)
                     VStack(spacing: 10){
-                        if userOption.user_height != nil {
-                            ProfileRow(key: "키", value: userOption.user_height!)
-                        }
-                        if userOption.user_bodytype != nil {
-                            ProfileRow(key: "체형", value: userOption.user_bodytype!)
-                        }
-                        if userOption.user_bloodtype != nil {
-                            ProfileRow(key: "혈액형", value: userOption.user_bloodtype!)
-                        }
-                        if userOption.user_job != nil {
-                            ProfileRow(key: "직업", value: userOption.user_job!)
-                        }
-                        if userOption.user_education != nil {
-                            ProfileRow(key: "학력", value: userOption.user_education!)
-                        }
-                        if userOption.user_holiday != nil {
-                            ProfileRow(key: "휴일", value: userOption.user_holiday!)
-                        }
-                        if userOption.user_cigarette != nil {
-                            ProfileRow(key: "담배", value: userOption.user_cigarette!)
-                        }
-                        if userOption.user_alcohol != nil {
-                            ProfileRow(key: "음주", value: userOption.user_alcohol!)
-                        }
-                        if userOption.user_religion != nil {
-                            ProfileRow(key: "종교", value: userOption.user_religion!)
-                        }
-                        if userOption.user_brother != nil {
-                            ProfileRow(key: "형제", value: userOption.user_brother!)
-                        }
+                        EditProfileRow(key: "키", value: ((userOption.user_height != nil) ? userOption.user_height : "등록 안됨")!)
+                        EditProfileRow(key: "체형", value: ((userOption.user_bodytype != nil) ? userOption.user_bodytype : "등록 안됨")!)
+                        EditProfileRow(key: "혈액형", value: ((userOption.user_bloodtype != nil) ? userOption.user_bloodtype : "등록 안됨")!)
+                        EditProfileRow(key: "직업", value: ((userOption.user_job != nil) ? userOption.user_job : "등록 안됨")!)
+                        EditProfileRow(key: "학력", value: ((userOption.user_education != nil) ? userOption.user_education : "등록 안됨")!)
+                        EditProfileRow(key: "휴일", value: ((userOption.user_holiday != nil) ? userOption.user_holiday : "등록 안됨")!)
+                        EditProfileRow(key: "흡연", value: ((userOption.user_cigarette != nil) ? userOption.user_cigarette : "등록 안됨")!)
+                        EditProfileRow(key: "음주", value: ((userOption.user_alcohol != nil) ? userOption.user_cigarette : "등록 안됨")!)
+                        EditProfileRow(key: "종교", value: ((userOption.user_religion != nil) ? userOption.user_religion : "등록 안됨")!)
+                        EditProfileRow(key: "형제", value: ((userOption.user_brother != nil) ? userOption.user_brother : "등록 안됨")!)
                     }
                     VStack(spacing: 10){
-                        if userOption.user_country != nil {
-                            ProfileRow(key: "나라", value: userOption.user_country!)
-                        }
-                        if userOption.user_salary != nil {
-                            ProfileRow(key: "수입", value: userOption.user_salary!)
-                        }
-                        if userOption.user_asset != nil {
-                            ProfileRow(key: "재산", value: userOption.user_asset!)
-                        }
-                        if userOption.user_marriagehistory != nil {
-                            ProfileRow(key: "결혼여부", value: userOption.user_marriagehistory!)
-                        }
-                        if userOption.user_children != nil {
-                            ProfileRow(key: "자녀", value: userOption.user_children!)
-                        }
-                        if userOption.user_marriageplan != nil {
-                            ProfileRow(key: "결혼계획", value: userOption.user_marriageplan!)
-                        }
-                        if userOption.user_childrenplan != nil {
-                            ProfileRow(key: "자녀계획", value: userOption.user_childrenplan!)
-                        }
-                        if userOption.user_parenting != nil {
-                            ProfileRow(key: "육아", value: userOption.user_parenting!)
-                        }
-                        if userOption.user_wishdate != nil {
-                            ProfileRow(key: "원하는 데이트", value: userOption.user_wishdate!)
-                        }
-                        if userOption.user_datecost != nil {
-                            ProfileRow(key: "데이트 비용", value: userOption.user_datecost!)
-                        }
+                        EditProfileRow(key: "나라", value: ((userOption.user_country != nil) ? userOption.user_country : "등록 안됨")!)
+                        EditProfileRow(key: "수입", value: ((userOption.user_salary != nil) ? userOption.user_salary : "등록 안됨")!)
+                        EditProfileRow(key: "재산", value: ((userOption.user_asset != nil) ? userOption.user_asset : "등록 안됨")!)
+                        EditProfileRow(key: "결혼여부", value: ((userOption.user_marriagehistory != nil) ? userOption.user_marriagehistory : "등록 안됨")!)
+                        EditProfileRow(key: "자녀", value: ((userOption.user_children != nil) ? userOption.user_children : "등록 안됨")!)
+                        EditProfileRow(key: "결혼계획", value: ((userOption.user_marriageplan != nil) ? userOption.user_marriageplan : "등록 안됨")!)
+                        EditProfileRow(key: "자녀계획", value: ((userOption.user_childrenplan != nil) ? userOption.user_childrenplan : "등록 안됨")!)
+                        EditProfileRow(key: "육아", value: ((userOption.user_parenting != nil) ? userOption.user_parenting : "등록 안됨")!)
+                        EditProfileRow(key: "원하는 데이트", value: ((userOption.user_wishdate != nil) ? userOption.user_wishdate : "등록 안됨")!)
+                        EditProfileRow(key: "데이트 비용", value: ((userOption.user_datecost != nil) ? userOption.user_datecost : "등록 안됨")!)
                     }
-                    .padding(.top,10)
                     VStack(spacing: 10){
-                        if userOption.user_roommate != nil {
-                            ProfileRow(key: "룸메이트", value: userOption.user_roommate!)
-                        }
-                        if userOption.user_language != nil {
-                            ProfileRow(key: "언어", value: userOption.user_language!)
-                        }
+                        EditProfileRow(key: "룸메이트", value: ((userOption.user_roommate != nil) ? userOption.user_roommate : "등록 안됨")!)
+                        EditProfileRow(key: "언어", value: ((userOption.user_language != nil) ? userOption.user_language : "등록 안됨")!)
                     }
-                    .padding(.top,10)
                 }
                 .padding(.vertical, 10)
                 .padding(.horizontal, 20)

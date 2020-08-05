@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -23,6 +24,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.FileUploadUtils
@@ -64,6 +67,11 @@ class SignupActivity: PSAppCompatActivity() {
     var mainprofile : Int? = null
 
 
+    private val requiredPermission = arrayOf(
+        android.Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+
+
 
     //사용자가 홈키 눌렀을때
     override fun onUserLeaveHint() {
@@ -78,6 +86,8 @@ class SignupActivity: PSAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+
+        checkPermissions()
 
         handler =object : Handler() {
             override fun handleMessage(msg: Message) {
@@ -531,6 +541,21 @@ class SignupActivity: PSAppCompatActivity() {
                     .into(image_signupmain)
             }
         })
+    }
+
+    private fun checkPermissions(){
+        val rejectedPermissionList = java.util.ArrayList<String>()
+
+        for(permission in requiredPermission){
+            if(ContextCompat.checkSelfPermission(this,permission)!= PackageManager.PERMISSION_GRANTED) {
+                rejectedPermissionList.add(permission)
+            }
+        }
+
+        if(rejectedPermissionList.isNotEmpty()){
+            val array = arrayOfNulls<String>(rejectedPermissionList.size)
+            ActivityCompat.requestPermissions(this,rejectedPermissionList.toArray(array), 100)
+        }
     }
 
     fun photoFromGallery() {

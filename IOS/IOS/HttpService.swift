@@ -429,7 +429,7 @@ public class HttpService:ObservableObject{
         }.resume()
     }
     
-    func getStoryImageReq(userId: String, callback: @escaping ([StoryModel]) -> Void){
+    func getStoryImageReq(userId: String,gender: String, callback: @escaping ([StoryModel]) -> Void){
         guard let url=URL(string: "\(ip)/image/get/story") else {
             return
         }
@@ -437,7 +437,8 @@ public class HttpService:ObservableObject{
         let data=[
             [
                 "user_id" : userId,
-                "image_usage" : "story"
+                "image_usage" : "story",
+                "user_gender" : gender
             ]
         ]
         
@@ -746,7 +747,7 @@ public class HttpService:ObservableObject{
     
     //------------------------------Profile------------------------------//
     func updateIntroduce(userId: String, introduceType: String, introduce: String, callback: @escaping () -> Void) {
-        guard let url = URL(string: "\(ip)/chat/update/introduce") else{
+        guard let url = URL(string: "\(ip)/user/update/introduce") else{
             return
         }
         
