@@ -12,23 +12,21 @@ struct MyPageView : View{
     var body: some View{
         //NavigationView{
             ScrollView(){
-                HStack{
+                HStack(spacing: 15){
                     Spacer()
                     Image("default_image")
                         .resizable()
                         .frame(width:100,height: 100)
-                    Spacer(minLength:20)
-                    VStack{
+                    VStack(spacing: 10){
                         Text("닉네임")
-                            .font(.system(size:25))
+                            .font(.system(size:20))
                         NavigationLink(destination: EditProfileView()){
                             Text("프로필 편집")
-                                .font(.system(size: 20,weight: .bold))
+                                .font(.system(size: 15))
                                 .foregroundColor(Color.white)
                                 .padding()
-                                .background(Color.orange)
-                                .cornerRadius(25)
-                                .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color.orange, lineWidth: 0))
+                                .background(Color(red: 255/255, green: 160/255, blue: 0))
+                                .cornerRadius(15)
                         }
                     }
                     Spacer()

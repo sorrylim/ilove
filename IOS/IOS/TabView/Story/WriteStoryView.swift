@@ -11,7 +11,6 @@ import SwiftUI
 struct WriteStoryView : View{
     
     @Environment(\.presentationMode) var presentationMode
-    @Binding var showing:Bool
     
     @State var content=""
     
@@ -23,10 +22,18 @@ struct WriteStoryView : View{
     @State var imageUrl : URL?
     
     @State var value : CGFloat=0
-    
     var body: some View{
-        //NavigationView{
             VStack{
+                HStack{
+                    Spacer()
+                    Text("스토리 작성")
+                    Spacer()
+                    Button(action: {
+                        self.writeStory()
+                    }){
+                        Text("등록")
+                    }
+                }
                 MultilineTextField(text:"당신에 대해 이야기 해주세요",content: $content)
                 HStack{
                     Spacer()
@@ -44,7 +51,6 @@ struct WriteStoryView : View{
                 }){
                     Text("사진 추가")
                 }
-                    
                 .offset(y: -self.value)
                 .onAppear(){
                     NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { noti in
@@ -66,20 +72,6 @@ struct WriteStoryView : View{
             .onTapGesture {
                 UIApplication.shared.endEditing()
             }
-            .navigationBarTitle("스토리 작성",displayMode: .inline)
-            .navigationBarItems(
-                leading: Button(action: {
-                    self.showing=false
-                }) {
-                    Text("취소")
-                },
-                trailing: Button(action: {
-                    self.writeStory()
-                    self.showing=false
-                }){
-                    Text("등록")
-            })
-        //}
         
     }
     

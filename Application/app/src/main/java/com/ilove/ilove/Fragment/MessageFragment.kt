@@ -16,7 +16,6 @@ import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
-import org.json.JSONArray
 import org.json.JSONObject
 
 class MessageFragment(titleText: TextView) : Fragment() {
@@ -66,7 +65,7 @@ class MessageFragment(titleText: TextView) : Fragment() {
 
         chatRoomAdapter.clear()
 
-        VolleyService.getMyChatRoom(UserInfo.ID, activity!!, { success ->
+        VolleyService.getMyRoomReq(UserInfo.ID, activity!!, { success ->
             var array = success
 
             for (i in 0..array.length() - 1) {

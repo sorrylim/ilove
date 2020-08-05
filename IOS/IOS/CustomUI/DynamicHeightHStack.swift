@@ -54,7 +54,7 @@ struct DynamicHeightHStack: View {
         Text(text)
             .padding(.all, 5)
             .font(.system(size: 15))
-            .background(Color.orange)
+            .background(Color(red: 255/255, green: 160/255, blue: 0))
             .foregroundColor(Color.white)
             .cornerRadius(15)
     }

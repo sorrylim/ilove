@@ -87,9 +87,9 @@ struct VipGuideView : View {
                     .font(.system(size: 15,weight: .bold))
                     .foregroundColor(Color.white)
                     .frame(width:150, height:50)
-                    .background(Color.orange)
+                    .background(Color(red: 255/255, green: 160/255, blue: 0))
                     .cornerRadius(25)
-                    .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color.orange, lineWidth: 0))
+                    .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color(red: 255/255, green: 160/255, blue: 0), lineWidth: 0))
             }
             Spacer()
         }
