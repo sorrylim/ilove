@@ -112,29 +112,17 @@ class SplashActivity : AppCompatActivity() {
                         UserInfo.MESSAGETICKET=user.getInt("user_messageticket")
                         UserInfo.VIP = user.getInt("user_vip")
                         UserInfo.GUIDE = user.getInt("user_guide")
-                        UserInfo.BLOCKINGNUMBER = user.getString("user_blockingnumber")
+
+                        if(UserInfo.BLOCKING == 1) {
+                            VolleyService.getMyBlockingListReq(UserInfo.ID, this, {success->
+                                UserInfo.BLOCKINGNUMBER = success.getString("blocking_partner")
+                            })
+                        }
 
 
                         var pref=this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
                         var editor=pref.edit()
                         editor.putString("ID",UserInfo.ID)
-                            .putString("NICKNAME",UserInfo.NICKNAME)
-                            .putString("BIRTHDAY",UserInfo.BIRTHDAY)
-                            .putString("PHONE",UserInfo.PHONE)
-                            .putString("GENDER",UserInfo.GENDER)
-                            .putString("AUTHORITY",UserInfo.AUTHORITY)
-                            .putInt("BLOCKING",UserInfo.BLOCKING)
-                            .putInt("ALARMLIKE", UserInfo.ALARMLIKE)
-                            .putInt("ALARMMEET", UserInfo.ALARMMEET)
-                            .putInt("ALARMCHECKPROFILE", UserInfo.ALARMCHECKPROFILE)
-                            .putInt("ALARMUPDATEPROFILE", UserInfo.ALARMUPDATEPROFILE)
-                            .putInt("ALARMMESSAGE", UserInfo.ALARMMESSAGE)
-                            .putInt("CANDYCOUNT", UserInfo.CANDYCOUNT)
-                            .putInt("LIKECOUNT", UserInfo.LIKECOUNT)
-                            .putInt("MESSAGETICKET", UserInfo.MESSAGETICKET)
-                            .putInt("VIP", UserInfo.VIP)
-                            .putInt("GUIDE", UserInfo.GUIDE)
-                            .putString("BLOCKINGNUMBER", UserInfo.BLOCKINGNUMBER)
                             .apply()
 
                         /*Handler().postDelayed({
