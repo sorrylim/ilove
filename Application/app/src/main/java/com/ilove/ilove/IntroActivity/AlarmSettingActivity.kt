@@ -55,7 +55,38 @@ class AlarmSettingActivity : PSAppCompatActivity() {
                 }
                 else
                 {
+                    val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+                    val projection = arrayOf(
+                        ContactsContract.CommonDataKinds.Phone.NUMBER
+                    )
 
+                    val cursor = contentResolver.query(
+                        uri, projection, null,
+                        null , null
+                    )
+
+
+                    var blockingNumber = ""
+
+                    if (cursor!!.moveToFirst()) {
+                        do {
+                            if (cursor.getString(0).startsWith("01")) {
+                                blockingNumber += (cursor.getString(0).replace("-","").replace(" ", "") + ",")
+                            }
+                        } while (cursor.moveToNext())
+                    }
+
+                    Log.d(
+                        "test",
+                        "phone=" + blockingNumber
+                    )
+
+                    VolleyService.updateReq("user", "user_blockingnumber='${blockingNumber}'", "user_id='${UserInfo.ID}'", this, {success->
+                        VolleyService.insertReq("blocking", "blocking_user, blocking_partner", "'${UserInfo.ID}','${blockingNumber}'", this, {success->
+
+                        })
+                    })
+                    cursor?.close()
                 }
             }
 
@@ -157,6 +188,9 @@ class AlarmSettingActivity : PSAppCompatActivity() {
                 )
 
                 VolleyService.updateReq("user", "user_blockingnumber='${blockingNumber}'", "user_id='${UserInfo.ID}'", this, {success->
+                    VolleyService.insertReq("blocking", "blocking_user, blocking_partner", "'${UserInfo.ID}','${blockingNumber}'", this, {success->
+
+                    })
                 })
                 cursor?.close()
             }
@@ -201,7 +235,9 @@ class AlarmSettingActivity : PSAppCompatActivity() {
             )
 
             VolleyService.updateReq("user", "user_blockingnumber='${blockingNumber}'", "user_id='${UserInfo.ID}'", this, {success->
+                VolleyService.insertReq("blocking", "blocking_user, blocking_partner", "'${UserInfo.ID}','${blockingNumber}'", this, {success->
 
+                })
             })
             cursor?.close()
         }

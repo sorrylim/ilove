@@ -15,10 +15,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/text_storynothing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="조회가능한 스토리가 없습니다."
+                android:textColor="@color/colorMdGrey_700"
+                android:textSize="25dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/rv_storyview"
+                app:layout_constraintEnd_toEndOf="@+id/rv_storyview"
+                app:layout_constraintStart_toStartOf="@+id/rv_storyview"
+                app:layout_constraintTop_toTopOf="@+id/rv_storyview" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_storyview"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

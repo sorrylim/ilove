@@ -43,6 +43,7 @@ class StoryFragment(titleText: TextView) : Fragment() {
         var myStoryImageId: Int? = null
         var myStoryImagePath : String? = null
         var swipeLayout : SwipeRefreshLayout = rootView.findViewById(R.id.swipe_story)
+        var nothingStoryText : TextView = rootView.findViewById(R.id.text_storynothing)
 
         var psDialog = PSDialog(activity!!)
 
@@ -85,9 +86,11 @@ class StoryFragment(titleText: TextView) : Fragment() {
                 }
 
                 if(storyList.size == 0) {
-
+                    nothingStoryText.visibility = View.VISIBLE
+                    storyRV.adapter = null
                 }
                 else {
+                    nothingStoryText.visibility = View.INVISIBLE
                     storyRV.setHasFixedSize(true)
                     storyRV.layoutManager = GridLayoutManager(activity!!, 3)
                     storyRV.adapter = StoryAdapter(activity!!, storyList)
@@ -171,9 +174,11 @@ class StoryFragment(titleText: TextView) : Fragment() {
             }
 
             if(storyList.size == 0) {
-
+                nothingStoryText.visibility = View.VISIBLE
+                storyRV.adapter = null
             }
             else {
+                nothingStoryText.visibility = View.INVISIBLE
                 storyRV.setHasFixedSize(true)
                 storyRV.layoutManager = GridLayoutManager(activity!!, 3)
                 storyRV.adapter = StoryAdapter(activity!!, storyList)

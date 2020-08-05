@@ -1075,6 +1075,26 @@ object VolleyService {
     }
 
 
+    fun getBlockingListReq(userId: String, context: Context, success : (JSONArray) -> Unit) {
+        val url = "${ip}/user/get/blocking"
 
+        var json=JSONObject()
+            .put("user_id", userId)
 
+        var array = JSONArray()
+            .put(json)
+
+        val request=object : JsonArrayRequest(
+            Method.POST,
+            url,
+            array,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
 }

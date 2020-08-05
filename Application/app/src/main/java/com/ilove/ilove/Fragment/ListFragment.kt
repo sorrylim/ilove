@@ -150,27 +150,45 @@ class ListFragment(titleText: TextView) : Fragment() {
 
                     upProfileUserList.addAll(userList)
 
-                    var iter = upProfileUserList.iterator()
+
                     if(UserInfo.BLOCKING == 1) {
-                        while(iter.hasNext()){
-                            var userList = iter.next() as UserList
-
-                            if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
-                                iter.remove()
+                        VolleyService.getBlockingListReq(UserInfo.ID, activity!!, {success->
+                            var blockingList = ArrayList<String>()
+                            var array = success
+                            for(i in 0..array.length()-1) {
+                                var json = array[i] as JSONObject
+                                blockingList.add(json.getString("blocking_user"))
                             }
-                        }
-                    }
 
-                    if(upProfileUserList.size == 0) {
-                        nothingText!!.visibility = View.VISIBLE
-                        psDialog.dismiss()
-                    }
-                    else {
-                        nothingText!!.visibility = View.GONE
-                        partnerListRV.setHasFixedSize(true)
-                        partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                        partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
-                        psDialog.dismiss()
+                            var iter = upProfileUserList.iterator()
+                            while(iter.hasNext()){
+                                var userList = iter.next() as UserList
+
+                                if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
+                                    iter.remove()
+                                }
+                                else {
+                                    for(i in 0..blockingList.size-1) {
+                                        if(userList.userPhone == blockingList.get(i)) {
+                                            iter.remove()
+                                        }
+                                    }
+                                }
+                            }
+
+                            if(upProfileUserList.size == 0) {
+                                nothingText!!.visibility = View.VISIBLE
+                                partnerListRV.adapter = null
+                                psDialog.dismiss()
+                            }
+                            else {
+                                nothingText!!.visibility = View.GONE
+                                partnerListRV.setHasFixedSize(true)
+                                partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                                partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                                psDialog.dismiss()
+                            }
+                        })
                     }
                 })
             })
@@ -227,27 +245,44 @@ class ListFragment(titleText: TextView) : Fragment() {
 
                     upProfileUserList.addAll(userList)
 
-                    var iter = upProfileUserList.iterator()
                     if(UserInfo.BLOCKING == 1) {
-                        while(iter.hasNext()){
-                            var userList = iter.next() as UserList
-
-                            if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
-                                iter.remove()
+                        VolleyService.getBlockingListReq(UserInfo.ID, activity!!, {success->
+                            var blockingList = ArrayList<String>()
+                            var array = success
+                            for(i in 0..array.length()-1) {
+                                var json = array[i] as JSONObject
+                                blockingList.add(json.getString("blocking_user"))
                             }
-                        }
-                    }
 
-                    if(upProfileUserList.size == 0) {
-                        nothingText!!.visibility = View.VISIBLE
-                        psDialog.dismiss()
-                    }
-                    else {
-                        nothingText!!.visibility = View.GONE
-                        partnerListRV.setHasFixedSize(true)
-                        partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                        partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
-                        psDialog.dismiss()
+                            var iter = upProfileUserList.iterator()
+                            while(iter.hasNext()){
+                                var userList = iter.next() as UserList
+
+                                if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
+                                    iter.remove()
+                                }
+                                else {
+                                    for(i in 0..blockingList.size-1) {
+                                        if(userList.userPhone == blockingList.get(i)) {
+                                            iter.remove()
+                                        }
+                                    }
+                                }
+                            }
+
+                            if(upProfileUserList.size == 0) {
+                                nothingText!!.visibility = View.VISIBLE
+                                partnerListRV.adapter = null
+                                psDialog.dismiss()
+                            }
+                            else {
+                                nothingText!!.visibility = View.GONE
+                                partnerListRV.setHasFixedSize(true)
+                                partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                                partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                                psDialog.dismiss()
+                            }
+                        })
                     }
                 })
             })
@@ -310,27 +345,44 @@ class ListFragment(titleText: TextView) : Fragment() {
 
                     upProfileUserList.addAll(userList)
 
-                    var iter = upProfileUserList.iterator()
                     if(UserInfo.BLOCKING == 1) {
-                        while(iter.hasNext()){
-                            var userList = iter.next() as UserList
-
-                            if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
-                                iter.remove()
+                        VolleyService.getBlockingListReq(UserInfo.ID, activity!!, {success->
+                            var blockingList = ArrayList<String>()
+                            var array = success
+                            for(i in 0..array.length()-1) {
+                                var json = array[i] as JSONObject
+                                blockingList.add(json.getString("blocking_user"))
                             }
-                        }
-                    }
 
-                    if(upProfileUserList.size == 0) {
-                        nothingText!!.visibility = View.VISIBLE
-                        psDialog.dismiss()
-                    }
-                    else {
-                        nothingText!!.visibility = View.GONE
-                        partnerListRV.setHasFixedSize(true)
-                        partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                        partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
-                        psDialog.dismiss()
+                            var iter = upProfileUserList.iterator()
+                            while(iter.hasNext()){
+                                var userList = iter.next() as UserList
+
+                                if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
+                                    iter.remove()
+                                }
+                                else {
+                                    for(i in 0..blockingList.size-1) {
+                                        if(userList.userPhone == blockingList.get(i)) {
+                                            iter.remove()
+                                        }
+                                    }
+                                }
+                            }
+
+                            if(upProfileUserList.size == 0) {
+                                nothingText!!.visibility = View.VISIBLE
+                                partnerListRV.adapter = null
+                                psDialog.dismiss()
+                            }
+                            else {
+                                nothingText!!.visibility = View.GONE
+                                partnerListRV.setHasFixedSize(true)
+                                partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                                partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                                psDialog.dismiss()
+                            }
+                        })
                     }
                 })
             })
@@ -387,27 +439,44 @@ class ListFragment(titleText: TextView) : Fragment() {
 
                     upProfileUserList.addAll(userList)
 
-                    var iter = upProfileUserList.iterator()
                     if(UserInfo.BLOCKING == 1) {
-                        while(iter.hasNext()){
-                            var userList = iter.next() as UserList
-
-                            if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
-                                iter.remove()
+                        VolleyService.getBlockingListReq(UserInfo.ID, activity!!, {success->
+                            var blockingList = ArrayList<String>()
+                            var array = success
+                            for(i in 0..array.length()-1) {
+                                var json = array[i] as JSONObject
+                                blockingList.add(json.getString("blocking_user"))
                             }
-                        }
-                    }
 
-                    if(upProfileUserList.size == 0) {
-                        nothingText!!.visibility = View.VISIBLE
-                        psDialog.dismiss()
-                    }
-                    else {
-                        nothingText!!.visibility = View.GONE
-                        partnerListRV.setHasFixedSize(true)
-                        partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                        partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
-                        psDialog.dismiss()
+                            var iter = upProfileUserList.iterator()
+                            while(iter.hasNext()){
+                                var userList = iter.next() as UserList
+
+                                if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
+                                    iter.remove()
+                                }
+                                else {
+                                    for(i in 0..blockingList.size-1) {
+                                        if(userList.userPhone == blockingList.get(i)) {
+                                            iter.remove()
+                                        }
+                                    }
+                                }
+                            }
+
+                            if(upProfileUserList.size == 0) {
+                                nothingText!!.visibility = View.VISIBLE
+                                partnerListRV.adapter = null
+                                psDialog.dismiss()
+                            }
+                            else {
+                                nothingText!!.visibility = View.GONE
+                                partnerListRV.setHasFixedSize(true)
+                                partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                                partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                                psDialog.dismiss()
+                            }
+                        })
                     }
                 })
             })
