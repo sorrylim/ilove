@@ -601,6 +601,8 @@ public class HttpService:ObservableObject{
     }
     //------------------------------Story------------------------------//
     
+    
+    
     //------------------------------Chat------------------------------//
     func createRoomReq(userId: String, userNickname: String, callback:@escaping (ChatRoomModel) -> Void){
         guard let url = URL(string: "\(ip)/chat/create/room") else{
@@ -739,5 +741,37 @@ public class HttpService:ObservableObject{
         }.resume()
     }
     //------------------------------Chat------------------------------//
+    
+    
+    
+    //------------------------------Profile------------------------------//
+    func updateIntroduce(userId: String, introduceType: String, introduce: String, callback: @escaping () -> Void) {
+        guard let url = URL(string: "\(ip)/chat/update/introduce") else{
+            return
+        }
+        
+        let data = [
+            "user_id" : userId,
+            "introduce_type" : introduceType,
+            "introduce_data" : introduce
+        ]
+        
+        let body = try! JSONSerialization.data(withJSONObject: data)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            guard let data = data else{
+                return
+            }
+            
+            callback()
+        }.resume()
+    }
+    //------------------------------Profile------------------------------//
+
 }
 

@@ -90,6 +90,8 @@ struct WriteStoryView : View{
             let date=dateFormatter.string(from: now)
             
             HttpService.shared.insertStoryReq(userId: UserInfo.shared.ID,imageUrl: imageUrl!,imageUsage: "story",imageContent: content,imageDate: date,uiImage: inputImage!)
+            
+            presentationMode.wrappedValue.dismiss()
         }
     }
 }

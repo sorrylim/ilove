@@ -10,32 +10,38 @@ import SwiftUI
 
 struct EditProfileView : View{
     
-    @State var profileImageList : [UIImage] = []
+    @State var profileImageList : [UIImage]
     
     @State var userOption : UserOptionModel = UserOptionModel(user_id: UserInfo.shared.ID, user_height: nil, user_bodytype: nil, user_bloodtype: nil, user_residence: nil, user_job: nil, user_education: nil, user_holiday: nil, user_cigarette: nil, user_alcohol: nil, user_religion: nil, user_brother: nil, user_country: nil, user_salary: nil, user_asset: nil, user_marriagehistory: nil, user_children: nil,user_marriageplan: nil, user_childrenplan: nil, user_parenting: nil, user_wishdate: nil, user_datecost: nil, user_roommate: nil, user_language: nil, user_interest: nil, user_personality: nil, user_favoriteperson: nil, user_city: nil, user_introduce: nil, user_previewintroduce: nil, user_gender: nil)
+    
+    @State var previewIntroVisible = false
     
     var body: some View{
         ScrollView{
             Group{
                 VStack{
-                    Image("default_image")
+                    Image(uiImage: profileImageList[0])
                         .resizable()
                         .frame(width:100, height:100)
                     Text("대표 사진")
                         .font(.system(size: 10))
                         .foregroundColor(.gray)
                 }
-                
                 HStack{
-                    Image("default_image")
-                        .resizable()
-                        .frame(width:100, height:100)
-                    Image("default_image")
-                        .resizable()
-                        .frame(width:100, height:100)
-                    Image("default_image")
-                        .resizable()
-                        .frame(width:100, height:100)
+                    ForEach(1..<4, id:\.self) { i in
+                        ZStack{
+                            if i<self.profileImageList.count {
+                                Image(uiImage: self.profileImageList[i])
+                                    .resizable()
+                                    .frame(width:100, height:100)
+                            }
+                            else {
+                                Image("default_image")
+                                    .resizable()
+                                    .frame(width:100, height:100)
+                            }
+                        }
+                    }
                 }
             }
             .padding(.vertical,10)
@@ -57,6 +63,9 @@ struct EditProfileView : View{
                             Image("pencil_icon")
                                 .resizable()
                                 .frame(width: 15, height: 15)
+                                .onTapGesture {
+                                    self.previewIntroVisible=true
+                            }
                         }
                     }
                 }
@@ -161,8 +170,12 @@ struct EditProfileView : View{
                 .padding(.top,10)
             }
             .padding(.vertical,10)
+            .padding(.horizontal,10)
         }
         .padding(10)
+        .sheet(isPresented: $previewIntroVisible){
+            EditPreviewIntroduceView(userOption: self.$userOption)
+        }
         .onAppear(){
             HttpService.shared.getUserOptionReq(userId: UserInfo.shared.ID){ userOptionModel -> Void in
                 self.userOption=userOptionModel
@@ -181,15 +194,17 @@ struct EditProfileRow : View{
     var body: some View{
         VStack{
             HStack{
-                Text(self.key)
-                    .font(.system(size:13))
-                    .foregroundColor(Color.gray)
-                    .frame(width: 100)
                 HStack{
+                    Text(self.key)
+                        .font(.system(size:13))
+                        .foregroundColor(Color.gray)
                     Spacer()
                     Text(self.value)
                         .font(.system(size:13))
                         .foregroundColor(Color(red: 255/255, green: 160/255, blue: 0/255))
+                    Image("baseline_rightarrow_grey_24")
+                        .resizable()
+                        .frame(width: 15, height: 15)
                 }
             }
         }

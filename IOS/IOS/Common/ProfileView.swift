@@ -34,7 +34,6 @@ struct ProfileView: View {
         
         ScrollView {
             if isInit {
-                
                 VStack{
                     HStack{
                         Text(self.userNickname)
@@ -145,6 +144,7 @@ struct ProfileView: View {
                             ProfileRow(key: "데이트 비용", value: userOption.user_datecost!)
                         }
                     }
+                    .padding(.top,10)
                     VStack(spacing: 10){
                         if userOption.user_roommate != nil {
                             ProfileRow(key: "룸메이트", value: userOption.user_roommate!)
@@ -153,9 +153,10 @@ struct ProfileView: View {
                             ProfileRow(key: "언어", value: userOption.user_language!)
                         }
                     }
+                    .padding(.top,10)
                 }
                 .padding(.vertical, 10)
-                
+                .padding(.horizontal, 20)
                 if interest.count > 0 {
                     VStack{
                         HStack{
@@ -239,16 +240,14 @@ struct ProfileRow : View{
     var body: some View{
         VStack{
             HStack{
-                Text(self.key)
-                    .font(.system(size:13))
-                    .foregroundColor(Color.gray)
-                    .frame(width: 100)
                 HStack{
+                    Text(self.key)
+                        .font(.system(size:13))
+                        .foregroundColor(Color.gray)
+                    Spacer()
                     Text(self.value)
                         .font(.system(size:13))
-                    
-                    
-                    Spacer()
+                        .foregroundColor(Color(red: 255/255, green: 160/255, blue: 0/255))
                 }
             }
         }

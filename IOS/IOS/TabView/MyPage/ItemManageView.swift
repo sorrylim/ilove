@@ -61,7 +61,7 @@ struct ItemManageView : View {
                         .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color(red: 255/255, green: 160/255, blue: 0), lineWidth: 0))
                 }
                 Spacer()
-                NavigationLink(destination: EditProfileView()){
+                //NavigationLink(destination: EditProfileView()){
                     Text("사탕 충전하기")
                         .font(.system(size: 15,weight: .bold))
                         .foregroundColor(Color.white)
@@ -69,7 +69,7 @@ struct ItemManageView : View {
                         .background(Color(red: 255/255, green: 160/255, blue: 0))
                         .cornerRadius(25)
                         .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color(red: 255/255, green: 160/255, blue: 0), lineWidth: 0))
-                }
+                //}
             }
         }
         .padding()

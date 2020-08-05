@@ -10,6 +10,7 @@
 		540DA57C24BED4DD009434E4 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540DA57B24BED4DD009434E4 /* ChatView.swift */; };
 		5436A47924D86066006C0753 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5436A47824D86066006C0753 /* GoogleService-Info.plist */; };
 		5436A47B24DA6BAA006C0753 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5436A47A24DA6BAA006C0753 /* BlurView.swift */; };
+		5436A47E24DA8C2E006C0753 /* EditPreviewIntroduceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5436A47D24DA8C2E006C0753 /* EditPreviewIntroduceView.swift */; };
 		5446588A24C925DF00E59FA3 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5446588924C925DF00E59FA3 /* PagingView.swift */; };
 		5446588C24C9555500E59FA3 /* SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5446588B24C9555500E59FA3 /* SwipeGesture.swift */; };
 		5451D1EC24A2F8610035EA91 /* PartnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5451D1EB24A2F8610035EA91 /* PartnerView.swift */; };
@@ -49,6 +50,7 @@
 		540DA57B24BED4DD009434E4 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		5436A47824D86066006C0753 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5436A47A24DA6BAA006C0753 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		5436A47D24DA8C2E006C0753 /* EditPreviewIntroduceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPreviewIntroduceView.swift; sourceTree = "<group>"; };
 		5446588924C925DF00E59FA3 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
 		5446588B24C9555500E59FA3 /* SwipeGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGesture.swift; sourceTree = "<group>"; };
 		5451D1EB24A2F8610035EA91 /* PartnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerView.swift; sourceTree = "<group>"; };
@@ -118,6 +120,14 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
+		5436A47C24DA8C13006C0753 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				5436A47D24DA8C2E006C0753 /* EditPreviewIntroduceView.swift */,
+			);
+			path = EditProfile;
+			sourceTree = "<group>";
+		};
 		5451D1EA24A2F8480035EA91 /* Channel */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +147,7 @@
 		54745B9724A0702A00B32F25 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				5436A47C24DA8C13006C0753 /* EditProfile */,
 				545D598D24A0A438000B8A5A /* ItemManage */,
 				5497A40B24A09A7C005BBC1A /* SettingItem */,
 				547E622A249CAFFA00D8B7C4 /* EditProfileView.swift */,
@@ -393,6 +404,7 @@
 				5446588C24C9555500E59FA3 /* SwipeGesture.swift in Sources */,
 				540DA57C24BED4DD009434E4 /* ChatView.swift in Sources */,
 				549E5B3B24ADB39300050E62 /* ExtensionClass.swift in Sources */,
+				5436A47E24DA8C2E006C0753 /* EditPreviewIntroduceView.swift in Sources */,
 				547E622B249CAFFA00D8B7C4 /* EditProfileView.swift in Sources */,
 				5457057E24CFF2FA00B9D1EF /* DynamicHeightHStack.swift in Sources */,
 				547E6225249C88E300D8B7C4 /* ChannelView.swift in Sources */,
