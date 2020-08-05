@@ -29,7 +29,67 @@ import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_edit_profile_staff.*
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.image_editmain
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.image_editsub1
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.image_editsub2
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.image_editsub3
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editalcohol
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editasset
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editbloodtype
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editbody
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editbrother
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editchildren
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editchildrenplan
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editcigarette
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editcity
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editcountry
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editdatecost
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editeducation
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editfavoriteperson
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editheight
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editholiday
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editinterest
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editintroduce
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editjob
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editlanguage
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editmarriagehistory
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editmarriageplan
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editpersonality
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editpreviewintroduce
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editreligion
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editroommate
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editsalary
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.layout_editwishdate
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editalcohol
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editasset
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editbloodtype
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editbody
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editbrother
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editchildren
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editchildrenplan
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editcigarette
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editcity
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editcountry
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editdatecost
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editeducation
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editfavoriteperson
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editheight
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editholiday
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editinterest
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editintroduce
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editjob
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editlanguage
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editmarriagehistory
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editmarriageplan
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editpersonality
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editpreviewintroduce
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editreligion
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editroommate
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editsalary
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.text_editwishdate
+import kotlinx.android.synthetic.main.activity_edit_profile_staff.toolbar_editprofile
 
 import org.json.JSONArray
 import org.json.JSONObject
@@ -46,11 +106,14 @@ class ManagerEditProfileActivity : PSAppCompatActivity() {
     var imagePath : String? = null
     var imageCaptureUri: Uri? = null
     val PICK_FROM_ALBUM = 1
+    var editImagePath : String? = null
     var userOptionList = ArrayList<UserItem.UserOption>()
     var profileImageList = ArrayList<ImageView>()
+    var profileImagePath = ArrayList<String>()
     var profileImageIdList : ArrayList<Int?> = arrayListOf(null, null, null, null)
     var editImageId : Int? = null
     var layout:Int? = null
+    var mainprofile:Int?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -102,35 +165,52 @@ class ManagerEditProfileActivity : PSAppCompatActivity() {
         refreshProfileImage()
 
         image_editmain.setOnClickListener{
-            editImageId = profileImageIdList.get(0)
+            editImageId= null
+            editImagePath = null
+            mainprofile=1
+            if(profileImageIdList.size!=0) {
+                editImageId = profileImageIdList.get(0)
+                var list : List<String> = profileImagePath.get(0).split("/")
+                editImagePath = list.get(3)
+            }
             photoFromGallery()
         }
 
         image_editsub1.setOnClickListener {
+            editImagePath = null
             editImageId = null
+            mainprofile=0
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 else -> {
                     dialogPhotoType()
                     editImageId = profileImageIdList.get(1)
+                    var list : List<String> = profileImagePath.get(1).split("/")
+                    editImagePath = list.get(3)
                 }
             }
         }
 
         image_editsub2.setOnClickListener {
+            editImagePath = null
             editImageId = null
+            mainprofile=0
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 2 -> photoFromGallery()
                 else -> {
                     dialogPhotoType()
                     editImageId = profileImageIdList.get(2)
+                    var list : List<String> = profileImagePath.get(2).split("/")
+                    editImagePath = list.get(3)
                 }
             }
         }
 
         image_editsub3.setOnClickListener {
+            editImagePath = null
             editImageId = null
+            mainprofile=0
             when(profileImageIdList.size) {
                 1 -> photoFromGallery()
                 2 -> photoFromGallery()
@@ -138,6 +218,8 @@ class ManagerEditProfileActivity : PSAppCompatActivity() {
                 else -> {
                     dialogPhotoType()
                     editImageId = profileImageIdList.get(3)
+                    var list : List<String> = profileImagePath.get(3).split("/")
+                    editImagePath = list.get(3)
                 }
             }
         }
@@ -599,11 +681,13 @@ class ManagerEditProfileActivity : PSAppCompatActivity() {
 
     fun setProfileImage(array: JSONArray) {
         profileImageIdList.clear()
+        profileImagePath.clear()
         for(i in 0..array.length()-1) {
             var json = array[i] as JSONObject
             Glide.with(this)
                     .load(json.getString("image")).apply(RequestOptions().override(640, 640))
                     .into(profileImageList.get(i))
+            profileImageIdList.add(json.getInt("image_id"))
             profileImageIdList.add(json.getInt("image_id"))
         }
     }
@@ -763,16 +847,22 @@ class ManagerEditProfileActivity : PSAppCompatActivity() {
                     var imagePath = resultUri.getPath()
 
                     if(editImageId != null) {
-                        FileUploadUtils.uploadProfileImage(imagePath!!, "", "update", editImageId!!)
+                        var list : List<String> = editImagePath!!.split("/")
+                        FileUploadUtils.uploadProfileImage(imagePath!!, "", "update", editImageId!!, editImagePath!!)
                     } else {
-                        FileUploadUtils.uploadProfileImage(imagePath!!, "profile", "insert", null)
+                        if(mainprofile==1){
+                            FileUploadUtils.uploadProfileImage(imagePath!!, "mainprofile", "insert", null, "")
+                        }
+                        FileUploadUtils.uploadProfileImage(imagePath!!, "profile", "insert", null, "")
                     }
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     val error = result.error
                     editImageId = null
+                    editImagePath = null
                 }
+                editImageId = null
+                editImagePath = null
             }
-
         }
     }
 
@@ -793,9 +883,10 @@ class ManagerEditProfileActivity : PSAppCompatActivity() {
         }
 
         deletePhotoBtn.setOnClickListener {
-            VolleyService.deleteImageReq(editImageId!!, this, {success->
+            VolleyService.deleteImageReq(editImageId!!, editImagePath!!, this, {success->
                 if(success == "success") {
                     editImageId = null
+                    editImagePath = null
                     refreshProfileImage()
                 }
             })

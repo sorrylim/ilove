@@ -1,15 +1,18 @@
 package com.ilove.ilove.Object
 
 import android.content.Context
+import android.util.Base64
 import android.util.Log
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.ilove.ilove.Class.UserInfo
-import com.ilove.ilove.Fragment.MessageFragment
 import org.json.JSONArray
 import org.json.JSONObject
+import java.sql.Timestamp
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
 
 object VolleyService {
     val ip= "http://18.217.130.157:3000"
@@ -433,11 +436,12 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
-    fun getStoryImageReq(userId:String, imageUsage:String, context: Context, success:(JSONArray)->Unit) {
+    fun getStoryImageReq(userId:String, imageUsage:String, userGender: String, context: Context, success:(JSONArray)->Unit) {
         var url = "${ip}/image/get/story"
         var json = JSONObject()
         json.put("user_id", userId)
         json.put("image_usage", imageUsage)
+        json.put("user_gender", userGender)
 
         var array = JSONArray()
         array.put(json)
@@ -571,10 +575,11 @@ object VolleyService {
         Volley.newRequestQueue(context).add(request)
     }
 
-    fun deleteImageReq(imageId:Int, context:Context, success:(String) -> Unit) {
+    fun deleteImageReq(imageId:Int, deleteImage:String, context:Context, success:(String) -> Unit) {
         var url = "${ip}/image/delete"
         var json = JSONObject()
         json.put("image_id", imageId)
+        json.put("delete_image", deleteImage)
 
         var request = object : JsonObjectRequest(
             Method.POST,
@@ -960,4 +965,116 @@ object VolleyService {
 
         Volley.newRequestQueue(context).add(request)
     }
+
+    fun sendSMSReq(phone:String, certifyyNum: Int, context: Context, success: (JSONObject) -> Unit) {
+        var url = "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:256675021402:ilove/messages"
+        val timestamp = System.currentTimeMillis().toString()
+
+        fun makeSignature(): String? {
+            val space = " "
+            val newLine = "\n"
+            val method = "POST"
+            val url = "/sms/v2/services/ncp:sms:kr:256675021402:ilove/messages"
+            Log.d("test", timestamp)
+            val accessKey = "AaHQNdxSDCTfeRxkV7mN"
+            val secretKey = "QmKMMaN8dwzSrjTsgYJEYl31ASHhHfZcKIe0rb2O"
+            val message = java.lang.StringBuilder()
+                .append(method)
+                .append(space)
+                .append(url)
+                .append(newLine)
+                .append(timestamp)
+                .append(newLine)
+                .append(accessKey)
+                .toString()
+            val signingKey =
+                SecretKeySpec(secretKey.toByteArray(charset("UTF-8")), "HmacSHA256")
+            val mac = Mac.getInstance("HmacSHA256")
+            mac.init(signingKey)
+            val rawHmac = mac.doFinal(message.toByteArray(charset("UTF-8")))
+            return java.util.Base64.getEncoder().encodeToString(rawHmac)
+        }
+
+        var signature = makeSignature()
+
+        var array = JSONArray()
+        var json1 = JSONObject()
+        json1.put("to", phone)
+        array.put(json1)
+
+        var json = JSONObject()
+        json.put("type", "SMS")
+        json.put("from", "01073253757")
+        json.put("content", "[아이러브팅] 인증번호 ${certifyyNum} 를 입력해주세요.")
+        json.put("messages", array)
+
+        var request = object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it)
+                Log.d("test", "성공")
+            },
+            Response.ErrorListener {
+                Log.d("test", it.toString())
+            }) {
+            override fun getHeaders(): MutableMap<String, String> {
+                var header = HashMap<String, String>()
+                header.put("Content-Type", "application/json; charset=utf-8")
+                header.put("x-ncp-apigw-timestamp", timestamp)
+                header.put("x-ncp-iam-access-key", "AaHQNdxSDCTfeRxkV7mN")
+                header.put("x-ncp-apigw-signature-v2", signature!!)
+                return header
+            }
+        }
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun updateCandyReq(userId : String, candyCount: Int, updateType: String, context: Context, success : (String) -> Unit) {
+        val url = "${ip}/user/update/candy"
+
+        var json=JSONObject()
+            .put("user_id", userId)
+            .put("candy_count", candyCount)
+            .put("update_type", updateType)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun getPartnerExpressionReq(userId : String, partnerId: String, context: Context, success : (JSONObject) -> Unit) {
+        val url = "${ip}/expression/get/partner"
+
+        var json=JSONObject()
+            .put("user_id", userId)
+            .put("partner_id", partnerId)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it)
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+
+
+
 }

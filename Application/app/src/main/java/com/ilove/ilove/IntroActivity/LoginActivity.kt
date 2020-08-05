@@ -25,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
         btn_login.setOnClickListener {
             VolleyService.loginReq(edit_loginid.text.toString(), edit_loginpw.text.toString(), this, {success->
                 Log.d("test", success.getInt("code").toString())

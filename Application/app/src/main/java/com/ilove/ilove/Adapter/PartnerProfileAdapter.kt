@@ -21,7 +21,7 @@ class PartnerProfileAdapter(val context: Context, val profileImageList:ArrayList
     }
 
     override fun onBindViewHolder(holder: PartnerProfileAdapter.ViewHolder, position: Int) {
-        Glide.with(context).load(profileImageList.get(position)).into(holder.itemView.image_partnerprofile)
+        Glide.with(context).load(profileImageList.get(position)).apply(RequestOptions().override(1080, 1920)).into(holder.itemView.image_partnerprofile)
         holder.itemView.image_partnerprofile.setClipToOutline(true)
     }
 

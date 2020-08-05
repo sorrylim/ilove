@@ -15,7 +15,7 @@
         android:text="문의내용"
         android:textColor="@color/colorMdGrey_700"
         android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_inquirecheck"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,4 +32,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_inquiretitle" />
+
+    <TextView
+        android:id="@+id/text_inquirecheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="확인여부"
+        android:textColor="@color/colorMdGrey_700"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_inquiretitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

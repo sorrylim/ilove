@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSAppCompatActivity
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
@@ -21,13 +22,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class StoryActivity : PSAppCompatActivity() {
+    var userPhone = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_story)
         toolbarBinding(toolbar_story, "", true)
 
         var image : ImageView = findViewById(R.id.image_storyimage)
-        var gpsTracker = GpsTracker(this)
+        var psDialog = PSDialog(this)
 
 
         image.setClipToOutline(true)
@@ -44,9 +47,12 @@ class StoryActivity : PSAppCompatActivity() {
         var curDate = simpleDateFormat.format(System.currentTimeMillis())
 
         VolleyService.getStoryUserReq(UserInfo.ID, imageId, this, {success->
+            psDialog.setLoadingDialog()
+            psDialog.show()
             var gpsTracker = GpsTracker(this)
             var partnerDate : Date = simpleDateFormat.parse(success.getString("user_recenttime"))
 
+            userPhone = success.getString("user_phone")
             age = (curDate.substring(0, 4).toInt() - success.getString("user_birthday").substring(0, 4).toInt() + 1).toString()
             userNickname = success.getString("user_nickname")
             text_storynickname.text = userNickname + ", " + age
@@ -62,7 +68,7 @@ class StoryActivity : PSAppCompatActivity() {
             text_storyviewcount.text = success.getInt("viewcount").toString()
             text_storylikecount.text = success.getInt("likecount").toString()
             userId = success.getString("user_id")
-            Glide.with(this).load(imgUrl).apply(RequestOptions().centerCrop()).into(image_storyimage)
+            Glide.with(this).load(imgUrl).apply(RequestOptions().centerCrop()).apply(RequestOptions().override(300, 300)).into(image_storyimage)
 
             if(success.getInt("like") == 1) {
                 btn_storylike.setLiked(true)
@@ -81,9 +87,11 @@ class StoryActivity : PSAppCompatActivity() {
                     intent.putExtra("userId", userId)
                     intent.putExtra("userImage", json.getString("image"))
                     intent.putExtra("userAge", age)
+                    intent.putExtra("userPhone", userPhone!!)
 
                     startActivity(intent)
                 }
+                psDialog.dismiss()
             })
         })
 

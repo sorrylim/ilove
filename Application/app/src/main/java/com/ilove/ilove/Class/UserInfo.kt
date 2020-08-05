@@ -8,7 +8,7 @@ class UserInfo : Application() {
         var PW: String = ""
         var NICKNAME: String = ""
         var BIRTHDAY : String = ""
-        var GENDER: String = ""
+        var GENDER: String = "F"
         var AUTHORITY: String = ""
         var BLOCKING: Int = 0
         var PHONE: String = ""
@@ -24,5 +24,6 @@ class UserInfo : Application() {
         var TOKEN: String?=""
         var LATITUDE: String? = null
         var LONGITUDE : String? = null
+        var GUIDE: Int = 0
     }
 }

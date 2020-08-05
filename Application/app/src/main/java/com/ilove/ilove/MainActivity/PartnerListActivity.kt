@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ilove.ilove.Adapter.PartnerListAdapter
 import com.ilove.ilove.Class.PSAppCompatActivity
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.Partner
 import com.ilove.ilove.Object.VolleyService
@@ -63,10 +64,14 @@ class PartnerListActivity : PSAppCompatActivity() {
         }
 
         VolleyService.getSendUserReq(UserInfo.ID, expressionType, this, {success->
+            var psDialog = PSDialog(this)
+            psDialog.setLoadingDialog()
+            psDialog.show()
             partnerList.clear()
             var array = success
             if(array!!.length() == 0) {
                 text_nohistory.visibility = View.VISIBLE
+                psDialog.dismiss()
             }
             else {
                 for(i in 0..array!!.length()-1) {
@@ -79,6 +84,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                 rv_partnerlist.setHasFixedSize(true)
                 rv_partnerlist.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
                 rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "send")
+                psDialog.dismiss()
             }
         })
     }
@@ -96,10 +102,14 @@ class PartnerListActivity : PSAppCompatActivity() {
         }
 
         VolleyService.getReceiveUserReq(UserInfo.ID, expressionType, this, {success->
+            var psDialog = PSDialog(this)
+            psDialog.setLoadingDialog()
+            psDialog.show()
             partnerList.clear()
             var array = success
             if(array!!.length() == 0) {
                 text_nohistory.visibility = View.VISIBLE
+                psDialog.dismiss()
             }
             else {
                 for (i in 0..array!!.length() - 1) {
@@ -122,6 +132,7 @@ class PartnerListActivity : PSAppCompatActivity() {
                 rv_partnerlist.layoutManager =
                     LinearLayoutManager(this, RecyclerView.VERTICAL, false)
                 rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "receive")
+                psDialog.dismiss()
             }
         })
     }
@@ -139,6 +150,9 @@ class PartnerListActivity : PSAppCompatActivity() {
         }
 
         VolleyService.getEach1UserReq(UserInfo.ID, expressionType, this, {success->
+            var psDialog = PSDialog(this)
+            psDialog.setLoadingDialog()
+            psDialog.show()
             partnerList.clear()
             var array = success
             for(i in 0..array!!.length()-1) {
@@ -160,10 +174,12 @@ class PartnerListActivity : PSAppCompatActivity() {
                 rv_partnerlist.setHasFixedSize(true)
                 rv_partnerlist.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
                 rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "each"+expressionType)
+                psDialog.dismiss()
             })
 
             if(partnerList.size == 0) {
                 text_nohistory.visibility = View.VISIBLE
+                psDialog.dismiss()
             }
         })
     }
@@ -172,6 +188,9 @@ class PartnerListActivity : PSAppCompatActivity() {
         var history = getText(R.string.viewhistory)
         text_history.setText(history)
         VolleyService.getVisitUserReq(UserInfo.ID, visitType, this, {success->
+            var psDialog = PSDialog(this)
+            psDialog.setLoadingDialog()
+            psDialog.show()
             partnerList.clear()
             var array = success
             for(i in 0..array!!.length()-1) {
@@ -184,9 +203,11 @@ class PartnerListActivity : PSAppCompatActivity() {
             rv_partnerlist.setHasFixedSize(true)
             rv_partnerlist.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             rv_partnerlist.adapter = PartnerListAdapter(this, partnerList, "visit")
+            psDialog.dismiss()
 
             if(partnerList.size == 0) {
                 text_nohistory.visibility = View.VISIBLE
+                psDialog.dismiss()
             }
         })
     }

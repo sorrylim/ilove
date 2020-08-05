@@ -13,12 +13,14 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.android.volley.toolbox.Volley
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSAppCompatActivity
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Fragment.*
 import com.ilove.ilove.IntroActivity.ChargeCandyActivity
@@ -51,6 +53,13 @@ class MainActivity : PSAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if(UserInfo.GUIDE == 1) {
+            var psDialog = PSDialog(this)
+            psDialog.setGuideLike()
+            psDialog.show()
+        }
+
         if(UserInfo.ID==""){
             var intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -103,7 +112,7 @@ class MainActivity : PSAppCompatActivity() {
         bnv_main.setOnNavigationItemSelectedListener(navListener)
 
         if (savedInstanceState == null) {
-            channelFragment = ChannelFragment(text_maintoolbar)
+            channelFragment = ChannelFragment()
             supportFragmentManager.beginTransaction().add(R.id.frame_main, channelFragment!!).commit()
         }
     }
@@ -112,7 +121,7 @@ class MainActivity : PSAppCompatActivity() {
         when (it.itemId) {
             R.id.bnv_main_channel -> {
                 if(channelFragment == null) {
-                    channelFragment = ChannelFragment(text_maintoolbar)
+                    channelFragment = ChannelFragment()
                     supportFragmentManager.beginTransaction().add(R.id.frame_main, channelFragment!!).commit()
                 }
 

@@ -40,6 +40,7 @@ class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>) 
 
         var distance = gpsTracker.getDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1))
 
+
         holder.itemView.text_newusernicknameage.text = userList.get(position).userNickname + ", " + age.toString()
 
         holder.itemView.text_newuserrecentdata.text = distance.get(0)+ distance.get(1) + ", " + gpsTracker.timeDiff(partnerDate.getTime())
@@ -54,6 +55,7 @@ class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>) 
             intent.putExtra("userNickname", userList.get(position).userNickname)
             intent.putExtra("userAge", age.toString())
             intent.putExtra("userCity", userList.get(position).userCity)
+            intent.putExtra("userPhone", userList.get(position).userPhone)
             context.startActivity(intent)
         }
     }

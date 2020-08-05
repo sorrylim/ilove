@@ -6,6 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity.PartnerActivity">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="#FFFFFF"
+            android:clickable="true"
+            app:borderWidth="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/call_n_icon">
+
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#FFFFFF"
+            android:backgroundTint="#FFFFFF"
+            android:clickable="true"
+            app:borderWidth="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/bigheart_off">
+
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_partner"
             android:layout_width="match_parent"
@@ -564,13 +595,13 @@
 
                         <TextView
                             android:id="@+id/text_partnerwishdate"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="첫 데이트까지 희망사항"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
                             android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerwishdate1"
+                            android:gravity="center"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerwishdate1"
                             app:layout_constraintTop_toTopOf="@+id/text_partnerwishdate1" />
@@ -660,8 +691,8 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="20dp"
                             android:text="취미"
-                            android:textColor="@color/colorMdGrey_700"
-                            android:textSize="20dp"
+                            android:textColor="@color/colorMdGrey_500"
+                            android:textSize="15dp"
                             android:visibility="gone"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/view30" />
@@ -709,9 +740,9 @@
                             android:layout_height="48dp"
                             android:layout_gravity="bottom"
                             app:ci_drawable="@drawable/circle_white"
-                            app:ci_height="7dp"
+                            app:ci_height="3dp"
                             app:ci_margin="4dp"
-                            app:ci_width="7dp"
+                            app:ci_width="3dp"
                             app:layout_constraintBottom_toBottomOf="@+id/viewpager_partnerprofile"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -742,7 +773,7 @@
                             android:id="@+id/view30"
                             android:layout_width="0dp"
                             android:layout_height="1dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="30dp"
                             android:background="@color/colorMdGrey_300"
                             android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -755,7 +786,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginBottom="80dp"
                             android:orientation="vertical"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -770,7 +801,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginBottom="80dp"
                             android:orientation="vertical"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -785,14 +816,16 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="10dp"
-                            android:layout_marginBottom="20dp"
+                            android:layout_marginBottom="80dp"
                             android:orientation="vertical"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerfavoriteperson"
-                            app:layout_constraintVertical_bias="0.0"></LinearLayout>
+                            app:layout_constraintVertical_bias="0.0">
+
+                        </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

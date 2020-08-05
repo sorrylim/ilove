@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ilove.ilove.Adapter.UserListAdapter
 import com.ilove.ilove.Class.GpsTracker
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.UserList
 import com.ilove.ilove.Object.VolleyService
@@ -31,6 +32,7 @@ class ListFragment(titleText: TextView) : Fragment() {
     var rootView : View? = null
     var sortType : Int = 0
     var titleText: TextView = titleText
+    var nothingText : TextView? = null
 
 
 
@@ -44,6 +46,7 @@ class ListFragment(titleText: TextView) : Fragment() {
         var sortTime : TextView = rootView!!.findViewById(R.id.text_sorttime)
         var userListRV : RecyclerView = rootView!!.findViewById(R.id.rv_userlist)
         var swipeLayout : SwipeRefreshLayout = rootView!!.findViewById(R.id.layout_swipe)
+        nothingText = rootView!!.findViewById(R.id.text_listnothing)
 
         //글꼴변경
         //val typefaceb = Typeface.createFromAsset(context?.assets, "nanumbarunpenb.ttf")
@@ -92,10 +95,13 @@ class ListFragment(titleText: TextView) : Fragment() {
     }
 
     fun sortTime() {
+        var psDialog = PSDialog(activity!!)
+        psDialog.setLoadingDialog()
         var gpsTracker = GpsTracker(activity!!)
         val partnerListRV : RecyclerView = rootView!!.findViewById(R.id.rv_userlist)
         if(UserInfo.GENDER == "M") {
             VolleyService.getUserListReq("F", UserInfo.ID, activity!!, {success->
+                psDialog.show()
                 userList.clear()
                 var array = success
                 for(i in 0..array!!.length()-1) {
@@ -143,14 +149,23 @@ class ListFragment(titleText: TextView) : Fragment() {
                     }
 
                     upProfileUserList.addAll(userList)
-                    partnerListRV.setHasFixedSize(true)
-                    partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                    partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+
+                    if(upProfileUserList.size == 0) {
+                        nothingText!!.visibility = View.VISIBLE
+                        psDialog.dismiss()
+                    }
+                    else {
+                        partnerListRV.setHasFixedSize(true)
+                        partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                        partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                        psDialog.dismiss()
+                    }
                 })
             })
         }
         else if(UserInfo.GENDER == "F") {
             VolleyService.getUserListReq("M", UserInfo.ID, activity!!, {success->
+                psDialog.show()
                 userList.clear()
                 var array = success
                 for(i in 0..array!!.length()-1) {
@@ -199,21 +214,29 @@ class ListFragment(titleText: TextView) : Fragment() {
                     }
 
                     upProfileUserList.addAll(userList)
-                    partnerListRV.setHasFixedSize(true)
-                    partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                    partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                    if(upProfileUserList.size == 0) {
+                        nothingText!!.visibility = View.VISIBLE
+                        psDialog.dismiss()
+                    }
+                    else {
+                        partnerListRV.setHasFixedSize(true)
+                        partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                        partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                        psDialog.dismiss()
+                    }
                 })
-
-
             })
         }
     }
 
     fun sortGps() {
+        var psDialog = PSDialog(activity!!)
+        psDialog.setLoadingDialog()
         var gpsTracker = GpsTracker(activity!!)
         val partnerListRV : RecyclerView = rootView!!.findViewById(R.id.rv_userlist)
         if(UserInfo.GENDER == "M") {
             VolleyService.getUserListReq("F", UserInfo.ID, activity!!, {success->
+                psDialog.show()
                 userList.clear()
                 var array = success
                 for(i in 0..array!!.length()-1) {
@@ -261,14 +284,22 @@ class ListFragment(titleText: TextView) : Fragment() {
                     }
 
                     upProfileUserList.addAll(userList)
-                    partnerListRV.setHasFixedSize(true)
-                    partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                    partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                    if(upProfileUserList.size == 0) {
+                        nothingText!!.visibility = View.VISIBLE
+                        psDialog.dismiss()
+                    }
+                    else {
+                        partnerListRV.setHasFixedSize(true)
+                        partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                        partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                        psDialog.dismiss()
+                    }
                 })
             })
         }
         else if(UserInfo.GENDER == "F") {
             VolleyService.getUserListReq("M", UserInfo.ID, activity!!, {success->
+                psDialog.show()
                 userList.clear()
                 var array = success
                 for(i in 0..array!!.length()-1) {
@@ -317,9 +348,16 @@ class ListFragment(titleText: TextView) : Fragment() {
                     }
 
                     upProfileUserList.addAll(userList)
-                    partnerListRV.setHasFixedSize(true)
-                    partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                    partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                    if(upProfileUserList.size == 0) {
+                        nothingText!!.visibility = View.VISIBLE
+                        psDialog.dismiss()
+                    }
+                    else {
+                        partnerListRV.setHasFixedSize(true)
+                        partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                        partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                        psDialog.dismiss()
+                    }
                 })
             })
         }

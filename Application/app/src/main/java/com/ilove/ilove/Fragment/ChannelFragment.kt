@@ -2,6 +2,7 @@ package com.ilove.ilove.Fragment
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,10 +25,9 @@ import kotlinx.android.synthetic.main.fragment_channel.view.*
 import kotlinx.android.synthetic.main.fragment_channel.view.layout_sendlike
 import org.json.JSONObject
 
-class ChannelFragment(titleText: TextView) : Fragment() {
+class ChannelFragment : Fragment() {
 
     var newUserList = ArrayList<NewUserList>()
-    var titleText : TextView = titleText
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,7 +65,52 @@ class ChannelFragment(titleText: TextView) : Fragment() {
 
         swipeLayout.setOnRefreshListener {
             VolleyService.getExpressionCountReq(UserInfo.ID, activity!!, {success->
+                psDialog.setLoadingDialog()
+                psDialog.show()
                 var json = success
+
+                if(json.getInt("send_like") > 0) {
+                    sendLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+                else {
+                    sendLikeBtn.setBackgroundResource(0)
+                }
+
+                if(json.getInt("receive_like") > 0) {
+                    receiveLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+                else {
+                    receiveLikeBtn.setBackgroundResource(0)
+                }
+
+                if(json.getInt("each_like") > 0) {
+                    eachLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+                else {
+                    eachLikeBtn.setBackgroundResource(0)
+                }
+
+                if(json.getInt("send_meet") > 0) {
+                    sendMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+                else {
+                    sendMeetBtn.setBackgroundResource(0)
+                }
+
+                if(json.getInt("receive_meet") > 0) {
+                    receiveMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+                else {
+                    receiveMeetBtn.setBackgroundResource(0)
+                }
+
+                if(json.getInt("each_meet") > 0) {
+                    eachMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+                }
+                else {
+                    eachMeetBtn.setBackgroundResource(0)
+                }
+
                 sendLikeCount.text = json!!.getInt("send_like").toString() + "명"
                 receiveLikeCount.text = json!!.getInt("receive_like").toString() + "명"
                 eachLikeCount.text = json!!.getInt("each_like").toString() + "명"
@@ -91,6 +136,7 @@ class ChannelFragment(titleText: TextView) : Fragment() {
                             newUserRV.setHasFixedSize(true)
                             newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
                             newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
+                            psDialog.dismiss()
                         })
                     }
                     else {
@@ -106,6 +152,7 @@ class ChannelFragment(titleText: TextView) : Fragment() {
                             newUserRV.setHasFixedSize(true)
                             newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
                             newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
+                            psDialog.dismiss()
                         })
                     }
                 })
@@ -115,6 +162,9 @@ class ChannelFragment(titleText: TextView) : Fragment() {
 
         if(UserInfo.GENDER == "M") {
             VolleyService.getNewUserListReq("F", activity!!, {success->
+                var loadingDialog = PSDialog(activity!!)
+                loadingDialog.setLoadingDialog()
+                loadingDialog.show()
                 newUserList.clear()
                 var array = success
                 for(i in 0..array.length()-1)
@@ -126,10 +176,14 @@ class ChannelFragment(titleText: TextView) : Fragment() {
                 newUserRV.setHasFixedSize(true)
                 newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
                 newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
+                loadingDialog.dismiss()
             })
         }
         else {
             VolleyService.getNewUserListReq("M", activity!!, {success->
+                var loadingDialog = PSDialog(activity!!)
+                loadingDialog.setLoadingDialog()
+                loadingDialog.show()
                 newUserList.clear()
                 var array = success
                 for(i in 0..array.length()-1)
@@ -141,6 +195,7 @@ class ChannelFragment(titleText: TextView) : Fragment() {
                 newUserRV.setHasFixedSize(true)
                 newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
                 newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
+                loadingDialog.dismiss()
             })
         }
 
@@ -150,25 +205,43 @@ class ChannelFragment(titleText: TextView) : Fragment() {
             if(json.getInt("send_like") > 0) {
                 sendLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
             }
+            else {
+                sendLikeBtn.setBackgroundResource(0)
+            }
 
             if(json.getInt("receive_like") > 0) {
                 receiveLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+            }
+            else {
+                receiveLikeBtn.setBackgroundResource(0)
             }
 
             if(json.getInt("each_like") > 0) {
                 eachLikeBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
             }
+            else {
+                eachLikeBtn.setBackgroundResource(0)
+            }
 
             if(json.getInt("send_meet") > 0) {
                 sendMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+            }
+            else {
+                sendMeetBtn.setBackgroundResource(0)
             }
 
             if(json.getInt("receive_meet") > 0) {
                 receiveMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
             }
+            else {
+                receiveMeetBtn.setBackgroundResource(0)
+            }
 
             if(json.getInt("each_meet") > 0) {
                 eachMeetBtn.setBackgroundResource(R.drawable.rounded_color_layout_1dp)
+            }
+            else {
+                eachMeetBtn.setBackgroundResource(0)
             }
 
             sendLikeCount.text = json!!.getInt("send_like").toString() + "명"

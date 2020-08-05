@@ -12,8 +12,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Adapter.StoryAdapter
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ImageItem
 import com.ilove.ilove.MainActivity.StoryActivity
@@ -26,6 +29,7 @@ import org.json.JSONObject
 class StoryFragment(titleText: TextView) : Fragment() {
     var storyList = ArrayList<ImageItem.StoryImage>()
     var titleText : TextView = titleText
+    var gender = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,14 +41,61 @@ class StoryFragment(titleText: TextView) : Fragment() {
         var myStoryImage: ImageView = rootView.findViewById(R.id.image_mystoryimage)
         var myStoryImageId: Int? = null
         var myStoryImagePath : String? = null
+        var swipeLayout : SwipeRefreshLayout = rootView.findViewById(R.id.swipe_story)
+
+        var psDialog = PSDialog(activity!!)
 
         var myStoryBlock1 : ImageView = rootView.findViewById(R.id.img_none2)
         var myStoryBlock2 : TextView = rootView.findViewById(R.id.text_none)
 
+        if(UserInfo.GENDER == "M") {
+            gender = "F"
+        }
+        else {
+            gender ="M"
+        }
+
         myStoryImage.setClipToOutline(true)
         storyRV.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
+        swipeLayout.setOnRefreshListener {
+            VolleyService.getStoryImageReq(UserInfo.ID, "story", gender, activity!!, { success->
+                storyList.clear()
 
+                var array = success
+
+                for(i in 0..array.length()-1) {
+                    var json = array[i] as JSONObject
+
+                    var story = ImageItem.StoryImage(json.getInt("image_id"), json.getString("user_id"), json.getString("image"))
+
+                    storyList.add(story)
+                }
+
+                storyRV.setHasFixedSize(true)
+                storyRV.layoutManager = GridLayoutManager(activity!!, 3)
+                storyRV.adapter = StoryAdapter(activity!!, storyList)
+
+                VolleyService.getMyStoryImageReq(UserInfo.ID, activity!!, {success->
+                    var json = success
+                    myStoryImageId = json.getInt("image_id")
+                    myStoryImagePath = json.getString("image")
+
+                    if(myStoryImageId != null) {
+                        Glide.with(activity!!).load(myStoryImagePath).into(myStoryImage)
+                        myStoryImage.setOnClickListener {
+                            var intent = Intent(activity!!, StoryActivity::class.java)
+                            intent.putExtra("image", myStoryImagePath)
+                            intent.putExtra("image_id", myStoryImageId as Int)
+                            startActivity(intent)
+                        }
+                        myStoryBlock1.visibility = View.INVISIBLE
+                        myStoryBlock2.visibility = View.INVISIBLE
+                    }
+                })
+                swipeLayout.setRefreshing(false)
+            })
+        }
 
         writeStoryBtn.setOnClickListener {
             var intent = Intent(activity!!, WriteStoryActivity::class.java)
@@ -56,7 +107,9 @@ class StoryFragment(titleText: TextView) : Fragment() {
             startActivity(intent)
         }
 
-        VolleyService.getStoryImageReq(UserInfo.ID, "story", activity!!, { success->
+        VolleyService.getStoryImageReq(UserInfo.ID, "story", gender, activity!!, { success->
+            psDialog.setLoadingDialog()
+            psDialog.show()
             storyList.clear()
 
             var array = success
@@ -69,17 +122,13 @@ class StoryFragment(titleText: TextView) : Fragment() {
                 storyList.add(story)
             }
 
-            storyRV.setHasFixedSize(true)
-            storyRV.layoutManager = GridLayoutManager(activity!!, 3)
-            storyRV.adapter = StoryAdapter(activity!!, storyList)
-
             VolleyService.getMyStoryImageReq(UserInfo.ID, activity!!, {success->
                 var json = success
                 myStoryImageId = json.getInt("image_id")
                 myStoryImagePath = json.getString("image")
 
                 if(myStoryImageId != null) {
-                    Glide.with(activity!!).load(myStoryImagePath).into(myStoryImage)
+                    Glide.with(activity!!).load(myStoryImagePath).apply(RequestOptions().override(300, 300)).into(myStoryImage)
                     myStoryImage.setOnClickListener {
                         var intent = Intent(activity!!, StoryActivity::class.java)
                         intent.putExtra("image", myStoryImagePath)
@@ -89,7 +138,15 @@ class StoryFragment(titleText: TextView) : Fragment() {
                     myStoryBlock1.visibility = View.INVISIBLE
                     myStoryBlock2.visibility = View.INVISIBLE
                 }
+
+                psDialog.dismiss()
             })
+
+            storyRV.setHasFixedSize(true)
+            storyRV.layoutManager = GridLayoutManager(activity!!, 3)
+            storyRV.adapter = StoryAdapter(activity!!, storyList)
+            psDialog.dismiss()
+
         })
 
         return rootView

@@ -7,11 +7,15 @@ import android.graphics.drawable.ColorDrawable
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableStringBuilder
+import android.text.TextWatcher
+import android.text.method.ScrollingMovementMethod
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -29,13 +33,16 @@ import com.ilove.ilove.Adapter.MessageCandyAdapter
 import com.ilove.ilove.Adapter.PersonalityAdapter
 import com.ilove.ilove.Adapter.UserOptionAdapter
 import com.ilove.ilove.IntroActivity.ChargeCandyActivity
+import com.ilove.ilove.IntroActivity.SignupActivity
 import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Item.UserItem
 import com.ilove.ilove.MainActivity.ChatActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.dialog_inquire.*
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
+import kotlin.random.Random
 
 class PSDialog(activity: Activity) {
 
@@ -143,7 +150,7 @@ class PSDialog(activity: Activity) {
 
         updateBtn.setOnClickListener {
             if(userOptionData == "") {
-                Toast.makeText(context, title+"을 선택해주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, title+"을(를) 선택해주세요", Toast.LENGTH_SHORT).show()
             }
             else {
                 if(userOption == "user_city") {
@@ -262,7 +269,7 @@ class PSDialog(activity: Activity) {
                 Toast.makeText(context, title+"을 선택해주세요", Toast.LENGTH_SHORT).show()
             }
             else {
-                if(userOption == "user_city") {
+                if(userOption == "user_city" || userOption == "user_purpose") {
                     VolleyService.updateUserCityReq(UserId, userOption, userOptionData!!, context!!, {success->
                         if(success == "success") {
                             dismiss()
@@ -301,7 +308,6 @@ class PSDialog(activity: Activity) {
                     VolleyService.updateUserOptionReq(UserId, userOption, userOptionData!!, context!!, {success->
                         if(success == "success") {
                             if(userOptionData.length > 8) {
-
                                 dismiss()
                             }
                             else {
@@ -498,6 +504,32 @@ class PSDialog(activity: Activity) {
         }
     }
 
+    fun setUpdateCandy(candyCount: Int, updateType: String) {
+        dialog!!.setContentView(R.layout.dialog_profileup)
+        var titleText : TextView = dialog!!.findViewById(R.id.text_dialogtitle)
+        var contentText : TextView = dialog!!.findViewById(R.id.text_dialogcontent)
+        var subContentText : TextView = dialog!!.findViewById(R.id.text_dialogsubcontent)
+        var acceptBtn : Button = dialog!!.findViewById(R.id.btn_dialogaccept)
+        var cancelBtn : Button = dialog!!.findViewById(R.id.btn_dialogcancel)
+
+        titleText.text = "상품구매"
+        contentText.text = "사탕 ${candyCount}개를 선택하셨습니다.\n구매하시겠습니까?"
+
+        subContentText.visibility = View.GONE
+
+        acceptBtn.setOnClickListener {
+            VolleyService.updateCandyReq(UserInfo.ID, candyCount, updateType, context!!, {success->
+                if(success=="success") {
+                    dialog!!.dismiss()
+                }
+            })
+        }
+
+        cancelBtn.setOnClickListener {
+            dialog!!.dismiss()
+        }
+    }
+
     class BottomSheetDialog(categoryText : TextView) : BottomSheetDialogFragment() {
         var categoryText = categoryText
 
@@ -512,10 +544,171 @@ class PSDialog(activity: Activity) {
 
         override fun onActivityCreated(savedInstanceState: Bundle?) {
             super.onActivityCreated(savedInstanceState)
+            view?.findViewById<TextView>(R.id.text_inquirepurchase)?.setOnClickListener {
+                categoryText.text = text_inquirepurchase.text
+                dismiss()
+            }
+
             view?.findViewById<TextView>(R.id.text_inquireservice)?.setOnClickListener {
                 categoryText.text = text_inquireservice.text
                 dismiss()
             }
+        }
+    }
+
+    fun setPermissionDialog() {
+        dialog!!.setContentView(R.layout.dialog_permission)
+        var displayMetrics: DisplayMetrics = DisplayMetrics()
+        (context as Activity).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics) // 화면의 가로길이를 구함
+        var width = displayMetrics.widthPixels * 0.8
+
+
+        val checkBtn : Button = dialog!!.findViewById(R.id.btn_permissioncheck)
+        val permissionLayout : ConstraintLayout = dialog!!.findViewById(R.id.layout_permission)
+
+        permissionLayout.getLayoutParams().width = width.toInt()
+
+        checkBtn.setOnClickListener {
+            dismiss()
+            val psDialog = PSDialog(context!!)
+            psDialog.setPernsonalInfo()
+            psDialog.show()
+        }
+    }
+
+    fun setPernsonalInfo() {
+        var displayMetrics: DisplayMetrics = DisplayMetrics()
+        (context as Activity).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics) // 화면의 가로길이를 구함
+        var width = displayMetrics.widthPixels * 0.8
+        var height = displayMetrics.heightPixels * 0.8
+
+        dialog!!.setContentView(R.layout.dialog_personalinfo)
+        val agreeBtn : Button = dialog!!.findViewById(R.id.btn_personalinfo)
+        val personalText : TextView = dialog!!.findViewById(R.id.textView80)
+        var personalLayout : ConstraintLayout = dialog!!.findViewById(R.id.layout_personalinfo)
+
+        personalLayout.getLayoutParams().width = width.toInt()
+        personalLayout.getLayoutParams().height = height.toInt()
+        personalLayout.requestLayout()
+
+        personalText.movementMethod = ScrollingMovementMethod.getInstance()
+
+        agreeBtn.setOnClickListener {
+            dismiss()
+            val psDialog = PSDialog(context!!)
+            psDialog.setCertification1()
+            psDialog.show()
+        }
+    }
+
+    fun setCertification1() {
+        dialog = Dialog(context!!, R.style.popCasterDlgTheme)
+        val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_certification1, null)
+        val phoneEdit : EditText = dialogView.findViewById(R.id.edit_phone)
+        val sendBtn : TextView = dialogView.findViewById(R.id.text_certificationphone)
+
+        phoneEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if(phoneEdit.length() == 11) {
+                    sendBtn.setTextColor(Color.parseColor("#212121"))
+                    sendBtn.isClickable = true
+                }
+                else {
+                    sendBtn.setTextColor(Color.parseColor("#9E9E9E"))
+                    sendBtn.isClickable = false
+                }
+            }
+        })
+
+        dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
+        dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
+
+        sendBtn.setOnClickListener {
+            var random = Random
+            var certifyNum = random.nextInt(100000, 999999)
+            var phone = phoneEdit.text.toString()
+
+            VolleyService.sendSMSReq(phone, certifyNum, context!!, {success-> })
+
+            dismiss()
+            val psDialog = PSDialog(context!!)
+            psDialog.setCertification2(phone, certifyNum)
+            psDialog.show()
+        }
+    }
+
+    fun setCertification2(phone:String, certifyNum: Int) {
+        dialog = Dialog(context!!, R.style.popCasterDlgTheme)
+        val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_certification2, null)
+        val certifyEdit : EditText = dialogView.findViewById(R.id.edit_certifynum)
+        val certifyBtn : TextView = dialogView.findViewById(R.id.text_certification)
+
+        dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
+        dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
+
+        certifyBtn.setOnClickListener {
+            if(certifyEdit.text.toString() == certifyNum.toString()) {
+                var intent = Intent(context!!, SignupActivity::class.java)
+                intent.putExtra("phone", phone)
+                context!!.startActivity(intent)
+                dismiss()
+            }
+            else {
+                Toast.makeText(context!!, "인증번호가 틀립니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    fun setGuideLike() {
+        dialog!!.setContentView(R.layout.dialog_guidelike)
+        var acceptBtn : Button = dialog!!.findViewById(R.id.btn_guidelike)
+
+        acceptBtn.setOnClickListener {
+            dialog!!.setContentView(R.layout.dialog_guidemeet)
+            var acceptBtn : Button = dialog!!.findViewById(R.id.btn_guidemeet)
+            acceptBtn.setOnClickListener {
+                dismiss()
+                VolleyService.updateReq("user", "user_guide=0", "user_id='${UserInfo.ID}'", context!!, {success->
+                })
+            }
+        }
+    }
+
+    fun setLoadingDialog() {
+        dialog!!.window!!.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+        dialog!!.setContentView(R.layout.dialog_loading)
+        var loadingImage : ImageView = dialog!!.findViewById(R.id.image_loading)
+
+        Glide.with(context!!).asGif().load(R.raw.loading).into(loadingImage)
+    }
+
+    fun setInquireClickDialog(title: String, content: String, answer: String, date:String, answerDate: String) {
+        dialog = Dialog(context!!, R.style.popCasterDlgTheme)
+        val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_inquireclick, null)
+        val titleText : TextView = dialogView.findViewById(R.id.text_inquireclicktitle)
+        val contentText : TextView = dialogView.findViewById(R.id.text_inquireclickcontent)
+        val answerText : TextView = dialogView.findViewById(R.id.text_inquireclickanswer)
+        val cancelBtn : ImageView = dialogView.findViewById(R.id.image_inquireclickcancel)
+        val dateText : TextView = dialogView.findViewById(R.id.text_inquireclickdate)
+        val answerDateText: TextView = dialogView.findViewById(R.id.text_inquireclickanswerdate)
+
+        dateText.text = date
+        answerDateText.text = answerDate
+        titleText.text = title
+        contentText.text = content
+        answerText.text = answer
+
+        dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
+        dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
+
+        cancelBtn.setOnClickListener {
+            dismiss()
         }
     }
 

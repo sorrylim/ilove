@@ -44,7 +44,7 @@
         android:background="@drawable/rounded_corner_shape_button"
         android:text="프로필 편집"
         android:textColor="@color/colorMdWhite_1000"
-        android:textSize="14dp"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/image_mypageprofile"
