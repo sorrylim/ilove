@@ -150,11 +150,23 @@ class ListFragment(titleText: TextView) : Fragment() {
 
                     upProfileUserList.addAll(userList)
 
+                    var iter = upProfileUserList.iterator()
+                    if(UserInfo.BLOCKING == 1) {
+                        while(iter.hasNext()){
+                            var userList = iter.next() as UserList
+
+                            if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
+                                iter.remove()
+                            }
+                        }
+                    }
+
                     if(upProfileUserList.size == 0) {
                         nothingText!!.visibility = View.VISIBLE
                         psDialog.dismiss()
                     }
                     else {
+                        nothingText!!.visibility = View.GONE
                         partnerListRV.setHasFixedSize(true)
                         partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
                         partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
@@ -214,11 +226,24 @@ class ListFragment(titleText: TextView) : Fragment() {
                     }
 
                     upProfileUserList.addAll(userList)
+
+                    var iter = upProfileUserList.iterator()
+                    if(UserInfo.BLOCKING == 1) {
+                        while(iter.hasNext()){
+                            var userList = iter.next() as UserList
+
+                            if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
+                                iter.remove()
+                            }
+                        }
+                    }
+
                     if(upProfileUserList.size == 0) {
                         nothingText!!.visibility = View.VISIBLE
                         psDialog.dismiss()
                     }
                     else {
+                        nothingText!!.visibility = View.GONE
                         partnerListRV.setHasFixedSize(true)
                         partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
                         partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
@@ -284,11 +309,24 @@ class ListFragment(titleText: TextView) : Fragment() {
                     }
 
                     upProfileUserList.addAll(userList)
+
+                    var iter = upProfileUserList.iterator()
+                    if(UserInfo.BLOCKING == 1) {
+                        while(iter.hasNext()){
+                            var userList = iter.next() as UserList
+
+                            if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
+                                iter.remove()
+                            }
+                        }
+                    }
+
                     if(upProfileUserList.size == 0) {
                         nothingText!!.visibility = View.VISIBLE
                         psDialog.dismiss()
                     }
                     else {
+                        nothingText!!.visibility = View.GONE
                         partnerListRV.setHasFixedSize(true)
                         partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
                         partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
@@ -348,11 +386,24 @@ class ListFragment(titleText: TextView) : Fragment() {
                     }
 
                     upProfileUserList.addAll(userList)
+
+                    var iter = upProfileUserList.iterator()
+                    if(UserInfo.BLOCKING == 1) {
+                        while(iter.hasNext()){
+                            var userList = iter.next() as UserList
+
+                            if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
+                                iter.remove()
+                            }
+                        }
+                    }
+
                     if(upProfileUserList.size == 0) {
                         nothingText!!.visibility = View.VISIBLE
                         psDialog.dismiss()
                     }
                     else {
+                        nothingText!!.visibility = View.GONE
                         partnerListRV.setHasFixedSize(true)
                         partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
                         partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)

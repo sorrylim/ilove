@@ -29,6 +29,7 @@ class MessageFragment(titleText: TextView) : Fragment() {
     var chatRoomRV : RecyclerView? = null
     var chatRoomList = ArrayList<ChatRoomItem>()
     var chatRoomAdapter: ChatRoomAdapter? = null
+    var nothingMessageText: TextView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +39,7 @@ class MessageFragment(titleText: TextView) : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_message, container, false)
         chatRoomRV = rootView.findViewById<RecyclerView>(R.id.rv_chatroom)
         chatRoomAdapter = ChatRoomAdapter(activity!!, chatRoomList!!)
+        nothingMessageText = rootView.findViewById(R.id.text_messagenothing)
 
         handler = object : Handler() {
             override fun handleMessage(msg: Message) {
@@ -69,27 +71,33 @@ class MessageFragment(titleText: TextView) : Fragment() {
         VolleyService.getMyChatRoom(UserInfo.ID, activity!!, { success ->
             var array = success
 
-            for (i in 0..array.length() - 1) {
-                var json = array[i] as JSONObject
+            if(array.length()==0){
+                nothingMessageText!!.visibility = View.VISIBLE
+            }
+            else {
+                nothingMessageText!!.visibility = View.GONE
+                for (i in 0..array.length() - 1) {
+                    var json = array[i] as JSONObject
 
-                var partnerId = ""
+                    var partnerId = ""
 
-                if (UserInfo.ID == json.getString("room_maker")) partnerId =
-                    json.getString("room_partner")
-                else partnerId = json.getString("room_maker")
+                    if (UserInfo.ID == json.getString("room_maker")) partnerId =
+                        json.getString("room_partner")
+                    else partnerId = json.getString("room_maker")
 
-                VolleyService.getProfileImageReq(
-                    partnerId,
-                    activity!!,
-                    { success ->
-                        var imageJson = success[0] as JSONObject
-                        addChatRoom(json, imageJson.getString("image"))
-                        chatRoomAdapter.sortByLastChat()
-                        chatRoomRV.setHasFixedSize(true)
-                        chatRoomRV.layoutManager =
-                            LinearLayoutManager(activity!!, RecyclerView.VERTICAL, false)
-                        chatRoomRV.adapter = chatRoomAdapter
-                    })
+                    VolleyService.getProfileImageReq(
+                        partnerId,
+                        activity!!,
+                        { success ->
+                            var imageJson = success[0] as JSONObject
+                            addChatRoom(json, imageJson.getString("image"))
+                            chatRoomAdapter.sortByLastChat()
+                            chatRoomRV.setHasFixedSize(true)
+                            chatRoomRV.layoutManager =
+                                LinearLayoutManager(activity!!, RecyclerView.VERTICAL, false)
+                            chatRoomRV.adapter = chatRoomAdapter
+                        })
+                }
             }
         })
     }
