@@ -48,45 +48,68 @@ class AlarmSettingActivity : PSAppCompatActivity() {
         settingSwitch(switch_blockfriend, UserInfo.BLOCKING)
 
         switch_blockfriend.setOnCheckedChangeListener { compoundButton, b ->
-            if(b == true) {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                {
-                    checkContactsPermission()
-                }
-                else
-                {
-                    val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-                    val projection = arrayOf(
-                        ContactsContract.CommonDataKinds.Phone.NUMBER
-                    )
-
-                    val cursor = contentResolver.query(
-                        uri, projection, null,
-                        null , null
-                    )
-
-
-                    var blockingNumber = ""
-
-                    if (cursor!!.moveToFirst()) {
-                        do {
-                            if (cursor.getString(0).startsWith("01")) {
-                                blockingNumber += (cursor.getString(0).replace("-","").replace(" ", "") + ",")
-                            }
-                        } while (cursor.moveToNext())
+            when(b) {
+                true -> {
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    {
+                        checkContactsPermission()
                     }
+                    else
+                    {
+                        val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+                        val projection = arrayOf(
+                            ContactsContract.CommonDataKinds.Phone.NUMBER
+                        )
 
-                    Log.d(
-                        "test",
-                        "phone=" + blockingNumber
-                    )
+                        val cursor = contentResolver.query(
+                            uri, projection, null,
+                            null , null
+                        )
 
-                    VolleyService.updateReq("user", "user_blockingnumber='${blockingNumber}'", "user_id='${UserInfo.ID}'", this, {success->
-                        VolleyService.insertReq("blocking", "blocking_user, blocking_partner", "'${UserInfo.ID}','${blockingNumber}'", this, {success->
 
+                        var blockingNumber = ""
+
+                        if (cursor!!.moveToFirst()) {
+                            do {
+                                if (cursor.getString(0).startsWith("01")) {
+                                    blockingNumber += (cursor.getString(0).replace("-","").replace(" ", "") + ",")
+                                }
+                            } while (cursor.moveToNext())
+                        }
+
+                        Log.d(
+                            "test",
+                            "phone=" + blockingNumber
+                        )
+
+                        VolleyService.updateReq("user", "user_blockingnumber='${blockingNumber}'", "user_id='${UserInfo.ID}'", this, {success->
+                            VolleyService.insertReq("blocking", "blocking_user, blocking_partner", "'${UserInfo.ID}','${blockingNumber}'", this, {success->
+                                var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
+                                var editor = userPref.edit()
+                                editor.putString("BLOCKINGNUMBER", blockingNumber)
+                                    .putInt("BLOCKING", 1)
+                                    .apply()
+
+                                UserInfo.BLOCKING = 1
+                                UserInfo.BLOCKINGNUMBER = blockingNumber
+                            })
                         })
+
+
+                        cursor?.close()
+                    }
+                }
+                false -> {
+                    VolleyService.deleteReq("blocking", "blocking_user='${UserInfo.ID}'", this, {success->
+                        var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
+                        var editor = userPref.edit()
+                        editor.putString("BLOCKINGNUMBER", "")
+                            .putInt("BLOCKING", 0)
+                            .apply()
+
+                        UserInfo.BLOCKING = 0
+                        UserInfo.BLOCKINGNUMBER = ""
                     })
-                    cursor?.close()
                 }
             }
 
@@ -189,7 +212,14 @@ class AlarmSettingActivity : PSAppCompatActivity() {
 
                 VolleyService.updateReq("user", "user_blockingnumber='${blockingNumber}'", "user_id='${UserInfo.ID}'", this, {success->
                     VolleyService.insertReq("blocking", "blocking_user, blocking_partner", "'${UserInfo.ID}','${blockingNumber}'", this, {success->
+                        var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
+                        var editor = userPref.edit()
+                        editor.putString("BLOCKINGNUMBER", blockingNumber)
+                            .putInt("BLOCKING", 1)
+                            .apply()
 
+                        UserInfo.BLOCKING = 1
+                        UserInfo.BLOCKINGNUMBER = blockingNumber
                     })
                 })
                 cursor?.close()
@@ -236,7 +266,14 @@ class AlarmSettingActivity : PSAppCompatActivity() {
 
             VolleyService.updateReq("user", "user_blockingnumber='${blockingNumber}'", "user_id='${UserInfo.ID}'", this, {success->
                 VolleyService.insertReq("blocking", "blocking_user, blocking_partner", "'${UserInfo.ID}','${blockingNumber}'", this, {success->
+                    var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
+                    var editor = userPref.edit()
+                    editor.putString("BLOCKINGNUMBER", blockingNumber)
+                        .putInt("BLOCKING", 1)
+                        .apply()
 
+                    UserInfo.BLOCKING = 1
+                    UserInfo.BLOCKINGNUMBER = blockingNumber
                 })
             })
             cursor?.close()
