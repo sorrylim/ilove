@@ -64,4 +64,6 @@ dependencies {
 
     //circle indicator
     implementation 'me.relex:circleindicator:2.1.4'
+
+    implementation 'jp.wasabeef:glide-transformations:4.1.0'
 }

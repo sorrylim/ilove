@@ -26,5 +26,6 @@ class UserInfo : Application() {
         var LONGITUDE : String? = null
         var GUIDE: Int = 0
         var BLOCKINGNUMBER : String = ""
+        var ENABLE: Int = 0
     }
 }

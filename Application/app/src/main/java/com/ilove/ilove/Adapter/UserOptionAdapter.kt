@@ -1,5 +1,6 @@
 package com.ilove.ilove.Adapter
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -65,6 +66,7 @@ class UserOptionAdapter(val context: Context, val userOptionList:ArrayList<UserI
 
                 notifyDataSetChanged()
             }
+
         }
 
 

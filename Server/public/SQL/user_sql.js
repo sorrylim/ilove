@@ -82,6 +82,26 @@ module.exports = function () {
         })
       })
     },
+    get_blocking_user : function(user_id, callback) {
+      pool.getConnection(function(err, con) {
+        var sql = `select blocking_user from blocking where blocking_partner like '%${user_id}%'`
+        con.query(sql, function(err, result) {
+          con.release()
+          if(err) callback(err)
+          else callback(null, result)
+        })
+      })
+    },
+    get_my_blocking_user : function(user_id, callback) {
+      pool.getConnection(function(err, con) {
+        var sql = `select blocking_partner from blocking where user_id='${user_id}'`
+        con.query(sql, function(err, result) {
+          con.release()
+          if(err) callback(err)
+          else callback(null, result)
+        })
+      })
+    },
     pool: pool
   }
 }

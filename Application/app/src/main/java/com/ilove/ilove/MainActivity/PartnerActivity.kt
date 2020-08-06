@@ -1,26 +1,23 @@
 package com.ilove.ilove.MainActivity
 
-import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.ilove.ilove.Adapter.PartnerProfileAdapter
+import com.ilove.ilove.Adapter.PartnerProfileBlurAdapter
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_partner.*
-import kotlinx.android.synthetic.main.fragment_channel.*
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 
@@ -151,30 +148,6 @@ class PartnerActivity : PSAppCompatActivity() {
                 var json = array[i] as JSONObject
                 profileImageList.add(json.getString("image"))
             }
-
-            viewpager_partnerprofile.adapter = PartnerProfileAdapter(this, profileImageList, profileImageList.size)
-
-
-            indicator.setViewPager(viewpager_partnerprofile)
-            indicator.bringToFront()
-            indicator.createIndicators(profileImageList.size, 0)
-            viewpager_partnerprofile.registerOnPageChangeCallback(object : OnPageChangeCallback() {
-                override fun onPageScrolled(
-                    position: Int,
-                    positionOffset: Float,
-                    positionOffsetPixels: Int
-                ) {
-                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                    if (positionOffsetPixels == 0) {
-                        viewpager_partnerprofile.setCurrentItem(position)
-                    }
-                }
-
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    indicator.animatePageSelected(position % profileImageList.size)
-                }
-            })
 
             VolleyService.getUserOptionReq(userId, this, { success->
                 var json = success
@@ -422,17 +395,65 @@ class PartnerActivity : PSAppCompatActivity() {
                 VolleyService.getPartnerExpressionReq(UserInfo.ID, userId, this, { success->
                     var json = success
 
-                        if(json.getInt("like") == 1) {
-                            fab_like.setImageResource(R.drawable.bigheart_on)
-                            like = 1
+                    if (json.getInt("like") == 1) {
+                        fab_like.setImageResource(R.drawable.bigheart_on)
+                        like = 1
+                    }
+
+                    if (json.getInt("meet") == 1) {
+                        fab_call.setImageResource(R.drawable.call_icon)
+                        meet = 1
+                    }
+
+                    if(UserInfo.VIP > 0) {
+                        viewpager_partnerprofile.adapter = PartnerProfileAdapter(this, profileImageList, profileImageList.size)
+                        btn_showprofile.visibility = View.GONE
+                    }
+                    else if(json.getInt("show") == 1){
+                        viewpager_partnerprofile.adapter = PartnerProfileAdapter(this, profileImageList, profileImageList.size)
+                        btn_showprofile.visibility = View.GONE
+                    }
+                    else {
+                        btn_showprofile.visibility = View.VISIBLE
+                        viewpager_partnerprofile.adapter = PartnerProfileBlurAdapter(this, profileImageList, profileImageList.size)
+                    }
+
+                    btn_showprofile.setOnClickListener {
+                        var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                        var curDate = simpleDateFormat.format(System.currentTimeMillis())
+                        VolleyService.insertShowExpressionReq(UserInfo.ID, userId, curDate, 0, this, {success->
+                            if(success == "success") {
+                                btn_showprofile.visibility = View.GONE
+                                var adapter = PartnerProfileAdapter(this, profileImageList, profileImageList.size)
+                                viewpager_partnerprofile.adapter = adapter
+                                adapter.notifyDataSetChanged()
+                            }
+                        })
+                    }
+
+                    indicator.setViewPager(viewpager_partnerprofile)
+                    indicator.bringToFront()
+                    indicator.createIndicators(profileImageList.size, 0)
+                    viewpager_partnerprofile.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+                        override fun onPageScrolled(
+                            position: Int,
+                            positionOffset: Float,
+                            positionOffsetPixels: Int
+                        ) {
+                            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                            if (positionOffsetPixels == 0) {
+                                viewpager_partnerprofile.setCurrentItem(position)
+                            }
                         }
 
-                        if(json.getInt("meet") == 1) {
-                            fab_call.setImageResource(R.drawable.call_icon)
-                            meet = 1
+                        override fun onPageSelected(position: Int) {
+                            super.onPageSelected(position)
+                            indicator.animatePageSelected(position % profileImageList.size)
                         }
+                    })
 
                     psDialog.dismiss()
+                    btn_showprofile.bringToFront()
                 })
             })
         })

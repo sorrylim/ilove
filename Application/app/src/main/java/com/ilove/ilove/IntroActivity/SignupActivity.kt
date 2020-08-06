@@ -200,7 +200,6 @@ class SignupActivity: PSAppCompatActivity() {
         psDialog.dialog!!.setOnDismissListener {
             height(psDialog)
         }
-
     }
 
     fun purpose(psDialog: PSDialog) {
@@ -264,7 +263,7 @@ class SignupActivity: PSAppCompatActivity() {
                 UserItem.UserOption("변호사"), UserItem.UserOption("공인회계사"), UserItem.UserOption("사장, 임원"), UserItem.UserOption("외국계 금융관련"), UserItem.UserOption("공무원"), UserItem.UserOption("학생"), UserItem.UserOption("승무원"), UserItem.UserOption("교수, 선생님"), UserItem.UserOption("패션업"),
                 UserItem.UserOption("연예인, 모델"), UserItem.UserOption("광고"), UserItem.UserOption("방송, 신문사"), UserItem.UserOption("WEB관련"), UserItem.UserOption("아나운서"), UserItem.UserOption("나레이터 모델"), UserItem.UserOption("안내원"), UserItem.UserOption("비서"), UserItem.UserOption("간호사"), UserItem.UserOption("보육사"),
                 UserItem.UserOption("자영업"), UserItem.UserOption("파일럿"), UserItem.UserOption("중소기업"), UserItem.UserOption("금융업"), UserItem.UserOption("컨설팅업"), UserItem.UserOption("조리사, 영양사"), UserItem.UserOption("교육관련"), UserItem.UserOption("식품관련"), UserItem.UserOption("제약관련"), UserItem.UserOption("보험"), UserItem.UserOption("부동산"),
-                UserItem.UserOption("건설업"), UserItem.UserOption("통신"), UserItem.UserOption("유통"), UserItem.UserOption("서비스업"), UserItem.UserOption("미용관련"), UserItem.UserOption("연예게 관련"), UserItem.UserOption("여행관련"), UserItem.UserOption("결혼관련업"), UserItem.UserOption("복지관련"), UserItem.UserOption("약사"),
+                UserItem.UserOption("건설업"), UserItem.UserOption("통신"), UserItem.UserOption("유통"), UserItem.UserOption("서비스업"), UserItem.UserOption("미용관련"), UserItem.UserOption("연예계 관련"), UserItem.UserOption("여행관련"), UserItem.UserOption("결혼관련업"), UserItem.UserOption("복지관련"), UserItem.UserOption("약사"),
                 UserItem.UserOption("스포츠선수"), UserItem.UserOption("기타"))
         psDialog.setUserOption_signup("직업", "user_job", userOptionList, phone!!)
         psDialog.show()
@@ -455,7 +454,7 @@ class SignupActivity: PSAppCompatActivity() {
 
     fun interest(psDialog:PSDialog) {
         userOptionList.clear()
-        userOptionList = arrayListOf(UserItem.UserOption("영화보기"), UserItem.UserOption("카페가기"), UserItem.UserOption("코인노래방"), UserItem.UserOption("편맥하기"), UserItem.UserOption("수다떨기"), UserItem.UserOption("맞집찾기"), UserItem.UserOption("야구보기"), UserItem.UserOption("축구보기"), UserItem.UserOption("여행가기"), UserItem.UserOption("등산하기"), UserItem.UserOption("춤추기"), UserItem.UserOption("독서하기"))
+        userOptionList = arrayListOf(UserItem.UserOption("영화보기"), UserItem.UserOption("카페가기"), UserItem.UserOption("코인노래방"), UserItem.UserOption("편맥하기"), UserItem.UserOption("수다떨기"), UserItem.UserOption("맛집찾기"), UserItem.UserOption("야구보기"), UserItem.UserOption("축구보기"), UserItem.UserOption("여행가기"), UserItem.UserOption("등산하기"), UserItem.UserOption("춤추기"), UserItem.UserOption("독서하기"))
         psDialog.setUserOption_signup("관심사", "user_interest", userOptionList,phone!!)
         psDialog.show()
         psDialog.dialog!!.setOnDismissListener {
@@ -479,10 +478,16 @@ class SignupActivity: PSAppCompatActivity() {
         psDialog.setUserOption_signup("내가 좋아하는 사람", "user_favoriteperson", userOptionList,phone!!)
         psDialog.show()
         psDialog.dialog!!.setOnDismissListener {
-            var intent = Intent(this, SplashActivity::class.java)
-            startActivity(intent)
+            VolleyService.updateReq("user", "user_enable=1", "user_id='${UserInfo.ID}'", this, {success->
+                if(success.getString("result") == "success") {
+                    var intent = Intent(this, SplashActivity::class.java)
+                    startActivity(intent)
+                }
+                else {
+                    Toast.makeText(this, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

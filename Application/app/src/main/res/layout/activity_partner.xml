@@ -14,6 +14,7 @@
             android:layout_marginBottom="20dp"
             android:backgroundTint="#FFFFFF"
             android:clickable="true"
+            android:visibility="visible"
             app:borderWidth="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +31,7 @@
             android:background="#FFFFFF"
             android:backgroundTint="#FFFFFF"
             android:clickable="true"
+            android:visibility="visible"
             app:borderWidth="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +43,7 @@
             android:id="@+id/scroll_partner"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -50,7 +53,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:visibility="visible">
 
                         <ImageView
                             android:id="@+id/image_partnerbackpress"
@@ -58,6 +62,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="20dp"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/viewpager_partnerprofile"
                             app:srcCompat="@drawable/icon_arrow_left" />
@@ -72,6 +77,7 @@
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="20dp"
                             android:textStyle="bold"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/indicator" />
 
@@ -82,6 +88,7 @@
                             android:text="나이, 지역"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/text_partnernickname"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnernickname" />
 
@@ -95,7 +102,7 @@
                             android:text="소개글"
                             android:textColor="@color/colorMdGrey_700"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/view28" />
@@ -109,7 +116,7 @@
                             android:text="프로필"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/view29" />
 
@@ -122,7 +129,7 @@
                             android:text="키"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
@@ -134,7 +141,7 @@
                             android:text="키"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerheight1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerheight1"
@@ -149,7 +156,7 @@
                             android:text="체형"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerheight1" />
 
@@ -160,7 +167,7 @@
                             android:text="체형"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerbodytype1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerbodytype1"
@@ -174,7 +181,7 @@
                             android:layout_marginTop="13dp"
                             android:text="혈액형"
                             android:textColor="@color/colorMdGrey_500"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerbodytype1" />
 
@@ -185,7 +192,7 @@
                             android:text="혈액형"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerbloodtype1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerbloodtype1"
@@ -200,7 +207,7 @@
                             android:text="직업"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerbloodtype1" />
 
@@ -211,7 +218,7 @@
                             android:text="직업"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerjob1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerjob1"
@@ -226,7 +233,7 @@
                             android:text="학력"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerjob1" />
 
@@ -237,7 +244,7 @@
                             android:text="학력"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnereducation1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnereducation1"
@@ -252,7 +259,7 @@
                             android:text="휴일"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnereducation1" />
 
@@ -263,7 +270,7 @@
                             android:text="휴일"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerholiday1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerholiday1"
@@ -278,7 +285,7 @@
                             android:text="담배"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerholiday1" />
 
@@ -289,7 +296,7 @@
                             android:text="담배"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnercigarette1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnercigarette1"
@@ -304,7 +311,7 @@
                             android:text="술"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnercigarette1" />
 
@@ -315,7 +322,7 @@
                             android:text="술"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partneralcohol1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partneralcohol1"
@@ -330,7 +337,7 @@
                             android:text="종교"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partneralcohol1" />
 
@@ -341,7 +348,7 @@
                             android:text="종교"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerreligion1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerreligion1"
@@ -355,7 +362,7 @@
                             android:layout_marginTop="15dp"
                             android:text="형제자매"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerreligion1" />
 
@@ -366,7 +373,7 @@
                             android:text="형제자매"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerbrother1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerbrother1"
@@ -381,7 +388,7 @@
                             android:text="국적"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerbrother1" />
 
@@ -392,7 +399,7 @@
                             android:text="국적"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnercountry1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnercountry1"
@@ -407,7 +414,7 @@
                             android:text="연수입"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnercountry1" />
 
@@ -418,7 +425,7 @@
                             android:text="연수입"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnersalary1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnersalary1"
@@ -433,7 +440,7 @@
                             android:text="재산"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnersalary1" />
 
@@ -444,7 +451,7 @@
                             android:text="재산"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerasset1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerasset1"
@@ -459,7 +466,7 @@
                             android:text="혼인이력"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerasset1" />
 
@@ -470,7 +477,7 @@
                             android:text="혼인이력"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnermarriagehistory1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnermarriagehistory1"
@@ -485,7 +492,7 @@
                             android:text="자녀"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnermarriagehistory1" />
 
@@ -496,7 +503,7 @@
                             android:text="자녀"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerchildren1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerchildren1"
@@ -511,7 +518,7 @@
                             android:text="결혼계획"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerchildren1" />
 
@@ -522,7 +529,7 @@
                             android:text="결혼계획"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnermarriageplan1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnermarriageplan1"
@@ -537,7 +544,7 @@
                             android:text="자녀계획"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnermarriageplan1" />
 
@@ -548,7 +555,7 @@
                             android:text="자녀계획"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerchildrenplan1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerchildrenplan1"
@@ -563,7 +570,7 @@
                             android:text="가사, 육아"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerchildrenplan1" />
 
@@ -574,7 +581,7 @@
                             android:text="가사, 육아"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerparenting1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerparenting1"
@@ -589,7 +596,7 @@
                             android:text="첫 데이트까지 희망사항"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerparenting1" />
 
@@ -597,11 +604,14 @@
                             android:id="@+id/text_partnerwishdate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="center"
                             android:text="첫 데이트까지 희망사항"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
-                            android:gravity="center"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_partnerwishdate1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerwishdate1"
                             app:layout_constraintTop_toTopOf="@+id/text_partnerwishdate1" />
@@ -615,18 +625,21 @@
                             android:text="첫 데이트 비용"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
-                            app:layout_constraintTop_toBottomOf="@+id/text_partnerwishdate1" />
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerwishdate" />
 
                         <TextView
                             android:id="@+id/text_partnerdatecost"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
                             android:text="첫 데이트 비용"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:gravity="center"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerdatecost1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerdatecost1"
@@ -641,9 +654,9 @@
                             android:text="동거인"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
-                            app:layout_constraintTop_toBottomOf="@+id/text_partnerdatecost1" />
+                            app:layout_constraintTop_toBottomOf="@+id/text_partnerdatecost" />
 
                         <TextView
                             android:id="@+id/text_partnerroommate"
@@ -652,7 +665,7 @@
                             android:text="동거인"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerroommate1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerroommate1"
@@ -667,7 +680,7 @@
                             android:text="사용 가능 언어"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="13dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="@+id/textView30"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerroommate1" />
 
@@ -678,7 +691,7 @@
                             android:text="사용 가능 언어"
                             android:textColor="@color/colorMdGrey_900"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="@+id/text_partnerlanguage1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/text_partnerlanguage1"
@@ -693,7 +706,7 @@
                             android:text="취미"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/view30" />
 
@@ -706,7 +719,7 @@
                             android:text="내 성격은"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/layout_hobby" />
 
@@ -719,14 +732,32 @@
                             android:text="내가 좋아하는 친구는"
                             android:textColor="@color/colorMdGrey_500"
                             android:textSize="15dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/layout_personality" />
+
+                        <Button
+                            android:id="@+id/btn_showprofile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/more_rounded_corner_shape_button"
+                            android:elevation="10dp"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:text="프로필보기"
+                            android:textColor="@color/colorMdWhite_1000"
+                            android:textSize="20dp"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="@+id/viewpager_partnerprofile"
+                            app:layout_constraintEnd_toEndOf="@+id/viewpager_partnerprofile"
+                            app:layout_constraintStart_toStartOf="@+id/viewpager_partnerprofile"
+                            app:layout_constraintTop_toTopOf="@+id/viewpager_partnerprofile" />
 
                         <androidx.viewpager2.widget.ViewPager2
                             android:id="@+id/viewpager_partnerprofile"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:visibility="visible"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -739,6 +770,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:layout_gravity="bottom"
+                            android:visibility="visible"
                             app:ci_drawable="@drawable/circle_white"
                             app:ci_height="3dp"
                             app:ci_margin="4dp"
@@ -754,6 +786,7 @@
                             android:layout_height="1dp"
                             android:layout_marginTop="20dp"
                             android:background="@color/colorMdGrey_300"
+                            android:visibility="visible"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerage" />
@@ -764,7 +797,7 @@
                             android:layout_height="1dp"
                             android:layout_marginTop="20dp"
                             android:background="@color/colorMdGrey_300"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerintroduce" />
@@ -775,7 +808,7 @@
                             android:layout_height="1dp"
                             android:layout_marginTop="30dp"
                             android:background="@color/colorMdGrey_300"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/text_partnerlanguage" />
@@ -788,7 +821,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="80dp"
                             android:orientation="vertical"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -803,7 +836,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="80dp"
                             android:orientation="vertical"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -818,7 +851,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="80dp"
                             android:orientation="vertical"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"

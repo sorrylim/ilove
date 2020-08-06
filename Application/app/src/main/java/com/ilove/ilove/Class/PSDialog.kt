@@ -2,6 +2,7 @@ package com.ilove.ilove.Class
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.content.Intent
@@ -31,9 +32,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Adapter.MessageCandyAdapter
 import com.ilove.ilove.Adapter.PersonalityAdapter
+import com.ilove.ilove.Adapter.SignupUserOptionAdapter
 import com.ilove.ilove.Adapter.UserOptionAdapter
 import com.ilove.ilove.IntroActivity.ChargeCandyActivity
 import com.ilove.ilove.IntroActivity.SignupActivity
+import com.ilove.ilove.IntroActivity.SplashActivity
 import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.Item.UserItem
 import com.ilove.ilove.MainActivity.ChatActivity
@@ -253,7 +256,7 @@ class PSDialog(activity: Activity) {
 
     fun setUserOption_signup(title : String, userOption:String, userOptionList: ArrayList<UserItem.UserOption>,UserId:String) {
         dialog = Dialog(context!!, R.style.popCasterDlgTheme)
-        val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_useroption, null)
+        val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_signupuseroption, null)
         var titleText : TextView = dialogView.findViewById(R.id.text_useroptiontitle)
         var userOptionRV: RecyclerView = dialogView.findViewById(R.id.rv_useroption)
         var updateBtn: ImageView = dialogView.findViewById(R.id.image_updateoption)
@@ -264,7 +267,7 @@ class PSDialog(activity: Activity) {
         dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
         dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
 
-        updateBtn.setOnClickListener {
+        dialog!!.setOnDismissListener {
             if(userOptionData == "") {
                 Toast.makeText(context, title+"을 선택해주세요", Toast.LENGTH_SHORT).show()
             }
@@ -355,9 +358,10 @@ class PSDialog(activity: Activity) {
             ssb.setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             titleText.text = ssb
 
+            updateBtn.visibility = View.VISIBLE
             userOptionRV.setHasFixedSize(true)
             userOptionRV.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            userOptionRV.adapter = UserOptionAdapter(context!!, userOptionList)
+            userOptionRV.adapter = SignupUserOptionAdapter(context!!, userOptionList, dialog!!)
         }
 
     }
@@ -655,10 +659,22 @@ class PSDialog(activity: Activity) {
 
         certifyBtn.setOnClickListener {
             if(certifyEdit.text.toString() == certifyNum.toString()) {
-                var intent = Intent(context!!, SignupActivity::class.java)
-                intent.putExtra("phone", phone)
-                context!!.startActivity(intent)
-                dismiss()
+                VolleyService.userCheckReq(phone, context!!, {success->
+                    if(success == "1") {
+                        var userPref = context!!.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
+                        var editor = userPref.edit()
+                        editor.putString("ID", phone).apply()
+
+                        var intent = Intent(context!!, SplashActivity::class.java)
+                        context!!.startActivity(intent)
+                    }
+                    else {
+                        var intent = Intent(context!!, SignupActivity::class.java)
+                        intent.putExtra("phone", phone)
+                        context!!.startActivity(intent)
+                        dismiss()
+                    }
+                })
             }
             else {
                 Toast.makeText(context!!, "인증번호가 틀립니다.", Toast.LENGTH_SHORT).show()

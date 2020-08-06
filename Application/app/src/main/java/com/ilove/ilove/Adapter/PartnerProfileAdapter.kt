@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.R
+import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.item_partnerprofile.view.*
 
 class PartnerProfileAdapter(val context: Context, val profileImageList:ArrayList<String>, val count:Int) : RecyclerView.Adapter<PartnerProfileAdapter.ViewHolder>() {
@@ -21,7 +22,8 @@ class PartnerProfileAdapter(val context: Context, val profileImageList:ArrayList
     }
 
     override fun onBindViewHolder(holder: PartnerProfileAdapter.ViewHolder, position: Int) {
-        Glide.with(context).load(profileImageList.get(position)).apply(RequestOptions().override(1080, 1920)).into(holder.itemView.image_partnerprofile)
+        Glide.with(context).load(profileImageList.get(position))
+            .apply(RequestOptions().override(1080, 1920)).into(holder.itemView.image_partnerprofile)
         holder.itemView.image_partnerprofile.setClipToOutline(true)
     }
 
