@@ -542,7 +542,7 @@ class SignupActivity: PSAppCompatActivity() {
             var array = success
             if(array.length() != 0) {
                 var json = array[0] as JSONObject
-                Glide.with(this).load(json.getString("image")).apply(RequestOptions().override(640, 640))
+                Glide.with(this).load(json.getString("image")).apply(RequestOptions().override(100, 100))
                     .into(image_signupmain)
             }
         })

@@ -144,7 +144,7 @@ class PSDialog(activity: Activity) {
         val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_useroption, null)
         var titleText : TextView = dialogView.findViewById(R.id.text_useroptiontitle)
         var userOptionRV: RecyclerView = dialogView.findViewById(R.id.rv_useroption)
-        var updateBtn: ImageView = dialogView.findViewById(R.id.image_updateoption)
+        var updateBtn: Button = dialogView.findViewById(R.id.image_updateoption)
 
         userOptionData = ""
 
@@ -256,10 +256,10 @@ class PSDialog(activity: Activity) {
 
     fun setUserOption_signup(title : String, userOption:String, userOptionList: ArrayList<UserItem.UserOption>,UserId:String) {
         dialog = Dialog(context!!, R.style.popCasterDlgTheme)
-        val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_signupuseroption, null)
+        val dialogView = context!!.layoutInflater.inflate(R.layout.dialog_useroption, null)
         var titleText : TextView = dialogView.findViewById(R.id.text_useroptiontitle)
         var userOptionRV: RecyclerView = dialogView.findViewById(R.id.rv_useroption)
-        var updateBtn: ImageView = dialogView.findViewById(R.id.image_updateoption)
+        var updateBtn: Button = dialogView.findViewById(R.id.image_updateoption)
 
         userOptionData = ""
 
@@ -267,7 +267,7 @@ class PSDialog(activity: Activity) {
         dialog!!.getWindow()!!.getAttributes().windowAnimations = R.style.DialogSlideRight
         dialog!!.addContentView(dialogView, ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT))
 
-        dialog!!.setOnDismissListener {
+        updateBtn.setOnClickListener {
             if(userOptionData == "") {
                 Toast.makeText(context, title+"을 선택해주세요", Toast.LENGTH_SHORT).show()
             }
@@ -358,10 +358,9 @@ class PSDialog(activity: Activity) {
             ssb.setSpan(StyleSpan(Typeface.BOLD), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             titleText.text = ssb
 
-            updateBtn.visibility = View.VISIBLE
             userOptionRV.setHasFixedSize(true)
             userOptionRV.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            userOptionRV.adapter = SignupUserOptionAdapter(context!!, userOptionList, dialog!!)
+            userOptionRV.adapter = UserOptionAdapter(context!!, userOptionList)
         }
 
     }
