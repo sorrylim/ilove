@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,11 +13,16 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ilove.ilove.Adapter.NewUserAdapter
+import com.ilove.ilove.Adapter.UserListAdapter
+import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.NewUserList
+import com.ilove.ilove.Item.UserList
 import com.ilove.ilove.MainActivity.PartnerListActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
@@ -24,6 +30,9 @@ import kotlinx.android.synthetic.main.fragment_channel.*
 import kotlinx.android.synthetic.main.fragment_channel.view.*
 import kotlinx.android.synthetic.main.fragment_channel.view.layout_sendlike
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChannelFragment : Fragment() {
 
@@ -55,18 +64,31 @@ class ChannelFragment : Fragment() {
         var swipeLayout: SwipeRefreshLayout = rootView.layout_swipe
         var nestedScrollView : NestedScrollView = rootView.scroll_channel
         var upProfileBtn : ConstraintLayout = rootView.findViewById(R.id.layout_upprofile)
+        val newUserText : TextView = rootView.findViewById(R.id.textView100)
+
+        val gpsTracker = GpsTracker(activity!!)
+
+        var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        var partnerDate : Date = simpleDateFormat.parse("2020-08-07 16:08:00")
+
+        Log.d("test", "${gpsTracker.timeDiffValue(partnerDate.getTime())}")
+
 
         upProfileBtn.setOnClickListener {
-            psDialog.setUpProfile()
-            psDialog.show()
+            if(UserInfo.ENABLE == 1) {
+                psDialog.setUpProfile()
+                psDialog.show()
+            }
+            else {
+                psDialog.setIncompleteProfile()
+                psDialog.show()
+            }
         }
 
         nestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
         swipeLayout.setOnRefreshListener {
             VolleyService.getExpressionCountReq(UserInfo.ID, activity!!, {success->
-                psDialog.setLoadingDialog()
-                psDialog.show()
                 var json = success
 
                 if(json.getInt("send_like") > 0) {
@@ -133,10 +155,68 @@ class ChannelFragment : Fragment() {
                                 newUserList.add(NewUserList(json.getString("user_id"), json.getString("user_nickname"), json.getString("user_birthday"), json.getString("user_city"),
                                     json.getString("user_recentgps"), json.getString("user_recenttime"), json.getString("user_phone"), json.getString("image")))
                             }
-                            newUserRV.setHasFixedSize(true)
-                            newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
-                            newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
-                            psDialog.dismiss()
+
+                            VolleyService.getBlockingListReq(UserInfo.ID, activity!!, {success->
+                                var blockingList = ArrayList<String>()
+                                var array = success
+                                for(i in 0..array.length()-1) {
+                                    var json = array[i] as JSONObject
+                                    blockingList.add(json.getString("blocking_user"))
+                                }
+
+                                if(UserInfo.BLOCKING == 1) {
+                                    var iter = newUserList.iterator()
+                                    while(iter.hasNext()){
+                                        var userList = iter.next() as NewUserList
+
+                                        if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
+                                            iter.remove()
+                                        }
+                                        else {
+                                            for(i in 0..blockingList.size-1) {
+                                                if(userList.userPhone == blockingList.get(i)) {
+                                                    iter.remove()
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    var iter = newUserList.iterator()
+                                    while(iter.hasNext()){
+                                        var userList = iter.next() as NewUserList
+
+                                        for(i in 0..blockingList.size-1) {
+                                            if(userList.userPhone == blockingList.get(i)) {
+                                                iter.remove()
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                                if(newUserList.size == 0) {
+                                    newUserText.visibility = View.GONE
+                                    newUserRV.visibility = View.GONE
+                                    newUserRV.adapter = null
+                                }
+                                else {
+                                    if(newUserList.size > 4) {
+                                        newUserText.visibility = View.VISIBLE
+                                        newUserRV.visibility = View.VISIBLE
+                                        newUserRV.setHasFixedSize(true)
+                                        newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
+                                        newUserRV.adapter = NewUserAdapter(activity!!, newUserList, 4)
+                                    }
+                                    else {
+                                        newUserText.visibility = View.VISIBLE
+                                        newUserRV.visibility = View.VISIBLE
+                                        newUserRV.setHasFixedSize(true)
+                                        newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
+                                        newUserRV.adapter = NewUserAdapter(activity!!, newUserList, newUserList.size)
+                                    }
+                                }
+                            })
                         })
                     }
                     else {
@@ -149,10 +229,68 @@ class ChannelFragment : Fragment() {
                                 newUserList.add(NewUserList(json.getString("user_id"), json.getString("user_nickname"), json.getString("user_birthday"), json.getString("user_city"),
                                     json.getString("user_recentgps"), json.getString("user_recenttime"), json.getString("user_phone"), json.getString("image")))
                             }
-                            newUserRV.setHasFixedSize(true)
-                            newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
-                            newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
-                            psDialog.dismiss()
+
+                            VolleyService.getBlockingListReq(UserInfo.ID, activity!!, {success->
+                                var blockingList = ArrayList<String>()
+                                var array = success
+                                for(i in 0..array.length()-1) {
+                                    var json = array[i] as JSONObject
+                                    blockingList.add(json.getString("blocking_user"))
+                                }
+
+                                if(UserInfo.BLOCKING == 1) {
+                                    var iter = newUserList.iterator()
+                                    while(iter.hasNext()){
+                                        var userList = iter.next() as NewUserList
+
+                                        if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
+                                            iter.remove()
+                                        }
+                                        else {
+                                            for(i in 0..blockingList.size-1) {
+                                                if(userList.userPhone == blockingList.get(i)) {
+                                                    iter.remove()
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    var iter = newUserList.iterator()
+                                    while(iter.hasNext()){
+                                        var userList = iter.next() as NewUserList
+
+                                        for(i in 0..blockingList.size-1) {
+                                            if(userList.userPhone == blockingList.get(i)) {
+                                                iter.remove()
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                                if(newUserList.size == 0) {
+                                    newUserText.visibility = View.GONE
+                                    newUserRV.visibility = View.GONE
+                                    newUserRV.adapter = null
+                                }
+                                else {
+                                    if(newUserList.size > 4) {
+                                        newUserText.visibility = View.VISIBLE
+                                        newUserRV.visibility = View.VISIBLE
+                                        newUserRV.setHasFixedSize(true)
+                                        newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
+                                        newUserRV.adapter = NewUserAdapter(activity!!, newUserList, 4)
+                                    }
+                                    else {
+                                        newUserText.visibility = View.VISIBLE
+                                        newUserRV.visibility = View.VISIBLE
+                                        newUserRV.setHasFixedSize(true)
+                                        newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
+                                        newUserRV.adapter = NewUserAdapter(activity!!, newUserList, newUserList.size)
+                                    }
+                                }
+                            })
                         })
                     }
                 })
@@ -173,10 +311,69 @@ class ChannelFragment : Fragment() {
                     newUserList.add(NewUserList(json.getString("user_id"), json.getString("user_nickname"), json.getString("user_birthday"), json.getString("user_city"),
                     json.getString("user_recentgps"), json.getString("user_recenttime"), json.getString("user_phone"), json.getString("image")))
                 }
-                newUserRV.setHasFixedSize(true)
-                newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
-                newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
-                loadingDialog.dismiss()
+                VolleyService.getBlockingListReq(UserInfo.ID, activity!!, {success->
+                    var blockingList = ArrayList<String>()
+                    var array = success
+                    for(i in 0..array.length()-1) {
+                        var json = array[i] as JSONObject
+                        blockingList.add(json.getString("blocking_user"))
+                    }
+
+                    if(UserInfo.BLOCKING == 1) {
+                        var iter = newUserList.iterator()
+                        while(iter.hasNext()){
+                            var userList = iter.next() as NewUserList
+
+                            if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
+                                iter.remove()
+                            }
+                            else {
+                                for(i in 0..blockingList.size-1) {
+                                    if(userList.userPhone == blockingList.get(i)) {
+                                        iter.remove()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        var iter = newUserList.iterator()
+                        while(iter.hasNext()){
+                            var userList = iter.next() as NewUserList
+
+                            for(i in 0..blockingList.size-1) {
+                                if(userList.userPhone == blockingList.get(i)) {
+                                    iter.remove()
+                                }
+                            }
+                        }
+                    }
+
+
+                    if(newUserList.size == 0) {
+                        newUserText.visibility = View.GONE
+                        newUserRV.visibility = View.GONE
+                        newUserRV.adapter = null
+                        loadingDialog.dismiss()
+                    }
+                    else {
+                        if(newUserList.size > 4) {
+                            newUserText.visibility = View.VISIBLE
+                            newUserRV.visibility = View.VISIBLE
+                            newUserRV.setHasFixedSize(true)
+                            newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
+                            newUserRV.adapter = NewUserAdapter(activity!!, newUserList, 4)
+                        }
+                        else {
+                            newUserText.visibility = View.VISIBLE
+                            newUserRV.visibility = View.VISIBLE
+                            newUserRV.setHasFixedSize(true)
+                            newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
+                            newUserRV.adapter = NewUserAdapter(activity!!, newUserList, newUserList.size)
+                        }
+                        loadingDialog.dismiss()
+                    }
+                })
             })
         }
         else {
@@ -192,10 +389,69 @@ class ChannelFragment : Fragment() {
                     newUserList.add(NewUserList(json.getString("user_id"), json.getString("user_nickname"), json.getString("user_birthday"), json.getString("user_city"),
                         json.getString("user_recentgps"), json.getString("user_recenttime"), json.getString("user_phone"), json.getString("image")))
                 }
-                newUserRV.setHasFixedSize(true)
-                newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
-                newUserRV.adapter = NewUserAdapter(activity!!, newUserList)
-                loadingDialog.dismiss()
+                VolleyService.getBlockingListReq(UserInfo.ID, activity!!, {success->
+                    var blockingList = ArrayList<String>()
+                    var array = success
+                    for(i in 0..array.length()-1) {
+                        var json = array[i] as JSONObject
+                        blockingList.add(json.getString("blocking_user"))
+                    }
+
+                    if(UserInfo.BLOCKING == 1) {
+                        var iter = newUserList.iterator()
+                        while(iter.hasNext()){
+                            var userList = iter.next() as NewUserList
+
+                            if(UserInfo.BLOCKINGNUMBER.contains(userList.userPhone)){
+                                iter.remove()
+                            }
+                            else {
+                                for(i in 0..blockingList.size-1) {
+                                    if(userList.userPhone == blockingList.get(i)) {
+                                        iter.remove()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        var iter = newUserList.iterator()
+                        while(iter.hasNext()){
+                            var userList = iter.next() as NewUserList
+
+                            for(i in 0..blockingList.size-1) {
+                                if(userList.userPhone == blockingList.get(i)) {
+                                    iter.remove()
+                                }
+                            }
+                        }
+                    }
+
+
+                    if(newUserList.size == 0) {
+                        newUserText.visibility = View.GONE
+                        newUserRV.visibility = View.GONE
+                        newUserRV.adapter = null
+                        loadingDialog.dismiss()
+                    }
+                    else {
+                        if(newUserList.size > 4) {
+                            newUserText.visibility = View.VISIBLE
+                            newUserRV.visibility = View.VISIBLE
+                            newUserRV.setHasFixedSize(true)
+                            newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
+                            newUserRV.adapter = NewUserAdapter(activity!!, newUserList, 4)
+                        }
+                        else {
+                            newUserText.visibility = View.VISIBLE
+                            newUserRV.visibility = View.VISIBLE
+                            newUserRV.setHasFixedSize(true)
+                            newUserRV.layoutManager = GridLayoutManager(activity!!, 2)
+                            newUserRV.adapter = NewUserAdapter(activity!!, newUserList, newUserList.size)
+                        }
+                        loadingDialog.dismiss()
+                    }
+                })
             })
         }
 

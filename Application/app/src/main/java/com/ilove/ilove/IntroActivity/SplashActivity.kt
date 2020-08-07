@@ -47,7 +47,7 @@ class SplashActivity : AppCompatActivity() {
 
 
         var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
-        UserInfo.ID = "01041545154"//userPref.getString("ID", "")!!
+        UserInfo.ID = userPref.getString("ID", "")!!
         if(UserInfo.ID != "") {
             VolleyService.loginReq(UserInfo.ID, "", this, { success->
                 when(success.getInt("code")) {
@@ -110,7 +110,7 @@ class SplashActivity : AppCompatActivity() {
                         UserInfo.CANDYCOUNT=user.getInt("user_candycount")
                         UserInfo.LIKECOUNT=user.getInt("user_likecount")
                         UserInfo.MESSAGETICKET=user.getInt("user_messageticket")
-                        UserInfo.VIP = user.getInt("user_vip")
+                        UserInfo.VIP = user.getString("user_vip")
                         UserInfo.GUIDE = user.getInt("user_guide")
                         UserInfo.ENABLE = user.getInt("user_enable")
 

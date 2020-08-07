@@ -42,6 +42,8 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val psDialog = PSDialog(context as Activity)
+        psDialog.setIncompleteProfile()
         var gpsTracker = GpsTracker(context as Activity)
         var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         var curDate = simpleDateFormat.format(System.currentTimeMillis())
@@ -96,21 +98,29 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
             holder.itemView.btn_call.setLiked(false)
         }
 
+
+
         holder.itemView.btn_userlike.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
-                VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "like", curDate, context, {success->
-                    VolleyService.sendFCMReq(userList.get(position).userId,"like",context)
-                    when(success) {
-                        "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
-                        "eachsuccess" -> {
-                            likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
-                            var dialog = PSDialog(context as Activity)
-                            dialog.setEachExpressionLikeDialog(userList.get(position).userId,userList.get(position).userNickname, age.toString() + ", " + userList.get(position).userCity, userList.get(position).userImage)
-                            dialog.show()
+                if(UserInfo.ENABLE == 1) {
+                    VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "like", curDate, context, {success->
+                        VolleyService.sendFCMReq(userList.get(position).userId,"like",context)
+                        when(success) {
+                            "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
+                            "eachsuccess" -> {
+                                likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_on, null))
+                                var dialog = PSDialog(context as Activity)
+                                dialog.setEachExpressionLikeDialog(userList.get(position).userId,userList.get(position).userNickname, age.toString() + ", " + userList.get(position).userCity, userList.get(position).userImage)
+                                dialog.show()
+                            }
+                            else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
                         }
-                        else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
-                    }
-                })
+                    })
+                }
+                else {
+                    likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.heart_off, null))
+                    psDialog.show()
+                }
             }
             override fun unLiked(likeButton: LikeButton?) {
                 VolleyService.deleteExpressionReq(UserInfo.ID, userList.get(position).userId, "like", context, {success->
@@ -126,19 +136,25 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
 
         holder.itemView.btn_call.setOnLikeListener(object: OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
-                VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "meet", curDate, context, {success->
-                    VolleyService.sendFCMReq(userList.get(position).userId,"meet",context)
-                    when(success) {
-                        "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_icon, null))
-                        "eachsuccess" -> {
-                            likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_icon, null))
-                            var dialog = PSDialog(context as Activity)
-                            dialog.setEachExpressionMeetDialog(userList.get(position).userNickname, age.toString() + ", " + userList.get(position).userCity, userList.get(position).userPhone, userList.get(position).userImage)
-                            dialog.show()
+                if(UserInfo.ENABLE == 1) {
+                    VolleyService.insertExpressionReq(UserInfo.ID, userList.get(position).userId, "meet", curDate, context, {success->
+                        VolleyService.sendFCMReq(userList.get(position).userId,"meet",context)
+                        when(success) {
+                            "success" -> likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_icon, null))
+                            "eachsuccess" -> {
+                                likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_icon, null))
+                                var dialog = PSDialog(context as Activity)
+                                dialog.setEachExpressionMeetDialog(userList.get(position).userNickname, age.toString() + ", " + userList.get(position).userCity, userList.get(position).userPhone, userList.get(position).userImage)
+                                dialog.show()
+                            }
+                            else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
                         }
-                        else -> Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
-                    }
-                })
+                    })
+                }
+                else {
+                    likeButton!!.setLikeDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.call_n_icon, null))
+                    psDialog.show()
+                }
             }
             override fun unLiked(likeButton: LikeButton?) {
                 VolleyService.deleteExpressionReq(UserInfo.ID, userList.get(position).userId, "meet", context, {success->
@@ -153,23 +169,28 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
         })
 
         holder.itemView.setOnClickListener {
-            var intent = Intent(context, PartnerActivity::class.java)
-            intent.putExtra("userNickname", userList.get(position).userNickname)
-            intent.putExtra("userId", userList.get(position).userId)
-            intent.putExtra("userAge", age.toString())
-            intent.putExtra("userCity", userList.get(position).userCity)
-            intent.putExtra("userPhone", userList.get(position).userPhone)
+            if(UserInfo.ENABLE == 1) {
+                var intent = Intent(context, PartnerActivity::class.java)
+                intent.putExtra("userNickname", userList.get(position).userNickname)
+                intent.putExtra("userId", userList.get(position).userId)
+                intent.putExtra("userAge", age.toString())
+                intent.putExtra("userCity", userList.get(position).userCity)
+                intent.putExtra("userPhone", userList.get(position).userPhone)
 
-            val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-            val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
+                val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
-            VolleyService.insertHistoryReq(UserInfo.ID, userList.get(position).userId, "profile", currentDate, context, {success->
-                VolleyService.sendFCMReq(userList.get(position).userId,"visitprofile",context)
-                if(success == "success")
-                    context.startActivity(intent)
-                else
-                    Toast.makeText(context, "서버와의 통신 오류 입니다.", Toast.LENGTH_SHORT).show()
-            })
+                VolleyService.insertHistoryReq(UserInfo.ID, userList.get(position).userId, "profile", currentDate, context, {success->
+                    VolleyService.sendFCMReq(userList.get(position).userId,"visitprofile",context)
+                    if(success == "success")
+                        context.startActivity(intent)
+                    else
+                        Toast.makeText(context, "서버와의 통신 오류 입니다.", Toast.LENGTH_SHORT).show()
+                })
+            }
+            else {
+                psDialog.show()
+            }
         }
     }
 

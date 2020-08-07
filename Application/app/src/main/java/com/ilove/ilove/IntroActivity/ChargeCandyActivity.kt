@@ -1,5 +1,6 @@
 package com.ilove.ilove.IntroActivity
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,17 +10,22 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anjlab.android.iab.v3.BillingProcessor
+import com.anjlab.android.iab.v3.TransactionDetails
 import com.ilove.ilove.Adapter.ChargeCandyAdapter
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.UserItem
+import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_charge_candy.*
 
 class ChargeCandyActivity : PSAppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_charge_candy)
+
 
         var titleText = "내 사탕 ${UserInfo.CANDYCOUNT}개"
 

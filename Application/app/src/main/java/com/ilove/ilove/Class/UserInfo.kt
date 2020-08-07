@@ -20,7 +20,7 @@ class UserInfo : Application() {
         var CANDYCOUNT: Int = 100
         var LIKECOUNT: Int = 0
         var MESSAGETICKET: Int = 0
-        var VIP : Int = 0
+        var VIP : String = ""
         var TOKEN: String?=""
         var LATITUDE: String? = null
         var LONGITUDE : String? = null

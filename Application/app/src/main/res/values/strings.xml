@@ -14,8 +14,13 @@
     <string name="likehistory"><font color="#212121">좋아요 내역은 </font><font color="#e53935">일주일</font><font color="#212121"> 동안 보관됩니다.</font></string>
     <string name="meethistory"><font color="#212121">연락주세요 내역은 </font><font color="#e53935">일주일</font><font color="#212121"> 동안 보관됩니다.</font></string>
     <string name="guidepermission"><b>"아이러브팅"</b>앱을 이용하기 위해\n<b>다음의 접근권한</b>을 허용해주세요</string>
+    <string name="incompleteprofile">서비스를 이용하기 위해\n<font color="#FFA500"><b>프로필</b></font>을 완성 시켜주세요!</string>
+    <string name="incompleteeditprofile"><font color="#FFA500"><b>프로필</b></font>이 아직 미완성 입니다.\n나가시겠습니까?</string>
 
     <string name="default_notification_channel_id">ilove_id</string>
     <string name="default_notification_channel_name">ilove_name</string>
+
+    <string name="in_app_license_key">
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhIn5hyizykQWK1zohE4ta6ANE027B/cED+0p2gwNtEXmuo3Z0/H6rnIFsLqktadmwoarRAaDPENx1YdL9cXbAos2bvoRyoLR5GSMvJTSTh9fzJOkkv33WBY23wSNFEEp1uGYaM84rJqqw0xgb2dR5+/Ei3MxiLaIA1jBf3BlWy0R1WvJQzFDIwQP0xrOTdzegoKM0dg67x9CU+TYSTSzL55drJV8+UkZfIhHQfVPc/9bdzIulDByDoHEaTz1yjemkE5K54ccom53xSrcWj4jCtwLM7yiVQaoRVvvdMCsfR6Sldy1DuBN63ytQymvz5hhq07spxKfJwVs2GBzQHo0xwIDAQAB</string>
 
 </resources>
