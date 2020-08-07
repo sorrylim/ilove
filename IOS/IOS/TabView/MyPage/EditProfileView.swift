@@ -106,32 +106,37 @@ struct EditProfileView : View{
                 
                 VStack{
                     VStack(spacing: 10){
-                        EditProfileRow(key: "키", value: ((userOption!.user_height != nil) ? userOption?.user_height : "등록 안됨")!)
-                        EditProfileRow(key: "체형", value: ((userOption!.user_bodytype != nil) ? userOption?.user_bodytype : "등록 안됨")!)
-                        EditProfileRow(key: "혈액형", value: ((userOption!.user_bloodtype != nil) ? userOption?.user_bloodtype : "등록 안됨")!)
-                        EditProfileRow(key: "직업", value: ((userOption!.user_job != nil) ? userOption?.user_job : "등록 안됨")!)
-                        EditProfileRow(key: "학력", value: ((userOption!.user_education != nil) ? userOption?.user_education : "등록 안됨")!)
-                        EditProfileRow(key: "휴일", value: ((userOption!.user_holiday != nil) ? userOption?.user_holiday : "등록 안됨")!)
-                        EditProfileRow(key: "흡연", value: ((userOption!.user_cigarette != nil) ? userOption?.user_cigarette : "등록 안됨")!)
-                        EditProfileRow(key: "음주", value: ((userOption!.user_alcohol != nil) ? userOption?.user_cigarette : "등록 안됨")!)
-                        EditProfileRow(key: "종교", value: ((userOption!.user_religion != nil) ? userOption?.user_religion : "등록 안됨")!)
-                        EditProfileRow(key: "형제", value: ((userOption!.user_brother != nil) ? userOption?.user_brother : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "키", value: ((userOption!.user_height != nil) ? userOption?.user_height : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "체형", value: ((userOption!.user_bodytype != nil) ? userOption?.user_bodytype : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "혈액형", value: ((userOption!.user_bloodtype != nil) ? userOption?.user_bloodtype : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "거주지", value: ((userOption!.user_city != nil) ? userOption?.user_city : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "직업", value: ((userOption!.user_job != nil) ? userOption?.user_job : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "학력", value: ((userOption!.user_education != nil) ? userOption?.user_education : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "휴일", value: ((userOption!.user_holiday != nil) ? userOption?.user_holiday : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "흡연", value: ((userOption!.user_cigarette != nil) ? userOption?.user_cigarette : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "음주", value: ((userOption!.user_alcohol != nil) ? userOption?.user_cigarette : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "종교", value: ((userOption!.user_religion != nil) ? userOption?.user_religion : "등록 안됨")!)
+                        
                     }
                     VStack(spacing: 10){
-                        EditProfileRow(key: "나라", value: ((userOption!.user_country != nil) ? userOption?.user_country : "등록 안됨")!)
-                        EditProfileRow(key: "수입", value: ((userOption!.user_salary != nil) ? userOption?.user_salary : "등록 안됨")!)
-                        EditProfileRow(key: "재산", value: ((userOption!.user_asset != nil) ? userOption?.user_asset : "등록 안됨")!)
-                        EditProfileRow(key: "결혼여부", value: ((userOption!.user_marriagehistory != nil) ? userOption?.user_marriagehistory : "등록 안됨")!)
-                        EditProfileRow(key: "자녀", value: ((userOption!.user_children != nil) ? userOption?.user_children : "등록 안됨")!)
-                        EditProfileRow(key: "결혼계획", value: ((userOption!.user_marriageplan != nil) ? userOption?.user_marriageplan : "등록 안됨")!)
-                        EditProfileRow(key: "자녀계획", value: ((userOption!.user_childrenplan != nil) ? userOption?.user_childrenplan : "등록 안됨")!)
-                        EditProfileRow(key: "육아", value: ((userOption!.user_parenting != nil) ? userOption?.user_parenting : "등록 안됨")!)
-                        EditProfileRow(key: "원하는 데이트", value: ((userOption!.user_wishdate != nil) ? userOption?.user_wishdate : "등록 안됨")!)
-                        EditProfileRow(key: "데이트 비용", value: ((userOption!.user_datecost != nil) ? userOption?.user_datecost : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "형제", value: ((userOption!.user_brother != nil) ? userOption?.user_brother : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "나라", value: ((userOption!.user_country != nil) ? userOption?.user_country : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "수입", value: ((userOption!.user_salary != nil) ? userOption?.user_salary : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "재산", value: ((userOption!.user_asset != nil) ? userOption?.user_asset : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "결혼여부", value: ((userOption!.user_marriagehistory != nil) ? userOption?.user_marriagehistory : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "자녀", value: ((userOption!.user_children != nil) ? userOption?.user_children : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "결혼계획", value: ((userOption!.user_marriageplan != nil) ? userOption?.user_marriageplan : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "자녀계획", value: ((userOption!.user_childrenplan != nil) ? userOption?.user_childrenplan : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "원하는 데이트", value: ((userOption!.user_wishdate != nil) ? userOption?.user_wishdate : "등록 안됨")!)
+                        
                     }
                     VStack(spacing: 10){
-                        EditProfileRow(key: "룸메이트", value: ((userOption!.user_roommate != nil) ? userOption?.user_roommate : "등록 안됨")!)
-                        EditProfileRow(key: "언어", value: ((userOption!.user_language != nil) ? userOption?.user_language : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "데이트 비용", value: ((userOption!.user_datecost != nil) ? userOption?.user_datecost : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "룸메이트", value: ((userOption!.user_roommate != nil) ? userOption?.user_roommate : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "언어", value: ((userOption!.user_language != nil) ? userOption?.user_language : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "취미", value: ((userOption!.user_interest != nil) ? userOption?.user_interest : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "성격", value: ((userOption!.user_personality != nil) ? userOption?.user_personality : "등록 안됨")!)
+                        EditProfileRow(userOption: $userOption, key: "내가 좋아하는 사람", value: ((userOption!.user_favoriteperson != nil) ? userOption?.user_favoriteperson : "등록 안됨")!)
                     }
                 }
                 .padding(.vertical,10)
@@ -159,8 +164,11 @@ struct EditProfileView : View{
 
 struct EditProfileRow : View{
     
+    @Binding var userOption : UserOptionModel?
     @State var key : String
     @State var value : String
+    
+    @State var optionVisible = false
     
     var body: some View{
         VStack{
@@ -176,8 +184,14 @@ struct EditProfileRow : View{
                     Image("baseline_rightarrow_grey_24")
                         .resizable()
                         .frame(width: 15, height: 15)
+                        .onTapGesture {
+                            self.optionVisible=true
+                    }
                 }
             }
+        }
+        .sheet(isPresented: $optionVisible){
+            EditUserOptionView(userOption: self.$userOption, title: self.key)
         }
     }
 }

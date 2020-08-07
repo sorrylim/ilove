@@ -746,7 +746,7 @@ public class HttpService:ObservableObject{
     
     
     //------------------------------Profile------------------------------//
-    func updateIntroduce(userId: String, introduceType: String, introduce: String, callback: @escaping () -> Void) {
+    func updateIntroduceReq(userId: String, introduceType: String, introduce: String, callback: @escaping () -> Void) {
         guard let url = URL(string: "\(ip)/user/update/introduce") else{
             return
         }
@@ -755,6 +755,60 @@ public class HttpService:ObservableObject{
             "user_id" : userId,
             "introduce_type" : introduceType,
             "introduce_data" : introduce
+        ]
+        
+        let body = try! JSONSerialization.data(withJSONObject: data)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            guard let data = data else{
+                return
+            }
+            
+            callback()
+        }.resume()
+    }
+    
+    func updateOptionReq(userId: String, userOption: String, userOptionData: String, callback:@escaping () -> Void) {
+        guard let url = URL(string: "\(ip)/user/update/option") else{
+            return
+        }
+        
+        let data = [
+            "user_id" : userId,
+            "user_option" : userOption,
+            "user_optiondata" : userOptionData
+        ]
+        
+        let body = try! JSONSerialization.data(withJSONObject: data)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            guard let data = data else{
+                return
+            }
+            
+            callback()
+        }.resume()
+    }
+    
+    func updateOptionCityReq(userId: String, userOption: String, userOptionData: String, callback:@escaping () -> Void) {
+        guard let url = URL(string: "\(ip)/user/update/option") else{
+            return
+        }
+        
+        let data = [
+            "user_id" : userId,
+            "user_option" : userOption,
+            "user_optiondate" : userOptionData
         ]
         
         let body = try! JSONSerialization.data(withJSONObject: data)

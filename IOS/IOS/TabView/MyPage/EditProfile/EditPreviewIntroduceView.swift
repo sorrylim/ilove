@@ -30,7 +30,7 @@ struct EditPreviewIntroduceView: View {
                             self.alertVisible=true
                         }
                         else{
-                            HttpService.shared.updateIntroduce(userId: UserInfo.shared.ID, introduceType: "user_previewintroduce", introduce: self.content){
+                            HttpService.shared.updateIntroduceReq(userId: UserInfo.shared.ID, introduceType: "user_previewintroduce", introduce: self.content){
                                 self.userOption!.user_previewintroduce=self.content
                                 self.presentationMode.wrappedValue.dismiss()
                                 

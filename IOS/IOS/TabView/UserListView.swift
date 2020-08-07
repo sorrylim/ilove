@@ -63,9 +63,9 @@ struct UserListView : View{
                         UserRow(user: user, view: self)
                     }
                 }
-                    .onAppear(){
-                        UITableView.appearance().separatorStyle = .none
-                    }
+                .onAppear(){
+                    UITableView.appearance().separatorStyle = .none
+                }
                 .navigationBarTitle("리스트",displayMode: .inline)
                 .onAppear(){
                     ContentView.rootView?.setTitle(title: "리스트")
@@ -302,7 +302,11 @@ struct UserRow : View{
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let date=dateFormatter.string(from: now)
             
-            self.age=(Int(date.split(separator: "-")[0]).unsafelyUnwrapped-Int(self.user.user_birthday.split(separator: "-")[0]).unsafelyUnwrapped+1)
+            var birthday=self.user.user_birthday
+            var start=birthday.index(birthday.startIndex,offsetBy: 0)
+            var end=birthday.index(birthday.startIndex, offsetBy: 3)
+            
+            self.age=(Int(date.split(separator: "-")[0]).unsafelyUnwrapped-Int(birthday[start...end]).unsafelyUnwrapped+1)
             
             var userRecentTime = dateFormatter.date(from : self.user.user_recenttime)?.addingTimeInterval(3600 * 9)
             now=now.addingTimeInterval(3600 * 9)

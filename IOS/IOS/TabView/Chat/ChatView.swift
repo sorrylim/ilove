@@ -188,10 +188,11 @@ struct ChatView: View {
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                     let date=dateFormatter.string(from: now)
                     
-                    var year1 = Int(date.split(separator: "-")[0])
-                    var year2 = Int(profileModel.user_birthday.split(separator: "-")[0])
+                    var birthday=self.profile.user_birthday
+                    var start=birthday.index(birthday.startIndex,offsetBy: 0)
+                    var end=birthday.index(birthday.startIndex, offsetBy: 3)
                     
-                    self.age = year1!-year2!+1
+                    self.age=(Int(date.split(separator: "-")[0]).unsafelyUnwrapped-Int(birthday[start...end]).unsafelyUnwrapped+1)
                 }
             }
         }

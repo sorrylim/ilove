@@ -25,10 +25,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if(p0.notification!=null){
 
             if(p0.notification?.title!! == "refresh" && p0.notification?.body!! == "refresh"){
-                var handler=MessageFragment.handler
-                var msg=handler!!.obtainMessage()
-                msg.what=0
-                handler.sendMessage(msg)
+                if(MessageFragment.handler != null) {
+                    var handler = MessageFragment.handler
+                    var msg = handler!!.obtainMessage()
+                    msg.what = 0
+                    handler.sendMessage(msg)
+                }
             }
             else {
                 if (!isAppOnForeground(applicationContext)) {

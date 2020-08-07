@@ -77,27 +77,36 @@ class ChatActivity : AppCompatActivity() {
 
         roomId=room!!.roomId
 
+        var view=findViewById<ConstraintLayout>(R.id.layout_partner)
+
         if(room!!.imageUrl==""){
             var partnerId=""
             if(UserInfo.ID==room!!.maker) partnerId = room!!.partner
             else partnerId = room!!.maker
 
-
             VolleyService.getProfileImageReq(partnerId,this,{success ->
                 var json = success[0] as JSONObject
 
                 chatPartnerImage=json.getString("image")
+
+                Glide.with(view)
+                    .load(chatPartnerImage)
+                    .apply(RequestOptions().circleCrop())
+                    .apply(RequestOptions().override(640, 640))
+                    .into(image_chatpartner)
             })
         }
-        else chatPartnerImage = room!!.imageUrl
+        else {
+            chatPartnerImage = room!!.imageUrl
 
-        var view=findViewById<ConstraintLayout>(R.id.layout_partner)
+            Glide.with(view)
+                .load(chatPartnerImage)
+                .apply(RequestOptions().circleCrop())
+                .apply(RequestOptions().override(640, 640))
+                .into(image_chatpartner)
+        }
 
-        Glide.with(view)
-            .load(chatPartnerImage)
-            .apply(RequestOptions().circleCrop())
-            .apply(RequestOptions().override(640, 640))
-            .into(image_chatpartner)
+
 
         if(UserInfo.ID == room!!.maker){
             VolleyService.getProfileReq(room!!.partner,this){

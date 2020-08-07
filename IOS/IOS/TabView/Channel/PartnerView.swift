@@ -259,7 +259,11 @@ struct PartnerRow : View{
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let date=dateFormatter.string(from: now)
             
-            self.age=(Int(date.split(separator: "-")[0]).unsafelyUnwrapped-Int(self.partner.user_birthday.split(separator: "-")[0]).unsafelyUnwrapped+1)
+            var birthday=self.partner.user_birthday
+            var start=birthday.index(birthday.startIndex,offsetBy: 0)
+            var end=birthday.index(birthday.startIndex, offsetBy: 3)
+            
+            self.age=(Int(date.split(separator: "-")[0]).unsafelyUnwrapped-Int(birthday[start...end]).unsafelyUnwrapped+1)
             
             var partnerRecentTime = dateFormatter.date(from : self.partner.user_recenttime)?.addingTimeInterval(3600 * 9)
             now=now.addingTimeInterval(3600 * 9)

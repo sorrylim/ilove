@@ -12,6 +12,7 @@
 		5436A47B24DA6BAA006C0753 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5436A47A24DA6BAA006C0753 /* BlurView.swift */; };
 		5436A47E24DA8C2E006C0753 /* EditPreviewIntroduceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5436A47D24DA8C2E006C0753 /* EditPreviewIntroduceView.swift */; };
 		5436A48024DAA436006C0753 /* EditIntroduceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5436A47F24DAA436006C0753 /* EditIntroduceView.swift */; };
+		5436A48224DBC353006C0753 /* EditUserOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5436A48124DBC353006C0753 /* EditUserOptionView.swift */; };
 		5446588A24C925DF00E59FA3 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5446588924C925DF00E59FA3 /* PagingView.swift */; };
 		5446588C24C9555500E59FA3 /* SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5446588B24C9555500E59FA3 /* SwipeGesture.swift */; };
 		5451D1EC24A2F8610035EA91 /* PartnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5451D1EB24A2F8610035EA91 /* PartnerView.swift */; };
@@ -53,6 +54,7 @@
 		5436A47A24DA6BAA006C0753 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		5436A47D24DA8C2E006C0753 /* EditPreviewIntroduceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPreviewIntroduceView.swift; sourceTree = "<group>"; };
 		5436A47F24DAA436006C0753 /* EditIntroduceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroduceView.swift; sourceTree = "<group>"; };
+		5436A48124DBC353006C0753 /* EditUserOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserOptionView.swift; sourceTree = "<group>"; };
 		5446588924C925DF00E59FA3 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
 		5446588B24C9555500E59FA3 /* SwipeGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGesture.swift; sourceTree = "<group>"; };
 		5451D1EB24A2F8610035EA91 /* PartnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerView.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			children = (
 				5436A47D24DA8C2E006C0753 /* EditPreviewIntroduceView.swift */,
 				5436A47F24DAA436006C0753 /* EditIntroduceView.swift */,
+				5436A48124DBC353006C0753 /* EditUserOptionView.swift */,
 			);
 			path = EditProfile;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				5446588A24C925DF00E59FA3 /* PagingView.swift in Sources */,
 				5436A47B24DA6BAA006C0753 /* BlurView.swift in Sources */,
 				54966CC524C6C29600131C43 /* LocationManager.swift in Sources */,
+				5436A48224DBC353006C0753 /* EditUserOptionView.swift in Sources */,
 				5494D0A824BD9E4B00ED2C08 /* EachAlert.swift in Sources */,
 				549E5B3724ADB29D00050E62 /* MultilineTextField.swift in Sources */,
 				545D598F24A0A448000B8A5A /* VipGuideView.swift in Sources */,
