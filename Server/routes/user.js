@@ -5,6 +5,24 @@ var router = express.Router();
 var db_user = require('../public/SQL/user_sql')()
 var db_expression = require('../public/SQL/expression_sql')()
 
+
+router.post('/login', function (req, res, next) {
+  var user_id = req.body.user_id
+
+  db_user.login(user_id, function (err, result) {
+    if (err) console.log(err)
+    else {
+      db_user.get_my_blocking_user(user_id, function(err, blocking) {
+        if(err) console.log(err)
+        else {
+          result[0]["user_blockingnumber"] = blocking[0]["blocking_partner"];
+          res.send(result[0])
+        }
+      })
+    }
+  })
+})
+
 router.post('/get/list', function(req, res, next) {
   var user_gender = req.body[0].user_gender
   var user_id = req.body[0].user_id
@@ -98,6 +116,30 @@ router.post('/upprofile', function(req, res, next) {
     }
   })
   
+})
+
+router.post('/get/blocking', function(req, res, next) {
+  var user_id = req.body[0].user_id
+
+  db_user.get_blocking_user(user_id, function(err, result) {
+    if(err) console.log(err)
+    else res.send(result)
+  })
+})
+
+router.post('/get/my/blocking', function(req, res, next) {
+  var user_id = req.body[0].user_id
+
+  db_user.get_my_blocking_user(user_id, function(err, result) {
+    if(err) console.log(err)
+    else res.send(result)
+  })
+})
+
+router.post('/save/showprofile', function(req, res, next) {
+  var user_id = req.body.user_id
+  var partner_id = req.body.partner_id
+  var showprofile_date = req.body.showprofile_date
 })
 
 module.exports = router;

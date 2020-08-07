@@ -112,6 +112,7 @@ class SplashActivity : AppCompatActivity() {
                         UserInfo.MESSAGETICKET=user.getInt("user_messageticket")
                         UserInfo.VIP = user.getInt("user_vip")
                         UserInfo.GUIDE = user.getInt("user_guide")
+                        UserInfo.ENABLE = user.getInt("user_enable")
 
                         if(UserInfo.BLOCKING == 1) {
                             VolleyService.getMyBlockingListReq(UserInfo.ID, this, {success->

@@ -1118,4 +1118,48 @@ object VolleyService {
 
         Volley.newRequestQueue(context).add(request)
     }
+
+    fun insertShowExpressionReq(userId : String, partnerId: String, expressionDate:String, candyCount: Int, context: Context, success : (String) -> Unit) {
+        val url = "${ip}/expression/insert/showprofile"
+
+        var json=JSONObject()
+            .put("user_id", userId)
+            .put("partner_id", partnerId)
+            .put("expression_date", expressionDate)
+            .put("candy_count", candyCount)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("result"))
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    fun userCheckReq(userId : String, context: Context, success : (String) -> Unit) {
+        val url = "${ip}/user/check"
+
+        var json=JSONObject()
+            .put("user_id", userId)
+
+        val request=object : JsonObjectRequest(
+            Method.POST,
+            url,
+            json,
+            Response.Listener {
+                success(it.getString("count"))
+            },
+            Response.ErrorListener {
+            }
+        ){}
+
+        Volley.newRequestQueue(context).add(request)
+    }
+
 }
