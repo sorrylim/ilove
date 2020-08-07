@@ -157,6 +157,9 @@ class ChatActivity : AppCompatActivity() {
 
             if(edit_chat.text.toString()=="") return@setOnClickListener
 
+            var content = edit_chat.text.toString()
+            edit_chat.setText("")
+
             val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
             val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
@@ -164,9 +167,9 @@ class ChatActivity : AppCompatActivity() {
             if(UserInfo.ID==room!!.maker) chatPartner=room!!.partner
             else chatPartner=room!!.maker
 
-            VolleyService.insertChatReq(room!!.roomId,UserInfo.ID,UserInfo.NICKNAME,chatPartner,edit_chat.text.toString(),currentDate,this, {success ->
+            VolleyService.insertChatReq(room!!.roomId,UserInfo.ID,UserInfo.NICKNAME,chatPartner,content,currentDate,this, {success ->
                 writeFirebase(room!!.roomId,UserInfo.ID,UserInfo.NICKNAME,edit_chat.text.toString(),currentDate)
-                edit_chat.setText("")
+
                 list_chat.setSelection(chatAdapter.count - 1)
             })
         }

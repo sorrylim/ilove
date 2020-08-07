@@ -22,23 +22,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(p0: RemoteMessage) {
 
-        if(p0.notification!=null){
-
-            if(p0.notification?.title!! == "refresh" && p0.notification?.body!! == "refresh"){
-                if(MessageFragment.handler != null) {
-                    var handler = MessageFragment.handler
-                    var msg = handler!!.obtainMessage()
-                    msg.what = 0
-                    handler.sendMessage(msg)
-                }
+        if (p0.notification != null) {
+            if (MessageFragment.handler != null) {
+                var handler = MessageFragment.handler
+                var msg = handler!!.obtainMessage()
+                msg.what = 0
+                handler.sendMessage(msg)
             }
-            else {
-                if (!isAppOnForeground(applicationContext)) {
-                    sendNotification(p0.to, p0.notification?.title!!, p0.notification?.body)
-                } else {
-                }
+            if (!isAppOnForeground(applicationContext)) {
+                sendNotification(p0.to, p0.notification?.title!!, p0.notification?.body)
             }
         }
+
     }
 
     private fun sendNotification(to:String?,title: String?,body: String?) {
@@ -50,7 +45,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         var pendingIntent= PendingIntent.getActivity(this,0,intent, PendingIntent.FLAG_ONE_SHOT)
         val notificationSound= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        var notificationBuilder= NotificationCompat.Builder(this,"fcm_ourcountry")
+        var notificationBuilder= NotificationCompat.Builder(this,"fcm_ilove")
             .setSmallIcon(R.drawable.ic_launcher_foreground) // 로고
             .setContentTitle(title)
             .setContentText(body)
