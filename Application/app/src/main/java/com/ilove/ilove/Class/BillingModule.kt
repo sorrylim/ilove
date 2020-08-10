@@ -2,49 +2,87 @@ package com.ilove.ilove.Class
 
 import android.app.Activity
 import android.content.Context
-import com.anjlab.android.iab.v3.BillingProcessor
-import com.anjlab.android.iab.v3.TransactionDetails
+import android.util.Log
+import android.widget.Toast
+import com.android.billingclient.api.*
 
-class BillingModule(context: Context) : BillingProcessor.IBillingHandler{
-    val licenseKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhIn5hyizykQWK1zohE4ta6ANE027B/cED+0p2gwNtEXmuo3Z0/H6rnIFsLqktadmwoarRAaDPENx1YdL9cXbAos2bvoRyoLR5GSMvJTSTh9fzJOkkv33WBY23wSNFEEp1uGYaM84rJqqw0xgb2dR5+/Ei3MxiLaIA1jBf3BlWy0R1WvJQzFDIwQP0xrOTdzegoKM0dg67x9CU+TYSTSzL55drJV8+UkZfIhHQfVPc/9bdzIulDByDoHEaTz1yjemkE5K54ccom53xSrcWj4jCtwLM7yiVQaoRVvvdMCsfR6Sldy1DuBN63ytQymvz5hhq07spxKfJwVs2GBzQHo0xwIDAQAB"
+class BillingModule(context: Context) : PurchasesUpdatedListener{
     lateinit var context : Context
-    lateinit var bp : BillingProcessor
+    lateinit var mBillingClient : BillingClient
+    lateinit var mConsumeListener: ConsumeResponseListener
+
+    val skuID10 = "candy10"
+    lateinit var skuDetails10 : SkuDetails
 
     init{
         this.context = context
-        this.bp = BillingProcessor(context, licenseKey, this)
-    }
+        this.mBillingClient = BillingClient.newBuilder(context).setListener(this).enablePendingPurchases().build()
+        mBillingClient.startConnection(object : BillingClientStateListener {
+            override fun onBillingSetupFinished(billingResult: BillingResult?) {
+                if(billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
+                    Log.d("test", "구글 결제 서버에 접속을 성공하였습니다.")
+                    var skuList = ArrayList<String>()
 
-    fun purchaseProduct(itemId: String) {
-        bp.purchase(context as Activity, itemId)
-    }
+                    skuList.add("candy10")
 
-    fun releaseBillingProcessor() {
-        if(bp != null) {
-            bp.release()
+                    val params = SkuDetailsParams.newBuilder().setSkusList(skuList).setType(BillingClient.SkuType.INAPP).build()
+
+                    mBillingClient.querySkuDetailsAsync(params, object : SkuDetailsResponseListener {
+                        override fun onSkuDetailsResponse(billingResult: BillingResult?, skuDetailsList: MutableList<SkuDetails>?) {
+                            if(billingResult?.responseCode == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
+                                for(skuDetails in skuDetailsList) {
+                                    if(skuID10.equals(skuDetails.sku)) {
+                                        skuDetails10 = skuDetails
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }
+                else {
+                    Log.d("test", "구글 결제 서버 접속에 실패하였습니다.\n오류코드: " + billingResult?.getResponseCode());
+                }
+            }
+
+            override fun onBillingServiceDisconnected() {
+                Log.d("test", "구글 결제 서버와 접속이 끊어졌습니다.");
+            }
+
+
+        })
+
+        mConsumeListener = object : ConsumeResponseListener {
+            override fun onConsumeResponse(billingResult: BillingResult?, purchaseToken: String?) {
+                if (billingResult?.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                    Log.d("test", "상품을 성공적으로 소모하였습니다. 소모된 상품 => " + purchaseToken);
+                    return;
+                } else {
+                    Log.d("test", "상품 소모에 실패하였습니다. 오류코드 (" + billingResult?.getResponseCode() + "), 대상 상품 코드: " + purchaseToken);
+                    return;
+                }
+            }
         }
     }
 
-
-    override fun onProductPurchased(productId: String, details: TransactionDetails?) {
-
+    fun doBillingFlow(skuDetails: SkuDetails) {
+        val flowParams = BillingFlowParams.newBuilder().setSkuDetails(skuDetails).build()
+        val responseCode = mBillingClient.launchBillingFlow(context as Activity, flowParams);
+        Log.d("test", "$responseCode")
     }
 
-    override fun onPurchaseHistoryRestored() {
-
-    }
-
-    override fun onBillingError(errorCode: Int, error: Throwable?) {
-        if(errorCode != com.anjlab.android.iab.v3.Constants.BILLING_RESPONSE_RESULT_USER_CANCELED)
-        {
-
+    override fun onPurchasesUpdated(billingResult: BillingResult?, purchases: MutableList<Purchase>?) {
+        if(billingResult?.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
+            Log.d("test", "결제에 성공하였습니다.")
+            for(i in purchases) {
+                val consumeParams = ConsumeParams.newBuilder().setPurchaseToken(i.purchaseToken).build()
+                mBillingClient.consumeAsync(consumeParams, mConsumeListener)
+            }
+        }
+        else if(billingResult?.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
+            Log.d("test", "사용자에 의해 구매가 취소되었습니다.")
+        }
+        else {
+            Log.d("test", "결제가 취소되었습니다." + billingResult?.responseCode)
         }
     }
-
-    override fun onBillingInitialized() {
-
-    }
-
-
-
 }

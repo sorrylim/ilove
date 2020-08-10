@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -43,16 +44,13 @@ class MainActivity : PSAppCompatActivity() {
     var listFragment : Fragment? = null
     var messageFragment : Fragment? = null
     var profileFragment : Fragment? = null
-
-
-
     val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
     val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         if(UserInfo.GUIDE == 1) {
             var psDialog = PSDialog(this)

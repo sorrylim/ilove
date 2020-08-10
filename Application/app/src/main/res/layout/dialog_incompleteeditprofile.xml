@@ -46,7 +46,7 @@
         android:layout_marginBottom="10dp"
         android:text="나가기"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/btn_incompleteprofileedit"
-        app:layout_constraintStart_toStartOf="@+id/btn_incompleteprofileedit"
-        app:layout_constraintTop_toBottomOf="@+id/btn_incompleteprofileedit" />
+        app:layout_constraintEnd_toEndOf="@+id/btn_incompleteeditprofileedit"
+        app:layout_constraintStart_toStartOf="@+id/btn_incompleteeditprofileedit"
+        app:layout_constraintTop_toBottomOf="@+id/btn_incompleteeditprofileedit" />
 </androidx.constraintlayout.widget.ConstraintLayout>
