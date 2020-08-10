@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.ilove.ilove.Adapter.PartnerProfileAdapter
 import com.ilove.ilove.Adapter.PartnerProfileBlurAdapter
+import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
@@ -46,6 +47,7 @@ class PartnerActivity : PSAppCompatActivity() {
 
         var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         var curDate = simpleDateFormat.format(System.currentTimeMillis())
+        val gpsTracker = GpsTracker(this)
 
         var psDialog = PSDialog(this)
 
@@ -405,7 +407,7 @@ class PartnerActivity : PSAppCompatActivity() {
                         meet = 1
                     }
 
-                    if(UserInfo.VIP > 0) {
+                    if(gpsTracker.timeDiffValue(simpleDateFormat.parse(UserInfo.VIP).getTime()) < 0) {
                         viewpager_partnerprofile.adapter = PartnerProfileAdapter(this, profileImageList, profileImageList.size)
                         btn_showprofile.visibility = View.GONE
                     }

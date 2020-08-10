@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.GpsTracker
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.NewUserList
 import com.ilove.ilove.MainActivity.PartnerActivity
@@ -19,10 +20,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>) : RecyclerView.Adapter<NewUserAdapter.ViewHolder>() {
+class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>, val userListSize: Int) : RecyclerView.Adapter<NewUserAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
-        return userList.size
+        return userListSize
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewUserAdapter.ViewHolder {
@@ -50,13 +51,20 @@ class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>) 
         holder.itemView.image_newuser.setClipToOutline(true)
 
         holder.itemView.setOnClickListener {
-            var intent = Intent(context, PartnerActivity::class.java)
-            intent.putExtra("userId", userList.get(position).userId)
-            intent.putExtra("userNickname", userList.get(position).userNickname)
-            intent.putExtra("userAge", age.toString())
-            intent.putExtra("userCity", userList.get(position).userCity)
-            intent.putExtra("userPhone", userList.get(position).userPhone)
-            context.startActivity(intent)
+            if(UserInfo.ENABLE == 1) {
+                var intent = Intent(context, PartnerActivity::class.java)
+                intent.putExtra("userId", userList.get(position).userId)
+                intent.putExtra("userNickname", userList.get(position).userNickname)
+                intent.putExtra("userAge", age.toString())
+                intent.putExtra("userCity", userList.get(position).userCity)
+                intent.putExtra("userPhone", userList.get(position).userPhone)
+                context.startActivity(intent)
+            }
+            else {
+                val psDialog = PSDialog(context!!)
+                psDialog.setIncompleteProfile()
+                psDialog.show()
+            }
         }
     }
 

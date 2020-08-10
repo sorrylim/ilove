@@ -747,7 +747,7 @@
                             android:text="프로필보기"
                             android:textColor="@color/colorMdWhite_1000"
                             android:textSize="20dp"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/viewpager_partnerprofile"
                             app:layout_constraintEnd_toEndOf="@+id/viewpager_partnerprofile"
                             app:layout_constraintStart_toStartOf="@+id/viewpager_partnerprofile"

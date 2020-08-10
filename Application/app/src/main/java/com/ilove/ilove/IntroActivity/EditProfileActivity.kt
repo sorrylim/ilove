@@ -96,6 +96,7 @@ import kotlinx.android.synthetic.main.activity_edit_profile.text_editwishdate
 import kotlinx.android.synthetic.main.activity_edit_profile.toolbar_editprofile
 import kotlinx.android.synthetic.main.activity_edit_profile_staff.*
 import kotlinx.android.synthetic.main.activity_main.view.*
+import okhttp3.internal.publicsuffix.PublicSuffixDatabase
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.FileNotFoundException
@@ -672,8 +673,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        Toast.makeText(this, "테스트", Toast.LENGTH_SHORT).show()
-        super.onBackPressed()
+        checkIncomplete()
     }
 
     fun profileImageInit() {
@@ -905,6 +905,26 @@ class EditProfileActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.setType("image/*")
         startActivityForResult(intent, PICK_FROM_ALBUM)
+    }
+
+    fun checkIncomplete() {
+        if(text_editheight.text == "선택" || text_editbody.text == "선택" || text_editbloodtype.text == "선택" || text_editcity.text == "선택"
+            || text_editjob.text == "선택" || text_editeducation.text == "선택" || text_editholiday.text == "선택" || text_editcigarette.text == "선택"
+            || text_editalcohol.text == "선택" || text_editreligion.text == "선택" || text_editbrother.text == "선택" || text_editcountry.text == "선택"
+            || text_editsalary.text == "선택" || text_editasset.text == "선택" || text_editmarriagehistory.text == "선택" || text_editchildren.text == "선택"
+            || text_editmarriageplan.text == "선택" || text_editchildrenplan.text == "선택" || text_editwishdate.text == "선택" || text_editdatecost.text == "선택"
+            || text_editroommate.text == "선택" || text_editlanguage.text == "선택" || text_editinterest.text == "선택" || text_editpersonality.text == "선택"
+            || text_editfavoriteperson.text == "선택") {
+            val psDialog = PSDialog(this)
+            psDialog.setIncompleteEditProfile()
+            psDialog.show()
+        }
+        else {
+            finish()
+            VolleyService.updateReq("user", "user_enable=1", "user_id='${UserInfo.ID}'", this, {success->
+                UserInfo.ENABLE = 1
+            })
+        }
     }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

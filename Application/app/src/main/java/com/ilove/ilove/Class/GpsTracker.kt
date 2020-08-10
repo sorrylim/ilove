@@ -207,4 +207,11 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
         }
         return msg!!
     }
+
+    fun timeDiffValue(time : Long): Long{
+        val curTime = System.currentTimeMillis()
+        var diffTime = (curTime- time) / 1000
+
+        return diffTime
+    }
 }

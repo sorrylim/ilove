@@ -35,6 +35,7 @@ import com.ilove.ilove.Adapter.PersonalityAdapter
 import com.ilove.ilove.Adapter.SignupUserOptionAdapter
 import com.ilove.ilove.Adapter.UserOptionAdapter
 import com.ilove.ilove.IntroActivity.ChargeCandyActivity
+import com.ilove.ilove.IntroActivity.EditProfileActivity
 import com.ilove.ilove.IntroActivity.SignupActivity
 import com.ilove.ilove.IntroActivity.SplashActivity
 import com.ilove.ilove.Item.ChatRoomItem
@@ -43,6 +44,7 @@ import com.ilove.ilove.MainActivity.ChatActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.dialog_inquire.*
+import org.json.JSONObject
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import kotlin.random.Random
@@ -522,11 +524,15 @@ class PSDialog(activity: Activity) {
         subContentText.visibility = View.GONE
 
         acceptBtn.setOnClickListener {
-            VolleyService.updateCandyReq(UserInfo.ID, candyCount, updateType, context!!, {success->
+            Log.d("test", "결제")
+            val billingModue = BillingModule(context!!)
+            val bp = billingModue.bp
+            billingModue.purchaseProduct("candy10")
+            /*VolleyService.updateCandyReq(UserInfo.ID, candyCount, updateType, context!!, {success->
                 if(success=="success") {
                     dialog!!.dismiss()
                 }
-            })
+            })*/
         }
 
         cancelBtn.setOnClickListener {
@@ -725,6 +731,48 @@ class PSDialog(activity: Activity) {
 
         cancelBtn.setOnClickListener {
             dismiss()
+        }
+    }
+
+    fun setIncompleteProfile() {
+        dialog!!.setContentView(R.layout.dialog_incompleteprofile)
+
+        val editBtn : Button = dialog!!.findViewById(R.id.btn_incompleteprofileedit)
+        val cancelBtn : TextView = dialog!!.findViewById(R.id.text_incompleteprofilecancel)
+        val profileImage: ImageView = dialog!!.findViewById(R.id.image_incompleteprofile)
+
+        VolleyService.getProfileImageReq(UserInfo.ID, context!!, {success->
+            var array = success
+
+            var json = array[0] as JSONObject
+
+            Glide.with(context!!).load(json.getString("image")).apply(RequestOptions().override(100, 100)).apply(RequestOptions().circleCrop()).into(profileImage)
+        })
+
+        editBtn.setOnClickListener {
+            dismiss()
+            var intent = Intent(context!!, EditProfileActivity::class.java)
+            context!!.startActivity(intent)
+        }
+
+        cancelBtn.setOnClickListener {
+            dismiss()
+        }
+    }
+
+    fun setIncompleteEditProfile() {
+        dialog!!.setContentView(R.layout.dialog_incompleteeditprofile)
+
+        val stayBtn : Button = dialog!!.findViewById(R.id.btn_incompleteeditprofileedit)
+        val cancelBtn : TextView = dialog!!.findViewById(R.id.text_incompleteeditprofilecancel)
+
+        stayBtn.setOnClickListener {
+            dismiss()
+        }
+
+        cancelBtn.setOnClickListener {
+            dismiss()
+            context!!.finish()
         }
     }
 
