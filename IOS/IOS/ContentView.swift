@@ -13,6 +13,7 @@
         static var rootView : ContentView? = nil
         
         @State var title = "아이러브"
+        @State var candyShopVisible = false
         
         var body: some View {
             NavigationView{
@@ -43,6 +44,12 @@
                         .tag(4)
                 }
                 .navigationBarTitle("\(self.title)",displayMode: .inline)
+                .navigationBarItems(trailing: Image("candy_icon").resizable().frame(width: 20, height: 20).onTapGesture {
+                    self.candyShopVisible=true
+                })
+            }
+            .sheet(isPresented: self.$candyShopVisible){
+                CandyShopView()
             }
             .onAppear(){
                 ContentView.rootView=self

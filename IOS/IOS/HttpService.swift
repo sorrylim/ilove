@@ -133,6 +133,87 @@ public class HttpService:ObservableObject{
             callback(decoded)
         }.resume()
     }
+    
+    func getPartnerExpressionReq(userId: String, partnerId: String, callback: @escaping (ExpressionModel) -> ()){
+        guard let url=URL(string: "\(ip)/expression/get/partner") else {
+            return
+        }
+        
+        let data = [
+            "user_id" : userId,
+            "partner_id" : partnerId
+        ]
+        
+        let body=try! JSONSerialization.data(withJSONObject: data)
+        
+        var request=URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else {
+                return
+            }
+            
+            let decoded = try! JSONDecoder().decode(ExpressionModel.self, from: data)
+            
+            callback(decoded)
+        }.resume()
+    }
+    
+    func insertShowExpressionReq(userId: String, partnerId: String, date: String, candyCount: Int, callback:@escaping () -> ()){
+        guard let url=URL(string: "\(ip)/expression/insert/showprofile") else {
+            return
+        }
+        
+        let data = [
+            "user_id" : userId,
+            "partner_id" : partnerId,
+            "expression_date" : date,
+            "candy_count" : candyCount
+            ] as [String : Any]
+        
+        let body=try! JSONSerialization.data(withJSONObject: data)
+        
+        var request=URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else {
+                return
+            }
+            
+            callback()
+        }.resume()
+    }
+    
+    func updateCandyReq(userId: String, count: Int, type: String, callback: @escaping () -> Void){
+        guard let url=URL(string: "\(ip)/user/update/candy") else {
+            return
+        }
+        
+        let data=[
+            "user_id" : userId,
+            "candy_count" : count,
+            "update_type" : type
+            ] as [String : Any]
+        
+        let body=try! JSONSerialization.data(withJSONObject: data)
+        
+        var requset=URLRequest(url: url)
+        requset.httpMethod="POST"
+        requset.httpBody=body
+        requset.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: requset) { (data, response, error) in
+            guard let data = data else{
+                return
+            }
+        }.resume()
+    }
     //------------------------------Common------------------------------//
     
     
@@ -278,6 +359,30 @@ public class HttpService:ObservableObject{
             callback(decoded)
         }.resume()
     }
+    
+    func updateUpProfileReq(userId: String, date: String){
+        guard let url=URL(string: "\(ip)/user/upprofile") else {
+            return
+        }
+        
+        let data=[
+            "user_id" : userId,
+            "upprofile_date" : date
+        ]
+        
+        let body=try! JSONSerialization.data(withJSONObject: data)
+        
+        var requset=URLRequest(url: url)
+        requset.httpMethod="POST"
+        requset.httpBody=body
+        requset.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: requset) { (data, response, error) in
+            guard let data = data else{
+                return
+            }
+        }.resume()
+    }
     //------------------------------Channel------------------------------//
     
     
@@ -397,6 +502,7 @@ public class HttpService:ObservableObject{
             callback(decoded)
         }.resume()
     }
+    
     
     //------------------------------List------------------------------//
     
