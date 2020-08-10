@@ -10,8 +10,6 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.anjlab.android.iab.v3.BillingProcessor
-import com.anjlab.android.iab.v3.TransactionDetails
 import com.ilove.ilove.Adapter.ChargeCandyAdapter
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.UserInfo

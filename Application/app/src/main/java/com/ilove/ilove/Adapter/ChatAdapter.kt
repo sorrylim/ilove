@@ -20,12 +20,18 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Object.Blur
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ChatItem
 import com.ilove.ilove.Object.ImageManager
 import com.ilove.ilove.R
+import kotlinx.android.synthetic.main.item_chatroom.view.*
+import java.text.SimpleDateFormat
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.util.*
 import kotlin.collections.ArrayList
 
 class ChatAdapter(private val activity: Activity) : BaseAdapter() {
@@ -107,15 +113,34 @@ class ChatAdapter(private val activity: Activity) : BaseAdapter() {
                 if (Build.VERSION.SDK_INT >= 11) {
                     textContent.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
                 }
-
-                var filter = BlurMaskFilter(20F, BlurMaskFilter.Blur.NORMAL)
-                textContent.paint.setMaskFilter(filter)
-                var btnBuyCandy = view.findViewById<Button>(R.id.btn_buycandy)
-                btnBuyCandy.visibility = View.VISIBLE
-                btnBuyCandy.setOnClickListener {
-                    var psDialog = PSDialog(activity)
-                    psDialog.setMessageTicketDialog()
-                    psDialog.show()
+                var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                var gpsTracker = GpsTracker(context as Activity)
+                if(UserInfo.VIP!="0") {
+                    if (gpsTracker.timeDiffValue(
+                            simpleDateFormat.parse(UserInfo.VIP).getTime()
+                        ) < 0
+                    ) {
+                        var filter = BlurMaskFilter(20F, BlurMaskFilter.Blur.NORMAL)
+                        textContent.paint.setMaskFilter(filter)
+                        var btnBuyCandy = view.findViewById<Button>(R.id.btn_buycandy)
+                        btnBuyCandy.visibility = View.VISIBLE
+                        btnBuyCandy.setOnClickListener {
+                            var psDialog = PSDialog(activity)
+                            psDialog.setMessageTicketDialog()
+                            psDialog.show()
+                        }
+                    }
+                }
+                else {
+                    var filter = BlurMaskFilter(20F, BlurMaskFilter.Blur.NORMAL)
+                    textContent.paint.setMaskFilter(filter)
+                    var btnBuyCandy = view.findViewById<Button>(R.id.btn_buycandy)
+                    btnBuyCandy.visibility = View.VISIBLE
+                    btnBuyCandy.setOnClickListener {
+                        var psDialog = PSDialog(activity)
+                        psDialog.setMessageTicketDialog()
+                        psDialog.show()
+                    }
                 }
             }
         } else {

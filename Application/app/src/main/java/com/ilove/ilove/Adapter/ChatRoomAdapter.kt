@@ -1,5 +1,6 @@
 package com.ilove.ilove.Adapter
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -10,12 +11,19 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ChatRoomItem
 import com.ilove.ilove.MainActivity.ChatActivity
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.item_chatroom.view.*
 import kotlinx.android.synthetic.main.item_newuser.view.*
+import java.text.SimpleDateFormat
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.concurrent.timer
 
 class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoomItem>) :
@@ -55,7 +63,6 @@ class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoom
                     timeStr = "오후 ${hour}:${min}"
             }
             holder.itemView.text_last_chat_time.text = timeStr
-
             holder.itemView.text_last_chat.text = "${chatRoom.lastChat}"
         }
         else {
