@@ -44,8 +44,6 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
 
-
-
         var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
         UserInfo.ID = userPref.getString("ID", "")!!
         if(UserInfo.ID != "") {

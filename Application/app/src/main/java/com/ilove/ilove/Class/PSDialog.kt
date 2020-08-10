@@ -517,6 +517,7 @@ class PSDialog(activity: Activity) {
         var subContentText : TextView = dialog!!.findViewById(R.id.text_dialogsubcontent)
         var acceptBtn : Button = dialog!!.findViewById(R.id.btn_dialogaccept)
         var cancelBtn : Button = dialog!!.findViewById(R.id.btn_dialogcancel)
+        val billingModue = BillingModule(context!!)
 
         titleText.text = "상품구매"
         contentText.text = "사탕 ${candyCount}개를 선택하셨습니다.\n구매하시겠습니까?"
@@ -525,14 +526,12 @@ class PSDialog(activity: Activity) {
 
         acceptBtn.setOnClickListener {
             Log.d("test", "결제")
-            val billingModue = BillingModule(context!!)
-            val bp = billingModue.bp
-            billingModue.purchaseProduct("candy10")
-            /*VolleyService.updateCandyReq(UserInfo.ID, candyCount, updateType, context!!, {success->
-                if(success=="success") {
-                    dialog!!.dismiss()
-                }
-            })*/
+            if(billingModue.mBillingClient.isReady) {
+                billingModue.doBillingFlow(billingModue.skuDetails10)
+            }
+            else {
+                Toast.makeText(context, "아직 준비되지 않았습니다.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         cancelBtn.setOnClickListener {

@@ -967,17 +967,17 @@ object VolleyService {
     }
 
     fun sendSMSReq(phone:String, certifyyNum: Int, context: Context, success: (JSONObject) -> Unit) {
-        var url = "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:256675021402:ilove/messages"
+        var url = "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:260114845161:iloveting/messages"
         val timestamp = System.currentTimeMillis().toString()
 
         fun makeSignature(): String? {
             val space = " "
             val newLine = "\n"
             val method = "POST"
-            val url = "/sms/v2/services/ncp:sms:kr:256675021402:ilove/messages"
+            val url = "/sms/v2/services/ncp:sms:kr:260114845161:iloveting/messages"
             Log.d("test", timestamp)
-            val accessKey = "AaHQNdxSDCTfeRxkV7mN"
-            val secretKey = "QmKMMaN8dwzSrjTsgYJEYl31ASHhHfZcKIe0rb2O"
+            val accessKey = "rKWG41t79UZoLH1w5NXT"
+            val secretKey = "nTvn2zShDAXMF3st84keJOQfH9aXutV9tSnsdq8r"
             val message = java.lang.StringBuilder()
                 .append(method)
                 .append(space)
@@ -1004,7 +1004,7 @@ object VolleyService {
 
         var json = JSONObject()
         json.put("type", "SMS")
-        json.put("from", "01073253757")
+        json.put("from", "01038911100")
         json.put("content", "[아이러브팅] 인증번호 ${certifyyNum} 를 입력해주세요.")
         json.put("messages", array)
 
@@ -1023,7 +1023,7 @@ object VolleyService {
                 var header = HashMap<String, String>()
                 header.put("Content-Type", "application/json; charset=utf-8")
                 header.put("x-ncp-apigw-timestamp", timestamp)
-                header.put("x-ncp-iam-access-key", "AaHQNdxSDCTfeRxkV7mN")
+                header.put("x-ncp-iam-access-key", "rKWG41t79UZoLH1w5NXT")
                 header.put("x-ncp-apigw-signature-v2", signature!!)
                 return header
             }
