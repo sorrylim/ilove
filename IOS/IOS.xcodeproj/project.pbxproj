@@ -36,7 +36,7 @@
 		547E622B249CAFFA00D8B7C4 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E622A249CAFFA00D8B7C4 /* EditProfileView.swift */; };
 		548AD92824A1A772003E27FD /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AD92724A1A772003E27FD /* HttpService.swift */; };
 		548AD92E24A1CD40003E27FD /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AD92D24A1CD40003E27FD /* DataModel.swift */; };
-		5494D0A824BD9E4B00ED2C08 /* EachAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5494D0A724BD9E4B00ED2C08 /* EachAlert.swift */; };
+		5494D0A824BD9E4B00ED2C08 /* EachMeetAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5494D0A724BD9E4B00ED2C08 /* EachMeetAlert.swift */; };
 		54966CC524C6C29600131C43 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54966CC424C6C29600131C43 /* LocationManager.swift */; };
 		54966CC824C6DECB00131C43 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54966CC724C6DECB00131C43 /* ProfileView.swift */; };
 		5497A40D24A09A94005BBC1A /* AlarmSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5497A40C24A09A94005BBC1A /* AlarmSettingView.swift */; };
@@ -45,6 +45,9 @@
 		549E5B3B24ADB39300050E62 /* ExtensionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E5B3A24ADB39300050E62 /* ExtensionClass.swift */; };
 		54B5EAD124C0002F00B80FDF /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B5EAD024C0002F00B80FDF /* UserInfo.swift */; };
 		54BC272E24B4460500DAE862 /* StoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BC272D24B4460500DAE862 /* StoryView.swift */; };
+		54BFE89E24DD26CD00DAF7C4 /* EachLikeAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BFE89D24DD26CD00DAF7C4 /* EachLikeAlert.swift */; };
+		54BFE8A024E105F600DAF7C4 /* CandyShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BFE89F24E105F600DAF7C4 /* CandyShopView.swift */; };
+		54BFE8A324E132F000DAF7C4 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BFE8A224E132F000DAF7C4 /* StartView.swift */; };
 		54D6D8FC24B84A0C0076C21C /* Pods_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE943F990410B844241EE6B5 /* Pods_IOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -80,7 +83,7 @@
 		547E622A249CAFFA00D8B7C4 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		548AD92724A1A772003E27FD /* HttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
 		548AD92D24A1CD40003E27FD /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
-		5494D0A724BD9E4B00ED2C08 /* EachAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachAlert.swift; sourceTree = "<group>"; };
+		5494D0A724BD9E4B00ED2C08 /* EachMeetAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachMeetAlert.swift; sourceTree = "<group>"; };
 		54966CC424C6C29600131C43 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		54966CC724C6DECB00131C43 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		5497A40C24A09A94005BBC1A /* AlarmSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingView.swift; sourceTree = "<group>"; };
@@ -89,6 +92,9 @@
 		549E5B3A24ADB39300050E62 /* ExtensionClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionClass.swift; sourceTree = "<group>"; };
 		54B5EAD024C0002F00B80FDF /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		54BC272D24B4460500DAE862 /* StoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryView.swift; sourceTree = "<group>"; };
+		54BFE89D24DD26CD00DAF7C4 /* EachLikeAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachLikeAlert.swift; sourceTree = "<group>"; };
+		54BFE89F24E105F600DAF7C4 /* CandyShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandyShopView.swift; sourceTree = "<group>"; };
+		54BFE8A224E132F000DAF7C4 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		54D6D8FF24B84BEC0076C21C /* Kingfisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Kingfisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E4B367991053D8954EC7FDE /* Pods-IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IOS.debug.xcconfig"; path = "Target Support Files/Pods-IOS/Pods-IOS.debug.xcconfig"; sourceTree = "<group>"; };
 		BE943F990410B844241EE6B5 /* Pods_IOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +190,7 @@
 		547E6201249C67A300D8B7C4 /* IOS */ = {
 			isa = PBXGroup;
 			children = (
+				54BFE8A124E1327400DAF7C4 /* SignUp */,
 				54966CC624C6DE7900131C43 /* Common */,
 				54966CC324C6C28100131C43 /* Object */,
 				549E5B3524ADB27F00050E62 /* CustomUI */,
@@ -250,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				54966CC724C6DECB00131C43 /* ProfileView.swift */,
+				54BFE89F24E105F600DAF7C4 /* CandyShopView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -267,13 +275,22 @@
 			children = (
 				549E5B3624ADB29D00050E62 /* MultilineTextField.swift */,
 				549E5B3824ADB34F00050E62 /* ImagePicker.swift */,
-				5494D0A724BD9E4B00ED2C08 /* EachAlert.swift */,
+				5494D0A724BD9E4B00ED2C08 /* EachMeetAlert.swift */,
 				5446588924C925DF00E59FA3 /* PagingView.swift */,
 				5446588B24C9555500E59FA3 /* SwipeGesture.swift */,
 				5457057D24CFF2FA00B9D1EF /* DynamicHeightHStack.swift */,
 				5436A47A24DA6BAA006C0753 /* BlurView.swift */,
+				54BFE89D24DD26CD00DAF7C4 /* EachLikeAlert.swift */,
 			);
 			path = CustomUI;
+			sourceTree = "<group>";
+		};
+		54BFE8A124E1327400DAF7C4 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				54BFE8A224E132F000DAF7C4 /* StartView.swift */,
+			);
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 		C4CF963777DB09C61E1C5C30 /* Pods */ = {
@@ -403,6 +420,7 @@
 			files = (
 				54B5EAD124C0002F00B80FDF /* UserInfo.swift in Sources */,
 				54966CC824C6DECB00131C43 /* ProfileView.swift in Sources */,
+				54BFE8A024E105F600DAF7C4 /* CandyShopView.swift in Sources */,
 				54BC272E24B4460500DAE862 /* StoryView.swift in Sources */,
 				547E6203249C67A300D8B7C4 /* AppDelegate.swift in Sources */,
 				547E6208249C67A300D8B7C4 /* IOS.xcdatamodeld in Sources */,
@@ -421,7 +439,7 @@
 				5436A47B24DA6BAA006C0753 /* BlurView.swift in Sources */,
 				54966CC524C6C29600131C43 /* LocationManager.swift in Sources */,
 				5436A48224DBC353006C0753 /* EditUserOptionView.swift in Sources */,
-				5494D0A824BD9E4B00ED2C08 /* EachAlert.swift in Sources */,
+				5494D0A824BD9E4B00ED2C08 /* EachMeetAlert.swift in Sources */,
 				549E5B3724ADB29D00050E62 /* MultilineTextField.swift in Sources */,
 				545D598F24A0A448000B8A5A /* VipGuideView.swift in Sources */,
 				54745B9B24A0724900B32F25 /* ItemManageView.swift in Sources */,
@@ -432,7 +450,9 @@
 				54745B9924A071FC00B32F25 /* SettingView.swift in Sources */,
 				547E6221249C82CC00D8B7C4 /* ChatListView.swift in Sources */,
 				548AD92E24A1CD40003E27FD /* DataModel.swift in Sources */,
+				54BFE8A324E132F000DAF7C4 /* StartView.swift in Sources */,
 				549E5B3924ADB34F00050E62 /* ImagePicker.swift in Sources */,
+				54BFE89E24DD26CD00DAF7C4 /* EachLikeAlert.swift in Sources */,
 				547E6205249C67A300D8B7C4 /* SceneDelegate.swift in Sources */,
 				5497A40D24A09A94005BBC1A /* AlarmSettingView.swift in Sources */,
 			);

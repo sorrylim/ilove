@@ -8,20 +8,25 @@
 
 import SwiftUI
 
-struct EachAlert: View {
+struct EachMeetAlert: View {
+    
+    
     
     var userId:String
     var userNickname:String
     var userAge:Int
-    var userRecentTime:String
+    var userCity:String
     var uiImage:UIImage
     
     @Binding var showing:Bool
     
+    @State var clicked = false
+    
     var body: some View {
         VStack(spacing:10){
-            Text("좋아요가 연결되었어요!\n대화를 시작해보세요")
-                .font(.system(size:20))
+            Text("연락주세요가 연결되었어요!\n연락처를 열람해보세요")
+                .font(.system(size:15))
+                .multilineTextAlignment(.center)
             
             Image(uiImage: uiImage)
                 .resizable()
@@ -30,12 +35,12 @@ struct EachAlert: View {
             
             Text("\(userNickname)")
                 .font(.system(size:15))
-            Text("\(userAge), \(userRecentTime)")
-                .font(.system(size:10))
-            
-            NavigationLink(destination: ChatView(roomImage: self.uiImage, userId: userId, userNickname: userNickname,isNew: true))
-            {
-                Text("대화시작하기")
+            Text("\(userAge), \(userCity)")
+                .font(.system(size:12))
+            Button(action: {
+                self.clicked=true
+            }){
+                Text(self.clicked ? self.userId : "연락처 열람하기")
                     .font(.system(size: 15))
                     .foregroundColor(Color.white)
                     .padding(15)
@@ -58,7 +63,6 @@ struct EachAlert: View {
         .animation(.spring())
         .onDisappear(){
             self.showing=false
-            print(self.showing)
         }
     }
 }

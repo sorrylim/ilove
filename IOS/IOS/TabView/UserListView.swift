@@ -18,7 +18,7 @@ struct UserListView : View{
     @State var alertUserId = ""
     @State var alertUserNickname = ""
     @State var alertUserAge = 0
-    @State var alertUserRecentTime = ""
+    @State var alertUserCity = ""
     @State var alertUiImage = UIImage()
     @State var alertVisible = false
     
@@ -95,17 +95,17 @@ struct UserListView : View{
             }
             if alertVisible {
                 GeometryReader{_ in
-                    EachAlert(userId: self.alertUserId, userNickname: self.alertUserNickname, userAge: self.alertUserAge, userRecentTime: self.alertUserRecentTime,uiImage: self.alertUiImage, showing: self.$alertVisible)
+                    EachLikeAlert(userId: self.alertUserId, userNickname: self.alertUserNickname, userAge: self.alertUserAge, userCity: self.alertUserCity,uiImage: self.alertUiImage, showing: self.$alertVisible)
                 }.background(Color.black.opacity(0.5).edgesIgnoringSafeArea(.all))
             }
         }
     }
     
-    mutating func setVisible(userId: String, userNickname: String, userAge: Int, userRecentTime: String,uiImage:UIImage, alertVisible: Bool){
+    mutating func setVisible(userId: String, userNickname: String, userAge: Int, userCity: String,uiImage:UIImage, alertVisible: Bool){
         self.alertUserId=userId
         self.alertUserNickname=userNickname
         self.alertUserAge=userAge
-        self.alertUserRecentTime=userRecentTime
+        self.alertUserCity=userCity
         self.alertUiImage=uiImage
         self.alertVisible=alertVisible
     }
@@ -171,10 +171,17 @@ struct UserRow : View{
             }
             
             VStack(alignment: .leading, spacing: 10){
-                Text("\(user.user_nickname) \(age) \(user.user_city)")
-                    .font(.system(size : 13))
-                    .foregroundColor(.gray)
-                
+                HStack{
+                    Text(user.user_purpose)
+                        .font(.system(size : 13))
+                        .foregroundColor(.white)
+                        .frame(width:30, height:20)
+                        .background(Color(red: 255/255, green: 160/255, blue:0/255))
+                        .cornerRadius(10)
+                    Text("\(user.user_nickname) \(age) \(user.user_city)")
+                        .font(.system(size : 13))
+                        .foregroundColor(.gray)
+                }
                 if user.user_previewintroduce != nil {
                     Text(user.user_previewintroduce!)
                         .font(.system(size: 12))
@@ -231,7 +238,7 @@ struct UserRow : View{
                         }
                     }
                     likeImage
-                        .foregroundColor(.red)
+                        .foregroundColor(self.user.like==1 ? Color(red: 255/255, green: 160/255, blue: 0/255) : .gray)
                         .frame(width: 15, height: 15)
                         .onAppear(){
                             if self.user.like==1 {
@@ -263,7 +270,7 @@ struct UserRow : View{
                                 }
                                 else if resultModel.result=="eachsuccess" {
                                     self.likeImage=Image(systemName: "heart.fill")
-                                    self.view.setVisible(userId: self.user.user_id, userNickname: self.user.user_nickname, userAge: self.age, userRecentTime: self.user.user_recenttime,uiImage: self.uiImage, alertVisible: true)
+                                    self.view.setVisible(userId: self.user.user_id, userNickname: self.user.user_nickname, userAge: self.age, userCity: self.user.user_city,uiImage: self.uiImage, alertVisible: true)
                                 }
                                 self.user.like=1
                             }

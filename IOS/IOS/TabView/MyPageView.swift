@@ -21,7 +21,7 @@ struct MyPageView : View{
                     if profileImageList.count > 0 {
                         Image(uiImage: profileImageList[0])
                             .resizable()
-                            .frame(width:100,height: 100)
+                            .frame(width:90,height: 90)
                             .cornerRadius(15)
                     }
                     else {
@@ -37,6 +37,7 @@ struct MyPageView : View{
                             Text("프로필 편집")
                                 .font(.system(size: 15))
                                 .foregroundColor(Color.white)
+                                .frame(width:160)
                                 .padding(10)
                                 .background(Color(red: 255/255, green: 160/255, blue: 0))
                                 .cornerRadius(10)
@@ -97,7 +98,7 @@ struct MyPageView : View{
                         Spacer()
                     }
                 }
-                .padding(.horizontal,10)
+                .padding(.horizontal,20)
             }
             .padding()
             .onAppear(){

@@ -28,6 +28,7 @@ struct ChannelView : View{
     @State var receiveMeetCount : Int = -1
     @State var eachMeetCount : Int = -1
     
+    @State var alertUpProfileVisible = false
     var body: some View {
         ScrollView(){
             //아이러브 신규 이성
@@ -66,124 +67,152 @@ struct ChannelView : View{
                     }
                 }
                 
-                Spacer(minLength: 30)
+                Spacer()
             }
             
             //내 프로필 확인한 사람 & 내 스토리를 확인한 사람
             Group{
-                HStack{
-                    Text("심쿵한 그대")
-                        .font(.system(size: 18))
+                ZStack{
+                    VStack(spacing: 10){
+                        Spacer()
+                        NavigationLink(destination: PartnerView(title : "내 프로필을 확인한 사람")){
+                            HStack{
+                                Text("내 프로필을 확인한 사람")
+                                    .font(.system(size: 15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(profileCount)명")
+                                    .foregroundColor(Color.black)
+                            }
+                            .padding(5)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(profileCount > 0 ? Color(red: 255/255, green: 160/255, blue: 0) : Color.white,lineWidth: 1))
+                        }
+                        
+                        NavigationLink(destination: PartnerView(title : "내 스토리를 확인한 사람")){
+                            HStack{
+                                Text("내 스토리를 확인한 사람")
+                                    .font(.system(size: 15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(storyCount)명")
+                                    .foregroundColor(Color.black)
+                            }
+                            .padding(5)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(storyCount > 0 ? Color(red: 255/255, green: 160/255, blue: 0) : Color.white,lineWidth: 1))
+                        }
+                        
+                        NavigationLink(destination: PartnerView(title: "내가 좋아요를 보낸 이성")){
+                            HStack{
+                                Text("내가 좋아요를 보낸 이성")
+                                    .font(.system(size:15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(sendLikeCount)명")
+                                    .foregroundColor(Color.black)
+                            }
+                            .padding(5)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(sendLikeCount > 0 ? Color(red: 255/255, green: 160/255, blue: 0) : Color.white,lineWidth: 1))
+                        }
+                        
+                        NavigationLink(destination: PartnerView(title: "나에게 좋아요를 보낸 이성")){
+                            HStack{
+                                Text("나에게 좋아요를 보낸 이성")
+                                    .font(.system(size:15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(receiveLikeCount)명")
+                                    .foregroundColor(Color.black)
+                            }
+                            .padding(5)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(receiveLikeCount > 0 ? Color(red: 255/255, green: 160/255, blue: 0) : Color.white,lineWidth: 1))
+                        }
+                        
+                        NavigationLink(destination: PartnerView(title: "서로 좋아요가 연결된 이성")){
+                            HStack{
+                                Text("서로 좋아요가 연결된 이성")
+                                    .font(.system(size:15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(eachLikeCount)명")
+                                    .foregroundColor(Color.black)
+                            }
+                            .padding(5)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(eachLikeCount > 0 ? Color(red: 255/255, green: 160/255, blue: 0) : Color.white,lineWidth: 1))
+                        }
+                    }
+                    .frame(width:UIScreen.main.bounds.width*0.85)
+                    .padding(15)
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 255/255, green: 160/255, blue: 0),lineWidth: 2))
+                    .padding(.top,10)
+                    VStack{
+                        Text("  심쿵한 그대  ")
+                            .font(.system(size: 18))
+                            .background(Color.white)
+                        Spacer()
+                    }
+                    
                 }
-                Spacer(minLength: 10)
-                VStack(spacing: 20){
-                    NavigationLink(destination: PartnerView(title : "내 프로필을 확인한 사람")){
-                        HStack{
-                            Text("내 프로필을 확인한 사람")
-                                .font(.system(size: 15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("\(profileCount)명")
-                                .foregroundColor(Color.black)
-                        }
-                    }
-                    
-                    NavigationLink(destination: PartnerView(title : "내 스토리를 확인한 사람")){
-                        HStack{
-                            Text("내 스토리를 확인한 사람")
-                                .font(.system(size: 15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("\(storyCount)명")
-                                .foregroundColor(Color.black)
-                        }
-                    }
-                    
-                    NavigationLink(destination: PartnerView(title: "내가 좋아요를 보낸 이성")){
-                        HStack{
-                            Text("내가 좋아요를 보낸 이성")
-                                .font(.system(size:15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("\(sendLikeCount)명")
-                                .foregroundColor(Color.black)
-                        }
-                    }
-                    
-                    NavigationLink(destination: PartnerView(title: "나에게 좋아요를 보낸 이성")){
-                        HStack{
-                            Text("나에게 좋아요를 보낸 이성")
-                                .font(.system(size:15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("\(receiveLikeCount)명")
-                                .foregroundColor(Color.black)
-                        }
-                    }
-                    
-                    NavigationLink(destination: PartnerView(title: "서로 좋아요가 연결된 이성")){
-                        HStack{
-                            Text("서로 좋아요가 연결된 이성")
-                                .font(.system(size:15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("\(eachLikeCount)명")
-                                .foregroundColor(Color.black)
-                        }
-                    }
-                }
-                .padding()
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 255/255, green: 160/255, blue: 0),lineWidth: 2))
-                Spacer(minLength: 30)
             }
+            .padding(.bottom,10)
             
             Group{
-                HStack{
-                    Text("심쿵 미팅")
-                        .font(.system(size: 18))
+                ZStack{
+                    VStack(spacing: 10){
+                        Spacer()
+                        NavigationLink(destination: PartnerView(title : "내가 만나고 싶은 그대")){
+                            HStack{
+                                Text("내가 만나고 싶은 그대")
+                                    .font(.system(size:15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(sendMeetCount)명")
+                                    .foregroundColor(Color.black)
+                            }
+                            .padding(5)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(sendMeetCount > 0 ? Color(red: 255/255, green: 160/255, blue: 0) : Color.white,lineWidth: 1))
+                        }
+                        
+                        
+                        NavigationLink(destination: PartnerView(title : "나를 만나고 싶어하는 그대")){
+                            HStack{
+                                Text("나를 만나고 싶어하는 그대")
+                                    .font(.system(size:15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(receiveMeetCount)명")
+                                    .foregroundColor(Color.black)
+                            }
+                            .padding(5)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(receiveMeetCount > 0 ? Color(red: 255/255, green: 160/255, blue: 0) : Color.white,lineWidth: 1))
+                        }
+                        
+                        NavigationLink(destination: PartnerView(title : "이제 만날수 있는 그대")){
+                            HStack{
+                                Text("이제 만날수 있는 그대")
+                                    .font(.system(size:15))
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                                Text("\(eachMeetCount)명")
+                                    .foregroundColor(Color.black)
+                            }
+                            .padding(5)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(eachMeetCount > 0 ? Color(red: 255/255, green: 160/255, blue: 0) : Color.white,lineWidth: 1))
+                        }
+                    }
+                    .frame(width:UIScreen.main.bounds.width*0.85)
+                    .padding(15)
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 255/255, green: 160/255, blue: 0),lineWidth: 2))
+                    .padding(.top,10)
+                    VStack{
+                        Text("  심쿵 미팅  ")
+                            .font(.system(size: 18))
+                            .background(Color.white)
+                        Spacer()
+                    }
                 }
-                Spacer(minLength: 10)
-                VStack(spacing: 20){
-                    
-                    NavigationLink(destination: PartnerView(title : "내가 만나고 싶은 그대")){
-                        HStack{
-                            Text("내가 만나고 싶은 그대")
-                                .font(.system(size:15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("\(sendMeetCount)명")
-                                .foregroundColor(Color.black)
-                        }
-                    }
-                    
-                    
-                    NavigationLink(destination: PartnerView(title : "나를 만나고 싶어하는 그대")){
-                        HStack{
-                            Text("나를 만나고 싶어하는 그대")
-                                .font(.system(size:15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("\(receiveMeetCount)명")
-                                .foregroundColor(Color.black)
-                        }
-                    }
-                    
-                    NavigationLink(destination: PartnerView(title : "서로 연락처를 주고받은 그대")){
-                        HStack{
-                            Text("서로 연락처를 주고받은 그대")
-                                .font(.system(size:15))
-                                .foregroundColor(Color.gray)
-                            Spacer()
-                            Text("\(eachMeetCount)명")
-                                .foregroundColor(Color.black)
-                        }
-                    }
-                }
-                .padding()
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 255/255, green: 160/255, blue: 0),lineWidth: 2))
-                Spacer(minLength: 30)
+                
             }
-            
+            .padding(.bottom,10)
             
             Group{
                 HStack{
@@ -197,6 +226,9 @@ struct ChannelView : View{
                             .font(.system(size:12))
                             .foregroundColor(Color.gray)
                     }
+                    .onTapGesture {
+                        self.alertUpProfileVisible=true
+                    }
                     Spacer()
                 }
                 .padding(.leading,20)
@@ -204,6 +236,22 @@ struct ChannelView : View{
                 Spacer(minLength: 30)
             }
             
+        }
+        .alert(isPresented: self.$alertUpProfileVisible){
+            Alert(title: Text("프로필 올리기").font(.system(size: 15))
+                , message: Text("\n프로필 올리기를 선택하셨습니다\n(리스트에 1시간 노출)").font(.system(size:12)).foregroundColor(.gray)
+                , primaryButton: .destructive(Text("취소"),action: {
+                    
+                })
+                ,secondaryButton: .cancel(Text("확인"), action: {
+                    let now = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    let date=dateFormatter.string(from: now)
+                    
+                    HttpService.shared.updateUpProfileReq(userId: UserInfo.shared.ID, date: date)
+                })
+            )
         }
         .padding()
         .navigationBarTitle("채널",displayMode: .inline)
