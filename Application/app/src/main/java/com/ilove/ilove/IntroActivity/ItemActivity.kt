@@ -32,8 +32,13 @@ class ItemActivity : PSAppCompatActivity() {
             leftDays = ((gpsTracker.timeDiffValue(vipDate.time) * -1) / 86400 + 1).toString()
         }
 
-        var list = UserInfo.VIP.split(" ")
-        leftDays = list.get(0) + "\n" + list.get(1) + " 까지"
+        if(UserInfo.VIP == "0000-00-00 00:00:00") {
+            leftDays = "0일"
+        }
+        else {
+            var list = UserInfo.VIP.split(" ")
+            leftDays = list.get(0) + "\n" + list.get(1) + " 까지"
+        }
 
 
         toolbarCenterBinding(toolbar_item, "아이템 관리", true)

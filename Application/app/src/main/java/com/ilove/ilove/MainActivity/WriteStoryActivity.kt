@@ -12,6 +12,7 @@ import android.provider.MediaStore
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.gun0912.tedpermission.PermissionListener
@@ -29,6 +30,7 @@ class WriteStoryActivity : PSAppCompatActivity() {
     val PICK_FROM_ALBUM = 1
     var imagePath : String? = null
     var imageCaptureUri: Uri? = null
+    var imageCheck = false
 
     private val requiredPermission = arrayOf(
         android.Manifest.permission.READ_EXTERNAL_STORAGE
@@ -58,8 +60,13 @@ class WriteStoryActivity : PSAppCompatActivity() {
         }
 
         text_insertstory.setOnClickListener {
-            FileUploadUtils.uploadStoryImage(imagePath!!, edit_storycontent.text.toString())
-            finish()
+            if(imageCheck == true) {
+                FileUploadUtils.uploadStoryImage(imagePath!!, edit_storycontent.text.toString())
+                finish()
+            }
+            else {
+                Toast.makeText(this, "이미지는 필수 항목입니다.", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
@@ -92,6 +99,7 @@ class WriteStoryActivity : PSAppCompatActivity() {
                     val imageBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageCaptureUri)
                     image_writestory.visibility = View.VISIBLE
                     image_writestory.setImageBitmap(imageBitmap)
+                    imageCheck = true
 
                 } catch (e: FileNotFoundException) {
                     // TODO Auto-generated catch block

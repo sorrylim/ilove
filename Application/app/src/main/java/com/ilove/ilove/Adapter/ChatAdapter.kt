@@ -19,6 +19,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSDialog
@@ -81,7 +82,7 @@ class ChatAdapter(private val activity: Activity) : BaseAdapter() {
             var textSpeaker = view!!.findViewById(R.id.text_speaker) as TextView
             var imageChatPartner = view.findViewById(R.id.image_chatpartner) as ImageView
             Glide.with(view)
-                .load(item.chatPartnerImage)
+                .load(item.chatPartnerImage).transition(DrawableTransitionOptions().crossFade())
                 .apply(RequestOptions().circleCrop())
                 .apply(RequestOptions().override(640, 640))
                 .into(imageChatPartner)
@@ -115,7 +116,7 @@ class ChatAdapter(private val activity: Activity) : BaseAdapter() {
                 }
                 var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 var gpsTracker = GpsTracker(context as Activity)
-                if(UserInfo.VIP!="0") {
+                if(UserInfo.VIP!="0000-00-00 00:00:00") {
                     if (gpsTracker.timeDiffValue(
                             simpleDateFormat.parse(UserInfo.VIP).getTime()
                         ) < 0

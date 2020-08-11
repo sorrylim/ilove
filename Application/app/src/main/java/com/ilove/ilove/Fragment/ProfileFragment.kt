@@ -63,15 +63,8 @@ class ProfileFragment(titleText: TextView) : Fragment() {
         nickName.text = UserInfo.NICKNAME
 
         editProfileBtn.setOnClickListener {
-            if(UserInfo.AUTHORITY=="normal") {
                  var intent = Intent(activity, EditProfileActivity::class.java)
                 startActivity(intent)
-            }
-            else if(UserInfo.AUTHORITY=="manager"){
-                 var intent = Intent(activity, ManagerEditProfileActivity::class.java)
-                startActivity(intent)
-            }
-
         }
 
         settingBtn.setOnClickListener {
