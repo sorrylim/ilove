@@ -27,6 +27,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.FileUploadUtils
 import com.ilove.ilove.Class.PSAppCompatActivity
@@ -59,12 +60,9 @@ class SignupActivity: PSAppCompatActivity() {
     var imagePath : String? = null
     var imageCaptureUri: Uri? = null
     val PICK_FROM_ALBUM = 1
-    var profileImageList = ArrayList<ImageView>()
-    var profileImageIdList : ArrayList<Int?> = arrayListOf(null, null, null, null)
-    var profileImagePath = ArrayList<String>()
     var editImageId : Int? = null
     var editImagePath : String? = null
-    var mainprofile : Int? = null
+    var imageCheck = false
 
 
     private val requiredPermission = arrayOf(
@@ -150,8 +148,8 @@ class SignupActivity: PSAppCompatActivity() {
 
 
         btn_save.setOnClickListener {
-            if(imageMain.background.equals(R.drawable.default_image)) {
-                Toast.makeText(this, "프로필 사진은 필수요소 입니다.", Toast.LENGTH_SHORT).show()
+            if(imageCheck == false) {
+                Toast.makeText(this, "프로필 사진은 필수항목 입니다.", Toast.LENGTH_SHORT).show()
             }
             else if(edit_nickname.text.toString()==""){
                 Toast.makeText(this,"닉네임을 입력해주세요.",Toast.LENGTH_SHORT).show()
@@ -522,13 +520,16 @@ class SignupActivity: PSAppCompatActivity() {
 
                     if(editImageId != null) {
                         FileUploadUtils.uploadSignupProfileImage(imagePath!!, "", "update", editImageId!!, editImagePath!!, phone!!)
+                        imageCheck = true
                     } else {
                         FileUploadUtils.uploadSignupProfileImage(imagePath!!, "mainprofile", "insert", null, "", phone!!)
+                        imageCheck = true
                     }
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     val error = result.error
                     editImageId = null
                     editImagePath = null
+                    imageCheck = false
                 }
                 editImageId = null
                 editImagePath = null
@@ -542,7 +543,8 @@ class SignupActivity: PSAppCompatActivity() {
             var array = success
             if(array.length() != 0) {
                 var json = array[0] as JSONObject
-                Glide.with(this).load(json.getString("image")).apply(RequestOptions().override(100, 100))
+                Glide.with(this).load(json.getString("image")).apply(RequestOptions().override(100, 100)).transition(
+                    DrawableTransitionOptions().crossFade())
                     .into(image_signupmain)
             }
         })

@@ -31,7 +31,6 @@ class ListFragment(titleText: TextView) : Fragment() {
     var userList = ArrayList<UserList>()
     var rootView : View? = null
     var sortType : Int = 0
-    var titleText: TextView = titleText
     var nothingText : TextView? = null
 
 
@@ -151,15 +150,15 @@ class ListFragment(titleText: TextView) : Fragment() {
                     upProfileUserList.addAll(userList)
 
 
-                    if(UserInfo.BLOCKING == 1) {
-                        VolleyService.getBlockingListReq(UserInfo.ID, activity!!, {success->
-                            var blockingList = ArrayList<String>()
-                            var array = success
-                            for(i in 0..array.length()-1) {
-                                var json = array[i] as JSONObject
-                                blockingList.add(json.getString("blocking_user"))
-                            }
+                    VolleyService.getBlockingListReq(UserInfo.ID, activity!!, {success->
+                        var blockingList = ArrayList<String>()
+                        var array = success
+                        for(i in 0..array.length()-1) {
+                            var json = array[i] as JSONObject
+                            blockingList.add(json.getString("blocking_user"))
+                        }
 
+                        if(UserInfo.BLOCKING == 1) {
                             var iter = upProfileUserList.iterator()
                             while(iter.hasNext()){
                                 var userList = iter.next() as UserList
@@ -175,21 +174,34 @@ class ListFragment(titleText: TextView) : Fragment() {
                                     }
                                 }
                             }
+                        }
+                        else {
+                            var iter = upProfileUserList.iterator()
+                            while(iter.hasNext()){
+                                var userList = iter.next() as UserList
 
-                            if(upProfileUserList.size == 0) {
-                                nothingText!!.visibility = View.VISIBLE
-                                partnerListRV.adapter = null
-                                psDialog.dismiss()
+                                for(i in 0..blockingList.size-1) {
+                                    if(userList.userPhone == blockingList.get(i)) {
+                                        iter.remove()
+                                    }
+                                }
                             }
-                            else {
-                                nothingText!!.visibility = View.GONE
-                                partnerListRV.setHasFixedSize(true)
-                                partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                                partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
-                                psDialog.dismiss()
-                            }
-                        })
-                    }
+                        }
+
+
+                        if(upProfileUserList.size == 0) {
+                            nothingText!!.visibility = View.VISIBLE
+                            partnerListRV.adapter = null
+                            psDialog.dismiss()
+                        }
+                        else {
+                            nothingText!!.visibility = View.GONE
+                            partnerListRV.setHasFixedSize(true)
+                            partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                            partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                            psDialog.dismiss()
+                        }
+                    })
                 })
             })
         }
@@ -245,15 +257,15 @@ class ListFragment(titleText: TextView) : Fragment() {
 
                     upProfileUserList.addAll(userList)
 
-                    if(UserInfo.BLOCKING == 1) {
-                        VolleyService.getBlockingListReq(UserInfo.ID, activity!!, {success->
-                            var blockingList = ArrayList<String>()
-                            var array = success
-                            for(i in 0..array.length()-1) {
-                                var json = array[i] as JSONObject
-                                blockingList.add(json.getString("blocking_user"))
-                            }
+                    VolleyService.getBlockingListReq(UserInfo.ID, activity!!, {success->
+                        var blockingList = ArrayList<String>()
+                        var array = success
+                        for(i in 0..array.length()-1) {
+                            var json = array[i] as JSONObject
+                            blockingList.add(json.getString("blocking_user"))
+                        }
 
+                        if(UserInfo.BLOCKING == 1) {
                             var iter = upProfileUserList.iterator()
                             while(iter.hasNext()){
                                 var userList = iter.next() as UserList
@@ -269,21 +281,34 @@ class ListFragment(titleText: TextView) : Fragment() {
                                     }
                                 }
                             }
+                        }
+                        else {
+                            var iter = upProfileUserList.iterator()
+                            while(iter.hasNext()){
+                                var userList = iter.next() as UserList
 
-                            if(upProfileUserList.size == 0) {
-                                nothingText!!.visibility = View.VISIBLE
-                                partnerListRV.adapter = null
-                                psDialog.dismiss()
+                                for(i in 0..blockingList.size-1) {
+                                    if(userList.userPhone == blockingList.get(i)) {
+                                        iter.remove()
+                                    }
+                                }
                             }
-                            else {
-                                nothingText!!.visibility = View.GONE
-                                partnerListRV.setHasFixedSize(true)
-                                partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                                partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
-                                psDialog.dismiss()
-                            }
-                        })
-                    }
+                        }
+
+
+                        if(upProfileUserList.size == 0) {
+                            nothingText!!.visibility = View.VISIBLE
+                            partnerListRV.adapter = null
+                            psDialog.dismiss()
+                        }
+                        else {
+                            nothingText!!.visibility = View.GONE
+                            partnerListRV.setHasFixedSize(true)
+                            partnerListRV.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                            partnerListRV.adapter = UserListAdapter(activity!!, upProfileUserList)
+                            psDialog.dismiss()
+                        }
+                    })
                 })
             })
         }

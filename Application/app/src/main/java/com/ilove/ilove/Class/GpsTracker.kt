@@ -64,8 +64,9 @@ public class GpsTracker(activity: Activity) : Service(), LocationListener {
             distanceForm.add("km")
         }
         else if(10000<=distanceInt) {
+            distanceInt /= 1000
             distanceForm.clear()
-            distanceForm.add(String.format("%.0f", (distanceInt - distanceInt%1000)))
+            distanceForm.add(String.format("%.0f", distanceInt))
             distanceForm.add("km")
         }
 

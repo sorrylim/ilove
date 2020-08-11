@@ -102,10 +102,13 @@ object VolleyService {
                 Log.d("test",it.toString())
                 if (it is com.android.volley.TimeoutError) {
                     Log.d("test", "TimeoutError")
-                    result.put("code", 0)
+                    result.put("code", 2)
                 } else if (it is com.android.volley.ParseError) {
                     Log.d("test", "ParserError")
                     result.put("code", 1)
+                } else if (it is com.android.volley.NoConnectionError) {
+                    Log.d("test", "NoConnectionError")
+                    result.put("code", 0)
                 }
                 success(result)
             }
@@ -312,6 +315,8 @@ object VolleyService {
         var url = "${ip}/image/get/profile"
         var json = JSONObject()
         json.put("user_id", userId)
+
+
 
         var array = JSONArray()
         array.put(json)

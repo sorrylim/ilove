@@ -198,23 +198,56 @@ class PSDialog(activity: Activity) {
 
                 }
                 else {
-                    VolleyService.updateUserOptionReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
-                        if(success == "success") {
-                            if(userOptionData.length > 8) {
-                                userOptionText.text = userOptionData.substring(0, 9) + "..."
-                                userOptionText.setTextColor(Color.parseColor("#FF8C00"))
-                                dismiss()
+                    if(userOption == "user_personality" || userOption == "user_favoriteperson") {
+                        var count = 0
+                        for(i in 0..userOptionList.size-1) {
+                            if(userOptionList.get(i).isSelected == true) {
+                                count ++
                             }
-                            else {
-                                userOptionText.text = userOptionData
-                                userOptionText.setTextColor(Color.parseColor("#FF8C00"))
-                                dismiss()
-                            }
+                        }
+
+                        if(count < 2 ) {
+                            Toast.makeText(context, "2개이상 선택해주세요.", Toast.LENGTH_SHORT).show()
                         }
                         else {
-                            Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                            VolleyService.updateUserOptionReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
+                                if(success == "success") {
+                                    if(userOptionData.length > 8) {
+                                        userOptionText.text = userOptionData.substring(0, 9) + "..."
+                                        userOptionText.setTextColor(Color.parseColor("#FF8C00"))
+                                        dismiss()
+                                    }
+                                    else {
+                                        userOptionText.text = userOptionData
+                                        userOptionText.setTextColor(Color.parseColor("#FF8C00"))
+                                        dismiss()
+                                    }
+                                }
+                                else {
+                                    Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                                }
+                            })
                         }
-                    })
+                    }
+                    else {
+                        VolleyService.updateUserOptionReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
+                            if(success == "success") {
+                                if(userOptionData.length > 8) {
+                                    userOptionText.text = userOptionData.substring(0, 9) + "..."
+                                    userOptionText.setTextColor(Color.parseColor("#FF8C00"))
+                                    dismiss()
+                                }
+                                else {
+                                    userOptionText.text = userOptionData
+                                    userOptionText.setTextColor(Color.parseColor("#FF8C00"))
+                                    dismiss()
+                                }
+                            }
+                            else {
+                                Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    }
                 }
             }
         }
@@ -310,19 +343,38 @@ class PSDialog(activity: Activity) {
 
                 }
                 else {
-                    VolleyService.updateUserOptionReq(UserId, userOption, userOptionData!!, context!!, {success->
-                        if(success == "success") {
-                            if(userOptionData.length > 8) {
-                                dismiss()
+                    if(userOption == "user_personality" || userOption == "user_favoriteperson") {
+                        var count = 0
+                        for(i in 0..userOptionList.size-1) {
+                            if(userOptionList.get(i).isSelected == true) {
+                                count ++
                             }
-                            else {
-                                dismiss()
-                            }
+                        }
+
+                        if(count < 2 ) {
+                            Toast.makeText(context, "2개이상 선택해주세요.", Toast.LENGTH_SHORT).show()
                         }
                         else {
-                            Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                            VolleyService.updateUserOptionReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
+                                if(success == "success") {
+                                        dismiss()
+                                }
+                                else {
+                                    Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                                }
+                            })
                         }
-                    })
+                    }
+                    else {
+                        VolleyService.updateUserOptionReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
+                            if(success == "success") {
+                                    dismiss()
+                            }
+                            else {
+                                Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    }
                 }
             }
 
@@ -771,6 +823,9 @@ class PSDialog(activity: Activity) {
 
         cancelBtn.setOnClickListener {
             dismiss()
+            VolleyService.updateReq("user", "user_enable=0", "user_id='${UserInfo.ID}'", context!!,
+                { success ->
+                })
             context!!.finish()
         }
     }

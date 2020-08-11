@@ -11,6 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
+import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Item.ImageItem
 import com.ilove.ilove.MainActivity.StoryActivity
@@ -35,7 +38,8 @@ class StoryAdapter(val context: Context, val storyList:ArrayList<ImageItem.Story
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Log.d("test", "${storyList.get(position).image}")
         Glide.with(holder.itemView)
-            .load(storyList.get(position).image)
+            .load(storyList.get(position).image).transition(DrawableTransitionOptions().crossFade()).apply(
+                RequestOptions().override(100, 100))
             .into(holder.itemView.image_storylist)
 
         var displayMetrics: DisplayMetrics = DisplayMetrics()
@@ -48,21 +52,28 @@ class StoryAdapter(val context: Context, val storyList:ArrayList<ImageItem.Story
         holder.itemView.image_storylist.setClipToOutline(true)
 
         holder.itemView.setOnClickListener {
-            val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
-            val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-            var intent = Intent(context , StoryActivity::class.java)
-            intent.putExtra("image_id", storyList.get(position).imageId)
-            intent.putExtra("image", storyList.get(position).image)
+            if(UserInfo.ENABLE == 0) {
+                val psDialog = PSDialog(context as Activity)
+                psDialog.setIncompleteProfile()
+                psDialog.show()
+            }
+            else {
+                val current = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
+                val currentDate = current.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                var intent = Intent(context , StoryActivity::class.java)
+                intent.putExtra("image_id", storyList.get(position).imageId)
+                intent.putExtra("image", storyList.get(position).image)
 
-            VolleyService.insertHistoryReq(UserInfo.ID, storyList.get(position).userId, "story", currentDate, context, { success ->
-                VolleyService.sendFCMReq(storyList.get(position).userId, "visitstory", context)
-                if(success == "success") {
-                    context.startActivity(intent)
-                }
-                else {
-                    Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
-                }
-            })
+                VolleyService.insertHistoryReq(UserInfo.ID, storyList.get(position).userId, "story", currentDate, context, { success ->
+                    VolleyService.sendFCMReq(storyList.get(position).userId, "visitstory", context)
+                    if(success == "success") {
+                        context.startActivity(intent)
+                    }
+                    else {
+                        Toast.makeText(context, "서버와의 통신오류", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
         }
     }
 

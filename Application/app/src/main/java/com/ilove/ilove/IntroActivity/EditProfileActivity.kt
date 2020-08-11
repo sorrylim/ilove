@@ -23,6 +23,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.FileUploadUtils
 import com.ilove.ilove.Class.PSAppCompatActivity
@@ -688,7 +689,8 @@ class EditProfileActivity : AppCompatActivity() {
         for(i in 0..array.length()-1) {
             var json = array[i] as JSONObject
             Glide.with(this)
-                .load(json.getString("image")).apply(RequestOptions().override(300, 300))
+                .load(json.getString("image")).apply(RequestOptions().override(100, 100)).transition(
+                    DrawableTransitionOptions().crossFade())
                 .into(profileImageList.get(i))
             profileImagePath.add(json.getString("image"))
             profileImageIdList.add(json.getInt("image_id"))
