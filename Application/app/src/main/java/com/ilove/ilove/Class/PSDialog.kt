@@ -556,6 +556,10 @@ class PSDialog(activity: Activity) {
                 if(success=="success") {
                     dialog!!.dismiss()
                 }
+                else if(success == "fail") {
+                    Toast.makeText(context, "상단 올리기가 적용 되어있습니다.", Toast.LENGTH_SHORT).show()
+                    dismiss()
+                }
             })
         }
 
