@@ -31,7 +31,7 @@ data class UserList(
     val userNickname: String,
     val userAge: String,
     val userCity: String,
-    val recentGps: String,
+    val recentGps: Float,
     val recentTime: String,
     val userIntroduce: String,
     val userPhone: String,

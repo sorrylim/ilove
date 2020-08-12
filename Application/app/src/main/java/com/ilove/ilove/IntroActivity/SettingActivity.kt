@@ -20,7 +20,7 @@ class SettingActivity : PSAppCompatActivity() {
             var intent = Intent(this, AlarmSettingActivity::class.java)
             startActivity(intent)
         }
-        text_settinglogout.setOnClickListener {
+        /*text_settinglogout.setOnClickListener {
             var pref=this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
             var editor=pref.edit()
             editor.putString("ID", "")
@@ -43,7 +43,7 @@ class SettingActivity : PSAppCompatActivity() {
                     .apply()
             var intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-        }
+        }*/
 
 
 

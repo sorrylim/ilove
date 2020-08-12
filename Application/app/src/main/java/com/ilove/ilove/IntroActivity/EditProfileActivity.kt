@@ -2,10 +2,13 @@ package com.ilove.ilove.IntroActivity
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -22,15 +25,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
-import com.ilove.ilove.Class.FileUploadUtils
-import com.ilove.ilove.Class.PSAppCompatActivity
-import com.ilove.ilove.Class.PSDialog
-import com.ilove.ilove.Class.UserInfo
+import com.ilove.ilove.Class.*
 import com.ilove.ilove.Fragment.ProfileFragment
 import com.ilove.ilove.Item.UserItem
+import com.ilove.ilove.MainActivity.MainActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import com.theartofdev.edmodo.cropper.CropImage
@@ -58,7 +61,6 @@ import kotlinx.android.synthetic.main.activity_edit_profile.layout_editholiday
 import kotlinx.android.synthetic.main.activity_edit_profile.layout_editinterest
 import kotlinx.android.synthetic.main.activity_edit_profile.layout_editintroduce
 import kotlinx.android.synthetic.main.activity_edit_profile.layout_editjob
-import kotlinx.android.synthetic.main.activity_edit_profile.layout_editlanguage
 import kotlinx.android.synthetic.main.activity_edit_profile.layout_editmarriagehistory
 import kotlinx.android.synthetic.main.activity_edit_profile.layout_editmarriageplan
 import kotlinx.android.synthetic.main.activity_edit_profile.layout_editpersonality
@@ -85,7 +87,6 @@ import kotlinx.android.synthetic.main.activity_edit_profile.text_editholiday
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editinterest
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editintroduce
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editjob
-import kotlinx.android.synthetic.main.activity_edit_profile.text_editlanguage
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editmarriagehistory
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editmarriageplan
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editpersonality
@@ -101,7 +102,7 @@ import java.io.FileNotFoundException
 import java.io.IOException
 
 
-class EditProfileActivity : AppCompatActivity() {
+class EditProfileActivity : PSAppCompatActivity() {
 
     companion object {
         var handler:Handler? = null
@@ -118,7 +119,44 @@ class EditProfileActivity : AppCompatActivity() {
     var editImagePath : String? = null
     var layout:Int? = null
 
+    private val PERMISSIONS_REQUEST_CODE = 100
+
     var mainprofile:Int?=null
+
+    private val requiredPermission = arrayOf(
+        android.Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+
+    private fun checkPermissions(){
+        val readStoragePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+
+        if(readStoragePermission == PackageManager.PERMISSION_GRANTED) {
+            photoFromGallery()
+        }
+        else {
+            ActivityCompat.requestPermissions(this, requiredPermission, PERMISSIONS_REQUEST_CODE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if(requestCode == PERMISSIONS_REQUEST_CODE && grantResults.size == requiredPermission.size) {
+            var checkResult = true
+
+            for (result in grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    checkResult = false
+                    break
+                }
+            }
+
+            if(checkResult) {
+                photoFromGallery()
+            }
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -169,12 +207,7 @@ class EditProfileActivity : AppCompatActivity() {
         profileImageList.add(imageSub3)
 
 
-        setSupportActionBar(toolbar_editprofile)
-        supportActionBar?.setDisplayShowCustomEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
-        supportActionBar?.setTitle("프로필 편집")
+        toolbarCenterBinding(toolbar_editprofile, "프로필편집", true)
 
         refreshProfileImage()
 
@@ -187,7 +220,7 @@ class EditProfileActivity : AppCompatActivity() {
                 var list : List<String> = profileImagePath.get(0).split("/")
                 editImagePath = list.get(3)
             }
-            photoFromGallery()
+            checkPermissions()
         }
 
         image_editsub1.setOnClickListener {
@@ -195,7 +228,7 @@ class EditProfileActivity : AppCompatActivity() {
             editImageId = null
             mainprofile=0
             when(profileImageIdList.size) {
-                1 -> photoFromGallery()
+                1 -> checkPermissions()
                 else -> {
                     dialogPhotoType()
                     editImageId = profileImageIdList.get(1)
@@ -210,8 +243,8 @@ class EditProfileActivity : AppCompatActivity() {
             editImageId = null
             mainprofile=0
             when(profileImageIdList.size) {
-                1 -> photoFromGallery()
-                2 -> photoFromGallery()
+                1 -> checkPermissions()
+                2 -> checkPermissions()
                 else -> {
                     dialogPhotoType()
                     editImageId = profileImageIdList.get(2)
@@ -226,9 +259,9 @@ class EditProfileActivity : AppCompatActivity() {
             editImageId = null
             mainprofile=0
             when(profileImageIdList.size) {
-                1 -> photoFromGallery()
-                2 -> photoFromGallery()
-                3 -> photoFromGallery()
+                1 -> checkPermissions()
+                2 -> checkPermissions()
+                3 -> checkPermissions()
                 else -> {
                     dialogPhotoType()
                     editImageId = profileImageIdList.get(3)
@@ -262,7 +295,10 @@ class EditProfileActivity : AppCompatActivity() {
             }
 
             if(json.getString("user_gender") != "null") {
-                text_editgender.text = json.getString("user_gender")
+                when(json.getString("user_gender")) {
+                    "M" -> text_editgender.text = "남자"
+                    "F" -> text_editgender.text = "여자"
+                }
                 text_editgender.setTextColor(Color.parseColor("#FFA500"))
                 text_editgender.setTypeface(text_editgender.getTypeface(), Typeface.BOLD)
             }
@@ -412,13 +448,6 @@ class EditProfileActivity : AppCompatActivity() {
                 text_editroommate.text = json.getString("user_roommate")
                 text_editroommate.setTextColor(Color.parseColor("#FFA500"))
                 text_editroommate.setTypeface(text_editroommate.getTypeface(), Typeface.BOLD)
-            }
-
-            if(json.getString("user_language") != "null")
-            {
-                text_editlanguage.text = json.getString("user_language")
-                text_editlanguage.setTextColor(Color.parseColor("#FFA500"))
-                text_editlanguage.setTypeface(text_editlanguage.getTypeface(), Typeface.BOLD)
             }
 
             if(json.getString("user_interest") != "null")
@@ -649,12 +678,6 @@ class EditProfileActivity : AppCompatActivity() {
             psDialog.show()
         }
 
-        layout_editlanguage.setOnClickListener {
-            userOptionList.clear()
-            language()
-            psDialog.setUserOption("사용가능언어", "user_language", userOptionList, text_editlanguage)
-            psDialog.show()
-        }
 
         layout_editinterest.setOnClickListener {
             userOptionList.clear()
@@ -825,10 +848,6 @@ class EditProfileActivity : AppCompatActivity() {
         userOptionList = arrayListOf(UserItem.UserOption("혼자 살아요"), UserItem.UserOption("친구랑 같이 살아요"), UserItem.UserOption("애완동물이랑 같이 살아요"), UserItem.UserOption("가족이랑 살아요"), UserItem.UserOption("기타"))
     }
 
-    fun language() {
-        userOptionList = arrayListOf(UserItem.UserOption("영어"), UserItem.UserOption("일본어"), UserItem.UserOption("중국어"), UserItem.UserOption("힌두어"), UserItem.UserOption("스페인어"), UserItem.UserOption("러시아어"), UserItem.UserOption("프랑스어"), UserItem.UserOption("아라비아어"), UserItem.UserOption("포르투갈어"), UserItem.UserOption("말레이시아어"), UserItem.UserOption("뱅골어"), UserItem.UserOption("독일어"))
-    }
-
     fun interest() {
         userOptionList = arrayListOf(UserItem.UserOption("영화보기"), UserItem.UserOption("카페가기"), UserItem.UserOption("코인노래방"), UserItem.UserOption("편맥하기"), UserItem.UserOption("수다떨기"), UserItem.UserOption("맛집찾기"), UserItem.UserOption("야구보기"), UserItem.UserOption("축구보기"), UserItem.UserOption("여행가기"), UserItem.UserOption("등산하기"), UserItem.UserOption("춤추기"), UserItem.UserOption("독서하기"))
     }
@@ -902,9 +921,7 @@ class EditProfileActivity : AppCompatActivity() {
         var deletePhotoBtn : TextView = dialog.findViewById(R.id.text_deletephoto)
 
         editPhotoBtn.setOnClickListener{
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            intent.setType("image/*")
-            startActivityForResult(intent, PICK_FROM_ALBUM)
+            checkPermissions()
             dialog.dismiss()
         }
 
@@ -935,7 +952,7 @@ class EditProfileActivity : AppCompatActivity() {
             || text_editalcohol.text == "선택" || text_editreligion.text == "선택" || text_editbrother.text == "선택" || text_editcountry.text == "선택"
             || text_editsalary.text == "선택" || text_editasset.text == "선택" || text_editmarriagehistory.text == "선택" || text_editchildren.text == "선택"
             || text_editmarriageplan.text == "선택" || text_editchildrenplan.text == "선택" || text_editwishdate.text == "선택" || text_editdatecost.text == "선택"
-            || text_editroommate.text == "선택" || text_editlanguage.text == "선택" || text_editinterest.text == "선택" || text_editpersonality.text == "선택"
+            || text_editroommate.text == "선택" ||  text_editinterest.text == "선택" || text_editpersonality.text == "선택"
             || text_editfavoriteperson.text == "선택") {
             val psDialog = PSDialog(this)
             psDialog.setIncompleteEditProfile()

@@ -408,7 +408,7 @@ class PartnerActivity : PSAppCompatActivity() {
                         meet = 1
                     }
 
-                    Log.d("test",UserInfo.ID + UserInfo.VIP)
+                    Log.d("test",UserInfo.ID + simpleDateFormat.parse(UserInfo.VIP).getTime())
 
                     if(gpsTracker.timeDiffValue(simpleDateFormat.parse(UserInfo.VIP).getTime()) < 0) {
                         viewpager_partnerprofile.adapter = PartnerProfileAdapter(this, profileImageList, profileImageList.size)

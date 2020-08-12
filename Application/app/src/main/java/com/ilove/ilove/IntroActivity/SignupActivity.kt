@@ -63,12 +63,42 @@ class SignupActivity: PSAppCompatActivity() {
     var editImageId : Int? = null
     var editImagePath : String? = null
     var imageCheck = false
+    val PERMISSIONS_REQUEST_CODE = 100
 
 
     private val requiredPermission = arrayOf(
         android.Manifest.permission.READ_EXTERNAL_STORAGE
     )
 
+    private fun checkPermissions(){
+        val readStoragePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+
+        if(readStoragePermission == PackageManager.PERMISSION_GRANTED) {
+            photoFromGallery()
+        }
+        else {
+            ActivityCompat.requestPermissions(this, requiredPermission, PERMISSIONS_REQUEST_CODE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if(requestCode == PERMISSIONS_REQUEST_CODE && grantResults.size == requiredPermission.size) {
+            var checkResult = true
+
+            for (result in grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    checkResult = false
+                    break
+                }
+            }
+
+            if(checkResult) {
+                photoFromGallery()
+            }
+        }
+    }
 
 
     //사용자가 홈키 눌렀을때
@@ -128,20 +158,19 @@ class SignupActivity: PSAppCompatActivity() {
             psDialog.show()
         }
 
-        refreshProfileImage()
 
         imageMain.setOnClickListener{
             VolleyService.getProfileImageReq(phone!!, this, {success->
                 var array = success
                 if(array.length() == 0) {
-                    photoFromGallery()
+                    checkPermissions()
                 }
                 else {
                     var json = array[0] as JSONObject
                     var list : List<String> = json.getString("image").split("/")
                     editImageId = json.getInt("image_id")
                     editImagePath = list.get(3)
-                    photoFromGallery()
+                    checkPermissions()
                 }
             })
         }
@@ -520,9 +549,11 @@ class SignupActivity: PSAppCompatActivity() {
 
                     if(editImageId != null) {
                         FileUploadUtils.uploadSignupProfileImage(imagePath!!, "", "update", editImageId!!, editImagePath!!, phone!!)
+                        refreshProfileImage()
                         imageCheck = true
                     } else {
                         FileUploadUtils.uploadSignupProfileImage(imagePath!!, "mainprofile", "insert", null, "", phone!!)
+                        refreshProfileImage()
                         imageCheck = true
                     }
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -548,21 +579,6 @@ class SignupActivity: PSAppCompatActivity() {
                     .into(image_signupmain)
             }
         })
-    }
-
-    private fun checkPermissions(){
-        val rejectedPermissionList = java.util.ArrayList<String>()
-
-        for(permission in requiredPermission){
-            if(ContextCompat.checkSelfPermission(this,permission)!= PackageManager.PERMISSION_GRANTED) {
-                rejectedPermissionList.add(permission)
-            }
-        }
-
-        if(rejectedPermissionList.isNotEmpty()){
-            val array = arrayOfNulls<String>(rejectedPermissionList.size)
-            ActivityCompat.requestPermissions(this,rejectedPermissionList.toArray(array), 100)
-        }
     }
 
     fun photoFromGallery() {
