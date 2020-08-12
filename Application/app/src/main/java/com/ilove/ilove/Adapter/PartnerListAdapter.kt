@@ -56,6 +56,16 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+
+        var gpsTracker = GpsTracker(context as Activity)
+        var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        var curDate = simpleDateFormat.format(System.currentTimeMillis())
+        var partnerDate : Date = simpleDateFormat.parse(partnerList.get(position).recentTime)
+
+        var age = curDate.substring(0, 4).toInt() - partnerList.get(position).userAge.substring(0,4).toInt() + 1
+
+
         if(listType == "eachlike") {
             holder.itemView.btn_partnerlistcall.visibility = View.GONE
             holder.itemView.btn_partnerlistlike.visibility = View.GONE
@@ -113,14 +123,12 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
             holder.itemView.btn_partnerlistlike.visibility = View.GONE
             holder.itemView.btn_each.visibility = View.VISIBLE
             holder.itemView.btn_each.setText("연락처 열람")
+            holder.itemView.btn_each.setOnClickListener {
+                val psDialog = PSDialog(context as Activity)
+                psDialog.setEachExpressionMeetDialog(partnerList.get(position).userNickname, age.toString() + ", " + partnerList.get(position).userCity, partnerList.get(position).userPhone, partnerList.get(position).userImage)
+                psDialog.show()
+            }
         }
-
-        var gpsTracker = GpsTracker(context as Activity)
-        var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        var curDate = simpleDateFormat.format(System.currentTimeMillis())
-        var partnerDate : Date = simpleDateFormat.parse(partnerList.get(position).recentTime)
-
-        var age = curDate.substring(0, 4).toInt() - partnerList.get(position).userAge.substring(0,4).toInt() + 1
 
 
         if(partnerList.get(position).dateHistory.substring(0, 10) == dateHistory)

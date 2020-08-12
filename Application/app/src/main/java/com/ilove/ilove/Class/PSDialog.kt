@@ -158,7 +158,7 @@ class PSDialog(activity: Activity) {
                 Toast.makeText(context, title+"을(를) 선택해주세요", Toast.LENGTH_SHORT).show()
             }
             else {
-                if(userOption == "user_city") {
+                if(userOption == "user_city" || userOption=="user_purpose") {
                     VolleyService.updateUserCityReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
                         if(success == "success") {
                             userOptionText.text = userOptionData
@@ -171,22 +171,24 @@ class PSDialog(activity: Activity) {
                     })
                 }
                 else if(userOption=="user_gender"){
-                    if(userOptionData=="여성"){
+                    if(userOptionData=="여자"){
                         userOptionData="F"
                     }
-                    else if(userOptionData=="남성") {
+                    else if(userOptionData=="남자") {
                         userOptionData="M"
                     }
+
                     VolleyService.updateUserCityReq(UserInfo.ID, userOption, userOptionData!!, context!!, {success->
                         if(success == "success") {
                             var gender:String?=null
                             if(userOptionData=="F"){
-                                gender="여성"
+                                gender="여자"
                             }
                             else{
-                                gender="남성"
+                                gender="남자"
                             }
 
+                            UserInfo.GENDER = userOptionData
                             userOptionText.text = gender
                             userOptionText.setTextColor(Color.parseColor("#FF8C00"))
                             dismiss()
@@ -579,7 +581,8 @@ class PSDialog(activity: Activity) {
         acceptBtn.setOnClickListener {
             Log.d("test", "결제")
             if(billingModue.mBillingClient.isReady) {
-                billingModue.doBillingFlow(billingModue.skuDetails10)
+                billingModue.doBillingFlow(billingModue.skuDetails10, candyCount)
+                dismiss()
             }
             else {
                 Toast.makeText(context, "아직 준비되지 않았습니다.", Toast.LENGTH_SHORT).show()
@@ -825,6 +828,7 @@ class PSDialog(activity: Activity) {
             dismiss()
             VolleyService.updateReq("user", "user_enable=0", "user_id='${UserInfo.ID}'", context!!,
                 { success ->
+                    UserInfo.ENABLE = 0
                 })
             context!!.finish()
         }

@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -331,6 +332,7 @@ class ListFragment(titleText: TextView) : Fragment() {
                         json.getString("user_birthday"), json.getString("user_city"), gpsTracker.getSortDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1)), json.getString("user_recenttime"),
                         json.getString("user_previewintroduce"), json.getString("user_phone"), json.getString("image"), json.getString("user_purpose"),json.getInt("like"), json.getInt("meet"))
                     userList.add(partner)
+                    Log.d("test", "${json.getString("user_nickname")}, ${gpsTracker.getSortDistance(UserInfo.LATITUDE!!, UserInfo.LONGITUDE!!, location.get(0), location.get(1))}")
                 }
 
                 Collections.sort(userList, object : Comparator<UserList> {

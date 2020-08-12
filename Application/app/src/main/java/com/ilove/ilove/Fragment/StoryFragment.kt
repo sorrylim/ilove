@@ -32,10 +32,7 @@ class StoryFragment(titleText: TextView) : Fragment() {
     var titleText : TextView = titleText
     var gender = ""
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_story, container, false)
         val writeStoryBtn : Button = rootView.findViewById(R.id.btn_writestory)
         val storyRV : RecyclerView = rootView.findViewById(R.id.rv_storyview)

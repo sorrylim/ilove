@@ -1,40 +1,23 @@
 package com.ilove.ilove.MainActivity
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.android.billingclient.api.PurchasesUpdatedListener
-import com.android.volley.toolbox.Volley
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
-import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSAppCompatActivity
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.Fragment.*
 import com.ilove.ilove.IntroActivity.ChargeCandyActivity
-import com.ilove.ilove.IntroActivity.LoginActivity
 import com.ilove.ilove.Object.VolleyService
 import com.ilove.ilove.R
 import kotlinx.android.synthetic.main.activity_main.*
-import java.sql.Time
-import java.text.SimpleDateFormat
 import java.time.*
 import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
-import java.util.*
 
 
 class MainActivity : PSAppCompatActivity() {
@@ -59,8 +42,8 @@ class MainActivity : PSAppCompatActivity() {
         }
 
         if(UserInfo.ID==""){
-            var intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            /*var intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)*/
         }
         else {
             FirebaseMessaging.getInstance().subscribeToTopic(UserInfo.ID)
