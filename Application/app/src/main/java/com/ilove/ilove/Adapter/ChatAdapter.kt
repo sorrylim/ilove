@@ -115,7 +115,7 @@ class ChatAdapter(private val activity: Activity) : BaseAdapter() {
                 }
                 var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 var gpsTracker = GpsTracker(context as Activity)
-                if(UserInfo.VIP!="0") {
+                if(UserInfo.VIP!="0000-00-00 00:00:00") {
                     if (gpsTracker.timeDiffValue(
                             simpleDateFormat.parse(UserInfo.VIP).getTime()
                         ) < 0

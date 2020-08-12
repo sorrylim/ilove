@@ -992,6 +992,7 @@ object VolleyService {
             val mac = Mac.getInstance("HmacSHA256")
             mac.init(signingKey)
             val rawHmac = mac.doFinal(message.toByteArray(charset("UTF-8")))
+
             return java.util.Base64.getEncoder().encodeToString(rawHmac)
         }
 
@@ -1014,7 +1015,7 @@ object VolleyService {
             json,
             Response.Listener {
                 success(it)
-                Log.d("test", "성공")
+                Log.d("test", "성공 ${it}")
             },
             Response.ErrorListener {
                 Log.d("test", it.toString())
