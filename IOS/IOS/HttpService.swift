@@ -18,6 +18,35 @@ public class HttpService:ObservableObject{
     var ip="http://18.217.130.157:3000"
     
     //------------------------------Common------------------------------//
+    func insertReq(table: String, col: String, values: String, callback: @escaping () -> Void){
+        guard let url=URL(string: "\(ip)/user/db/add") else{
+            return
+        }
+        
+        let data=[
+                "table": table,
+                "col": col,
+                "values": values
+        ]
+        
+        
+        let body=try! JSONSerialization.data(withJSONObject: data)
+        
+        var request=URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else {
+                return
+            }
+
+            callback()
+            
+        }.resume()
+    }
+    
     func deleteReq(table: String, cond: String, callback: @escaping () -> Void){
         guard let url=URL(string: "\(ip)/user/db/delete") else{
             return
@@ -1004,7 +1033,6 @@ public class HttpService:ObservableObject{
             }.resume()
         }
     }
-    
     //------------------------------SignUp------------------------------//
 }
 

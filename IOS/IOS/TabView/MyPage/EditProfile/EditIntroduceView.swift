@@ -33,7 +33,6 @@ struct EditIntroduceView: View {
                             HttpService.shared.updateIntroduceReq(userId: UserInfo.shared.ID, introduceType: "user_introduce", introduce: self.content){
                                 self.userOption!.user_introduce=self.content
                                 self.presentationMode.wrappedValue.dismiss()
-                                
                             }
                         }
                 }

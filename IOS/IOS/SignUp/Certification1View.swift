@@ -14,7 +14,6 @@ struct Certification1View: View {
     
     @State var content = ""
     @State var selected = false
-    @State var isActive = false
     
     var body: some View {
         VStack(spacing: 40){
@@ -29,8 +28,8 @@ struct Certification1View: View {
                     .multilineTextAlignment(.center)
                     .background(
                         Rectangle()
-                        .fill(Color.white)
-                        .padding(.bottom,2)
+                            .fill(Color.white)
+                            .padding(.bottom,2)
                             .background(selected ? Color.accentColor : Color(red: 180/255, green: 180/255, blue: 180/255)))
                     .padding(2)
                     .onTapGesture {
@@ -38,18 +37,10 @@ struct Certification1View: View {
                 }
                 HStack{
                     Spacer()
-                    NavigationLink(destination: Certification2View(phone: self.content), isActive: self.$isActive) {
+                    NavigationLink(destination: Certification2View(phone: self.content)) {
                         Text("보내기")
                             .font(.system(size: 20))
                             .foregroundColor(content.count != 11 ? .gray : .black)
-                            .onTapGesture {
-                                if self.content=="01041545154" {
-                                    self.isActive=true
-                                }
-                                else {
-                                    self.isActive=false
-                                }
-                        }
                     }
                     .disabled(content.count != 11)
                 }
@@ -57,6 +48,7 @@ struct Certification1View: View {
             Spacer()
         }
         .padding()
+        .navigationBarBackButtonHidden(true)
     }
 }
 

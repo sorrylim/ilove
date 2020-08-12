@@ -15,6 +15,8 @@ struct EditUserOptionView: View {
     @Binding var userOption : UserOptionModel?
     @State var title : String
     
+    @State var gender = ["남성", "여성"]
+    @State var purpose = ["결혼", "재혼", "연애"]
     @State var bodyTypes = ["마른","슬림탄탄","보통","글래머","근육질","통통한","뚱뚱한","기타"]
     @State var bloodTypes = ["A", "B", "O", "AB", "몰라요"]
     @State var cities = ["서울", "경기", "인천", "대전", "대구", "부산", "울산", "광주", "강원", "세종", "충북", "충남", "경북", "경남", "전북", "전남", "제주", "해외"]
@@ -104,8 +106,19 @@ struct EditUserOptionView: View {
         .onAppear(){
             
             var id=0
-            
-            if self.title=="키" {
+            if self.title == "이용목적" {
+                self.purpose.forEach { (i) in
+                    self.singleOptionArray.append(SingleOptionRow(id: id, text: i))
+                    id+=1
+                }
+            }
+            else if self.title == "성별" {
+                self.gender.forEach { (i) in
+                    self.singleOptionArray.append(SingleOptionRow(id: id, text: i))
+                    id+=1
+                }
+            }
+            else if self.title == "키" {
                 (150...200).forEach { (i) in
                     self.singleOptionArray.append(SingleOptionRow(id: id, text:"\(i)cm"))
                     id+=1
@@ -266,8 +279,15 @@ struct EditUserOptionView: View {
         var userOptionData : String = ""
         if type == "single" {
             userOptionData = SingleOptionRow.selected!.text
-            
-            if self.title == "키" {
+            if self.title == "이용목적" {
+                userOption="user_purpose"
+                self.userOption!.user_purpose=userOptionData
+            }
+            else if self.title == "성별" {
+                userOption="user_gender"
+                self.userOption!.user_gender = userOptionData
+            }
+            else if self.title == "키" {
                 userOption="user_height"
                 self.userOption!.user_height=userOptionData
             }
@@ -374,11 +394,9 @@ struct EditUserOptionView: View {
                 userOption="user_favoriteperson"
                 self.userOption!.user_interest = userOptionData
             }
-            
-            
         }
         
-        if userOption=="user_city" {
+        if userOption=="user_city" || userOption=="user_purpose" || userOption=="user_gender" {
             HttpService.shared.updateOptionCityReq(userId: UserInfo.shared.ID, userOption: userOption, userOptionData: userOptionData){
                 self.presentationMode.wrappedValue.dismiss()
             }

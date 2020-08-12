@@ -117,7 +117,7 @@ class AlarmSettingActivity : PSAppCompatActivity() {
         }
 
         switch_alarmupprofile.setOnCheckedChangeListener { compoundButton, b ->
-
+            updateAlarm("upprofile",b)
         }
 
         switch_alarmcheckprofile.setOnCheckedChangeListener { compoundButton, b ->

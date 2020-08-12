@@ -20,6 +20,9 @@ struct EditProfileView : View{
     
     @State var isInit = false
     
+    @State var previewIntro = ""
+    @State var intro = ""
+    
     var body: some View{
         ScrollView{
             if isInit {

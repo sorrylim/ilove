@@ -220,8 +220,6 @@ class SignupActivity: PSAppCompatActivity() {
         psDialog.dialog!!.setOnDismissListener {
             bodyType(psDialog)
         }
-
-
     }
 
     fun bodyType(psDialog:PSDialog) {

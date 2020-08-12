@@ -10,6 +10,8 @@ import SwiftUI
 
 struct Certification2View: View {
     
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     @State var phone : String
     
     @State var selected = false
@@ -30,8 +32,8 @@ struct Certification2View: View {
                     .multilineTextAlignment(.center)
                     .background(
                         Rectangle()
-                        .fill(Color.white)
-                        .padding(.bottom,2)
+                            .fill(Color.white)
+                            .padding(.bottom,2)
                             .background(selected ? Color.accentColor : Color(red: 180/255, green: 180/255, blue: 180/255)))
                     .padding(2)
                     .onTapGesture {
@@ -39,7 +41,7 @@ struct Certification2View: View {
                 }
                 HStack{
                     Spacer()
-                    NavigationLink(destination: SignUpView(), isActive: self.$isActive){
+                    NavigationLink(destination: SignUpView(phone: self.phone), isActive: self.$isActive){
                         Text("보내기")
                             .font(.system(size: 20))
                             .foregroundColor(content.count != 6 ? .gray : .black)
@@ -57,10 +59,14 @@ struct Certification2View: View {
             }
             Spacer()
         }
+        .navigationBarBackButtonHidden(true)
         .padding()
         .onAppear(){
             self.certifyNum = Float.random(in: 0..<10) * 100000
             HttpService.shared.sendSMSReq(phone: self.phone, certifyNum: Int(self.certifyNum!))
+        }
+        .onDisappear(){
+            self.presentationMode.wrappedValue.dismiss()
         }
     }
 }
