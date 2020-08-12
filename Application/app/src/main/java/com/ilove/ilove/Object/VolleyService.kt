@@ -931,7 +931,7 @@ object VolleyService {
     }
 
     fun updateUpProfileReq(userId : String, upProfileDate: String, context: Context, success : (String) -> Unit) {
-        val url = "${ip}/user/upprofile"
+        val url = "${ip}/chat/upprofile"
 
         var json=JSONObject()
             .put("user_id", userId)
