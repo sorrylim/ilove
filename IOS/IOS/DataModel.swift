@@ -176,3 +176,7 @@ struct ExpressionModel : Codable {
     var meet : Int
     var show : Int
 }
+
+struct HashModel : Codable {
+    var hash : String
+}
