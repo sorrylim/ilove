@@ -10,6 +10,8 @@ import SwiftUI
 
 struct PolicyAlert: View {
     
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     @Binding var showing : Bool
     @State var certification1Visible = false
     
@@ -42,8 +44,5 @@ struct PolicyAlert: View {
         .edgesIgnoringSafeArea(.top)
         .padding(.bottom,50)
         .frame(width: UIScreen.main.bounds.width*0.8, height: UIScreen.main.bounds.height*0.8)
-        .onDisappear(){
-            //self.showing=false
-        }
     }
 }

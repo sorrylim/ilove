@@ -10,6 +10,8 @@ import SwiftUI
 
 struct StartView: View {
     
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     @State var policyVisible = false
     
     var body: some View {
@@ -29,6 +31,9 @@ struct StartView: View {
                     PolicyAlert(showing: self.$policyVisible)
                 }.background(Color.black.opacity(0.5).edgesIgnoringSafeArea(.all))
             }
+        }
+        .onDisappear(){
+            self.presentationMode.wrappedValue.dismiss()
         }
     }
 }
