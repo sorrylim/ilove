@@ -359,15 +359,6 @@ class PartnerActivity : PSAppCompatActivity() {
                     view30.visibility = View.VISIBLE
                 }
 
-                if(json.getString("user_language") != "null")
-                {
-                    text_partnerlanguage.text = json.getString("user_language")
-                    text_partnerlanguage.visibility = View.VISIBLE
-                    text_partnerlanguage1.visibility = View.VISIBLE
-                    textView30.visibility = View.VISIBLE
-                    view30.visibility = View.VISIBLE
-                }
-
                 if(json.getString("user_interest") != "null")
                 {
                     text_partnerhobby.visibility = View.VISIBLE

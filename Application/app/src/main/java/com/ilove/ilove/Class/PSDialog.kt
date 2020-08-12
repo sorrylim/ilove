@@ -581,7 +581,8 @@ class PSDialog(activity: Activity) {
         acceptBtn.setOnClickListener {
             Log.d("test", "결제")
             if(billingModue.mBillingClient.isReady) {
-                billingModue.doBillingFlow(billingModue.skuDetails10)
+                billingModue.doBillingFlow(billingModue.skuDetails10, candyCount)
+                dismiss()
             }
             else {
                 Toast.makeText(context, "아직 준비되지 않았습니다.", Toast.LENGTH_SHORT).show()
