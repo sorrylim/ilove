@@ -11,6 +11,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.UserInfo
 import com.ilove.ilove.IntroActivity.*
 import com.ilove.ilove.Object.VolleyService
@@ -51,7 +53,8 @@ class ProfileFragment(titleText: TextView) : Fragment() {
             }
 
             Glide.with(activity!!)
-                .load(mainProfile)
+                .load(mainProfile).transition(DrawableTransitionOptions().crossFade()).apply(
+                    RequestOptions().override(100, 100))
                 .into(mainProfileImage)
 
             mainProfileImage.setClipToOutline(true)
@@ -60,15 +63,8 @@ class ProfileFragment(titleText: TextView) : Fragment() {
         nickName.text = UserInfo.NICKNAME
 
         editProfileBtn.setOnClickListener {
-            if(UserInfo.AUTHORITY=="normal") {
                  var intent = Intent(activity, EditProfileActivity::class.java)
                 startActivity(intent)
-            }
-            else if(UserInfo.AUTHORITY=="manager"){
-                 var intent = Intent(activity, ManagerEditProfileActivity::class.java)
-                startActivity(intent)
-            }
-
         }
 
         settingBtn.setOnClickListener {

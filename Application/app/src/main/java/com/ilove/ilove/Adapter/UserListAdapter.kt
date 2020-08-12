@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSDialog
 import com.ilove.ilove.Class.UserInfo
@@ -43,7 +45,6 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val psDialog = PSDialog(context as Activity)
-        psDialog.setIncompleteProfile()
         var gpsTracker = GpsTracker(context as Activity)
         var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         var curDate = simpleDateFormat.format(System.currentTimeMillis())
@@ -63,12 +64,12 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
             distance = String.format("%.1f", recentGps) + "km"
         }
         else if(10000<=recentGps) {
-            distance = String.format("%.0f", (recentGps - recentGps%1000)) + "km"
+            distance = String.format("%.0f", (recentGps/1000)) + "km"
         }
 
 
         Glide.with(holder.itemView)
-            .load(userList.get(position).userImage)
+            .load(userList.get(position).userImage).transition(DrawableTransitionOptions().crossFade()).apply(RequestOptions().override(100, 100))
             .into(holder.itemView.image_userlistprofile)
 
         holder.itemView.text_userlistinfo.text = userList.get(position).userNickname + " " + age + " " + userList.get(position).userCity
@@ -189,6 +190,7 @@ class UserListAdapter(val context: Context, val userList:ArrayList<UserList>) : 
                 })
             }
             else {
+                psDialog.setIncompleteProfile()
                 psDialog.show()
             }
         }

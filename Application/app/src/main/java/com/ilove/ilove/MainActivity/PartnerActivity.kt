@@ -3,6 +3,7 @@ package com.ilove.ilove.MainActivity
 import android.graphics.Color
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -406,6 +407,8 @@ class PartnerActivity : PSAppCompatActivity() {
                         fab_call.setImageResource(R.drawable.call_icon)
                         meet = 1
                     }
+
+                    Log.d("test",UserInfo.ID + UserInfo.VIP)
 
                     if(gpsTracker.timeDiffValue(simpleDateFormat.parse(UserInfo.VIP).getTime()) < 0) {
                         viewpager_partnerprofile.adapter = PartnerProfileAdapter(this, profileImageList, profileImageList.size)

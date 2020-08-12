@@ -3,11 +3,13 @@ package com.ilove.ilove.Adapter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSDialog
@@ -45,10 +47,13 @@ class NewUserAdapter(val context: Context, val userList:ArrayList<NewUserList>, 
         holder.itemView.text_newusernicknameage.text = userList.get(position).userNickname + ", " + age.toString()
 
         holder.itemView.text_newuserrecentdata.text = distance.get(0)+ distance.get(1) + ", " + gpsTracker.timeDiff(partnerDate.getTime())
+
+        Log.d("test", "${userList.get(position).userNickname} , ${gpsTracker.timeDiff(partnerDate.getTime())}")
         Glide.with(holder.itemView)
-            .load(userList.get(position).userImage).apply(RequestOptions().fitCenter()).apply(RequestOptions().override(300,300))
+            .load(userList.get(position).userImage).transition(DrawableTransitionOptions().crossFade()).apply(RequestOptions().fitCenter()).apply(RequestOptions().override(300,300))
             .into(holder.itemView.image_newuser)
         holder.itemView.image_newuser.setClipToOutline(true)
+
 
         holder.itemView.setOnClickListener {
             if(UserInfo.ENABLE == 1) {

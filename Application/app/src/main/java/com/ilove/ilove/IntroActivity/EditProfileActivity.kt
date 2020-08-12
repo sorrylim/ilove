@@ -23,6 +23,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.FileUploadUtils
 import com.ilove.ilove.Class.PSAppCompatActivity
@@ -94,9 +95,6 @@ import kotlinx.android.synthetic.main.activity_edit_profile.text_editroommate
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editsalary
 import kotlinx.android.synthetic.main.activity_edit_profile.text_editwishdate
 import kotlinx.android.synthetic.main.activity_edit_profile.toolbar_editprofile
-import kotlinx.android.synthetic.main.activity_edit_profile_staff.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import okhttp3.internal.publicsuffix.PublicSuffixDatabase
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.FileNotFoundException
@@ -257,6 +255,18 @@ class EditProfileActivity : AppCompatActivity() {
                 text_editpreviewintroduce.setTypeface(text_editpreviewintroduce.getTypeface(), Typeface.BOLD)
             }
 
+            if(json.getString("user_purpose") != "null") {
+                text_editpurpose.text = json.getString("user_purpose")
+                text_editpurpose.setTextColor(Color.parseColor("#FFA500"))
+                text_editpurpose.setTypeface(text_editpurpose.getTypeface(), Typeface.BOLD)
+            }
+
+            if(json.getString("user_gender") != "null") {
+                text_editgender.text = json.getString("user_gender")
+                text_editgender.setTextColor(Color.parseColor("#FFA500"))
+                text_editgender.setTypeface(text_editgender.getTypeface(), Typeface.BOLD)
+            }
+
             if(json.getString("user_height") != "null")
             {
                 text_editheight.text = json.getString("user_height")
@@ -383,13 +393,6 @@ class EditProfileActivity : AppCompatActivity() {
                 text_editchildrenplan.setTypeface(text_editchildrenplan.getTypeface(), Typeface.BOLD)
             }
 
-            if(json.getString("user_parenting") != "null")
-            {
-                text_editparenting.text = json.getString("user_parenting")
-                text_editparenting.setTextColor(Color.parseColor("#FFA500"))
-                text_editparenting.setTypeface(text_editparenting.getTypeface(), Typeface.BOLD)
-            }
-
             if(json.getString("user_wishdate") != "null")
             {
                 text_editwishdate.text = json.getString("user_wishdate")
@@ -475,6 +478,20 @@ class EditProfileActivity : AppCompatActivity() {
 
         layout_editintroduce.setOnClickListener {
             psDialog.setIntroduce(text_editintroduce)
+            psDialog.show()
+        }
+
+        layout_editpurpose.setOnClickListener {
+            userOptionList.clear()
+            purpose()
+            psDialog.setUserOption("이용목적", "user_purpose", userOptionList,text_editpurpose)
+            psDialog.show()
+        }
+
+        layout_editgender.setOnClickListener {
+            userOptionList.clear()
+            gender()
+            psDialog.setUserOption("성별", "user_gender", userOptionList, text_editgender)
             psDialog.show()
         }
 
@@ -688,7 +705,8 @@ class EditProfileActivity : AppCompatActivity() {
         for(i in 0..array.length()-1) {
             var json = array[i] as JSONObject
             Glide.with(this)
-                .load(json.getString("image")).apply(RequestOptions().override(300, 300))
+                .load(json.getString("image")).apply(RequestOptions().override(100, 100)).transition(
+                    DrawableTransitionOptions().crossFade())
                 .into(profileImageList.get(i))
             profileImagePath.add(json.getString("image"))
             profileImageIdList.add(json.getInt("image_id"))
@@ -705,6 +723,10 @@ class EditProfileActivity : AppCompatActivity() {
 
     fun purpose() {
         userOptionList = arrayListOf(UserItem.UserOption("결혼"), UserItem.UserOption("재혼"), UserItem.UserOption("연애"))
+    }
+
+    fun gender() {
+        userOptionList = arrayListOf(UserItem.UserOption("남자"), UserItem.UserOption("여자"))
     }
 
     fun height() {
@@ -908,7 +930,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     fun checkIncomplete() {
-        if(text_editheight.text == "선택" || text_editbody.text == "선택" || text_editbloodtype.text == "선택" || text_editcity.text == "선택"
+        if(text_editpurpose.text == "선택" || text_editgender.text =="선택" ||text_editheight.text == "선택" || text_editbody.text == "선택" || text_editbloodtype.text == "선택" || text_editcity.text == "선택"
             || text_editjob.text == "선택" || text_editeducation.text == "선택" || text_editholiday.text == "선택" || text_editcigarette.text == "선택"
             || text_editalcohol.text == "선택" || text_editreligion.text == "선택" || text_editbrother.text == "선택" || text_editcountry.text == "선택"
             || text_editsalary.text == "선택" || text_editasset.text == "선택" || text_editmarriagehistory.text == "선택" || text_editchildren.text == "선택"

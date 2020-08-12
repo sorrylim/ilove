@@ -104,10 +104,17 @@ class StoryFragment(titleText: TextView) : Fragment() {
                     if(myStoryImageId != null) {
                         Glide.with(activity!!).load(myStoryImagePath).into(myStoryImage)
                         myStoryImage.setOnClickListener {
-                            var intent = Intent(activity!!, StoryActivity::class.java)
-                            intent.putExtra("image", myStoryImagePath)
-                            intent.putExtra("image_id", myStoryImageId as Int)
-                            startActivity(intent)
+                            if(UserInfo.ENABLE == 0){
+                                val psDialog = PSDialog(activity!!)
+                                psDialog.setIncompleteProfile()
+                                psDialog.show()
+                            }
+                            else {
+                                var intent = Intent(activity!!, StoryActivity::class.java)
+                                intent.putExtra("image", myStoryImagePath)
+                                intent.putExtra("image_id", myStoryImageId as Int)
+                                startActivity(intent)
+                            }
                         }
                         myStoryBlock1.visibility = View.INVISIBLE
                         myStoryBlock2.visibility = View.INVISIBLE
@@ -118,13 +125,15 @@ class StoryFragment(titleText: TextView) : Fragment() {
         }
 
         writeStoryBtn.setOnClickListener {
-            var intent = Intent(activity!!, WriteStoryActivity::class.java)
-            startActivity(intent)
-        }
-
-        myStoryImage.setOnClickListener {
-            var intent = Intent(activity!!, WriteStoryActivity::class.java)
-            startActivity(intent)
+            if(UserInfo.ENABLE == 0) {
+                val psDialog = PSDialog(activity!!)
+                psDialog.setIncompleteProfile()
+                psDialog.show()
+            }
+            else {
+                var intent = Intent(activity!!, WriteStoryActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         VolleyService.getStoryImageReq(UserInfo.ID, "story", gender, activity!!, { success->
@@ -161,6 +170,22 @@ class StoryFragment(titleText: TextView) : Fragment() {
 
                 psDialog.dismiss()
             })
+
+            myStoryImage.setOnClickListener {
+                myStoryBlock1.visibility = View.VISIBLE
+                myStoryBlock1.bringToFront()
+                myStoryBlock2.visibility = View.VISIBLE
+                myStoryBlock2.bringToFront()
+                if(UserInfo.ENABLE == 0) {
+                    val psDialog = PSDialog(activity!!)
+                    psDialog.setIncompleteProfile()
+                    psDialog.show()
+                }
+                else {
+                    var intent = Intent(activity!!, WriteStoryActivity::class.java)
+                    startActivity(intent)
+                }
+            }
 
             var iter = storyList.iterator()
             if(UserInfo.BLOCKING == 1) {

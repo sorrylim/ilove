@@ -53,7 +53,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal"
@@ -74,8 +74,7 @@
                 android:id="@+id/imageView7"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginBottom="9dp"
-                app:layout_constraintBottom_toTopOf="@+id/textView36"
+                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -85,23 +84,24 @@
                 android:id="@+id/text_vipticket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="0일"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
             <TextView
                 android:id="@+id/textView36"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
+                android:layout_marginTop="30dp"
                 android:text="정회원"
                 android:textColor="@color/colorMdGrey_900"
-                app:layout_constraintBottom_toTopOf="@+id/text_vipticket"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView7" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -114,8 +114,7 @@
                 android:id="@+id/imageView8"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginBottom="9dp"
-                app:layout_constraintBottom_toTopOf="@+id/textView37"
+                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -128,20 +127,20 @@
                 android:text="0일"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
             <TextView
                 android:id="@+id/textView37"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
+                android:layout_marginTop="30dp"
                 android:text="메세지 이용권"
                 android:textColor="@color/colorMdGrey_900"
-                app:layout_constraintBottom_toTopOf="@+id/text_messageticket"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -155,8 +154,7 @@
                 android:id="@+id/imageView9"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginBottom="9dp"
-                app:layout_constraintBottom_toTopOf="@+id/textView38"
+                android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -169,20 +167,20 @@
                 android:text="0개"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
             <TextView
                 android:id="@+id/textView38"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
+                android:layout_marginTop="20dp"
                 android:text="좋아요"
                 android:textColor="@color/colorMdGrey_900"
-                app:layout_constraintBottom_toTopOf="@+id/text_liketicket"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

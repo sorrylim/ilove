@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.PSAppCompatActivity
@@ -68,7 +69,7 @@ class StoryActivity : PSAppCompatActivity() {
             text_storyviewcount.text = success.getInt("viewcount").toString()
             text_storylikecount.text = success.getInt("likecount").toString()
             userId = success.getString("user_id")
-            Glide.with(this).load(imgUrl).apply(RequestOptions().centerCrop()).apply(RequestOptions().override(300, 300)).into(image_storyimage)
+            Glide.with(this).load(imgUrl).transition(DrawableTransitionOptions().crossFade()).apply(RequestOptions().centerCrop()).apply(RequestOptions().override(300, 300)).into(image_storyimage)
 
             if(success.getInt("like") == 1) {
                 btn_storylike.setLiked(true)
@@ -79,7 +80,7 @@ class StoryActivity : PSAppCompatActivity() {
 
             VolleyService.getProfileImageReq(userId, this, {success->
                 var json = success[0] as JSONObject
-                Glide.with(this).load(json.getString("image")).apply(RequestOptions().circleCrop()).into(image_storyuserprofile)
+                Glide.with(this).load(json.getString("image")).transition(DrawableTransitionOptions().crossFade()).apply(RequestOptions().circleCrop()).into(image_storyuserprofile)
 
                 layout_storyuser.setOnClickListener {
                     var intent = Intent(this, PartnerActivity::class.java)

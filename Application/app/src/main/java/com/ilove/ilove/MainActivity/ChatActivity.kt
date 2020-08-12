@@ -17,6 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ReportFragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
@@ -90,7 +91,7 @@ class ChatActivity : AppCompatActivity() {
                 chatPartnerImage=json.getString("image")
 
                 Glide.with(view)
-                    .load(chatPartnerImage)
+                    .load(chatPartnerImage).transition(DrawableTransitionOptions().crossFade())
                     .apply(RequestOptions().circleCrop())
                     .apply(RequestOptions().override(640, 640))
                     .into(image_chatpartner)
@@ -100,7 +101,7 @@ class ChatActivity : AppCompatActivity() {
             chatPartnerImage = room!!.imageUrl
 
             Glide.with(view)
-                .load(chatPartnerImage)
+                .load(chatPartnerImage).transition(DrawableTransitionOptions().crossFade())
                 .apply(RequestOptions().circleCrop())
                 .apply(RequestOptions().override(640, 640))
                 .into(image_chatpartner)

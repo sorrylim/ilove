@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ilove.ilove.Class.GpsTracker
@@ -145,7 +146,7 @@ class PartnerListAdapter(val context: Context, val partnerList:ArrayList<Partner
         }
 
         Glide.with(holder.itemView)
-            .load(partnerList.get(position).userImage).apply(RequestOptions().circleCrop())
+            .load(partnerList.get(position).userImage).transition(DrawableTransitionOptions().crossFade()).apply(RequestOptions().circleCrop()).apply(RequestOptions().override(100, 100))
             .into(holder.itemView.image_partnerlistprofile)
         holder.itemView.text_partnerlistnickname.text = partnerList.get(position).userNickname + ", " + age.toString()
                 holder.itemView.text_partnerlistrecenttime.text = gpsTracker.timeDiff(partnerDate.getTime())
