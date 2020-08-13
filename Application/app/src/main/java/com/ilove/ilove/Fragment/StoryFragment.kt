@@ -58,6 +58,13 @@ class StoryFragment(titleText: TextView) : Fragment() {
         storyRV.setOverScrollMode(View.OVER_SCROLL_NEVER)
 
         swipeLayout.setOnRefreshListener {
+            if(UserInfo.GENDER == "M") {
+                gender = "F"
+            }
+            else {
+                gender ="M"
+            }
+
             VolleyService.getStoryImageReq(UserInfo.ID, "story", gender, activity!!, { success->
                 storyList.clear()
 

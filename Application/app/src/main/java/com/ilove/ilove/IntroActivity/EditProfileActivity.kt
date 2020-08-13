@@ -873,7 +873,7 @@ class EditProfileActivity : PSAppCompatActivity() {
                 Log.d("test", "$imagePath")
 
                 try {
-                    CropImage.activity(imageCaptureUri).setGuidelines(CropImageView.Guidelines.ON).start(this)
+                    CropImage.activity(imageCaptureUri).setAspectRatio(1, 1).setGuidelines(CropImageView.Guidelines.ON).start(this)
 
                 } catch (e: FileNotFoundException) {
                     // TODO Auto-generated catch block
