@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 import Combine
+import CryptoSwift
 
 public class HttpService:ObservableObject{
     
@@ -17,6 +18,35 @@ public class HttpService:ObservableObject{
     var ip="http://18.217.130.157:3000"
     
     //------------------------------Common------------------------------//
+    func insertReq(table: String, col: String, values: String, callback: @escaping () -> Void){
+        guard let url=URL(string: "\(ip)/user/db/add") else{
+            return
+        }
+        
+        let data=[
+                "table": table,
+                "col": col,
+                "values": values
+        ]
+        
+        
+        let body=try! JSONSerialization.data(withJSONObject: data)
+        
+        var request=URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else {
+                return
+            }
+
+            callback()
+            
+        }.resume()
+    }
+    
     func deleteReq(table: String, cond: String, callback: @escaping () -> Void){
         guard let url=URL(string: "\(ip)/user/db/delete") else{
             return
@@ -933,6 +963,76 @@ public class HttpService:ObservableObject{
         }.resume()
     }
     //------------------------------Profile------------------------------//
-
+    
+    
+    
+    //------------------------------SignUp------------------------------//
+    func makeSignatureReq(timestamp: Int64, callback: @escaping (HashModel) -> Void){
+        guard let url = URL(string: "\(ip)/user/make/signature") else{
+            return
+        }
+        
+        let data = [
+            "timestamp" : String(timestamp)
+        ]
+        
+        let body = try! JSONSerialization.data(withJSONObject: data)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod="POST"
+        request.httpBody=body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data,response,error) in
+            guard let data = data else{
+                return
+            }
+            
+            let decoded = try! JSONDecoder().decode(HashModel.self, from: data)
+            callback(decoded)
+        }.resume()
+    }
+    
+    func sendSMSReq(phone: String, certifyNum: Int){
+        guard let url = URL(string: "https://sens.apigw.ntruss.com/sms/v2/services/ncp:sms:kr:260114845161:iloveting/messages") else{
+            return
+        }
+        
+        var timestamp = Date().currentTimeMillis()
+        
+        self.makeSignatureReq(timestamp: timestamp){ hashModel in
+            
+            var signature = hashModel.hash
+            
+            let data = [
+                "type" : "SMS",
+                "from" : "01038911100",
+                "content" : "[아이러브팅] 인증번호 \(certifyNum)을(를) 입력해주세요.",
+                "messages" : [
+                    [
+                        "to" : phone
+                    ]
+                ]
+                ] as [String : Any]
+            
+            let body = try! JSONSerialization.data(withJSONObject: data)
+            
+            var request = URLRequest(url: url)
+            request.httpMethod="POST"
+            request.httpBody=body
+            request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            request.setValue("\(timestamp)", forHTTPHeaderField: "x-ncp-apigw-timestamp")
+            request.setValue("rKWG41t79UZoLH1w5NXT", forHTTPHeaderField: "x-ncp-iam-access-key")
+            request.setValue(signature, forHTTPHeaderField: "x-ncp-apigw-signature-v2")
+            
+            
+            URLSession.shared.dataTask(with: request) { (data,response,error) in
+                guard let data = data else{
+                    return
+                }
+            }.resume()
+        }
+    }
+    //------------------------------SignUp------------------------------//
 }
 

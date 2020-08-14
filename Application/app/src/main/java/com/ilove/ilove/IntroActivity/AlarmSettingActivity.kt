@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -47,7 +48,75 @@ class AlarmSettingActivity : PSAppCompatActivity() {
         settingSwitch(switch_alarmmeet,UserInfo.ALARMMEET)
         settingSwitch(switch_blockfriend, UserInfo.BLOCKING)
 
-        switch_blockfriend.setOnCheckedChangeListener { compoundButton, b ->
+        switch_blockfriend.setOnClickListener {
+            if(switch_blockfriend.isChecked == false) {
+                updateAlarm("blocking", false)
+                switch_blockfriend.isChecked = false
+                VolleyService.deleteReq("blocking", "blocking_user='${UserInfo.ID}'", this, {success->
+                    VolleyService.updateReq("user", "user_blockingnumber=''", "user_id='${UserInfo.ID}'", this, {success->
+                        var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
+                        var editor = userPref.edit()
+                        editor.putString("BLOCKINGNUMBER", "")
+                            .putInt("BLOCKING", 0)
+                            .apply()
+
+                        UserInfo.BLOCKING = 0
+                        UserInfo.BLOCKINGNUMBER = ""
+                    })
+                })
+            }
+            else if(switch_blockfriend.isChecked == true) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                {
+                    checkContactsPermission()
+                }
+                else
+                {
+                    switch_blockfriend.isChecked = true
+                    val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+                    val projection = arrayOf(
+                        ContactsContract.CommonDataKinds.Phone.NUMBER
+                    )
+
+                    val cursor = contentResolver.query(
+                        uri, projection, null,
+                        null , null
+                    )
+
+
+                    var blockingNumber = ""
+
+                    if (cursor!!.moveToFirst()) {
+                        do {
+                            if (cursor.getString(0).startsWith("01")) {
+                                blockingNumber += (cursor.getString(0).replace("-","").replace(" ", "") + ",")
+                            }
+                        } while (cursor.moveToNext())
+                    }
+
+                    Log.d(
+                        "test",
+                        "phone=" + blockingNumber
+                    )
+
+                    VolleyService.updateReq("user", "user_blockingnumber='${blockingNumber}'", "user_id='${UserInfo.ID}'", this, {success->
+                        VolleyService.insertReq("blocking", "blocking_user, blocking_partner", "'${UserInfo.ID}','${blockingNumber}'", this, {success->
+                            var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
+                            var editor = userPref.edit()
+                            editor.putString("BLOCKINGNUMBER", blockingNumber)
+                                .putInt("BLOCKING", 1)
+                                .apply()
+
+                            UserInfo.BLOCKING = 1
+                            UserInfo.BLOCKINGNUMBER = blockingNumber
+                        })
+                    })
+                    cursor?.close()
+                }
+            }
+        }
+
+        /*switch_blockfriend.setOnCheckedChangeListener { compoundButton, b ->
             when(b) {
                 true -> {
                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
@@ -94,30 +163,29 @@ class AlarmSettingActivity : PSAppCompatActivity() {
                                 UserInfo.BLOCKINGNUMBER = blockingNumber
                             })
                         })
-
-
                         cursor?.close()
                     }
                 }
                 false -> {
+                    updateAlarm("blocking", b)
                     VolleyService.deleteReq("blocking", "blocking_user='${UserInfo.ID}'", this, {success->
-                        var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
-                        var editor = userPref.edit()
-                        editor.putString("BLOCKINGNUMBER", "")
-                            .putInt("BLOCKING", 0)
-                            .apply()
+                        VolleyService.updateReq("user", "user_blockingnumber=''", "user_id='${UserInfo.ID}'", this, {success->
+                            var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
+                            var editor = userPref.edit()
+                            editor.putString("BLOCKINGNUMBER", "")
+                                .putInt("BLOCKING", 0)
+                                .apply()
 
-                        UserInfo.BLOCKING = 0
-                        UserInfo.BLOCKINGNUMBER = ""
+                            UserInfo.BLOCKING = 0
+                            UserInfo.BLOCKINGNUMBER = ""
+                        })
                     })
                 }
             }
-
-            updateAlarm("blocking", b)
-        }
+        }*/
 
         switch_alarmupprofile.setOnCheckedChangeListener { compoundButton, b ->
-
+            updateAlarm("upprofile",b)
         }
 
         switch_alarmcheckprofile.setOnCheckedChangeListener { compoundButton, b ->
@@ -158,14 +226,14 @@ class AlarmSettingActivity : PSAppCompatActivity() {
         )
         builder.setCancelable(true)
         builder.setPositiveButton("설정", DialogInterface.OnClickListener { dialog, id ->
-            val callGPSSettingIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-            startActivityForResult(callGPSSettingIntent, GPS_ENABLE_CODE)
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            val uri = Uri.fromParts("package", packageName, null)
+            intent.data = uri
+            startActivity(intent)
         })
         builder.setNegativeButton("취소",
             DialogInterface.OnClickListener { dialog, id ->
-                moveTaskToBack(true)
-                finishAndRemoveTask()
-                android.os.Process.killProcess(android.os.Process.myPid())})
+                dialog.dismiss()})
         builder.create().show()
     }
 
@@ -184,6 +252,8 @@ class AlarmSettingActivity : PSAppCompatActivity() {
             }
 
             if(checkResult) {
+                switch_blockfriend.isChecked = true
+                updateAlarm("blocking", true)
                 val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
                 val projection = arrayOf(
                     ContactsContract.CommonDataKinds.Phone.NUMBER
@@ -212,11 +282,6 @@ class AlarmSettingActivity : PSAppCompatActivity() {
 
                 VolleyService.updateReq("user", "user_blockingnumber='${blockingNumber}'", "user_id='${UserInfo.ID}'", this, {success->
                     VolleyService.insertReq("blocking", "blocking_user, blocking_partner", "'${UserInfo.ID}','${blockingNumber}'", this, {success->
-                        var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
-                        var editor = userPref.edit()
-                        editor.putString("BLOCKINGNUMBER", blockingNumber)
-                            .putInt("BLOCKING", 1)
-                            .apply()
 
                         UserInfo.BLOCKING = 1
                         UserInfo.BLOCKINGNUMBER = blockingNumber
@@ -226,6 +291,7 @@ class AlarmSettingActivity : PSAppCompatActivity() {
             }
         }
         else {
+            switch_blockfriend.isChecked = false
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, requiredPermission.get(0))) {
                 Toast.makeText(this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
                 finish()
@@ -238,6 +304,8 @@ class AlarmSettingActivity : PSAppCompatActivity() {
     fun checkContactsPermission() {
         val readContactPermission = ContextCompat.checkSelfPermission(this@AlarmSettingActivity, android.Manifest.permission.READ_CONTACTS)
         if(readContactPermission == PackageManager.PERMISSION_GRANTED) {
+            switch_blockfriend.isChecked = true
+            updateAlarm("blocking", true)
             val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
             val projection = arrayOf(
                 ContactsContract.CommonDataKinds.Phone.NUMBER
@@ -266,11 +334,6 @@ class AlarmSettingActivity : PSAppCompatActivity() {
 
             VolleyService.updateReq("user", "user_blockingnumber='${blockingNumber}'", "user_id='${UserInfo.ID}'", this, {success->
                 VolleyService.insertReq("blocking", "blocking_user, blocking_partner", "'${UserInfo.ID}','${blockingNumber}'", this, {success->
-                    var userPref = this.getSharedPreferences("UserInfo", Context.MODE_PRIVATE)
-                    var editor = userPref.edit()
-                    editor.putString("BLOCKINGNUMBER", blockingNumber)
-                        .putInt("BLOCKING", 1)
-                        .apply()
 
                     UserInfo.BLOCKING = 1
                     UserInfo.BLOCKINGNUMBER = blockingNumber
@@ -279,6 +342,7 @@ class AlarmSettingActivity : PSAppCompatActivity() {
             cursor?.close()
         }
         else {
+            switch_blockfriend.isChecked = false
             if (ActivityCompat.shouldShowRequestPermissionRationale(this@AlarmSettingActivity, requiredPermission.get(0))) {
                 ActivityCompat.requestPermissions(this@AlarmSettingActivity, requiredPermission, PERMISSIONS_REQUEST_CODE)
             } else {

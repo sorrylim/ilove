@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.ilove.ilove.Class.GpsTracker
 import com.ilove.ilove.Class.UserInfo
@@ -77,7 +78,8 @@ class ChatRoomAdapter(val context: Context, val chatRoomList: ArrayList<ChatRoom
         }
 
         Glide.with(holder.itemView)
-            .load(chatRoom.imageUrl).apply(RequestOptions().fitCenter())
+            .load(chatRoom.imageUrl).apply(RequestOptions().fitCenter()).transition(
+                DrawableTransitionOptions().crossFade())
             .apply(RequestOptions().override(640,640))
             .into(holder.itemView.image_chatroom)
         holder.itemView.image_chatroom.setClipToOutline(true)

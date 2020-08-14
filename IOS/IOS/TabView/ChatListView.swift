@@ -38,7 +38,6 @@ struct ChatListView : View{
 struct RoomRow : View {
     
     @State var room = ChatRoomModel(room_id: "", room_maker: "", room_partner: "", room_title: "", chat_content: "", chat_time: "")
-    @State var chatVisible = false
     
     @State var roomImage = UIImage()
     

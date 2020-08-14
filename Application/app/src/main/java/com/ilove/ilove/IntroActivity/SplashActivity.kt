@@ -173,7 +173,7 @@ class SplashActivity : AppCompatActivity() {
 
                 var intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-
+                finish()
             }
         }
         else {
@@ -205,6 +205,7 @@ class SplashActivity : AppCompatActivity() {
 
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this@SplashActivity, requiredPermission.get(0))) {
                 ActivityCompat.requestPermissions(this@SplashActivity, requiredPermission, PERMISSIONS_REQUEST_CODE)

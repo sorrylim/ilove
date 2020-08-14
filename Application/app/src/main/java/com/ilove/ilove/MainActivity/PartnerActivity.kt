@@ -359,15 +359,6 @@ class PartnerActivity : PSAppCompatActivity() {
                     view30.visibility = View.VISIBLE
                 }
 
-                if(json.getString("user_language") != "null")
-                {
-                    text_partnerlanguage.text = json.getString("user_language")
-                    text_partnerlanguage.visibility = View.VISIBLE
-                    text_partnerlanguage1.visibility = View.VISIBLE
-                    textView30.visibility = View.VISIBLE
-                    view30.visibility = View.VISIBLE
-                }
-
                 if(json.getString("user_interest") != "null")
                 {
                     text_partnerhobby.visibility = View.VISIBLE
@@ -408,7 +399,7 @@ class PartnerActivity : PSAppCompatActivity() {
                         meet = 1
                     }
 
-                    Log.d("test",UserInfo.ID + UserInfo.VIP)
+                    Log.d("test",UserInfo.ID + simpleDateFormat.parse(UserInfo.VIP).getTime())
 
                     if(gpsTracker.timeDiffValue(simpleDateFormat.parse(UserInfo.VIP).getTime()) < 0) {
                         viewpager_partnerprofile.adapter = PartnerProfileAdapter(this, profileImageList, profileImageList.size)

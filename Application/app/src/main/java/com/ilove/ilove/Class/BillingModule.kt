@@ -5,6 +5,8 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.android.billingclient.api.*
+import com.ilove.ilove.IntroActivity.ChargeCandyActivity
+import com.ilove.ilove.Object.VolleyService
 
 class BillingModule(context: Context) : PurchasesUpdatedListener{
     lateinit var context : Context
@@ -13,6 +15,7 @@ class BillingModule(context: Context) : PurchasesUpdatedListener{
 
     val skuID10 = "candy10"
     lateinit var skuDetails10 : SkuDetails
+    var candyCount = 0
 
     init{
         this.context = context
@@ -64,7 +67,8 @@ class BillingModule(context: Context) : PurchasesUpdatedListener{
         }
     }
 
-    fun doBillingFlow(skuDetails: SkuDetails) {
+    fun doBillingFlow(skuDetails: SkuDetails, candyCount: Int) {
+        this.candyCount = candyCount
         val flowParams = BillingFlowParams.newBuilder().setSkuDetails(skuDetails).build()
         val responseCode = mBillingClient.launchBillingFlow(context as Activity, flowParams);
         Log.d("test", "$responseCode")
@@ -73,10 +77,21 @@ class BillingModule(context: Context) : PurchasesUpdatedListener{
     override fun onPurchasesUpdated(billingResult: BillingResult?, purchases: MutableList<Purchase>?) {
         if(billingResult?.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
             Log.d("test", "결제에 성공하였습니다.")
-            for(i in purchases) {
-                val consumeParams = ConsumeParams.newBuilder().setPurchaseToken(i.purchaseToken).build()
-                mBillingClient.consumeAsync(consumeParams, mConsumeListener)
-            }
+            VolleyService.updateCandyReq(UserInfo.ID, candyCount, "increase", context, {success->
+                if(success == "success") {
+                    for(i in purchases) {
+                        val consumeParams = ConsumeParams.newBuilder().setPurchaseToken(i.purchaseToken).build()
+                        mBillingClient.consumeAsync(consumeParams, mConsumeListener)
+                    }
+
+                    UserInfo.CANDYCOUNT += candyCount
+
+                    var handler = ChargeCandyActivity.handler
+                    var msg = handler.obtainMessage()
+                    msg.what=0
+                    handler.sendMessage(msg)
+                }
+            })
         }
         else if(billingResult?.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
             Log.d("test", "사용자에 의해 구매가 취소되었습니다.")

@@ -132,6 +132,8 @@ struct ProfileImageModel : Codable {
 
 struct UserOptionModel : Codable{
     var user_id : String
+    var user_purpose : String?
+    var user_gender : String
     var user_height : String?
     var user_bodytype : String?
     var user_bloodtype : String?
@@ -161,7 +163,6 @@ struct UserOptionModel : Codable{
     var user_city : String?
     var user_introduce : String?
     var user_previewintroduce : String?
-    var user_gender : String?
 }
 
 struct ProfileModel : Codable{
@@ -175,4 +176,8 @@ struct ExpressionModel : Codable {
     var like : Int
     var meet : Int
     var show : Int
+}
+
+struct HashModel : Codable {
+    var hash : String
 }

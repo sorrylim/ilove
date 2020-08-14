@@ -20,7 +20,7 @@
     <View
         android:id="@+id/view34"
         android:layout_width="match_parent"
-        android:background="@color/colorMdGrey_500"
+        android:background="@color/colorMdGrey_300"
         android:layout_height="1dp" />
 
     <TextView

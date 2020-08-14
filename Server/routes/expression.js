@@ -2,6 +2,28 @@ var express = require('express');
 var router = express.Router();
 
 var db_expression = require('../public/SQL/expression_sql')()
+var db_user = require('../public/SQL/user_sql')()
+
+router.post('/save/showprofile', function(req, res, next) {
+    var user_id = req.body.user_id
+    var partner_id = req.body.partner_id
+    var expression_date = req.body.expression_date
+    var candy_count = req.body.candy_count
+
+    db_expression.insert_expression_data(user_id, partner_id, "show", expression_date, function(err, result) {
+        if(err) console.log(err)
+        else {
+            db_user.decrease_candy(user_id, candy_count, function(err, result) {
+                if(err) console.log(err)
+                else {
+                    var object = new Object()
+                    object.result = "success"
+                    res.send(object)
+                }
+            })
+        }
+    })
+})
 
 router.post('/get/count', function(req, res, next){
     var user_id = req.body.user_id
